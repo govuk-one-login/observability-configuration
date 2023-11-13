@@ -1,0 +1,95 @@
+name: Dynatrace Configuration Management
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  DeployNonProd:
+    env:
+      DYNATRACE_API_TOKEN: ${{ secrets.NONPROD_DYNATRACE_API_TOKEN}}
+      DYNATRACE_ENV_URL: ${{ secrets.NONPROD_DYNATRACE_ENV_URL}}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.GHA_ROLE_ARN }}
+          aws-region: eu-west-2
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' 
+      - run: pip install -r requirements.txt
+
+      - run: ./get-accounts.py
+
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.4
+
+      - name: Terraform fmt
+        run: terraform fmt -check
+
+      - name: Terraform init
+        run: terraform init
+
+      - run: terraform workspace select nonproduction
+
+      - name: Terraform validate
+        run: terraform validate -no-color
+
+      - name: Terraform apply
+        run: terraform apply -auto-approve -refresh=false
+  DeployProd:
+    env:
+      DYNATRACE_API_TOKEN: ${{ secrets.PROD_DYNATRACE_API_TOKEN}}
+      DYNATRACE_ENV_URL: ${{ secrets.PROD_DYNATRACE_ENV_URL}}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.GHA_ROLE_ARN }}
+          aws-region: eu-west-2
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' 
+      - run: pip install -r requirements.txt
+
+      - run: ./get-accounts.py
+
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.4
+
+      - name: Terraform fmt
+        run: terraform fmt -check
+
+      - name: Terraform init
+        run: terraform init
+
+      - run: terraform workspace select production
+
+      - name: Terraform validate
+        run: terraform validate -no-color
+
+      - name: Terraform apply
+        run: terraform apply -auto-approve -refresh=false
