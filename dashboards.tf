@@ -29,3 +29,25 @@ resource "dynatrace_dashboard_sharing" "signin-signup" {
     }
   }
 }
+
+resource "dynatrace_json_dashboard" "slos" {
+  contents = file("${path.module}/dashboards/slos.json")
+}
+
+resource "dynatrace_dashboard_sharing" "slos" {
+  dashboard_id = dynatrace_json_dashboard.slos.id
+
+  enabled = true
+
+  permissions {
+    permission {
+      level = "VIEW"
+      type  = "ALL"
+    }
+    permission {
+      id    = data.dynatrace_iam_group.all.id
+      level = "VIEW"
+      type  = "GROUP"
+    }
+  }
+}
