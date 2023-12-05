@@ -11,6 +11,7 @@ resource "dynatrace_slo_v2" "perf001" {
   target_warning     = 97
   error_budget_burn_rate {
     burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
   }
 }
 
@@ -27,6 +28,7 @@ resource "dynatrace_slo_v2" "perf002" {
   target_warning     = 99.5
   error_budget_burn_rate {
     burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
   }
 }
 
@@ -43,6 +45,7 @@ resource "dynatrace_slo_v2" "dva" {
   target_warning     = 99.95
   error_budget_burn_rate {
     burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
   }
 }
 
@@ -59,6 +62,7 @@ resource "dynatrace_slo_v2" "dvla" {
   target_warning     = 99.95
   error_budget_burn_rate {
     burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
   }
 }
 
@@ -75,6 +79,7 @@ resource "dynatrace_slo_v2" "hmpo" {
   target_warning     = 99.95
   error_budget_burn_rate {
     burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
   }
 }
 
@@ -91,5 +96,6 @@ resource "dynatrace_slo_v2" "experian" {
   target_warning     = 99.95
   error_budget_burn_rate {
     burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
   }
 }
