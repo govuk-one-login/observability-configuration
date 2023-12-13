@@ -18,9 +18,14 @@ To test, the following environment variables must be set:
 - settings.write
 - slo.read
 - slo.write
+- ExternalSyntheticConfiguration
 
 An OAuth client (`DT_ACCOUNT_ID`, `DT_CLIENT_ID`, `DT_CLIENT_SECRET`), with the following scopes:
 
 - account-idm-read
 
 Use `terraform workspace select nonproduction` to target the non-production state.
+
+You will also need valid AWS credentials for the `di-observability-prod` account.
+
+Then, you can use `terraform plan` to test changes, `terraform apply` to apply them (though this should be done by CI/CD really).
