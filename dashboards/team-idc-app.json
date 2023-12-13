@@ -1,0 +1,3254 @@
+{
+    "metadata": {
+      "configurationVersions": [
+        7
+      ],
+      "clusterVersion": "1.280.121.20231202-122138"
+    },
+    "dashboardMetadata": {
+      "name": "team-idc-app",
+      "shared": true,
+      "owner": "stevan.beattie@digital.cabinet-office.gov.uk",
+      "hasConsistentColors": false
+    },
+    "tiles": [
+      {
+        "name": "Invocations",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1026,
+          "left": 0,
+          "width": 304,
+          "height": 380
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "builtin:cloud.aws.lambda.invocations",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.aws_lambda_function"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.aws_lambda_function",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {
+            "hideLegend": false
+          },
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Lambda",
+        "tileType": "HEADER",
+        "configured": true,
+        "bounds": {
+          "top": 988,
+          "left": 0,
+          "width": 1216,
+          "height": 38
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false
+      },
+      {
+        "name": "DynamoDB",
+        "tileType": "HEADER",
+        "configured": true,
+        "bounds": {
+          "top": 1406,
+          "left": 0,
+          "width": 1216,
+          "height": 38
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false
+      },
+      {
+        "name": "Throttles (5m avg)",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1026,
+          "left": 912,
+          "width": 304,
+          "height": 152
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Honeycomb",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "builtin:cloud.aws.lambda.throttlers",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.aws_lambda_function"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.aws_lambda_function",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "HONEYCOMB",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "visible": true
+            },
+            "yAxes": []
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 1,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 3,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": true
+          }
+        },
+        "queriesSettings": {
+          "resolution": "5m",
+          "foldTransformation": "TOTAL",
+          "foldAggregation": "AVG"
+        },
+        "metricExpressions": [
+          "resolution=5m&(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)):names:fold(avg)"
+        ]
+      },
+      {
+        "name": "Read Capacity Used",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1444,
+          "left": 0,
+          "width": 304,
+          "height": 190
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Honeycomb",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "builtin:cloud.aws.dynamo.capacityUnits.consumed.read",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.dynamo_db_table"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.dynamo_db_table",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "HONEYCOMB",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "visible": true
+            },
+            "yAxes": []
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 300,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 500,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": true
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=Inf&(builtin:cloud.aws.dynamo.capacityUnits.consumed.read:filter(and(or(in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(dynamo_db_table),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.dynamo_db_table\"):sort(value(auto,descending)):limit(20)):names"
+        ]
+      },
+      {
+        "name": "Write Capacity Used",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1444,
+          "left": 304,
+          "width": 304,
+          "height": 190
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Honeycomb",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "builtin:cloud.aws.dynamo.capacityUnits.consumed.write",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.dynamo_db_table"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.dynamo_db_table",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "HONEYCOMB",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "visible": true
+            },
+            "yAxes": []
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 300,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 500,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": true
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=Inf&(builtin:cloud.aws.dynamo.capacityUnits.consumed.write:filter(and(or(in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(dynamo_db_table),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.dynamo_db_table\"):sort(value(auto,descending)):limit(20)):names"
+        ]
+      },
+      {
+        "name": "R/W Capacity Used",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1634,
+          "left": 0,
+          "width": 304,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "B",
+            "metric": "builtin:cloud.aws.dynamo.capacityUnits.consumed.read",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.dynamo_db_table"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.dynamo_db_table",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "C",
+            "metric": "builtin:cloud.aws.dynamo.capacityUnits.consumed.write",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.dynamo_db_table"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.dynamo_db_table",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "B:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "ORANGE",
+                "seriesType": "LINE",
+                "alias": "Used Read Units"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "C:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "BLUE",
+                "seriesType": "LINE",
+                "alias": "Used Write Units"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "B",
+                  "C"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 300,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 500,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": "5m"
+        },
+        "metricExpressions": [
+          "resolution=5m&(builtin:cloud.aws.dynamo.capacityUnits.consumed.read:filter(and(or(in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(dynamo_db_table),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.dynamo_db_table\"):sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.dynamo.capacityUnits.consumed.write:filter(and(or(in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(dynamo_db_table),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.dynamo_db_table\"):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "R/W Throttles",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1634,
+          "left": 304,
+          "width": 304,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "builtin:cloud.aws.dynamo.throttledEvents.read",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.dynamo_db_table"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.dynamo_db_table",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "B",
+            "metric": "builtin:cloud.aws.dynamo.throttledEvents.write",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.dynamo_db_table"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.dynamo_db_table",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": false
+          }
+        ],
+        "visualConfig": {
+          "type": "HONEYCOMB",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "B:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "visible": true
+            },
+            "yAxes": []
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 1,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 3,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": "5m",
+          "foldTransformation": "TOTAL",
+          "foldAggregation": "COUNT"
+        },
+        "metricExpressions": [
+          "resolution=5m&(builtin:cloud.aws.dynamo.throttledEvents.read:filter(and(or(in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(dynamo_db_table),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.dynamo_db_table\"):sort(value(auto,descending)):limit(20)):names:fold(count)"
+        ]
+      },
+      {
+        "name": "Successful Request Duration",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1634,
+          "left": 608,
+          "width": 304,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "B",
+            "metric": "builtin:cloud.aws.dynamo.requests.latency",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.dynamo_db_table"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.dynamo_db_table",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "HONEYCOMB",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "B:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "visible": true
+            },
+            "yAxes": []
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 1000,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 2000,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": true
+          }
+        },
+        "queriesSettings": {
+          "resolution": "5m",
+          "foldTransformation": "TOTAL",
+          "foldAggregation": "COUNT"
+        },
+        "metricExpressions": [
+          "resolution=5m&(builtin:cloud.aws.dynamo.requests.latency:filter(and(or(in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(dynamo_db_table),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.dynamo_db_table\"):sort(value(auto,descending)):limit(20)):names:fold(count)"
+        ]
+      },
+      {
+        "name": "User Error Rate (5m avg)",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1634,
+          "left": 912,
+          "width": 304,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Honeycomb",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "cloud.aws.dynamodb.userErrorsByAccountIdRegion",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "nestedFilters": [],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 1,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": "5m"
+        },
+        "metricExpressions": []
+      },
+      {
+        "name": "Successful Request Duration",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1444,
+          "left": 608,
+          "width": 304,
+          "height": 190
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "builtin:cloud.aws.dynamo.requests.latency",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.dynamo_db_table"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.dynamo_db_table",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 1000,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 2000,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": "5m",
+          "foldTransformation": "TOTAL",
+          "foldAggregation": "COUNT"
+        },
+        "metricExpressions": [
+          "resolution=5m&(builtin:cloud.aws.dynamo.requests.latency:filter(and(or(in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(dynamo_db_table),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.dynamo_db_table\"):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "User Error",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1444,
+          "left": 912,
+          "width": 304,
+          "height": 190
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Honeycomb",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "cloud.aws.dynamodb.userErrorsByAccountIdRegion",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "nestedFilters": [],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 3000,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 4000,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": true
+          }
+        },
+        "queriesSettings": {
+          "resolution": "5m",
+          "foldTransformation": "TOTAL",
+          "foldAggregation": "AVG"
+        },
+        "metricExpressions": []
+      },
+      {
+        "name": "AppSync",
+        "tileType": "HEADER",
+        "configured": true,
+        "bounds": {
+          "top": 0,
+          "left": 0,
+          "width": 1216,
+          "height": 38
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false
+      },
+      {
+        "name": "Connection Errors",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 342,
+          "left": 0,
+          "width": 304,
+          "height": 304
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "ext:cloud.aws.appsync.connectClientErrorSum",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.custom_device"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.custom_device",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "B",
+            "metric": "ext:cloud.aws.appsync.connectServerErrorSum",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.custom_device"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.custom_device",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "C",
+            "metric": "ext:cloud.aws.appsync.disconnectClientErrorSum",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.custom_device"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.custom_device",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "D",
+            "metric": "ext:cloud.aws.appsync.disconnectServerErrorSum",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.custom_device"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.custom_device",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "B:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "C:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "D:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A",
+                  "B",
+                  "C",
+                  "D"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": "5m"
+        },
+        "metricExpressions": [
+          "resolution=5m&(ext:cloud.aws.appsync.connectClientErrorSum:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.custom_device\"):sort(value(auto,descending)):limit(20)):limit(100):names,(ext:cloud.aws.appsync.connectServerErrorSum:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.custom_device\"):sort(value(auto,descending)):limit(20)):limit(100):names,(ext:cloud.aws.appsync.disconnectClientErrorSum:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.custom_device\"):sort(value(auto,descending)):limit(20)):limit(100):names,(ext:cloud.aws.appsync.disconnectServerErrorSum:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.custom_device\"):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Execution Duration",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1140,
+          "left": 304,
+          "width": 304,
+          "height": 266
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "builtin:cloud.aws.lambda.duration",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.aws_lambda_function"
+            ],
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.aws_lambda_function",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {
+            "hideLegend": true
+          },
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 60000,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 96000,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Execution Duration",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1026,
+          "left": 304,
+          "width": 304,
+          "height": 114
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Honeycomb",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "builtin:cloud.aws.lambda.duration",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.aws_lambda_function"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.aws_lambda_function",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "HONEYCOMB",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "visible": true
+            },
+            "yAxes": []
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 60000,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 96000,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=Inf&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)):names"
+        ]
+      },
+      {
+        "name": "Subscribe Errors",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 342,
+          "left": 304,
+          "width": 304,
+          "height": 304
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "ext:cloud.aws.appsync.subscribeClientErrorSum",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.custom_device"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.custom_device",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "B",
+            "metric": "ext:cloud.aws.appsync.subscribeServerErrorSum",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.custom_device"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.custom_device",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "C",
+            "metric": "ext:cloud.aws.appsync.unsubscribeClientErrorSum",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.custom_device"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.custom_device",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "D",
+            "metric": "ext:cloud.aws.appsync.unsubscribeServerErrorSum",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.custom_device"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.custom_device",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "B:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "C:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "D:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A",
+                  "B",
+                  "C",
+                  "D"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(ext:cloud.aws.appsync.subscribeClientErrorSum:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.custom_device\"):sort(value(auto,descending)):limit(20)):limit(100):names,(ext:cloud.aws.appsync.subscribeServerErrorSum:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.custom_device\"):sort(value(auto,descending)):limit(20)):limit(100):names,(ext:cloud.aws.appsync.unsubscribeClientErrorSum:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.custom_device\"):sort(value(auto,descending)):limit(20)):limit(100):names,(ext:cloud.aws.appsync.unsubscribeServerErrorSum:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.custom_device\"):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Latency Avg",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 38,
+          "left": 608,
+          "width": 304,
+          "height": 304
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "ext:cloud.aws.appsync.latency",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.custom_device"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.custom_device",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(ext:cloud.aws.appsync.latency:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.custom_device\"):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Connection Duration",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 38,
+          "left": 912,
+          "width": 304,
+          "height": 304
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "ext:cloud.aws.appsync.connectionDuration",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.custom_device"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.custom_device",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(ext:cloud.aws.appsync.connectionDuration:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.custom_device\"):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Connection Success",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 38,
+          "left": 0,
+          "width": 304,
+          "height": 304
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "ext:cloud.aws.appsync.disconnectSuccessSum",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.custom_device"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.custom_device",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "B",
+            "metric": "ext:cloud.aws.appsync.connectSuccessSum",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.custom_device"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.custom_device",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "B:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A",
+                  "B"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(ext:cloud.aws.appsync.disconnectSuccessSum:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.custom_device\"):sort(value(auto,descending)):limit(20)):limit(100):names,(ext:cloud.aws.appsync.connectSuccessSum:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.custom_device\"):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Error Rate",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1026,
+          "left": 608,
+          "width": 304,
+          "height": 380
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "builtin:cloud.aws.lambda.errorsRate",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.aws_lambda_function"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.aws_lambda_function",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "0",
+                "max": "100",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 50,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 75,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": "5m"
+        },
+        "metricExpressions": [
+          "resolution=5m&(builtin:cloud.aws.lambda.errorsRate:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Subscribe Success",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 38,
+          "left": 304,
+          "width": 304,
+          "height": 304
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "ext:cloud.aws.appsync.unsubscribeSuccessSum",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.custom_device"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.custom_device",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "B",
+            "metric": "ext:cloud.aws.appsync.subscribeSuccessSum",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.custom_device"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.custom_device",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "B:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A",
+                  "B"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(ext:cloud.aws.appsync.unsubscribeSuccessSum:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.custom_device\"):sort(value(auto,descending)):limit(20)):limit(100):names,(ext:cloud.aws.appsync.subscribeSuccessSum:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.custom_device\"):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Failed Executions",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 684,
+          "left": 608,
+          "width": 304,
+          "height": 304
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "ext:cloud.aws.states.executionsAbortedSumByRegionStateMachineArn",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "StateMachineArn"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "nestedFilters": [],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "B",
+            "metric": "ext:cloud.aws.states.executionsFailedSumByRegionStateMachineArn",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "StateMachineArn"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "nestedFilters": [],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "B:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A",
+                  "B"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(ext:cloud.aws.states.executionsAbortedSumByRegionStateMachineArn:splitBy(StateMachineArn):sort(value(auto,descending)):limit(20)):limit(100):names,(ext:cloud.aws.states.executionsFailedSumByRegionStateMachineArn:splitBy(StateMachineArn):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Step Functions",
+        "tileType": "HEADER",
+        "configured": true,
+        "bounds": {
+          "top": 646,
+          "left": 0,
+          "width": 1216,
+          "height": 38
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false
+      },
+      {
+        "name": "Successful Executions",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 684,
+          "left": 304,
+          "width": 304,
+          "height": 304
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "ext:cloud.aws.states.executionsSucceededSumByRegionStateMachineArn",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "StateMachineArn"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "nestedFilters": [],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(ext:cloud.aws.states.executionsSucceededSumByRegionStateMachineArn:splitBy(StateMachineArn):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Throttles",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1178,
+          "left": 912,
+          "width": 304,
+          "height": 228
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "builtin:cloud.aws.lambda.throttlers",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.aws_lambda_function"
+            ],
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.aws_lambda_function",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Service:identity-broker",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {
+            "hideLegend": true
+          },
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 1,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 3,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Service:identity-broker~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Execution Duration",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 684,
+          "left": 0,
+          "width": 304,
+          "height": 304
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "ext:cloud.aws.states.executionTimeByRegionStateMachineArn",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "StateMachineArn"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "nestedFilters": [],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(ext:cloud.aws.states.executionTimeByRegionStateMachineArn:splitBy(StateMachineArn):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Throttles",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 684,
+          "left": 912,
+          "width": 304,
+          "height": 304
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Pie",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "ext:cloud.aws.states.executionThrottledSumByRegionStateMachineArn",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "StateMachineArn"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "nestedFilters": [],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": "",
+          "foldTransformation": "TOTAL",
+          "foldAggregation": "COUNT"
+        },
+        "metricExpressions": [
+          "resolution=null&(ext:cloud.aws.states.executionThrottledSumByRegionStateMachineArn:splitBy(StateMachineArn):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      }
+    ]
+  }
