@@ -90,7 +90,7 @@ resource "dynatrace_browser_monitor" "monitor" {
           simulate_blur_event = true
           credential {
             field    = "username"
-            vault_id = "CREDENTIALS_VAULT-AC396CDF85B34D5C"
+            vault_id = data.dynatrace_credentials.login.id
           }
           target {
             locators {
@@ -139,7 +139,7 @@ resource "dynatrace_browser_monitor" "monitor" {
           simulate_blur_event = true
           credential {
             field    = "password"
-            vault_id = "CREDENTIALS_VAULT-AC396CDF85B34D5C"
+            vault_id = data.dynatrace_credentials.login.id
           }
           target {
             locators {
