@@ -6,6 +6,7 @@ provider "registry.terraform.io/dynatrace-oss/dynatrace" {
   constraints = "1.46.0"
   hashes = [
     "h1:A5SjKn0ujaQs19ASfkvpE/b1/8TqpG+LrN1xL5ZGc9I=",
+    "h1:oY12C+6NVaNtEP8ihoM2kPURNpvUP2FS9qTde1EgIQE=",
     "zh:085a7a399c21aadb24f4609dc7ff028993ff239697695e56fbdffc4c415faba5",
     "zh:1ad1ea637be09cbf811f59828e53673edf38d3b8cc6e7b0f3eab2cdd0bad3b2a",
     "zh:32d2bee20dfc1cf30787048fb466d032c66552d9832e9ff1060bce2d2c6e0c47",
