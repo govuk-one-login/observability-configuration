@@ -19,6 +19,7 @@ To test, the following environment variables must be set:
 - slo.read
 - slo.write
 - ExternalSyntheticConfiguration
+- credentialVault.read
 
 An OAuth client (`DT_ACCOUNT_ID`, `DT_CLIENT_ID`, `DT_CLIENT_SECRET`), with the following scopes:
 
