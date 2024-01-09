@@ -1,3 +1,11 @@
+# OneAgent features 
+resource "dynatrace_oneagent_features" "oneagent_features" {
+  for_each = local.oneagent_features
+  enabled  = each.value.enabled
+  key      = each.value.key
+  scope    = "environment"
+}
+
 # Disk options 
 resource "dynatrace_disk_options" "disk_options" {
   nfs_show_all = false
@@ -58,13 +66,13 @@ resource "dynatrace_data_privacy" "data_privacy" {
   }
 }
 
-# # Data privacy - OneAgent Side Masking
-# resource "dynatrace_oneagent_side_masking" "oneagent_side_masking" {
-#   is_email_masking_enabled     = false
-#   is_financial_masking_enabled = false
-#   is_numbers_masking_enabled   = false
-#   is_query_masking_enabled     = false
-# }
+# Data privacy - OneAgent Side Masking
+resource "dynatrace_oneagent_side_masking" "oneagent_side_masking" {
+  is_email_masking_enabled     = false
+  is_financial_masking_enabled = false
+  is_numbers_masking_enabled   = false
+  is_query_masking_enabled     = false
+}
 
 # Data privacy - IP Masking
 resource "dynatrace_ip_address_masking" "ip_address_masking" {
@@ -90,3 +98,5 @@ resource "dynatrace_limit_outbound_connections" "limit_outbound_connections" {
     enforced = true
   }
 }
+
+

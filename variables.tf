@@ -1,5 +1,4 @@
 variable "environment" {
-
 }
 
 variable "metrics_cost" {
