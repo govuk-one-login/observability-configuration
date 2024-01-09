@@ -24,7 +24,7 @@ resource "dynatrace_extension_execution_controller" "extension_execution_control
 
 # Terms of use
 resource "dynatrace_eula_settings" "eula_settings" {
-  scope = "environment"
+  scope       = "environment"
   enable_eula = true
 }
 
@@ -58,18 +58,18 @@ resource "dynatrace_data_privacy" "data_privacy" {
   }
 }
 
-# Data privacy - OneAgent Side Masking
-resource "dynatrace_oneagent_side_masking" "oneagent_side_masking" {
-  is_email_masking_enabled     = false
-  is_financial_masking_enabled = false
-  is_numbers_masking_enabled   = false
-  is_query_masking_enabled     = false
-}
+# # Data privacy - OneAgent Side Masking
+# resource "dynatrace_oneagent_side_masking" "oneagent_side_masking" {
+#   is_email_masking_enabled     = false
+#   is_financial_masking_enabled = false
+#   is_numbers_masking_enabled   = false
+#   is_query_masking_enabled     = false
+# }
 
 # Data privacy - IP Masking
 resource "dynatrace_ip_address_masking" "ip_address_masking" {
   enabled = true
-  type = "all"
+  type    = "all"
 }
 
 # Data privacy - Session replay
@@ -87,6 +87,6 @@ resource "dynatrace_session_replay_web_privacy" "session_replay_web_privacy" {
 # Limit outbound connections
 resource "dynatrace_limit_outbound_connections" "limit_outbound_connections" {
   allowed_outbound_connections {
-    enforced  = true
+    enforced = true
   }
 }
