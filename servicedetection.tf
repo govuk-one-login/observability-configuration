@@ -1,5 +1,5 @@
-resource "dynatrace_service_external_web_request" "#Zendesk#" {
-  name             = "#Zendesk#"
+resource "dynatrace_service_external_web_request" "Zendesk" {
+  name             = "Zendesk"
   enabled          = true
   conditions {
     condition {
@@ -9,47 +9,19 @@ resource "dynatrace_service_external_web_request" "#Zendesk#" {
       text_values            = [ "zendesk.com" ]
     }
   }
-  }
-  id_contributors {
-    port_for_service_id = false
-    }
-    context_root {
-      enable_id_contributor = false
-      }
-    
-    public_domain_name {
-      enable_id_contributor = true
-      service_id_contributor {
-        contribution_type   = "OriginalValue"
-        copy_from_host_name = true
-        transformations {
-          transformation {
-            transformation_type = "BEFORE"
-          }
-        }
-      }
-    }
-
-resource "dynatrace_service_external_web_request" "#CrosscoreAPI#" {
-  name             = "#CrosscoreAPI#"
-  enabled          = true
-  conditions {
-    condition {
-      attribute              = "URLHostName"
-      compare_operation_type = "EndsWith"
-      ignore_case            = false
-      text_values            = [ "api.crosscore.uk.experian.com" ]
-    }
-  }
   id_contributors {
     port_for_service_id = false
     application_id {
       enable_id_contributor = false
-      
+      service_id_contributor {
+        contribution_type = "OriginalValue"
+      }
     }
     context_root {
       enable_id_contributor = false
-      
+      service_id_contributor {
+        contribution_type = "OriginalValue"
+      }
     }
     public_domain_name {
       enable_id_contributor = true
@@ -65,9 +37,47 @@ resource "dynatrace_service_external_web_request" "#CrosscoreAPI#" {
     }
   }
 }
-
-resource "dynatrace_service_external_web_request" "#HMPOAPI#" {
-  name             = "#HMPOAPI#"
+resource "dynatrace_service_external_web_request" "Crosscore API" {
+  name             = "Crosscore API"
+  enabled          = true
+  conditions {
+    condition {
+      attribute              = "URLHostName"
+      compare_operation_type = "EndsWith"
+      ignore_case            = false
+      text_values            = [ "api.crosscore.uk.experian.com" ]
+    }
+  }
+  id_contributors {
+    port_for_service_id = false
+    application_id {
+      enable_id_contributor = false
+      service_id_contributor {
+        contribution_type = "OriginalValue"
+      }
+    }
+    context_root {
+      enable_id_contributor = false
+      service_id_contributor {
+        contribution_type = "OriginalValue"
+      }
+    }
+    public_domain_name {
+      enable_id_contributor = true
+      service_id_contributor {
+        contribution_type   = "OriginalValue"
+        copy_from_host_name = true
+        transformations {
+          transformation {
+            transformation_type = "BEFORE"
+          }
+        }
+      }
+    }
+  }
+}
+resource "dynatrace_service_external_web_request" "HMPO API" {
+  name             = "HMPO API"
   enabled          = true
   conditions {
     condition {
@@ -79,11 +89,17 @@ resource "dynatrace_service_external_web_request" "#HMPOAPI#" {
   }
   id_contributors {
     port_for_service_id = false
-
+    application_id {
+      enable_id_contributor = false
+      service_id_contributor {
+        contribution_type = "OriginalValue"
+      }
     }
     context_root {
       enable_id_contributor = false
-      
+      service_id_contributor {
+        contribution_type = "OriginalValue"
+      }
     }
     public_domain_name {
       enable_id_contributor = true
@@ -98,9 +114,9 @@ resource "dynatrace_service_external_web_request" "#HMPOAPI#" {
       }
     }
   }
-
-resource "dynatrace_service_external_web_request" "#DVAAPI#" {
-  name             = "#DVAAPI#"
+}
+resource "dynatrace_service_external_web_request" "DVA API" {
+  name             = "DVA API"
   enabled          = true
   conditions {
     condition {
@@ -112,9 +128,17 @@ resource "dynatrace_service_external_web_request" "#DVAAPI#" {
   }
   id_contributors {
     port_for_service_id = false
+    application_id {
+      enable_id_contributor = false
+      service_id_contributor {
+        contribution_type = "OriginalValue"
+      }
     }
     context_root {
       enable_id_contributor = false
+      service_id_contributor {
+        contribution_type = "OriginalValue"
+      }
     }
     public_domain_name {
       enable_id_contributor = true
@@ -129,9 +153,9 @@ resource "dynatrace_service_external_web_request" "#DVAAPI#" {
       }
     }
   }
-
-resource "dynatrace_service_external_web_request" "#DVLAAPI#" {
-  name             = "#DVLAAPI#"
+}
+resource "dynatrace_service_external_web_request" "DVLA API" {
+  name             = "DVLA API"
   enabled          = true
   conditions {
     condition {
@@ -143,9 +167,17 @@ resource "dynatrace_service_external_web_request" "#DVLAAPI#" {
   }
   id_contributors {
     port_for_service_id = false
+    application_id {
+      enable_id_contributor = false
+      service_id_contributor {
+        contribution_type = "OriginalValue"
+      }
     }
     context_root {
       enable_id_contributor = false
+      service_id_contributor {
+        contribution_type = "OriginalValue"
+      }
     }
     public_domain_name {
       enable_id_contributor = true
@@ -160,10 +192,9 @@ resource "dynatrace_service_external_web_request" "#DVLAAPI#" {
       }
     }
   }
-
-
-  resource "dynatrace_service_external_web_request" "#AWS#" {
-  name             = "#AWS#"
+}
+resource "dynatrace_service_external_web_request" "AWS" {
+  name             = "AWS"
   enabled          = true
   conditions {
     condition {
@@ -175,9 +206,17 @@ resource "dynatrace_service_external_web_request" "#DVLAAPI#" {
   }
   id_contributors {
     port_for_service_id = false
+    application_id {
+      enable_id_contributor = false
+      service_id_contributor {
+        contribution_type = "OriginalValue"
+      }
     }
     context_root {
       enable_id_contributor = false
+      service_id_contributor {
+        contribution_type = "OriginalValue"
+      }
     }
     public_domain_name {
       enable_id_contributor = true
@@ -192,4 +231,4 @@ resource "dynatrace_service_external_web_request" "#DVLAAPI#" {
       }
     }
   }
-
+}
