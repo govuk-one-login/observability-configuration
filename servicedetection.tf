@@ -37,8 +37,8 @@ resource "dynatrace_service_external_web_request" "Zendesk" {
     }
   }
 }
-resource "dynatrace_service_external_web_request" "CrosscoreAPI" {
-  name             = "CrosscoreAPI"
+resource "dynatrace_service_external_web_request" "Crosscore API" {
+  name             = "Crosscore API"
   enabled          = true
   conditions {
     condition {
@@ -76,8 +76,8 @@ resource "dynatrace_service_external_web_request" "CrosscoreAPI" {
     }
   }
 }
-resource "dynatrace_service_external_web_request" "HMPOAPI" {
-  name             = "HMPOAPI"
+resource "dynatrace_service_external_web_request" "HMPO API" {
+  name             = "HMPO API"
   enabled          = true
   conditions {
     condition {
@@ -115,8 +115,8 @@ resource "dynatrace_service_external_web_request" "HMPOAPI" {
     }
   }
 }
-resource "dynatrace_service_external_web_request" "DVAAPI" {
-  name             = "DVAAPI"
+resource "dynatrace_service_external_web_request" "DVA API" {
+  name             = "DVA API"
   enabled          = true
   conditions {
     condition {
@@ -154,8 +154,8 @@ resource "dynatrace_service_external_web_request" "DVAAPI" {
     }
   }
 }
-resource "dynatrace_service_external_web_request" "DVLAAPI" {
-  name             = "DVLAAPI"
+resource "dynatrace_service_external_web_request" "DVLA API" {
+  name             = "DVLA API"
   enabled          = true
   conditions {
     condition {
