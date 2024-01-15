@@ -1,11 +1,12 @@
 # OneAgent features 
 resource "dynatrace_oneagent_features" "oneagent_features" {
   for_each        = local.oneagent_features
-  enabled         = each.value.enabled
-  instrumentation = each.value.enabled
+  enabled         = each.value.enabled 
   key             = each.value.key
   scope           = "environment"
+  instrumentation = each.value.instrumentation_exist ? each.value.instrumentation_exist : null
 }
+
 
 # Disk options 
 resource "dynatrace_disk_options" "disk_options" {
