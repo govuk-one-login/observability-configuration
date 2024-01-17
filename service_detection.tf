@@ -24,3 +24,30 @@ resource "dynatrace_service_external_web_request" "YOTI" {
     }
   }
 }
+
+resource "dynatrace_service_external_web_request" "Ordnance_Survey" {
+  name    = "Ordnance Survey"
+  enabled = true
+  conditions {
+    condition {
+      attribute              = "HostName"
+      compare_operation_type = "StringEndsWith"
+      text_values            = ["api.os.uk"]
+    }
+  }
+  id_contributors {
+    port_for_service_id = false
+    application_id {
+      enable_id_contributor = false
+    }
+    context_root {
+      enable_id_contributor = false
+    }
+    public_domain_name {
+      enable_id_contributor = true
+      service_id_contributor {
+        contribution_type = "OriginalValue"
+      }
+    }
+  }
+}
