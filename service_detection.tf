@@ -182,7 +182,6 @@ resource "dynatrace_service_external_web_request" "DVA API" {
     }
   }
 }
-
 resource "dynatrace_service_external_web_request" "DVLA API" {
   name    = "DVLA API"
   enabled = true
