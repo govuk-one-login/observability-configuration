@@ -53,11 +53,11 @@ resource "dynatrace_service_external_web_request" "Ordnance_Survey" {
 }
 
 resource "dynatrace_service_external_web_request" "Zendesk" {
+  count   = local.is_production ? 1 : 0
   name    = "Zendesk"
   enabled = true
   conditions {
     condition {
-      count                  = local.is_production ? 1 : 0
       attribute              = "URLHostName"
       compare_operation_type = "EndsWith"
       ignore_case            = false
@@ -174,11 +174,11 @@ resource "dynatrace_service_external_web_request" "HMPO_API" {
 }
 
 resource "dynatrace_service_external_web_request" "DVA_API" {
+  count   = local.is_production ? 1 : 0
   name    = "DVA_API"
   enabled = true
   conditions {
     condition {
-      count                  = local.is_production ? 1 : 0
       attribute              = "URLHostName"
       compare_operation_type = "EndsWith"
       ignore_case            = false
@@ -255,11 +255,11 @@ resource "dynatrace_service_external_web_request" "DVLA_API" {
 }
 
 resource "dynatrace_service_external_web_request" "AWS" {
+  count   = local.is_production ? 1 : 0
   name    = "AWS"
   enabled = true
   conditions {
     condition {
-      count                  = local.is_production ? 1 : 0
       attribute              = "URLHostName"
       compare_operation_type = "EndsWith"
       ignore_case            = false
