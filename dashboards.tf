@@ -74,11 +74,11 @@ resource "dynatrace_dashboard_sharing" "team-idc-app" {
   }
 }
 
-resource "dynatrace_json_dashboard" "[WIP] DORA Metrics Dashboard" {
-  contents = file("${path.module}/dashboards/DORA Metrics Dashboard.json")
+resource "dynatrace_json_dashboard" "dora_metrics_dashboard" {
+  contents = file("${path.module}/dashboards/dora_metrics_dashboard.json")
 }
 
-resource "dynatrace_dashboard_sharing" "[WIP] DORA Metrics Dashboard" {
+resource "dynatrace_dashboard_sharing" "dora_metrics_dashboard" {
   dashboard_id = dynatrace_json_dashboard.dora_metrics_dashboard.id
 
   enabled = true
