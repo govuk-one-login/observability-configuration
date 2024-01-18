@@ -94,19 +94,19 @@ resource "dynatrace_dashboard_sharing" "dora_metrics_dashboard" {
       type  = "GROUP"
     }
     permission {
-    id = "fahmida.ahad@digital.cabinet-office.gov.uk"
-    level = "EDIT"
-    type = "USER"
+      id    = "fahmida.ahad@digital.cabinet-office.gov.uk"
+      level = "EDIT"
+      type  = "USER"
     }
-  permission {
-    id = "rasika.joshi@digital.cabinet-office.gov.uk"
-    level = "EDIT"
-    type = "USER"
+    permission {
+      id    = "rasika.joshi@digital.cabinet-office.gov.uk"
+      level = "EDIT"
+      type  = "USER"
     }
-    permission { 
-    id = "amran.muse@digital.cabinet-office.gov.uk"
-    level = "EDIT"
-    type = "USER"
+    permission {
+      id    = "amran.muse@digital.cabinet-office.gov.uk"
+      level = "EDIT"
+      type  = "USER"
     }
   }
 }
