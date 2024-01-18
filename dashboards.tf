@@ -73,3 +73,41 @@ resource "dynatrace_dashboard_sharing" "team-idc-app" {
     }
   }
 }
+
+resource "dynatrace_json_dashboard" "[WIP] DORA Metrics Dashboard" {
+  contents = file("${path.module}/dashboards/DORA Metrics Dashboard.json")
+}
+
+resource "dynatrace_dashboard_sharing" "[WIP] DORA Metrics Dashboard" {
+  dashboard_id = dynatrace_json_dashboard.dora_metrics_dashboard.id
+
+  enabled = true
+
+  permissions {
+    permission {
+      level = "VIEW"
+      type  = "ALL"
+    }
+    permission {
+      id    = data.dynatrace_iam_group.all.id
+      level = "VIEW"
+      type  = "GROUP"
+    }
+    permission {
+    id = "fahmida.ahad@digital.cabinet-office.gov.uk"
+    level = "EDIT"
+    type = "USER"
+    }
+  permission {
+    id = "rasika.joshi@digital.cabinet-office.gov.uk"
+    level = "EDIT"
+    type = "USER"
+    }
+    permission { 
+    id = "amran.muse@digital.cabinet-office.gov.uk"
+    level = "EDIT"
+    type = "USER"
+    }
+  }
+}
+
