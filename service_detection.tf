@@ -1,3 +1,10 @@
+# Unified services endpoint metrics
+resource "dynatrace_unified_services_metrics" "environment" {
+  enable_endpoint_metrics = true
+  service_id              = "environment"
+}
+
+# Service detection rules for External Web Requests 
 resource "dynatrace_service_external_web_request" "YOTI" {
   name    = "YOTI"
   enabled = true
@@ -58,9 +65,8 @@ resource "dynatrace_service_external_web_request" "Zendesk" {
   enabled = true
   conditions {
     condition {
-      attribute              = "URLHostName"
-      compare_operation_type = "EndsWith"
-      ignore_case            = false
+      attribute              = "HostName"
+      compare_operation_type = "StringEndsWith"
       text_values            = ["zendesk.com"]
     }
   }
@@ -68,39 +74,27 @@ resource "dynatrace_service_external_web_request" "Zendesk" {
     port_for_service_id = false
     application_id {
       enable_id_contributor = false
-      service_id_contributor {
-        contribution_type = "OriginalValue"
-      }
     }
     context_root {
       enable_id_contributor = false
-      service_id_contributor {
-        contribution_type = "OriginalValue"
-      }
     }
     public_domain_name {
       enable_id_contributor = true
       service_id_contributor {
         contribution_type   = "OriginalValue"
         copy_from_host_name = true
-        transformations {
-          transformation {
-            transformation_type = "BEFORE"
-          }
-        }
       }
     }
   }
 }
 
 resource "dynatrace_service_external_web_request" "Crosscore_API" {
-  name    = "Crosscore_API"
+  name    = "Crosscore API"
   enabled = true
   conditions {
     condition {
-      attribute              = "URLHostName"
-      compare_operation_type = "EndsWith"
-      ignore_case            = false
+      attribute              = "HostName"
+      compare_operation_type = "StringEndsWith"
       text_values            = local.is_production ? ["api.crosscore.uk.experian.com"] : ["api.uat.crosscore.uk.experian.com"]
     }
   }
@@ -108,39 +102,27 @@ resource "dynatrace_service_external_web_request" "Crosscore_API" {
     port_for_service_id = false
     application_id {
       enable_id_contributor = false
-      service_id_contributor {
-        contribution_type = "OriginalValue"
-      }
     }
     context_root {
       enable_id_contributor = false
-      service_id_contributor {
-        contribution_type = "OriginalValue"
-      }
     }
     public_domain_name {
       enable_id_contributor = true
       service_id_contributor {
         contribution_type   = "OriginalValue"
         copy_from_host_name = true
-        transformations {
-          transformation {
-            transformation_type = "BEFORE"
-          }
-        }
       }
     }
   }
 }
 
 resource "dynatrace_service_external_web_request" "HMPO_API" {
-  name    = "HMPO_API"
+  name    = "HMPO API"
   enabled = true
   conditions {
     condition {
-      attribute              = "URLHostName"
-      compare_operation_type = "EndsWith"
-      ignore_case            = false
+      attribute              = "HostName"
+      compare_operation_type = "StringEndsWith"
       text_values            = local.is_production ? ["api.dvadigital.homeoffice.gov.uk"] : ["api-dvadigital-cte.np.homeoffice.gov.uk"]
     }
   }
@@ -148,26 +130,15 @@ resource "dynatrace_service_external_web_request" "HMPO_API" {
     port_for_service_id = false
     application_id {
       enable_id_contributor = false
-      service_id_contributor {
-        contribution_type = "OriginalValue"
-      }
     }
     context_root {
       enable_id_contributor = false
-      service_id_contributor {
-        contribution_type = "OriginalValue"
-      }
     }
     public_domain_name {
       enable_id_contributor = true
       service_id_contributor {
         contribution_type   = "OriginalValue"
         copy_from_host_name = true
-        transformations {
-          transformation {
-            transformation_type = "BEFORE"
-          }
-        }
       }
     }
   }
@@ -175,13 +146,12 @@ resource "dynatrace_service_external_web_request" "HMPO_API" {
 
 resource "dynatrace_service_external_web_request" "DVA_API" {
   count   = local.is_production ? 1 : 0
-  name    = "DVA_API"
+  name    = "DVA API"
   enabled = true
   conditions {
     condition {
-      attribute              = "URLHostName"
-      compare_operation_type = "EndsWith"
-      ignore_case            = false
+      attribute              = "HostName"
+      compare_operation_type = "StringEndsWith"
       text_values            = ["driverlicensingcheck.nidirect.gov.uk"]
     }
   }
@@ -189,39 +159,27 @@ resource "dynatrace_service_external_web_request" "DVA_API" {
     port_for_service_id = false
     application_id {
       enable_id_contributor = false
-      service_id_contributor {
-        contribution_type = "OriginalValue"
-      }
     }
     context_root {
       enable_id_contributor = false
-      service_id_contributor {
-        contribution_type = "OriginalValue"
-      }
     }
     public_domain_name {
       enable_id_contributor = true
       service_id_contributor {
         contribution_type   = "OriginalValue"
         copy_from_host_name = true
-        transformations {
-          transformation {
-            transformation_type = "BEFORE"
-          }
-        }
       }
     }
   }
 }
 
 resource "dynatrace_service_external_web_request" "DVLA_API" {
-  name    = "DVLA_API"
+  name    = "DVLA API"
   enabled = true
   conditions {
     condition {
-      attribute              = "URLHostName"
-      compare_operation_type = "EndsWith"
-      ignore_case            = false
+      attribute              = "HostName"
+      compare_operation_type = "StringEndsWith"
       text_values            = local.is_production ? ["driver-vehicle-licensing.api.gov.uk"] : ["uat.driver-vehicle-licensing.api.gov.uk"]
     }
   }
@@ -229,26 +187,15 @@ resource "dynatrace_service_external_web_request" "DVLA_API" {
     port_for_service_id = false
     application_id {
       enable_id_contributor = false
-      service_id_contributor {
-        contribution_type = "OriginalValue"
-      }
     }
     context_root {
       enable_id_contributor = false
-      service_id_contributor {
-        contribution_type = "OriginalValue"
-      }
     }
     public_domain_name {
       enable_id_contributor = true
       service_id_contributor {
         contribution_type   = "OriginalValue"
         copy_from_host_name = true
-        transformations {
-          transformation {
-            transformation_type = "BEFORE"
-          }
-        }
       }
     }
   }
@@ -260,9 +207,8 @@ resource "dynatrace_service_external_web_request" "AWS" {
   enabled = true
   conditions {
     condition {
-      attribute              = "URLHostName"
-      compare_operation_type = "EndsWith"
-      ignore_case            = false
+      attribute              = "HostName"
+      compare_operation_type = "StringEndsWith"
       text_values            = ["amazonaws.com"]
     }
   }
@@ -270,27 +216,35 @@ resource "dynatrace_service_external_web_request" "AWS" {
     port_for_service_id = false
     application_id {
       enable_id_contributor = false
-      service_id_contributor {
-        contribution_type = "OriginalValue"
-      }
     }
     context_root {
       enable_id_contributor = false
-      service_id_contributor {
-        contribution_type = "OriginalValue"
-      }
     }
     public_domain_name {
       enable_id_contributor = true
       service_id_contributor {
         contribution_type   = "OriginalValue"
         copy_from_host_name = true
-        transformations {
-          transformation {
-            transformation_type = "BEFORE"
-          }
-        }
       }
+    }
+  }
+}
+
+# Service detection rules for External Web Requests 
+resource "dynatrace_service_external_web_service" "Redis" {
+  name    = "Redis"
+  enabled = true
+  conditions {
+    condition {
+      attribute              = "Endpoint"
+      compare_operation_type = "StringEndsWith"
+      text_values            = ["cache.amazonaws.com"]
+    }
+  }
+  id_contributors {
+    detect_as_web_request_service = false
+    url_path {
+      enable_id_contributor = false
     }
   }
 }
