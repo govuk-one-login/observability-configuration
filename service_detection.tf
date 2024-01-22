@@ -27,6 +27,7 @@ resource "dynatrace_service_external_web_request" "YOTI" {
       enable_id_contributor = true
       service_id_contributor {
         contribution_type = "OriginalValue"
+        copy_from_host_name = true
       }
     }
   }
@@ -54,6 +55,7 @@ resource "dynatrace_service_external_web_request" "Ordnance_Survey" {
       enable_id_contributor = true
       service_id_contributor {
         contribution_type = "OriginalValue"
+        copy_from_host_name = true
       }
     }
   }
@@ -229,6 +231,9 @@ resource "dynatrace_service_external_web_request" "AWS" {
     }
   }
 }
+
+
+
 
 # Service detection rules for External Web Requests 
 resource "dynatrace_service_external_web_service" "Redis" {
