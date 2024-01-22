@@ -1,0 +1,104 @@
+name: Check Terraform Configuration
+
+on:
+  push:
+  pull_request:
+    types: [opened, reopened]
+
+env:
+  DT_ACCOUNT_ID: ${{ secrets.DT_ACCOUNT_ID }}
+  DT_CLIENT_ID: ${{ secrets.DT_CLIENT_ID }}
+  DT_CLIENT_SECRET: ${{ secrets.DT_CLIENT_SECRET }}
+  TF_VAR_metrics_cost: ${{ secrets.metrics_cost }}
+  TF_VAR_full_stack_cost: ${{ secrets.full_stack_cost }}
+  TF_VAR_serverless_cost: ${{ secrets.serverless_cost }}
+  TF_VAR_synthetic_actions_cost: ${{ secrets.synthetic_actions_cost }}
+  TF_VAR_synthetic_requests_cost: ${{ secrets.synthetic_requests_cost }}
+
+jobs:
+  Check_NonProd:
+    env:
+      DYNATRACE_API_TOKEN: ${{ secrets.NONPROD_DYNATRACE_API_TOKEN}}
+      DYNATRACE_ENV_URL: ${{ secrets.NONPROD_DYNATRACE_ENV_URL}}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.GHA_ROLE_ARN }}
+          aws-region: eu-west-2
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' 
+      - run: pip install -r requirements.txt
+
+      - run: ./get-accounts.py
+
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.4
+
+      - name: Terraform fmt
+        run: terraform fmt -check
+
+      - name: Terraform init
+        run: terraform init
+
+      - run: terraform workspace select nonproduction
+
+      - name: Terraform validate
+        run: terraform validate -no-color
+
+      - name: Terraform plan
+        run: terraform plan -var environment=nonproduction
+  Check_Prod:
+    env:
+      DYNATRACE_API_TOKEN: ${{ secrets.PROD_DYNATRACE_API_TOKEN}}
+      DYNATRACE_ENV_URL: ${{ secrets.PROD_DYNATRACE_ENV_URL}}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.GHA_ROLE_ARN }}
+          aws-region: eu-west-2
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' 
+      - run: pip install -r requirements.txt
+
+      - run: ./get-accounts.py
+
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.4
+
+      - name: Terraform fmt
+        run: terraform fmt -check
+
+      - name: Terraform init
+        run: terraform init
+
+      - run: terraform workspace select production
+
+      - name: Terraform validate
+        run: terraform validate -no-color
+
+      - name: Terraform plan
+        run: terraform plan -var environment=production
