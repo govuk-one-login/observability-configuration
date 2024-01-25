@@ -132,6 +132,55 @@ resource "dynatrace_generic_types" "os_service" {
 }
 
 # Generic relationships
+resource "dynatrace_generic_relationships" "os_service" {
+  enabled          = true
+  created_by       = "Dynatrace"
+  from_type        = "os:service"
+  to_type          = "host"
+  type_of_relation = "RUNS_ON"
+  sources {
+    source {
+      source_type = "Topology"
+    }
+    source {
+      condition   = "$eq(builtin:osservice.availability)"
+      source_type = "Metrics"
+    }
+    source {
+      condition   = "$eq(AVAILABILITY_EVENT)"
+      source_type = "Events"
+    }
+  }
+}
 
+resource "dynatrace_generic_relationships" "process_group_instance" {
+  enabled          = true
+  created_by       = "Dynatrace"
+  from_type        = "process_group_instance"
+  to_type          = "os:service"
+  type_of_relation = "RUNS_ON"
+  sources {
+    source {
+      source_type = "Topology"
+    }
+    source {
+      condition   = "$eq(builtin:osservice.availability)"
+      source_type = "Metrics"
+    }
+  }
+}
 
-# Not used - Grail Security Context 
+resource "dynatrace_generic_relationships" "span_service_instance" {
+  enabled          = true
+  created_by       = "Dynatrace"
+  from_type        = "span:service_instance"
+  to_type          = "cloud_application_instance"
+  type_of_relation = "RUNS_ON"
+  sources {
+    source {
+      source_type = "Spans"
+    }
+  }
+}
+
+# Inactive - Grail Security Context 
