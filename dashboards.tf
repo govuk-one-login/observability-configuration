@@ -17,16 +17,6 @@ resource "dynatrace_dashboard_sharing" "signin-signup" {
       level = "VIEW"
       type  = "GROUP"
     }
-    permission {
-      id    = data.dynatrace_iam_group.observability.id
-      level = "EDIT"
-      type  = "GROUP"
-    }
-    permission {
-      id    = data.dynatrace_iam_group.service-operations.id
-      level = "EDIT"
-      type  = "GROUP"
-    }
   }
 }
 
@@ -93,21 +83,5 @@ resource "dynatrace_dashboard_sharing" "dora_metrics_dashboard" {
       level = "VIEW"
       type  = "GROUP"
     }
-    permission {
-      id    = "fahmida.ahad@digital.cabinet-office.gov.uk"
-      level = "EDIT"
-      type  = "USER"
-    }
-    permission {
-      id    = "rasika.joshi@digital.cabinet-office.gov.uk"
-      level = "EDIT"
-      type  = "USER"
-    }
-    permission {
-      id    = "amran.muse@digital.cabinet-office.gov.uk"
-      level = "EDIT"
-      type  = "USER"
-    }
   }
 }
-
