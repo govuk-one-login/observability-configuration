@@ -99,3 +99,71 @@ resource "dynatrace_slo_v2" "experian" {
     fast_burn_threshold             = 10
   }
 }
+
+resource "dynatrace_slo_v2" "account_management_journey" {
+  name               = "Account Management Journey (AVLB002)"
+  enabled            = true
+  custom_description = "Request-based SLO to determine the Reliability of a journey, averaged across all services within the AWS accounts that make up this journey (99.90%)"
+  evaluation_type    = "AGGREGATE"
+  evaluation_window  = "-1w"
+  filter             = "type(SERVICE), mzName(di-account-data-production, di-account-production, di-account-interventions-production, di-fraud-admin-interface-prod, di-fraud-ssf-production)"
+  metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
+  metric_name        = "account_management_journey"
+  target_success     = 99.9
+  target_warning     = 99.95
+  error_budget_burn_rate {
+    burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
+  }
+}
+
+resource "dynatrace_slo_v2" "identify_proofing_and_verification_journey" {
+  name               = "Identify Proofing and Verification Journey (AVLB002)"
+  enabled            = true
+  custom_description = "Request-based SLO to determine the Reliability of a journey, averaged across all services within the AWS accounts that make up this journey (99.90%)"
+  evaluation_type    = "AGGREGATE"
+  evaluation_window  = "-1w"
+  filter             = "type(SERVICE), mzName(di-ipv-cri-kbv-prod, di-facetoface-cri-prod, di-ipv-cri-dl-prod, di-ipv-cri-kbv-hmrc-prod, dcmaw-gds-prod, di-facetoface-prod, di-ipv-cri-passport-prod, di-ipv-cri-check-hmrc-prod, di-ipv-cri-passporta-prod, di-ipv-core-prod, di-ipv-cri-fraud-prod, di-ipv-cri-address-prod, di-ipvreturn-prod, di-ipv-spot-prod, di-ipv-contra-indicators-prod, di-ipv-cri-otg-hmrc-prod, di-bav-cri-prod, di-ticf-cri-production, gds-mobile-production-secrets, di-sts-prod)"
+  metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
+  metric_name        = "identify_proofing_and_verification_journey"
+  target_success     = 99.5
+  target_warning     = 99.8
+  error_budget_burn_rate {
+    burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
+  }
+}
+
+resource "dynatrace_slo_v2" "identity_re_use_journey" {
+  name               = "Identity Re-Use Journey (AVLB002)"
+  enabled            = true
+  custom_description = "Request-based SLO to determine the Reliability of a journey, averaged across all services within the AWS accounts that make up this journey (99.90%)"
+  evaluation_type    = "AGGREGATE"
+  evaluation_window  = "-1w"
+  filter             = "type(SERVICE), mzName(di-ipv-core-prod, di-id-reuse-core-production)"
+  metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
+  metric_name        = "identity_re_use_journey"
+  target_success     = 99.9
+  target_warning     = 99.95
+  error_budget_burn_rate {
+    burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
+  }
+}
+
+resource "dynatrace_slo_v2" "sign_in_sign_up_journey" {
+  name               = "Sign In / Sign Up Journey (AVLB002)"
+  enabled            = true
+  custom_description = "Request-based SLO to determine the Reliability of a journey, averaged across all services within the AWS accounts that make up this journey (99.90%)"
+  evaluation_type    = "AGGREGATE"
+  evaluation_window  = "-1w"
+  filter             = "type(SERVICE),mzName(gds-di-production)"
+  metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
+  metric_name        = "sign_in___sign_up_journey"
+  target_success     = 99.9
+  target_warning     = 99.95
+  error_budget_burn_rate {
+    burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
+  }
+}
