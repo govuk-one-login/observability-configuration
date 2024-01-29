@@ -9,3 +9,7 @@ resource "dynatrace_user_experience_score" "user_experience_score" {
 }
 
 # Usability analytics
+resource "dynatrace_usability_analytics" "usability_analytics" {
+    detect_rage_clicks = true
+}
+
