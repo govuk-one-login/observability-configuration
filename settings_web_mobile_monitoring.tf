@@ -92,3 +92,19 @@ resource "dynatrace_application_detection_rule" "APPLICATION-F8F4580A29A88578" {
 }
 
 # Identify host names 
+resource "dynatrace_rum_host_headers" "x_forwarded_host" {
+  header_name = "X-Forwarded-Host"
+}
+
+resource "dynatrace_rum_host_headers" "forwarded" {
+  count       = local.is_production ? 1 : 0
+  header_name = "Forwarded"
+}
+
+resource "dynatrace_rum_host_headers" "x_host" {
+  header_name = "X-Host"
+}
+
+resource "dynatrace_rum_host_headers" "host" {
+  header_name = "Host"
+}
