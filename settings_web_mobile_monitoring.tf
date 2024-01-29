@@ -62,3 +62,33 @@ resource "dynatrace_session_replay_resource_capture" "replay_resource_capture" {
 }
 
 # Application detection 
+resource "dynatrace_application_detection_rule" "APPLICATION-230FF579D5229BB5" {
+  count                  = local.is_production ? 0 : 1
+  application_identifier = "APPLICATION-230FF579D5229BB5"
+  filter_config {
+    application_match_target = "DOMAIN"
+    application_match_type   = "MATCHES"
+    pattern                  = "signin.build.account.gov.uk"
+  }
+}
+
+resource "dynatrace_application_detection_rule" "APPLICATION-2E7AE613F224F6A6" {
+  count                  = local.is_production ? 0 : 1
+  application_identifier = "APPLICATION-2E7AE613F224F6A6"
+  filter_config {
+    application_match_target = "DOMAIN"
+    application_match_type   = "MATCHES"
+    pattern                  = "signin.integration.account.gov.uk"
+  }
+}
+resource "dynatrace_application_detection_rule" "APPLICATION-F8F4580A29A88578" {
+  count                  = local.is_production ? 0 : 1
+  application_identifier = "APPLICATION-F8F4580A29A88578"
+  filter_config {
+    application_match_target = "DOMAIN"
+    application_match_type   = "MATCHES"
+    pattern                  = "signin.staging.account.gov.uk"
+  }
+}
+
+# Identify host names 
