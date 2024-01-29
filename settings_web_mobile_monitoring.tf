@@ -50,3 +50,15 @@ resource "dynatrace_rum_ip_determination" "x_http_client_ip" {
 resource "dynatrace_rum_ip_determination" "cf_connecting_ip" {
   header_name = "CF-Connecting-IP"
 }
+
+# Not in use - Provider breakdown
+# Not in use - Resource URL cleanup rules
+# Not in use - Resource types 
+
+# Resource capture for Session Replay 
+resource "dynatrace_session_replay_resource_capture" "replay_resource_capture" {
+  application_id            = "environment"
+  enable_resource_capturing = local.is_production ? false : true
+}
+
+# Application detection 
