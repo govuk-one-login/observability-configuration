@@ -103,7 +103,7 @@ resource "dynatrace_slo_v2" "experian" {
 resource "dynatrace_slo_v2" "account_management_journey" {
   name               = "Account Management Journey (AVLB002)"
   enabled            = true
-  custom_description = "Metric-based SLO to determine availability from requests, averaged across all services within the AWS accounts that make up this journey (99.90%)"
+  custom_description = "Request-based SLO to determine the Reliability of a journey, averaged across all services within the AWS accounts that make up this journey (99.90%)"
   evaluation_type    = "AGGREGATE"
   evaluation_window  = "-1w"
   filter             = "type(SERVICE), mzName(di-account-data-production, di-account-production, di-account-interventions-production, di-fraud-admin-interface-prod, di-fraud-ssf-production)"
@@ -120,7 +120,7 @@ resource "dynatrace_slo_v2" "account_management_journey" {
 resource "dynatrace_slo_v2" "identify_proofing_and_verification_journey" {
   name               = "Identify Proofing and Verification Journey (AVLB002)"
   enabled            = true
-  custom_description = "Metric-based SLO to determine availability from requests, averaged across all services within the AWS accounts that make up this journey (99.90%)"
+  custom_description = "Request-based SLO to determine the Reliability of a journey, averaged across all services within the AWS accounts that make up this journey (99.90%)"
   evaluation_type    = "AGGREGATE"
   evaluation_window  = "-1w"
   filter             = "type(SERVICE), mzName(di-ipv-cri-kbv-prod, di-facetoface-cri-prod, di-ipv-cri-dl-prod, di-ipv-cri-kbv-hmrc-prod, dcmaw-gds-prod, di-facetoface-prod, di-ipv-cri-passport-prod, di-ipv-cri-check-hmrc-prod, di-ipv-cri-passporta-prod, di-ipv-core-prod, di-ipv-cri-fraud-prod, di-ipv-cri-address-prod, di-ipvreturn-prod, di-ipv-spot-prod, di-ipv-contra-indicators-prod, di-ipv-cri-otg-hmrc-prod, di-bav-cri-prod, di-ticf-cri-production, gds-mobile-production-secrets, di-sts-prod)"
@@ -137,7 +137,7 @@ resource "dynatrace_slo_v2" "identify_proofing_and_verification_journey" {
 resource "dynatrace_slo_v2" "identity_re_use_journey" {
   name               = "Identity Re-Use Journey (AVLB002)"
   enabled            = true
-  custom_description = "Metric-based SLO to determine availability from requests, averaged across all services within the AWS accounts that make up this journey (99.90%)"
+  custom_description = "Request-based SLO to determine the Reliability of a journey, averaged across all services within the AWS accounts that make up this journey (99.90%)"
   evaluation_type    = "AGGREGATE"
   evaluation_window  = "-1w"
   filter             = "type(SERVICE), mzName(di-ipv-core-prod, di-id-reuse-core-production)"
@@ -154,7 +154,7 @@ resource "dynatrace_slo_v2" "identity_re_use_journey" {
 resource "dynatrace_slo_v2" "sign_in_sign_up_journey" {
   name               = "Sign In / Sign Up Journey (AVLB002)"
   enabled            = true
-  custom_description = "Metric-based SLO to determine availability from requests, averaged across all services within the AWS accounts that make up this journey (99.90%)"
+  custom_description = "Request-based SLO to determine the Reliability of a journey, averaged across all services within the AWS accounts that make up this journey (99.90%)"
   evaluation_type    = "AGGREGATE"
   evaluation_window  = "-1w"
   filter             = "type(SERVICE),mzName(gds-di-production)"
