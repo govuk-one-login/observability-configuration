@@ -1,3 +1,4 @@
+# Problem notifications 
 resource "dynatrace_slack_notification" "slack_notification" {
   active  = true
   name    = "di-slack-notification"
