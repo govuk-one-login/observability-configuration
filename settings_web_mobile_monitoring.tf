@@ -124,3 +124,13 @@ resource "dynatrace_web_app_enablement" "web_app_enablement" {
     cost_and_traffic_control = 100
   }
 }
+
+# RUM overload prevention 
+resource "dynatrace_rum_overload_prevention" "rum_overload_prevention" {
+  overload_prevention_limit = 3500
+}
+
+# RUM JavaScript updates
+resource "dynatrace_web_app_javascript_updates" "web_app_javascript_updates" {
+  javascript_version = "LATEST_STABLE"
+}
