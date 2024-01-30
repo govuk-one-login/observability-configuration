@@ -134,3 +134,38 @@ resource "dynatrace_rum_overload_prevention" "rum_overload_prevention" {
 resource "dynatrace_web_app_javascript_updates" "web_app_javascript_updates" {
   javascript_version = "LATEST_STABLE"
 }
+
+# Not in use - Custom RUM JavaScript version
+
+# Enablement and cost control 
+resource "dynatrace_mobile_app_enablement" "mobile_app_enablement" {
+  rum {
+    enabled                  = false
+    cost_and_traffic_control = 100
+  }
+  session_replay {
+    on_crash = false
+  }
+}
+
+# Not in use - Private Synthetic locations
+
+# Synthetic availability
+resource "dynatrace_synthetic_availability" "synthetic_availability" {
+  exclude_maintenance_windows = false
+}
+
+# Outage handling - Browser monitor default settings
+resource "dynatrace_browser_monitor_outage" "browser_monitor_outage" {
+  global_consecutive_outage_count_threshold = 1
+  global_outages                            = true
+  local_outages                             = false
+  retry_on_error                            = true
+}
+
+# Outage handling - HTTP monitor default settings
+resource "dynatrace_http_monitor_outage" "http_monitor_outage" {
+  global_consecutive_outage_count_threshold = 1
+  global_outages                            = true
+  local_outages                             = false
+}
