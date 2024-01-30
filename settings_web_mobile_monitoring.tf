@@ -91,7 +91,7 @@ resource "dynatrace_application_detection_rule" "APPLICATION-F8F4580A29A88578" {
   }
 }
 
-# Identify host names 
+# Host name determination
 resource "dynatrace_rum_host_headers" "x_forwarded_host" {
   header_name = "X-Forwarded-Host"
 }
@@ -107,4 +107,20 @@ resource "dynatrace_rum_host_headers" "x_host" {
 
 resource "dynatrace_rum_host_headers" "host" {
   header_name = "Host"
+}
+
+# Not in use - Advanced setup
+# Not in use - Beacon origins for CORS
+# Not in use - Advanced correlation
+
+# Enablement and cost control
+resource "dynatrace_web_app_enablement" "web_app_enablement" {
+  rum {
+    enabled                  = false
+    cost_and_traffic_control = 100
+  }
+  session_replay {
+    enabled                  = false
+    cost_and_traffic_control = 100
+  }
 }
