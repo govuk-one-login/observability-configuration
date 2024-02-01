@@ -119,3 +119,73 @@ resource "dynatrace_builtin_process_monitoring" "builtin_process_monitoring" {
 }
 
 # Built-in detection rules
+resource "dynatrace_process_group_detection_flags" "process_group_detection_flags" {
+  ignore_unique_identifiers                   = true
+  use_catalina_base                           = false
+  use_docker_container_name                   = false
+  auto_detect_cassandra_clusters              = true
+  add_node_js_script_name                     = true
+  auto_detect_tibco_container_edition_engines = true
+  identify_jboss_server_by_system_property    = true
+  auto_detect_web_methods_integration_server  = true
+  auto_detect_spring_boot                     = true
+  auto_detect_tibco_engines                   = true
+  split_oracle_database_pg                    = false
+  split_oracle_listener_pg                    = false
+  auto_detect_web_sphere_liberty_application  = true
+  short_lived_processes_monitoring            = true
+  group_ibmmqby_instance_name                 = true
+}
+
+# Not in use - Simple detection rules
+# Not in use - Declarative process grouping
+
+# Container monitoring
+resource "dynatrace_container_technology" "container_technology" {
+  bosh_process_manager = true
+  containerd           = true
+  crio                 = true
+  docker               = true
+  docker_windows       = false
+  garden               = true
+  podman               = false
+  winc                 = false
+}
+
+# Not in use - Container monitoring rules
+
+# Built-in container monitoring rules
+resource "dynatrace_container_builtin_rule" "container_builtin_rule" {
+  ignore_kubernetes_pause_container = true
+  ignore_docker_pause_container     = true
+  ignore_open_shift_sdn_namespace   = true
+  ignore_open_shift_build_pod_name  = true
+}
+
+# Cloud application and workload detection
+resource "dynatrace_cloudapp_workloaddetection" "cloud_app_workload_detection" {
+  cloud_foundry {
+    enabled = true
+  }
+  docker {
+    enabled = true
+  }
+  kubernetes {
+    enabled = true
+    filters {
+      filter {
+        enabled = true
+        inclusion_toggles {
+          inc_namespace = true
+          inc_basepod   = false
+          inc_container = true
+          inc_stage     = true
+          inc_product   = true
+        }
+        match_filter {
+          match_operator = "EXISTS"
+        }
+      }
+    }
+  }
+}
