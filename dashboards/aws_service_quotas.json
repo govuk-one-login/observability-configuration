@@ -1,0 +1,741 @@
+{
+  "version": 1,
+  "variables": [
+    {
+      "key": "AWS_ACCOUNT_NAME",
+      "type": "query",
+      "input": "fetch dt.entity.aws_credentials\n| fields entity.name\n",
+      "multiple": false
+    }
+  ],
+  "tiles": {
+    "0": {
+      "type": "data",
+      "title": "CryptographicOperationsSymmetric",
+      "query": "timeseries usage=sum(cloud.aws.usage.call_count_sum_by_class_resource_type, default:0, rate:1m),\nfilter: like(Resource, \"CryptographicOperationsSymmetric\") and \ndt.entity.custom_device in [fetch dt.entity.custom_device\n| fieldsAdd cred=accessible_by[dt.entity.aws_credentials][0]\n| fieldsAdd env=lookup([fetch dt.entity.aws_credentials], sourceField:cred, lookupField: id)[entity.name]\n| filter in(env, array($AWS_ACCOUNT_NAME))\n| fields id]",
+      "davis": {
+        "enabled": false,
+        "componentState": {
+          "selectedAnalyzerName": "dt.statistics.ui.ForecastAnalyzer",
+          "inputData": {
+            "dt.statistics.ui.ForecastAnalyzer": {
+              "generalParameters": {
+                "timeframe": {
+                  "startTime": "2023-12-15T04:36:14.071Z",
+                  "endTime": "2023-12-15T16:36:14.071Z"
+                },
+                "resolveDimensionalQueryData": true,
+                "logVerbosity": "INFO"
+              },
+              "forecastHorizon": 100,
+              "query": {
+                "expression": "timeseries usage=sum(cloud.aws.usage.call_count_sum_by_class_resource_type),\nfilter: like(Resource, \"CryptographicOperationsSymmetric\") and \ndt.entity.custom_device in [fetch dt.entity.custom_device\n| fieldsAdd cred=accessible_by[dt.entity.aws_credentials][0]\n| fieldsAdd env=lookup([fetch dt.entity.aws_credentials], sourceField:cred, lookupField: id)[entity.name]\n| filter in(env, array($AWS_ACCOUNT_NAME))\n| fields id]"
+              }
+            }
+          }
+        },
+        "davisVisualization": {}
+      },
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "thresholds": [
+          {
+            "id": 1,
+            "field": "",
+            "title": "",
+            "isEnabled": true,
+            "rules": [
+              {
+                "id": 0,
+                "color": {
+                  "Default": "var(--dt-colors-charts-categorical-color-09-default, #649438)"
+                },
+                "comparator": "≥",
+                "label": "<80%",
+                "value": 0
+              },
+              {
+                "id": 1,
+                "color": {
+                  "Default": "var(--dt-colors-charts-categorical-color-14-default, #d56b1a)"
+                },
+                "comparator": "≥",
+                "label": ">80%",
+                "value": 480000
+              },
+              {
+                "id": 2,
+                "color": {
+                  "Default": "var(--dt-colors-charts-categorical-color-12-default, #cd3741)"
+                },
+                "comparator": "≥",
+                "label": "Max (10,000/s)",
+                "value": 600000
+              }
+            ]
+          }
+        ],
+        "chartSettings": {
+          "gapPolicy": "connect",
+          "circleChartSettings": {
+            "groupingThresholdType": "relative",
+            "groupingThresholdValue": 0,
+            "valueType": "relative"
+          },
+          "categoryOverrides": {},
+          "categoricalBarChartSettings": {
+            "categoryAxis": "x",
+            "categoryAxisLabel": "x",
+            "valueAxis": "count()",
+            "valueAxisLabel": "count()"
+          },
+          "legend": {
+            "hidden": true
+          },
+          "leftYAxisSettings": {
+            "scale": "linear",
+            "max": "auto",
+            "min": "auto"
+          },
+          "fieldMapping": {
+            "timestamp": "timeframe",
+            "leftAxisValues": [
+              "usage"
+            ],
+            "leftAxisDimensions": [],
+            "fields": [],
+            "values": []
+          }
+        },
+        "singleValue": {
+          "showLabel": false,
+          "label": "",
+          "prefixIcon": "",
+          "autoscale": true,
+          "alignment": "center",
+          "colorThresholdTarget": "background",
+          "sparklineSettings": {
+            "showTicks": false
+          },
+          "trend": {
+            "isVisible": true
+          },
+          "recordField": "timeframe"
+        },
+        "table": {
+          "rowDensity": "condensed",
+          "enableSparklines": false,
+          "hiddenColumns": [],
+          "lineWrapIds": [],
+          "columnWidths": {
+            "[\"x\"]": 55.350006103515625,
+            "[\"device\"]": 360.4166564941406,
+            "[\"count()\"]": 93.71665954589844
+          }
+        },
+        "unitsOverrides": [
+          {
+            "identifier": "usage",
+            "unitCategory": "unspecified",
+            "baseUnit": "count_per_minute",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1706887966440
+          }
+        ]
+      }
+    },
+    "3": {
+      "type": "markdown",
+      "title": "",
+      "content": "# KMS"
+    },
+    "4": {
+      "type": "markdown",
+      "title": "",
+      "content": "# Secrets Manager"
+    },
+    "7": {
+      "type": "data",
+      "title": "DescribeSecret/GetSecretValue",
+      "query": "timeseries usage=sum(cloud.aws.usage.call_count_sum_by_class_resource_type, default:0),\nfilter: (like(Resource,\"DescribeSecret\") or like(Resource,\"GetSecretValue\")) and \ndt.entity.custom_device in [fetch dt.entity.custom_device\n| fieldsAdd cred=accessible_by[dt.entity.aws_credentials][0]\n| fieldsAdd env=lookup([fetch dt.entity.aws_credentials], sourceField:cred, lookupField: id)[entity.name]\n| filter in(env, array($AWS_ACCOUNT_NAME))\n| fields id]\n",
+      "davis": {
+        "enabled": false,
+        "componentState": {
+          "selectedAnalyzerName": "dt.statistics.ui.ForecastAnalyzer",
+          "inputData": {
+            "dt.statistics.ui.ForecastAnalyzer": {
+              "generalParameters": {
+                "timeframe": {
+                  "startTime": "2023-12-15T04:36:14.071Z",
+                  "endTime": "2023-12-15T16:36:14.071Z"
+                },
+                "resolveDimensionalQueryData": true,
+                "logVerbosity": "INFO"
+              },
+              "forecastHorizon": 100,
+              "query": {
+                "expression": "timeseries usage=sum(cloud.aws.usage.call_count_sum_by_class_resource_type),\nfilter: like(Resource, \"CryptographicOperationsSymmetric\") and \ndt.entity.custom_device in [fetch dt.entity.custom_device\n| fieldsAdd cred=accessible_by[dt.entity.aws_credentials][0]\n| fieldsAdd env=lookup([fetch dt.entity.aws_credentials], sourceField:cred, lookupField: id)[entity.name]\n| filter in(env, array($AWS_ACCOUNT_NAME))\n| fields id]"
+              }
+            }
+          }
+        },
+        "davisVisualization": {}
+      },
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "thresholds": [
+          {
+            "id": 1,
+            "field": "",
+            "title": "",
+            "isEnabled": true,
+            "rules": [
+              {
+                "id": 0,
+                "color": {
+                  "Default": "var(--dt-colors-charts-categorical-color-09-default, #649438)"
+                },
+                "comparator": "≥",
+                "label": "<80%",
+                "value": 0
+              },
+              {
+                "id": 1,
+                "color": {
+                  "Default": "var(--dt-colors-charts-categorical-color-14-default, #d56b1a)"
+                },
+                "comparator": "≥",
+                "label": ">80%",
+                "value": 480000
+              },
+              {
+                "id": 2,
+                "color": {
+                  "Default": "var(--dt-colors-charts-categorical-color-12-default, #cd3741)"
+                },
+                "comparator": "≥",
+                "label": "Max (10,000/s)",
+                "value": 600000
+              }
+            ]
+          }
+        ],
+        "chartSettings": {
+          "gapPolicy": "connect",
+          "circleChartSettings": {
+            "groupingThresholdType": "relative",
+            "groupingThresholdValue": 0,
+            "valueType": "relative"
+          },
+          "categoryOverrides": {},
+          "categoricalBarChartSettings": {
+            "categoryAxis": "x",
+            "categoryAxisLabel": "x",
+            "valueAxis": "count()",
+            "valueAxisLabel": "count()"
+          },
+          "legend": {
+            "hidden": true
+          },
+          "leftYAxisSettings": {
+            "scale": "linear",
+            "max": "auto",
+            "min": "auto"
+          },
+          "fieldMapping": {
+            "timestamp": "timeframe",
+            "leftAxisValues": [
+              "usage"
+            ],
+            "leftAxisDimensions": [],
+            "fields": [],
+            "values": []
+          }
+        },
+        "singleValue": {
+          "showLabel": true,
+          "label": "",
+          "prefixIcon": "",
+          "autoscale": true,
+          "alignment": "center"
+        },
+        "table": {
+          "rowDensity": "condensed",
+          "enableSparklines": false,
+          "hiddenColumns": [],
+          "lineWrapIds": [],
+          "columnWidths": {
+            "[\"x\"]": 55.350006103515625,
+            "[\"device\"]": 360.4166564941406,
+            "[\"count()\"]": 93.71665954589844
+          }
+        },
+        "unitsOverrides": [
+          {
+            "identifier": "usage",
+            "unitCategory": "unspecified",
+            "baseUnit": "count_per_minute",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1706888648674
+          }
+        ]
+      }
+    },
+    "8": {
+      "type": "data",
+      "title": "CryptographicOperationsRsa",
+      "query": "timeseries usage=sum(cloud.aws.usage.call_count_sum_by_class_resource_type, default:0, rate:1m),\nfilter: like(Resource, \"CryptographicOperationsRsa\") and \ndt.entity.custom_device in [fetch dt.entity.custom_device\n| fieldsAdd cred=accessible_by[dt.entity.aws_credentials][0]\n| fieldsAdd env=lookup([fetch dt.entity.aws_credentials], sourceField:cred, lookupField: id)[entity.name]\n| filter in(env, array($AWS_ACCOUNT_NAME))\n| fields id]",
+      "davis": {
+        "enabled": false,
+        "componentState": {
+          "selectedAnalyzerName": "dt.statistics.ui.ForecastAnalyzer",
+          "inputData": {
+            "dt.statistics.ui.ForecastAnalyzer": {
+              "generalParameters": {
+                "timeframe": {
+                  "startTime": "2023-12-15T04:36:14.071Z",
+                  "endTime": "2023-12-15T16:36:14.071Z"
+                },
+                "resolveDimensionalQueryData": true,
+                "logVerbosity": "INFO"
+              },
+              "forecastHorizon": 100,
+              "query": {
+                "expression": "timeseries usage=sum(cloud.aws.usage.call_count_sum_by_class_resource_type),\nfilter: like(Resource, \"CryptographicOperationsSymmetric\") and \ndt.entity.custom_device in [fetch dt.entity.custom_device\n| fieldsAdd cred=accessible_by[dt.entity.aws_credentials][0]\n| fieldsAdd env=lookup([fetch dt.entity.aws_credentials], sourceField:cred, lookupField: id)[entity.name]\n| filter in(env, array($AWS_ACCOUNT_NAME))\n| fields id]"
+              }
+            }
+          }
+        },
+        "davisVisualization": {}
+      },
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "thresholds": [
+          {
+            "id": 1,
+            "field": "",
+            "title": "",
+            "isEnabled": true,
+            "rules": [
+              {
+                "id": 0,
+                "color": {
+                  "Default": "var(--dt-colors-charts-categorical-color-09-default, #649438)"
+                },
+                "comparator": "≥",
+                "label": "<80%",
+                "value": 0
+              },
+              {
+                "id": 1,
+                "color": {
+                  "Default": "var(--dt-colors-charts-categorical-color-14-default, #d56b1a)"
+                },
+                "comparator": "≥",
+                "label": ">80%",
+                "value": 24000
+              },
+              {
+                "id": 2,
+                "color": {
+                  "Default": "var(--dt-colors-charts-categorical-color-12-default, #cd3741)"
+                },
+                "comparator": "≥",
+                "label": "Max (500/s)",
+                "value": 30000
+              }
+            ]
+          }
+        ],
+        "chartSettings": {
+          "gapPolicy": "connect",
+          "circleChartSettings": {
+            "groupingThresholdType": "relative",
+            "groupingThresholdValue": 0,
+            "valueType": "relative"
+          },
+          "categoryOverrides": {},
+          "categoricalBarChartSettings": {
+            "categoryAxis": "x",
+            "categoryAxisLabel": "x",
+            "valueAxis": "count()",
+            "valueAxisLabel": "count()"
+          },
+          "legend": {
+            "hidden": true
+          },
+          "leftYAxisSettings": {
+            "scale": "linear",
+            "max": "auto",
+            "min": "auto"
+          },
+          "fieldMapping": {
+            "timestamp": "timeframe",
+            "leftAxisValues": [
+              "usage"
+            ],
+            "leftAxisDimensions": [],
+            "fields": [],
+            "values": []
+          }
+        },
+        "singleValue": {
+          "showLabel": false,
+          "label": "",
+          "prefixIcon": "",
+          "autoscale": true,
+          "alignment": "center",
+          "colorThresholdTarget": "background",
+          "sparklineSettings": {
+            "showTicks": false
+          },
+          "trend": {
+            "isVisible": true
+          },
+          "recordField": "timeframe"
+        },
+        "table": {
+          "rowDensity": "condensed",
+          "enableSparklines": false,
+          "hiddenColumns": [],
+          "lineWrapIds": [],
+          "columnWidths": {
+            "[\"x\"]": 55.350006103515625,
+            "[\"device\"]": 360.4166564941406,
+            "[\"count()\"]": 93.71665954589844
+          }
+        },
+        "unitsOverrides": [
+          {
+            "identifier": "usage",
+            "unitCategory": "unspecified",
+            "baseUnit": "count_per_minute",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1706887966440
+          }
+        ]
+      }
+    },
+    "9": {
+      "type": "data",
+      "title": "CryptographicOperationsEcc",
+      "query": "timeseries usage=sum(cloud.aws.usage.call_count_sum_by_class_resource_type, default:0, rate:1m),\nfilter: like(Resource, \"CryptographicOperationsEcc\") and \ndt.entity.custom_device in [fetch dt.entity.custom_device\n| fieldsAdd cred=accessible_by[dt.entity.aws_credentials][0]\n| fieldsAdd env=lookup([fetch dt.entity.aws_credentials], sourceField:cred, lookupField: id)[entity.name]\n| filter in(env, array($AWS_ACCOUNT_NAME))\n| fields id]",
+      "davis": {
+        "enabled": false,
+        "componentState": {
+          "selectedAnalyzerName": "dt.statistics.ui.ForecastAnalyzer",
+          "inputData": {
+            "dt.statistics.ui.ForecastAnalyzer": {
+              "generalParameters": {
+                "timeframe": {
+                  "startTime": "2023-12-15T04:36:14.071Z",
+                  "endTime": "2023-12-15T16:36:14.071Z"
+                },
+                "resolveDimensionalQueryData": true,
+                "logVerbosity": "INFO"
+              },
+              "forecastHorizon": 100,
+              "query": {
+                "expression": "timeseries usage=sum(cloud.aws.usage.call_count_sum_by_class_resource_type),\nfilter: like(Resource, \"CryptographicOperationsSymmetric\") and \ndt.entity.custom_device in [fetch dt.entity.custom_device\n| fieldsAdd cred=accessible_by[dt.entity.aws_credentials][0]\n| fieldsAdd env=lookup([fetch dt.entity.aws_credentials], sourceField:cred, lookupField: id)[entity.name]\n| filter in(env, array($AWS_ACCOUNT_NAME))\n| fields id]"
+              }
+            }
+          }
+        },
+        "davisVisualization": {}
+      },
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "thresholds": [
+          {
+            "id": 1,
+            "field": "",
+            "title": "",
+            "isEnabled": true,
+            "rules": [
+              {
+                "id": 0,
+                "color": {
+                  "Default": "var(--dt-colors-charts-categorical-color-09-default, #649438)"
+                },
+                "comparator": "≥",
+                "label": "<80%",
+                "value": 0
+              },
+              {
+                "id": 1,
+                "color": {
+                  "Default": "var(--dt-colors-charts-categorical-color-14-default, #d56b1a)"
+                },
+                "comparator": "≥",
+                "label": ">80%",
+                "value": 14400
+              },
+              {
+                "id": 2,
+                "color": {
+                  "Default": "var(--dt-colors-charts-categorical-color-12-default, #cd3741)"
+                },
+                "comparator": "≥",
+                "label": "Max (300/s)",
+                "value": 18000
+              }
+            ]
+          }
+        ],
+        "chartSettings": {
+          "gapPolicy": "connect",
+          "circleChartSettings": {
+            "groupingThresholdType": "relative",
+            "groupingThresholdValue": 0,
+            "valueType": "relative"
+          },
+          "categoryOverrides": {},
+          "categoricalBarChartSettings": {
+            "categoryAxis": "x",
+            "categoryAxisLabel": "x",
+            "valueAxis": "count()",
+            "valueAxisLabel": "count()"
+          },
+          "legend": {
+            "hidden": true
+          },
+          "leftYAxisSettings": {
+            "scale": "linear",
+            "max": "auto",
+            "min": "auto"
+          },
+          "fieldMapping": {
+            "timestamp": "timeframe",
+            "leftAxisValues": [
+              "usage"
+            ],
+            "leftAxisDimensions": [],
+            "fields": [],
+            "values": []
+          }
+        },
+        "singleValue": {
+          "showLabel": false,
+          "label": "",
+          "prefixIcon": "",
+          "autoscale": true,
+          "alignment": "center",
+          "colorThresholdTarget": "background",
+          "sparklineSettings": {
+            "showTicks": false
+          },
+          "trend": {
+            "isVisible": true
+          },
+          "recordField": "timeframe"
+        },
+        "table": {
+          "rowDensity": "condensed",
+          "enableSparklines": false,
+          "hiddenColumns": [],
+          "lineWrapIds": [],
+          "columnWidths": {
+            "[\"x\"]": 55.350006103515625,
+            "[\"device\"]": 360.4166564941406,
+            "[\"count()\"]": 93.71665954589844
+          }
+        },
+        "unitsOverrides": [
+          {
+            "identifier": "usage",
+            "unitCategory": "unspecified",
+            "baseUnit": "count_per_minute",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1706887966440
+          }
+        ]
+      }
+    },
+    "10": {
+      "type": "data",
+      "title": "ListSecrets",
+      "query": "timeseries usage=sum(cloud.aws.usage.call_count_sum_by_class_resource_type, default:0),\nfilter: like(Resource, \"ListSecrets\") and \ndt.entity.custom_device in [fetch dt.entity.custom_device\n| fieldsAdd cred=accessible_by[dt.entity.aws_credentials][0]\n| fieldsAdd env=lookup([fetch dt.entity.aws_credentials], sourceField:cred, lookupField: id)[entity.name]\n| filter in(env, array($AWS_ACCOUNT_NAME))\n| fields id]\n",
+      "davis": {
+        "enabled": false,
+        "componentState": {
+          "selectedAnalyzerName": "dt.statistics.ui.ForecastAnalyzer",
+          "inputData": {
+            "dt.statistics.ui.ForecastAnalyzer": {
+              "generalParameters": {
+                "timeframe": {
+                  "startTime": "2023-12-15T04:36:14.071Z",
+                  "endTime": "2023-12-15T16:36:14.071Z"
+                },
+                "resolveDimensionalQueryData": true,
+                "logVerbosity": "INFO"
+              },
+              "forecastHorizon": 100,
+              "query": {
+                "expression": "timeseries usage=sum(cloud.aws.usage.call_count_sum_by_class_resource_type),\nfilter: like(Resource, \"CryptographicOperationsSymmetric\") and \ndt.entity.custom_device in [fetch dt.entity.custom_device\n| fieldsAdd cred=accessible_by[dt.entity.aws_credentials][0]\n| fieldsAdd env=lookup([fetch dt.entity.aws_credentials], sourceField:cred, lookupField: id)[entity.name]\n| filter in(env, array($AWS_ACCOUNT_NAME))\n| fields id]"
+              }
+            }
+          }
+        },
+        "davisVisualization": {}
+      },
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "thresholds": [
+          {
+            "id": 1,
+            "field": "",
+            "title": "",
+            "isEnabled": true,
+            "rules": [
+              {
+                "id": 0,
+                "color": {
+                  "Default": "var(--dt-colors-charts-categorical-color-09-default, #649438)"
+                },
+                "comparator": "≥",
+                "label": "<80%",
+                "value": 0
+              },
+              {
+                "id": 1,
+                "color": {
+                  "Default": "var(--dt-colors-charts-categorical-color-14-default, #d56b1a)"
+                },
+                "comparator": "≥",
+                "label": ">80%",
+                "value": 4800
+              },
+              {
+                "id": 2,
+                "color": {
+                  "Default": "var(--dt-colors-charts-categorical-color-12-default, #cd3741)"
+                },
+                "comparator": "≥",
+                "label": "Max (100/s)",
+                "value": 6000
+              }
+            ]
+          }
+        ],
+        "chartSettings": {
+          "gapPolicy": "connect",
+          "circleChartSettings": {
+            "groupingThresholdType": "relative",
+            "groupingThresholdValue": 0,
+            "valueType": "relative"
+          },
+          "categoryOverrides": {},
+          "categoricalBarChartSettings": {
+            "categoryAxis": "x",
+            "categoryAxisLabel": "x",
+            "valueAxis": "count()",
+            "valueAxisLabel": "count()"
+          },
+          "legend": {
+            "hidden": true
+          },
+          "leftYAxisSettings": {
+            "scale": "linear",
+            "max": "auto",
+            "min": "auto"
+          },
+          "fieldMapping": {
+            "timestamp": "timeframe",
+            "leftAxisValues": [
+              "usage"
+            ],
+            "leftAxisDimensions": [],
+            "fields": [],
+            "values": []
+          }
+        },
+        "singleValue": {
+          "showLabel": true,
+          "label": "",
+          "prefixIcon": "",
+          "autoscale": true,
+          "alignment": "center"
+        },
+        "table": {
+          "rowDensity": "condensed",
+          "enableSparklines": false,
+          "hiddenColumns": [],
+          "lineWrapIds": [],
+          "columnWidths": {
+            "[\"x\"]": 55.350006103515625,
+            "[\"device\"]": 360.4166564941406,
+            "[\"count()\"]": 93.71665954589844
+          }
+        },
+        "unitsOverrides": [
+          {
+            "identifier": "usage",
+            "unitCategory": "unspecified",
+            "baseUnit": "count_per_minute",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1706888648674
+          }
+        ]
+      }
+    }
+  },
+  "layouts": {
+    "0": {
+      "x": 0,
+      "y": 1,
+      "w": 24,
+      "h": 4
+    },
+    "3": {
+      "x": 0,
+      "y": 0,
+      "w": 24,
+      "h": 1
+    },
+    "4": {
+      "x": 0,
+      "y": 13,
+      "w": 24,
+      "h": 1
+    },
+    "7": {
+      "x": 0,
+      "y": 14,
+      "w": 24,
+      "h": 4
+    },
+    "8": {
+      "x": 0,
+      "y": 5,
+      "w": 24,
+      "h": 4
+    },
+    "9": {
+      "x": 0,
+      "y": 9,
+      "w": 24,
+      "h": 4
+    },
+    "10": {
+      "x": 0,
+      "y": 18,
+      "w": 24,
+      "h": 4
+    }
+  }
+}
