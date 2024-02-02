@@ -156,22 +156,5 @@ resource "dynatrace_management_zone_v2" "all" {
       enabled         = true
       entity_selector = "type(SERVICE),fromRelationships.runsOn(type(AWS_LAMBDA_FUNCTION),fromRelationships.isAccessibleBy(type(AWS_CREDENTIALS),awsAccountId(${each.value.id})))"
     }
-
-    rule {
-      type    = "DIMENSION"
-      enabled = true
-      dimension_rule {
-        applies_to = "METRIC"
-
-        dimension_conditions {
-          condition {
-            condition_type = "DIMENSION"
-            rule_matcher   = "EQUALS"
-            key            = "aws.account.id"
-            value          = each.value.id
-          }
-        }
-      }
-    }
   }
 }
