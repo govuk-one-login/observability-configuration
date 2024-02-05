@@ -1,0 +1,673 @@
+#Web Applications
+resource "dynatrace_web_app_anomalies" "web_app_anomalies" {
+  error_rate {
+    enabled                   = true
+    error_rate_detection_mode = "auto"
+    error_rate_auto {
+      absolute_increase = 0
+      relative_increase = 50
+      over_alerting_protection {
+        actions_per_minute     = 10
+        minutes_abnormal_state = 1
+      }
+    }
+  }
+  response_time {
+    enabled        = true
+    detection_mode = "auto"
+    response_time_auto {
+      over_alerting_protection {
+        actions_per_minute     = 10
+        minutes_abnormal_state = 1
+      }
+      response_time_all {
+        degradation_milliseconds = 100
+      }
+      response_time_slowest {
+        slowest_degradation_milliseconds = 1000
+      }
+    }
+  }
+  traffic_drops {
+    enabled = true
+  }
+  traffic_spikes {
+    enabled = false
+    traffic_spikes {
+      minutes_abnormal_state   = 1
+      traffic_spike_percentage = 50
+    }
+  }
+}
+
+#Mobile Applications
+resource "dynatrace_mobile_app_anomalies" "mobile_app_anomalies" {
+  error_rate_increase {
+    enabled        = true
+    detection_mode = "auto"
+    error_rate_increase_auto {
+      threshold_absolute = 6
+      threshold_relative = 50
+    }
+  }
+  slow_user_actions {
+    enabled        = true
+    detection_mode = "auto"
+    slow_user_actions_auto {
+      duration_avoid_overalerting {
+        min_action_rate = 10
+      }
+      duration_threshold_all_auto {
+        duration_threshold = 200
+        slowdown_percentage = 50
+      }
+      duration_threshold_slowest {
+        duration_threshold = 1000
+        slowdown_percentage = 100
+      }
+    }
+  }
+  unexpected_high_load {
+    enabled              = false
+  }
+  unexpected_low_load {
+    enabled = true
+    threshold_percentage = 50
+  }
+}
+
+#Mobile Application - crash rate increase
+resource "dynatrace_mobile_app_crash_rate" 
+  crash_rate_increase {
+    enabled        = true
+    detection_mode = "auto"
+    crash_rate_increase_auto {
+      baseline_violation_percentage = 150
+      concurrent_users    = 100
+      sensitivity = low
+    }
+  }
+
+#Custom Apps
+resource "dynatrace_custom_app_anomalies" "custom_app_anomalies" {
+  error_rate_increase {
+    enabled        = true
+    detection_mode = "auto"
+    error_rate_increase_auto {
+      threshold_absolute = 5
+      threshold_relative = 50
+    }
+  }
+  slow_user_actions {
+    enabled = true
+    detection_mode = auto
+    slow_user_Actions_auto {
+        duration_avoid_overalerting {
+            min_action_rate = 10
+        } 
+        duration_threshold_all {
+            duration_threshold = 100
+            slowdown_percentage = 50
+        }
+        duration_threshold_slowest {
+            duration_threshold = 1000
+            slowdown_percentage = 100
+        }
+    }
+  }
+  unexpected_high_load {
+    enabled              = false
+  }
+  unexpected_low_load {
+    enabled              = true
+    threshold_percentage = 50
+  }
+}
+
+#Custom Apps - crash rate increase
+resource "dynatrace_custom_app_crash_rate" {
+  crash_rate_increase {
+    enabled        = true
+    detection_mode = "auto"
+    crash_rate_increase_auto {
+      baseline_violation_percentage = 150
+      concurrent_users    = 100
+      sensitivity = low
+    }
+  }
+}
+
+#Services
+resource "dynatrace_service_anomalies_v2" "service_detection_anomalies" {
+  failure_rate {
+    enabled        = true
+    detection_mode = "auto"
+    auto_detection {
+      absolute_increase = 0
+      relative_increase = 50
+      over_alerting_protection {
+        minutes_abnormal_state = 1
+        requests_per_minute    = 10
+      }
+    }
+  }
+  load_drops {
+    enabled                = false
+  }
+  load_spikes {
+    enabled                = false
+  }
+  response_time {
+    enabled        = true
+    detection_mode = "auto"
+    auto_detection {
+      over_alerting_protection {
+        minutes_abnormal_state = 1
+        requests_per_minute    = 10
+      }
+      response_time_all {
+        degradation_milliseconds = 100
+        degradation_percent = 50
+      }
+      response_time_slowest {
+        slowest_degradation_milliseconds = 1000
+        slowest_degradation_percent = 100
+      }
+    }
+  }
+}
+
+#Database Services
+resource "dynatrace_database_anomalies_v2" "database_anomalies" {
+  scope = "environment"
+  database_connections {
+    enabled             = true
+    max_failed_connects = 5
+    time_period         = 5
+  }
+  failure_rate {
+    enabled        = true
+    detection_mode = "auto"
+    auto_detection {
+      absolute_increase = 0
+      relative_increase = 50
+      over_alerting_protection {
+        minutes_abnormal_state = 1
+        requests_per_minute    = 10
+      }
+    }
+  }
+  load_drops {
+    enabled = false
+  }
+  load_spikes {
+    enabled = false
+  }
+  response_time {
+    enabled        = true
+    detection_mode = "auto"
+    auto_detection {
+      over_alerting_protection {
+        minutes_abnormal_state = 1
+        requests_per_minute    = 10
+      }
+      response_time_all {
+        degradation_milliseconds = 5
+        degradation_percent = 50
+      }
+      response_time_slowest {
+        slowest_degradation_milliseconds = 20
+        slowest_degradation_percent = 100
+      }
+    }
+  }
+}
+
+#Metric events
+resource "dynatrace_metric_events" "Amazon_ECS_CPU_reservation" {
+  enabled                    = true
+  event_entity_dimension_key = "dt.entity.custom_device"
+  summary                    = "Amazon ECS CPU reservation [AWS]"
+  event_template {
+    description   = "The {metricname} value of {severity} was {alert_condition} your custome threshold of {threshold} "
+    davis_merge = true
+    event_type    = "RESOURCE"
+    title         = "Amazon_ECS_CPU_reservation [AWS]"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    alert_on_no_data   = false
+    dealerting_samples = 5 #doesn't have this
+    samples            = 5 #doesn't have this
+    threshold          = 95
+    violating_samples  = 3 #doesn't have this
+  }
+  query_definition {
+    type        = "METRIC_KEY"
+    aggregation = "AVG"
+    metric_key  = "CPUReservation"
+  }
+  entity_filter {
+    dimension_key = "dt.entity.custom_device"
+  }
+}
+
+resource "dynatrace_metric_events" "Amazon_ECS_CPU_utilization (by service name) [AWS]" {
+  enabled                    = true
+  event_entity_dimension_key = "dt.entity.custom_device"
+  summary                    = "Amazon ECS CPU utilization (by service name) [AWS]"
+  event_template {
+    description   = "The {metricname} value of {severity} was {alert_condition} your custome threshold of {threshold} "
+    davis_merge = true
+    event_type    = "RESOURCE"
+    title         = "Amazon ECS CPU utilization (by service name) [AWS]"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    alert_on_no_data   = false
+    dealerting_samples = 5 #doesn't have this
+    samples            = 5 #doesn't have this
+    threshold          = 95
+    violating_samples  = 3 #doesn't have this
+  }
+  query_definition {
+    type        = "METRIC_KEY"
+    aggregation = "AVG"
+    metric_key  = "CPUUtilization (byServiceName)"
+  }
+   entity_filter {
+    dimension_key = "dt.entity.custom_device"
+  }
+}
+
+resource "dynatrace_metric_events" "Amazon_ECS_Memory_reservation[AWS]" {
+  enabled                    = true
+  event_entity_dimension_key = "dt.entity.custom_device"
+  summary                    = "Amazon ECS Memory reservation[AWS]"
+  event_template {
+    description   = "The {metricname} value of {severity} was {alert_condition} your custome threshold of {threshold} "
+    davis_merge = true
+    event_type    = "RESOURCE"
+    title         = "Amazon ECS Memory reservation[AWS]"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    alert_on_no_data   = false
+    dealerting_samples = 5 #doesn't have this
+    samples            = 5 #doesn't have this
+    threshold          = 95
+    violating_samples  = 3 #doesn't have this
+  }
+  query_definition {
+    type        = "METRIC_KEY"
+    aggregation = "AVG"
+    metric_key  = "MemoryReservation"
+  }
+   entity_filter {
+    dimension_key = "dt.entity.custom_device"
+  }
+}
+resource "dynatrace_metric_events" "Amazon_ECS_Memory_utilization (by service name) [AWS]" {
+  enabled                    = true
+  event_entity_dimension_key = "dt.entity.custom_device"
+  summary                    = "Amazon ECS CPU utilization (by service name) [AWS]"
+  event_template {
+    description   = "The {metricname} value of {severity} was {alert_condition} your custome threshold of {threshold} "
+    davis_merge = true
+    event_type    = "RESOURCE"
+    title         = "Amazon ECS Memory utilization (by service name) [AWS]"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    alert_on_no_data   = false
+    dealerting_samples = 5 #doesn't have this
+    samples            = 5 #doesn't have this
+    threshold          = 95
+    violating_samples  = 3 #doesn't have this
+  }
+  query_definition {
+    type        = "METRIC_KEY"
+    aggregation = "AVG"
+    metric_key  = "MemoryUtilization (byServiceName)"
+  }
+   entity_filter {
+    dimension_key = "dt.entity.custom_device"
+  }
+}
+resource "dynatrace_metric_events" "Amazon_CodeBuild_CPU_utilized_percent (by build id/build number) [AWS]" {
+  enabled                    = true
+  event_entity_dimension_key = "dt.entity.custom_device"
+  summary                    = "Amazon CodeBuild CPU utilized percent (by build id/build number) [AWS]"
+  event_template {
+    description   = "The {metricname} value of {severity} was {alert_condition} your custome threshold of {threshold} "
+    davis_merge = true
+    event_type    = "RESOURCE"
+    title         = "Amazon CodeBuild CPU utilized percent (by build id/build number) [AWS]"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    alert_on_no_data   = false
+    dealerting_samples = 5 #doesn't have this
+    samples            = 5 #doesn't have this
+    threshold          = 95
+    violating_samples  = 3 #doesn't have this
+  }
+  query_definition {
+    type        = "METRIC_KEY"
+    aggregation = "AVG"
+    metric_key  = "CPUUtilizedPercent (by BuildId and BuildNumber)"
+  }
+   entity_filter {
+    dimension_key = "dt.entity.custom_device"
+  }
+}
+
+resource "dynatrace_metric_events" "AWS_CodeBuild_memory_utilized_percent (by build id/build number) [AWS]" {
+  enabled                    = true
+  event_entity_dimension_key = "dt.entity.custom_device"
+  summary                    = "Amazon CodeBuild memory utilized percent (by build id/build number) [AWS]"
+  event_template {
+    description   = "The {metricname} value of {severity} was {alert_condition} your custome threshold of {threshold} "
+    davis_merge = true
+    event_type    = "RESOURCE"
+    title         = "AWS CodeBuild memory utilized percent (by build id/build number)"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    alert_on_no_data   = false
+    dealerting_samples = 5 #doesn't have this
+    samples            = 5 #doesn't have this
+    threshold          = 95
+    violating_samples  = 3 #doesn't have this
+  }
+  query_definition {
+    type        = "METRIC_KEY"
+    aggregation = "AVG"
+    metric_key  = "MemoryUtilizedPercent (by BuildId and BuildNumber)"
+  }
+   entity_filter {
+    dimension_key = "dt.entity.custom_device"
+  }
+}
+
+#Frequent Issue detection
+resource "dynatrace_frequent_issues" "frequent_issue_detection" {
+  detect_apps = true
+  detect_txn = true
+  detect_infra = true
+}
+
+#Infrastructure
+#Hosts
+resource "dynatrace_host_anomalies_v2" "Host" {
+  scope = "HOST-1234567890000000"
+  host {
+    connection_lost_detection {
+      enabled               = true
+      on_graceful_shutdowns = "DONT_ALERT_ON_GRACEFUL_SHUTDOWN"
+    }
+    high_cpu_saturation_detection {
+      enabled        = true
+      detection_mode = "auto"
+    }
+    high_gc_activity_detection {
+      enabled        = true
+      detection_mode = "auto"
+    }
+    high_memory_detection {
+      enabled        = true
+      detection_mode = "auto"
+    }
+    high_system_load_detection {
+      enabled        = true
+      detection_mode = "auto"
+    }
+    out_of_memory_detection {
+      enabled        = true
+      detection_mode = "auto"
+    }
+    out_of_threads_detection {
+      enabled        = true
+      detection_mode = "auto"
+  }
+  network {
+    high_network_detection {
+      enabled        = true
+      detection_mode = "auto"
+    }
+    network_dropped_packets_detection {
+      enabled        = true
+      detection_mode = "auto"
+    }
+    network_errors_detection {
+      enabled        = true
+      detection_mode = "auto"
+    }
+    network_high_retransmission_detection {
+      enabled        = false
+    }
+    network_tcp_problems_detection {
+      enabled        = false
+}
+  }
+  }
+}
+
+#Disks
+resource "dynatrace_disk_anomalies_v2" "Disk_anomalies" {
+  scope = "environment"
+  disk {
+    disk_low_inodes_detection {
+      enabled        = true
+      detection_mode = "auto"
+    }
+    disk_low_space_detection {
+      enabled        = true
+      detection_mode = "auto"
+    }
+    disk_slow_writes_and_reads_detection {
+      enabled        = false
+    }
+  }
+}
+
+#AWS
+resource "dynatrace_aws_anomalies" "aws_anomalies" {
+  ec_2_candidate_high_cpu_detection {
+    enabled        = true
+    detection_mode = "auto"
+  }
+  elb_high_connection_errors_detection {
+    enabled        = true
+    detection_mode = "auto"
+  }
+  lambda_high_error_rate_detection {
+    enabled        = true
+    detection_mode = "auto"
+  }
+  rds_high_cpu_detection {
+    enabled = true
+    detection_mode = "auto"
+  }
+  rds_high_memory_detection {
+    enabled        = true
+    detection_mode = "auto"
+  }
+  rds_high_write_read_latency_detection {
+    enabled        = true
+    detection_mode = "auto"
+  }
+  rds_low_storage_detection {
+    enabled = true
+    detection_mode = "auto"
+  }
+  rds_restarts_sequence_detection {
+    enabled = false
+  }
+}
+
+#VMware
+resource "dynatrace_vmware_anomalies" "vmware_anomalies" {
+  dropped_packets_detection {
+    enabled        = true
+    detection_mode = "auto"
+  }
+  esxi_high_cpu_detection {
+    enabled = true
+    detection_mode = "auto"
+  }
+  esxi_high_memory_detection {
+    enabled        = true
+    detection_mode = "auto"
+  }
+  guest_cpu_limit_detection {
+    enabled        = true
+    detection_mode = "auto"
+  }
+  low_datastore_space_detection {
+    enabled = true
+    detection_mode = "auto"
+  }
+  overloaded_storage_detection {
+    enabled        = true
+    detection_mode = "auto"
+  }
+  slow_physical_storage_detection {
+    enabled        = true
+    detection_mode = "auto"
+  }
+  undersized_storage_detection {
+    enabled = true
+    detection_mode = "auto"
+  }
+}
+
+
+#Kubernetes
+#Cluster
+resource "dynatrace_k8s_cluster_anomalies" "k8s_cluster_anomalies" {
+  scope = "environment"
+  cpu_requests_saturation {
+    enabled = false
+  }
+  memory_requests_saturation {
+    enabled = false
+  }
+  monitoring_issues {
+    enabled = false
+  }
+  pods_saturation {
+    enabled = false
+  }
+  readiness_issues {
+    enabled = true
+    configuration {
+      observation_period_in_minutes = 5
+      sample_period_in_minutes      = 3
+    }
+  }
+}
+
+#node
+resource "dynatrace_k8s_node_anomalies" "k8s_node_anomalies" {
+  scope = "environment"
+  cpu_requests_saturation {
+    enabled = false
+  }
+  memory_requests_saturation {
+    enabled = false
+  }
+  pods_saturation {
+    enabled = false
+  }
+  readiness_issues {
+    enabled = false
+  }
+  node_problematic_condition {
+    enabled = false
+  }
+}
+
+#namespace
+resource "dynatrace_k8s_namespace_anomalies" "k8s_namespace_anomalies" {
+  scope = "environment"
+  cpu_limits_quota_saturation {
+    enabled = false
+  }
+  cpu_requests_quota_saturation {
+    enabled = false
+  }
+  memory_limits_quota_saturation {
+    enabled = false
+  }
+  memory_requests_quota_saturation {
+    enabled = false
+  }
+  pods_quota_saturation {
+    enabled = false
+  }
+}
+
+#workload
+resource "dynatrace_k8s_workload_anomalies" "k8s_workload_anomalies" {
+  scope = "environment"
+  container_restarts {
+    enabled = false
+  }
+  deployment_stuck {
+    enabled = false
+  }
+  not_all_pods_ready {
+    enabled = false
+  }
+  pending_pods {
+    enabled = false
+  }
+  pod_stuck_in_terminating {
+    enabled = false
+  }
+  workload_without_ready_pods {
+    enabled = false
+  }
+  high_cpu_throttling {
+    enabled = false
+  }
+  high_cpu_usage {
+    enabled = false
+  }
+  high_memory_usage {
+    enabled = false
+  }
+  job_failure_events {
+    enabled = false
+  }
+  oom_kills {
+    enabled = false
+  }
+  pod_backoff_events {
+    enabled = false
+  }
+  pod_eviction_events {
+    enabled = false
+  }
+  pod_preemption_events {
+    enabled = false
+  }
+}
+
+#Persistent volume claim anomaly detection
+resource "dynatrace_k8s_pvc_anomalies" "#name#" {
+  scope = "environment"
+  low_disk_space_critical {
+    enabled = false
+  }
+  low_disk_space_critical_percentage {
+    enabled = false
+  }
+}
