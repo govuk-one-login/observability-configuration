@@ -40,9 +40,9 @@ resource "dynatrace_process_visibility" "process_visibility" {
 # Not in use - Process availability
 
 # Process group monitoring
-resource "dynatrace_process_group_monitoring" "process_group_monitoring" {
-  monitoring_state = "MONITORING_ON"
-  process_group_id = ""
+
+resource "dynatrace_process_monitoring" "process_monitoring" {
+  auto_monitoring = true
 }
 
 # Not in use - Custom process monitoring rules
