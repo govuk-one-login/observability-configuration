@@ -1,7 +1,43 @@
 # Server-side service monitoring
 # Not in use - Service naming
 # Not in use - Request attributes
-# Not in use - Calculated service metrics
+# Calculated service metrics
+resource "dynatrace_calculated_service_metric" "cdtest_failed_request_count" {
+  count            = local.is_production ? 1 : 0
+  name             = "cdtest-failed-request-count"
+  enabled          = true
+  management_zones = ["gds-di-production"]
+  metric_key       = "calc:service.cdtest_failed_request_count"
+  unit             = "COUNT"
+  metric_definition {
+    metric = "FAILED_REQUEST_COUNT"
+  }
+}
+
+resource "dynatrace_calculated_service_metric" "cdtest_request_count" {
+  count            = local.is_production ? 1 : 0
+  name             = "cdtest-request-count"
+  enabled          = true
+  management_zones = ["gds-di-production"]
+  metric_key       = "calc:service.cdtest_request_count"
+  unit             = "COUNT"
+  metric_definition {
+    metric = "REQUEST_COUNT"
+  }
+}
+
+resource "dynatrace_calculated_service_metric" "cdtest_successful_request_count" {
+  count            = local.is_production ? 1 : 0
+  name             = "cdtest-successful-request-count"
+  enabled          = true
+  management_zones = ["gds-di-production"]
+  metric_key       = "calc:service.cdtest_successful_request_count"
+  unit             = "COUNT"
+  metric_definition {
+    metric = "SUCCESSFUL_REQUEST_COUNT"
+  }
+}
+
 # Terraform resource does not exist for Request naming
 
 # API detection rules 
@@ -494,7 +530,7 @@ resource "dynatrace_api_detection" "built_in_go_database" {
   }
 }
 
-# ??? Deep monitoring
+# Terraform resource does not exist for Deep monitoring in version 1.49.1
 
 # Not in use - URL-based sampling
 # Not in use - Span capturing
