@@ -229,16 +229,16 @@ resource "dynatrace_api_detection" "built_in_mule" {
   }
 }
 
-resource "dynatrace_api_detection" "built_in_net_rabbitmq" {
+resource "dynatrace_api_detection" "built_in_java_rabbitmq" {
   api_color       = "#aeebf0"
-  api_name        = "Built-In .NET RabbitMQ"
-  technology      = "dotNet"
+  api_name        = "Built-In Java RabbitMQ"
+  technology      = "Java"
   third_party_api = true
   conditions {
     condition {
       base    = "FQCN"
       matcher = "BEGINS_WITH"
-      pattern = "RabbitMQ."
+      pattern = "com.rabbitmq."
     }
   }
 }
