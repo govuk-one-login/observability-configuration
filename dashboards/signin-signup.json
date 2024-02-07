@@ -490,132 +490,6 @@
       ]
     },
     {
-      "name": "Total Credentials Issued",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1216,
-        "left": 1140,
-        "width": 304,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Top list",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "builtin:cloud.aws.lambda.invocations",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "dt.entity.aws_lambda_function"
-          ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "kbv-cri-api-v1-IssueCredentialFunction-9kQ6qvlX4Z1y",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "address-cri-api-v1-IssueCredentialFunction-GC8fdJKfkh8c",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "initialise-ipv-session-production",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "fraud-cri-api-v1-IssueCredentialFunction-uwOrpNkyLcmd",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "ipv-cri-passport-api-IssueCredentialFunction-0IctYmbJiH2M",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "TOP_LIST",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"fraud-cri-api-v1-IssueCredentialFunction-uwOrpNkyLcmd~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"kbv-cri-api-v1-IssueCredentialFunction-9kQ6qvlX4Z1y~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"initialise-ipv-session-production~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"ipv-cri-passport-api-IssueCredentialFunction-0IctYmbJiH2M~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"address-cri-api-v1-IssueCredentialFunction-GC8fdJKfkh8c~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
       "name": "Front-Channel Logout",
       "tileType": "DATA_EXPLORER",
       "configured": true,
@@ -1127,6 +1001,76 @@
       ]
     },
     {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 304,
+        "left": 1444,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## Total Account Creations/Signups\n\nThis graph derives from the signin metric within the Auth service.\n\nThe SignUp is split by Relying Party (where the RP is the external service) which is a further level of detail."
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 608,
+        "left": 1444,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## Document Checking App journey\n\nThis journey is only for Relying Parties that do not use the sign in service.\n\nThis journey is built by the Auth team."
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 912,
+        "left": 1444,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## Core Identities Claimed\n\nThis graph shows when a Relying Party has issued an identity. This isn't entirely clear.\n\nThe metrics are client ids. The Auth team needs to add a client name to the Id."
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 1216,
+        "left": 1444,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## Credentials Issued\n\n\nThis graph shows the number of credentials issued by type of credential.\n\nThe Credentials Issuer teams sit within the Identity Pod.\n\n"
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 1520,
+        "left": 1444,
+        "width": 304,
+        "height": 380
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## Front-Channel Logout\nThis shows how many users have logged out using the One Login logout button.\n\nThis shows client ids rather than client names. The Auth team would need to update this to show the client names.\n\n\n## Sign Ins by RP\nThis shows the number of sign ins per relying party. \n\n## Sign Ups by RP\nThis shows the number of signups per RP.\n"
+    },
+    {
       "name": "Sign Ins",
       "tileType": "DATA_EXPLORER",
       "configured": true,
@@ -1151,6 +1095,7 @@
           "sortBy": "DESC",
           "sortByDimension": "",
           "filterBy": {
+            "filterOperator": "AND",
             "nestedFilters": [],
             "criteria": []
           },
@@ -1233,6 +1178,89 @@
       ]
     },
     {
+      "name": "Total Credentials Issued",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1216,
+        "left": 1140,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Top list",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "dt.entity.aws_lambda_function"
+          ],
+          "metricSelector": "builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.contains(~\"IssueCredentialFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.contains(~\"initialise-ipv-session~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TOP_LIST",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.contains(~\"IssueCredentialFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.contains(~\"initialise-ipv-session~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
       "name": "Credentials Issued",
       "tileType": "DATA_EXPLORER",
       "configured": true,
@@ -1248,193 +1276,55 @@
       "queries": [
         {
           "id": "A",
-          "metric": "builtin:cloud.aws.lambda.invocations",
-          "spaceAggregation": "SUM",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "initialise-ipv-session-production",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"initialise-ipv-session~\")\"))))):splitBy():sum:sort(value(sum,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         },
         {
           "id": "B",
-          "metric": "builtin:cloud.aws.lambda.invocations",
-          "spaceAggregation": "SUM",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "ipv-cri-passport-api-IssueCredentialFunction-0IctYmbJiH2M",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"ipv-cri-passport-api-IssueCredentialFunction~\")\"))))):splitBy():sum:sort(value(sum,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         },
         {
           "id": "C",
-          "metric": "builtin:cloud.aws.lambda.invocations",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "address-cri-api-v1-IssueCredentialFunction-GC8fdJKfkh8c",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"address-cri-api-v1-IssueCredentialFunction~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         },
         {
           "id": "D",
-          "metric": "builtin:cloud.aws.lambda.invocations",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "fraud-cri-api-v1-IssueCredentialFunction-uwOrpNkyLcmd",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"fraud-cri-api-v1-IssueCredentialFunction~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         },
         {
           "id": "E",
-          "metric": "builtin:cloud.aws.lambda.invocations",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "kbv-cri-api-v1-IssueCredentialFunction-9kQ6qvlX4Z1y",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"kbv-cri-api-v1-IssueCredentialFunction~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         },
         {
           "id": "F",
-          "metric": "builtin:cloud.aws.lambda.invocations",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "dl-cri-api-v1-DrivingPermitCheckingFunction-YX3CJq1gU35Z",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"dl-cri-api-v1-DrivingPermitCheckingFunction~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         }
@@ -1570,78 +1460,8 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"initialise-ipv-session-production~\")\"))))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"ipv-cri-passport-api-IssueCredentialFunction-0IctYmbJiH2M~\")\"))))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"address-cri-api-v1-IssueCredentialFunction-GC8fdJKfkh8c~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"fraud-cri-api-v1-IssueCredentialFunction-uwOrpNkyLcmd~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"kbv-cri-api-v1-IssueCredentialFunction-9kQ6qvlX4Z1y~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"dl-cri-api-v1-DrivingPermitCheckingFunction-YX3CJq1gU35Z~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"initialise-ipv-session~\")\"))))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"ipv-cri-passport-api-IssueCredentialFunction~\")\"))))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"address-cri-api-v1-IssueCredentialFunction~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"fraud-cri-api-v1-IssueCredentialFunction~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"kbv-cri-api-v1-IssueCredentialFunction~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"dl-cri-api-v1-DrivingPermitCheckingFunction~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
       ]
-    },
-    {
-      "name": "Markdown",
-      "tileType": "MARKDOWN",
-      "configured": true,
-      "bounds": {
-        "top": 304,
-        "left": 1444,
-        "width": 304,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "markdown": "## Total Account Creations/Signups\n\nThis graph derives from the signin metric within the Auth service.\n\nThe SignUp is split by Relying Party (where the RP is the external service) which is a further level of detail."
-    },
-    {
-      "name": "Markdown",
-      "tileType": "MARKDOWN",
-      "configured": true,
-      "bounds": {
-        "top": 608,
-        "left": 1444,
-        "width": 304,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "markdown": "## Document Checking App journey\n\nThis journey is only for Relying Parties that do not use the sign in service.\n\nThis journey is built by the Auth team."
-    },
-    {
-      "name": "Markdown",
-      "tileType": "MARKDOWN",
-      "configured": true,
-      "bounds": {
-        "top": 912,
-        "left": 1444,
-        "width": 304,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "markdown": "## Core Identities Claimed\n\nThis graph shows when a Relying Party has issued an identity. This isn't entirely clear.\n\nThe metrics are client ids. The Auth team needs to add a client name to the Id."
-    },
-    {
-      "name": "Markdown",
-      "tileType": "MARKDOWN",
-      "configured": true,
-      "bounds": {
-        "top": 1216,
-        "left": 1444,
-        "width": 304,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "markdown": "## Credentials Issued\n\n\nThis graph shows the number of credentials issued by type of credential.\n\nThe Credentials Issuer teams sit within the Identity Pod.\n\n"
-    },
-    {
-      "name": "Markdown",
-      "tileType": "MARKDOWN",
-      "configured": true,
-      "bounds": {
-        "top": 1520,
-        "left": 1444,
-        "width": 304,
-        "height": 380
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "markdown": "## Front-Channel Logout\nThis shows how many users have logged out using the One Login logout button.\n\nThis shows client ids rather than client names. The Auth team would need to update this to show the client names.\n\n\n## Sign Ins by RP\nThis shows the number of sign ins per relying party. \n\n## Sign Ups by RP\nThis shows the number of signups per RP.\n"
     }
   ]
 }

@@ -3,7 +3,7 @@ resource "dynatrace_slo_v2" "perf001" {
   enabled            = true
   custom_description = "95% of user-facing requests to be served within 1 second"
   evaluation_type    = "AGGREGATE"
-  evaluation_window  = "-1w"
+  evaluation_window  = "-1M"
   filter             = "type(CUSTOM_DEVICE)"
   metric_expression  = "((ext:cloud.aws.apiGateway.latency:avg:partition(\"latency\",value(\"good\",le(1000))):splitBy():count:default(0))/(ext:cloud.aws.apiGateway.latency:avg:splitBy():count)*(100)):default(100,always)"
   metric_name        = "nfr_perf001"
@@ -20,7 +20,7 @@ resource "dynatrace_slo_v2" "perf002" {
   enabled            = true
   custom_description = "99% of user-facing requests to be served within 2.5 second"
   evaluation_type    = "AGGREGATE"
-  evaluation_window  = "-1w"
+  evaluation_window  = "-1M"
   filter             = "type(CUSTOM_DEVICE)"
   metric_expression  = "((ext:cloud.aws.apiGateway.latency:avg:partition(\"latency\",value(\"good\",le(2500))):splitBy():count:default(0))/(ext:cloud.aws.apiGateway.latency:avg:splitBy():count)*(100)):default(100,always)"
   metric_name        = "nfr_perf002"
@@ -32,15 +32,15 @@ resource "dynatrace_slo_v2" "perf002" {
   }
 }
 
-resource "dynatrace_slo_v2" "dva" {
-  name               = "DVA Uptime"
+resource "dynatrace_slo_v2" "dva_availability" {
+  name               = "DVA Availability"
   enabled            = true
-  custom_description = "DVA Uptime (99.9%)"
+  custom_description = "DVA Availability (99.9%)"
   evaluation_type    = "AGGREGATE"
-  evaluation_window  = "-1w"
+  evaluation_window  = "-1M"
   filter             = "type(SERVICE),entityId(SERVICE-FF8DF82736246DDE)"
   metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
-  metric_name        = "dva_uptime"
+  metric_name        = "dva_availability"
   target_success     = 99.9
   target_warning     = 99.95
   error_budget_burn_rate {
@@ -49,15 +49,15 @@ resource "dynatrace_slo_v2" "dva" {
   }
 }
 
-resource "dynatrace_slo_v2" "dvla" {
-  name               = "DVLA Uptime"
+resource "dynatrace_slo_v2" "dvla_availability" {
+  name               = "DVLA Availability"
   enabled            = true
-  custom_description = "DVLA Uptime (99.9%)"
+  custom_description = "DVLA Availability (99.9%)"
   evaluation_type    = "AGGREGATE"
-  evaluation_window  = "-1w"
+  evaluation_window  = "-1M"
   filter             = "type(SERVICE),entityId(SERVICE-63AD630610311EBF)"
   metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
-  metric_name        = "dvla_uptime"
+  metric_name        = "dvla_availability"
   target_success     = 99.9
   target_warning     = 99.95
   error_budget_burn_rate {
@@ -66,15 +66,15 @@ resource "dynatrace_slo_v2" "dvla" {
   }
 }
 
-resource "dynatrace_slo_v2" "hmpo" {
-  name               = "HMPO Uptime"
+resource "dynatrace_slo_v2" "hmpo_availability" {
+  name               = "HMPO Availability"
   enabled            = true
-  custom_description = "HMPO Uptime (99.9%)"
+  custom_description = "HMPO Availability (99.9%)"
   evaluation_type    = "AGGREGATE"
-  evaluation_window  = "-1w"
+  evaluation_window  = "-1M"
   filter             = "type(SERVICE),entityId(SERVICE-3EEEDBD9F4EDEF7A)"
   metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
-  metric_name        = "hmpo_uptime"
+  metric_name        = "hmpo_availability"
   target_success     = 99.9
   target_warning     = 99.95
   error_budget_burn_rate {
@@ -83,15 +83,87 @@ resource "dynatrace_slo_v2" "hmpo" {
   }
 }
 
-resource "dynatrace_slo_v2" "experian" {
-  name               = "Experian Uptime"
+resource "dynatrace_slo_v2" "experian_availability" {
+  name               = "Experian Availability"
   enabled            = true
-  custom_description = "Experian Uptime (99.9%)"
+  custom_description = "Experian Availability (99.9%)"
   evaluation_type    = "AGGREGATE"
-  evaluation_window  = "-1w"
+  evaluation_window  = "-1M"
   filter             = "type(SERVICE),entityId(SERVICE-85D75242ED17D58D)"
   metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
-  metric_name        = "experian_uptime"
+  metric_name        = "experian_availability"
+  target_success     = 99.9
+  target_warning     = 99.95
+  error_budget_burn_rate {
+    burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
+  }
+}
+
+resource "dynatrace_slo_v2" "account_management_service" {
+  count              = local.is_production ? 1 : 0
+  name               = "Account Management Service (AVLB002)"
+  enabled            = true
+  custom_description = "Request-based SLO to determine the Availability, averaged across all resources within the AWS accounts that make up this Service (99.90%)"
+  evaluation_type    = "AGGREGATE"
+  evaluation_window  = "-1M"
+  filter             = "type(SERVICE),mzName(di-account-data-production,di-account-production,di-account-interventions-production,di-fraud-admin-interface-prod,di-fraud-ssf-production)"
+  metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
+  metric_name        = "account_management_service"
+  target_success     = 99.9
+  target_warning     = 99.95
+  error_budget_burn_rate {
+    burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
+  }
+}
+
+resource "dynatrace_slo_v2" "identify_proofing_and_verification_service" {
+  count              = local.is_production ? 1 : 0
+  name               = "Identify Proofing and Verification Service (AVLB002)"
+  enabled            = true
+  custom_description = "Request-based SLO to determine the Availability, averaged across all resources within the AWS accounts that make up this Service (99.90%)"
+  evaluation_type    = "AGGREGATE"
+  evaluation_window  = "-1M"
+  filter             = "type(SERVICE),mzName(di-ipv-cri-kbv-prod,di-facetoface-cri-prod,di-ipv-cri-dl-prod,di-ipv-cri-kbv-hmrc-prod,dcmaw-gds-prod,di-facetoface-prod,di-ipv-cri-passport-prod,di-ipv-cri-check-hmrc-prod,di-ipv-cri-passporta-prod,di-ipv-core-prod,di-ipv-cri-fraud-prod,di-ipv-cri-address-prod,di-ipvreturn-prod,di-ipv-spot-prod,di-ipv-contra-indicators-prod,di-ipv-cri-otg-hmrc-prod,di-bav-cri-prod,di-ticf-cri-production,gds-mobile-production-secrets,di-sts-prod)"
+  metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
+  metric_name        = "identify_proofing_and_verification_service"
+  target_success     = 99.5
+  target_warning     = 99.8
+  error_budget_burn_rate {
+    burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
+  }
+}
+
+resource "dynatrace_slo_v2" "identity_re_use_service" {
+  count              = local.is_production ? 1 : 0
+  name               = "Identity Re-Use Service (AVLB002)"
+  enabled            = true
+  custom_description = "Request-based SLO to determine the Availability, averaged across all resources within the AWS accounts that make up this Service (99.90%)"
+  evaluation_type    = "AGGREGATE"
+  evaluation_window  = "-1M"
+  filter             = "type(SERVICE),mzName(di-ipv-core-prod,di-id-reuse-core-production)"
+  metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
+  metric_name        = "identity_re_use_service"
+  target_success     = 99.9
+  target_warning     = 99.95
+  error_budget_burn_rate {
+    burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
+  }
+}
+
+resource "dynatrace_slo_v2" "sign_in_sign_up_service" {
+  count              = local.is_production ? 1 : 0
+  name               = "Sign In / Sign Up Service (AVLB002)"
+  enabled            = true
+  custom_description = "Request-based SLO to determine the Availability, averaged across all resources within the AWS accounts that make up this Service (99.90%)"
+  evaluation_type    = "AGGREGATE"
+  evaluation_window  = "-1M"
+  filter             = "type(SERVICE),mzName(gds-di-production)"
+  metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
+  metric_name        = "sign_in_sign_up_service"
   target_success     = 99.9
   target_warning     = 99.95
   error_budget_burn_rate {
