@@ -1,4 +1,4 @@
-#Web Applications
+# Web Applications - Anomaly detection for applications 
 resource "dynatrace_web_app_anomalies" "web_app_anomalies" {
   error_rate {
     enabled                   = true
@@ -40,7 +40,7 @@ resource "dynatrace_web_app_anomalies" "web_app_anomalies" {
   }
 }
 
-#Mobile Applications
+# Mobile apps - Anomaly detection for mobile applications
 resource "dynatrace_mobile_app_anomalies" "mobile_app_anomalies" {
   error_rate_increase {
     enabled        = true
@@ -76,7 +76,7 @@ resource "dynatrace_mobile_app_anomalies" "mobile_app_anomalies" {
   }
 }
 
-#Mobile Application - crash rate increase
+# Mobile apps - Crash rate increase
 resource "dynatrace_mobile_app_crash_rate" 
   crash_rate_increase {
     enabled        = true
@@ -87,8 +87,7 @@ resource "dynatrace_mobile_app_crash_rate"
       sensitivity = low
     }
   }
-
-#Custom Apps
+ # Custom apps
 resource "dynatrace_custom_app_anomalies" "custom_app_anomalies" {
   error_rate_increase {
     enabled        = true
@@ -124,7 +123,7 @@ resource "dynatrace_custom_app_anomalies" "custom_app_anomalies" {
   }
 }
 
-#Custom Apps - crash rate increase
+# Custom apps - Crash rate increase
 resource "dynatrace_custom_app_crash_rate" {
   crash_rate_increase {
     enabled        = true
@@ -137,7 +136,7 @@ resource "dynatrace_custom_app_crash_rate" {
   }
 }
 
-#Services
+# Services
 resource "dynatrace_service_anomalies_v2" "service_detection_anomalies" {
   failure_rate {
     enabled        = true
@@ -177,7 +176,7 @@ resource "dynatrace_service_anomalies_v2" "service_detection_anomalies" {
   }
 }
 
-#Database Services
+# Database services
 resource "dynatrace_database_anomalies_v2" "database_anomalies" {
   scope = "environment"
   database_connections {
@@ -223,180 +222,182 @@ resource "dynatrace_database_anomalies_v2" "database_anomalies" {
   }
 }
 
-#Metric events
-resource "dynatrace_metric_events" "Amazon_ECS_CPU_reservation" {
+# Metric events
+resource "dynatrace_metric_events" "amazon_ecs_cpu_reservation_aws" {
+  count   = local.is_production ? 0 : 1
   enabled                    = true
   event_entity_dimension_key = "dt.entity.custom_device"
   summary                    = "Amazon ECS CPU reservation [AWS]"
   event_template {
-    description   = "The {metricname} value of {severity} was {alert_condition} your custome threshold of {threshold} "
+    description = "The {metricname} value of {severity} was {alert_condition} your custom threshold of {threshold}."
     davis_merge = true
-    event_type    = "RESOURCE"
-    title         = "Amazon_ECS_CPU_reservation [AWS]"
+    event_type  = "RESOURCE"
+    title       = "Amazon ECS CPU reservation [AWS]"
   }
   model_properties {
     type               = "STATIC_THRESHOLD"
     alert_condition    = "ABOVE"
     alert_on_no_data   = false
-    dealerting_samples = 5 #doesn't have this
-    samples            = 5 #doesn't have this
+    dealerting_samples = 10
+    samples            = 10
     threshold          = 95
-    violating_samples  = 3 #doesn't have this
+    violating_samples  = 3
   }
   query_definition {
     type        = "METRIC_KEY"
     aggregation = "AVG"
-    metric_key  = "CPUReservation"
-  }
-  entity_filter {
-    dimension_key = "dt.entity.custom_device"
+    metric_key  = "ext:cloud.aws.ecs.cpuReservation"
+    entity_filter {
+    }
   }
 }
 
-resource "dynatrace_metric_events" "Amazon_ECS_CPU_utilization (by service name) [AWS]" {
+resource "dynatrace_metric_events" "amazon_ecs_cpu_utilization_by_service_name_aws" {
+  count   = local.is_production ? 0 : 1
   enabled                    = true
   event_entity_dimension_key = "dt.entity.custom_device"
   summary                    = "Amazon ECS CPU utilization (by service name) [AWS]"
   event_template {
-    description   = "The {metricname} value of {severity} was {alert_condition} your custome threshold of {threshold} "
+    description = "The {metricname} value of {severity} was {alert_condition} your custom threshold of {threshold}."
     davis_merge = true
-    event_type    = "RESOURCE"
-    title         = "Amazon ECS CPU utilization (by service name) [AWS]"
+    event_type  = "RESOURCE"
+    title       = "Amazon ECS CPU utilization (by service name) [AWS]"
   }
   model_properties {
     type               = "STATIC_THRESHOLD"
     alert_condition    = "ABOVE"
     alert_on_no_data   = false
-    dealerting_samples = 5 #doesn't have this
-    samples            = 5 #doesn't have this
+    dealerting_samples = 10
+    samples            = 10
     threshold          = 95
-    violating_samples  = 3 #doesn't have this
+    violating_samples  = 3
   }
   query_definition {
     type        = "METRIC_KEY"
     aggregation = "AVG"
-    metric_key  = "CPUUtilization (byServiceName)"
-  }
-   entity_filter {
-    dimension_key = "dt.entity.custom_device"
+    metric_key  = "ext:cloud.aws.ecs.cpuUtilizationByServiceName"
+    entity_filter {
+    }
   }
 }
 
-resource "dynatrace_metric_events" "Amazon_ECS_Memory_reservation[AWS]" {
+resource "dynatrace_metric_events" "amazon_ecs_memory_reservation_aws" {
+  count   = local.is_production ? 0 : 1
   enabled                    = true
   event_entity_dimension_key = "dt.entity.custom_device"
-  summary                    = "Amazon ECS Memory reservation[AWS]"
+  summary                    = "Amazon ECS Memory reservation [AWS]"
   event_template {
-    description   = "The {metricname} value of {severity} was {alert_condition} your custome threshold of {threshold} "
+    description = "The {metricname} value of {severity} was {alert_condition} your custom threshold of {threshold}."
     davis_merge = true
-    event_type    = "RESOURCE"
-    title         = "Amazon ECS Memory reservation[AWS]"
+    event_type  = "RESOURCE"
+    title       = "Amazon ECS Memory reservation [AWS]"
   }
   model_properties {
     type               = "STATIC_THRESHOLD"
     alert_condition    = "ABOVE"
     alert_on_no_data   = false
-    dealerting_samples = 5 #doesn't have this
-    samples            = 5 #doesn't have this
+    dealerting_samples = 10
+    samples            = 10
     threshold          = 95
-    violating_samples  = 3 #doesn't have this
+    violating_samples  = 3
   }
   query_definition {
     type        = "METRIC_KEY"
     aggregation = "AVG"
-    metric_key  = "MemoryReservation"
-  }
-   entity_filter {
-    dimension_key = "dt.entity.custom_device"
-  }
-}
-resource "dynatrace_metric_events" "Amazon_ECS_Memory_utilization (by service name) [AWS]" {
-  enabled                    = true
-  event_entity_dimension_key = "dt.entity.custom_device"
-  summary                    = "Amazon ECS CPU utilization (by service name) [AWS]"
-  event_template {
-    description   = "The {metricname} value of {severity} was {alert_condition} your custome threshold of {threshold} "
-    davis_merge = true
-    event_type    = "RESOURCE"
-    title         = "Amazon ECS Memory utilization (by service name) [AWS]"
-  }
-  model_properties {
-    type               = "STATIC_THRESHOLD"
-    alert_condition    = "ABOVE"
-    alert_on_no_data   = false
-    dealerting_samples = 5 #doesn't have this
-    samples            = 5 #doesn't have this
-    threshold          = 95
-    violating_samples  = 3 #doesn't have this
-  }
-  query_definition {
-    type        = "METRIC_KEY"
-    aggregation = "AVG"
-    metric_key  = "MemoryUtilization (byServiceName)"
-  }
-   entity_filter {
-    dimension_key = "dt.entity.custom_device"
-  }
-}
-resource "dynatrace_metric_events" "Amazon_CodeBuild_CPU_utilized_percent (by build id/build number) [AWS]" {
-  enabled                    = true
-  event_entity_dimension_key = "dt.entity.custom_device"
-  summary                    = "Amazon CodeBuild CPU utilized percent (by build id/build number) [AWS]"
-  event_template {
-    description   = "The {metricname} value of {severity} was {alert_condition} your custome threshold of {threshold} "
-    davis_merge = true
-    event_type    = "RESOURCE"
-    title         = "Amazon CodeBuild CPU utilized percent (by build id/build number) [AWS]"
-  }
-  model_properties {
-    type               = "STATIC_THRESHOLD"
-    alert_condition    = "ABOVE"
-    alert_on_no_data   = false
-    dealerting_samples = 5 #doesn't have this
-    samples            = 5 #doesn't have this
-    threshold          = 95
-    violating_samples  = 3 #doesn't have this
-  }
-  query_definition {
-    type        = "METRIC_KEY"
-    aggregation = "AVG"
-    metric_key  = "CPUUtilizedPercent (by BuildId and BuildNumber)"
-  }
-   entity_filter {
-    dimension_key = "dt.entity.custom_device"
+    metric_key  = "ext:cloud.aws.ecs.memoryReservation"
+    entity_filter {
+    }
   }
 }
 
-resource "dynatrace_metric_events" "AWS_CodeBuild_memory_utilized_percent (by build id/build number) [AWS]" {
+resource "dynatrace_metric_events" "amazon_ecs_memory_utilization" {
+  count   = local.is_production ? 0 : 1
   enabled                    = true
   event_entity_dimension_key = "dt.entity.custom_device"
-  summary                    = "Amazon CodeBuild memory utilized percent (by build id/build number) [AWS]"
+  summary                    = "Amazon ECS Memory utilization (by service name) [AWS]"
   event_template {
-    description   = "The {metricname} value of {severity} was {alert_condition} your custome threshold of {threshold} "
+    description = "The {metricname} value of {severity} was {alert_condition} your custom threshold of {threshold}."
     davis_merge = true
-    event_type    = "RESOURCE"
-    title         = "AWS CodeBuild memory utilized percent (by build id/build number)"
+    event_type  = "RESOURCE"
+    title       = "Amazon ECS Memory utilization (by service name) [AWS]"
   }
   model_properties {
     type               = "STATIC_THRESHOLD"
     alert_condition    = "ABOVE"
     alert_on_no_data   = false
-    dealerting_samples = 5 #doesn't have this
-    samples            = 5 #doesn't have this
+    dealerting_samples = 10
+    samples            = 10
     threshold          = 95
-    violating_samples  = 3 #doesn't have this
+    violating_samples  = 3
   }
   query_definition {
     type        = "METRIC_KEY"
     aggregation = "AVG"
-    metric_key  = "MemoryUtilizedPercent (by BuildId and BuildNumber)"
-  }
-   entity_filter {
-    dimension_key = "dt.entity.custom_device"
+    metric_key  = "ext:cloud.aws.ecs.memoryUtilizationByServiceName"
+    entity_filter {
+    }
   }
 }
 
-#Frequent Issue detection
+resource "dynatrace_metric_events" "aws_codebuild_cpu_utilized_percent" {
+  count   = local.is_production ? 0 : 1
+  enabled                    = true
+  event_entity_dimension_key = "dt.entity.custom_device"
+  summary                    = "AWS CodeBuild CPU utilized percent (by build id/build number) [AWS]"
+  event_template {
+    description = "The {metricname} value of {severity} was {alert_condition} your custom threshold of {threshold}."
+    davis_merge = true
+    event_type  = "RESOURCE"
+    title       = "AWS CodeBuild CPU utilized percent (by build id/build number) [AWS]"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    alert_on_no_data   = false
+    dealerting_samples = 10
+    samples            = 10
+    threshold          = 95
+    violating_samples  = 3
+  }
+  query_definition {
+    type        = "METRIC_KEY"
+    aggregation = "AVG"
+    metric_key  = "ext:cloud.aws.codebuild.cpuUtilizedPercentByBuildIdBuildNumber"
+    entity_filter {
+    }
+  }
+}
+
+resource "dynatrace_metric_events" "aws_codebuild_memory_utilized_percent" {
+  count   = local.is_production ? 0 : 1
+  enabled                    = true
+  event_entity_dimension_key = "dt.entity.custom_device"
+  summary                    = "AWS CodeBuild memory utilized percent (by build id/build number) [AWS]"
+  event_template {
+    description = "The {metricname} value of {severity} was {alert_condition} your custom threshold of {threshold}."
+    davis_merge = true
+    event_type  = "RESOURCE"
+    title       = "AWS CodeBuild memory utilized percent (by build id/build number) [AWS]"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    alert_on_no_data   = false
+    dealerting_samples = 10
+    samples            = 10
+    threshold          = 95
+    violating_samples  = 3
+  }
+  query_definition {
+    type        = "METRIC_KEY"
+    aggregation = "AVG"
+    metric_key  = "ext:cloud.aws.codebuild.memoryUtilizedPercentByBuildIdBuildNumber"
+    entity_filter {
+    }
+  }
+}
+
+# Frequent issue detection
 resource "dynatrace_frequent_issues" "frequent_issue_detection" {
   detect_apps = true
   detect_txn = true
