@@ -85,3 +85,25 @@ resource "dynatrace_dashboard_sharing" "dora_metrics_dashboard" {
     }
   }
 }
+
+resource "dynatrace_json_dashboard" "dns" {
+  contents = file("${path.module}/dashboards/dns.json")
+}
+
+resource "dynatrace_dashboard_sharing" "dns" {
+  dashboard_id = dynatrace_json_dashboard.dns.id
+
+  enabled = true
+
+  permissions {
+    permission {
+      level = "VIEW"
+      type  = "ALL"
+    }
+    permission {
+      id    = data.dynatrace_iam_group.all.id
+      level = "VIEW"
+      type  = "GROUP"
+    }
+  }
+}
