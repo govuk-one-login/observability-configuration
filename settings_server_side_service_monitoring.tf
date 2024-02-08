@@ -5,6 +5,22 @@
 # Terraform resource does not exist for Request naming
 
 # API detection rules - Need import to current terraform state file.
+
+resource "dynatrace_api_detection" "test_api_detection" {
+  count           = local.is_production ? 0 : 1
+  api_color       = "#b4e5f4"
+  api_name        = "Pavels-Test"
+  technology      = "PHP"
+  third_party_api = true
+  conditions {
+    condition {
+      base    = "FILE_NAME"
+      matcher = "CONTAINS"
+      pattern = "wp-include/"
+    }
+  }
+}
+
 # resource "dynatrace_api_detection" "built_in_wordpress" {
 #   api_color       = "#b4e5f9"
 #   api_name        = "Built-In Wordpress"
