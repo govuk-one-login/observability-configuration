@@ -4,8 +4,7 @@
 # Not in use - Calculated service metrics
 # Terraform resource does not exist for Request naming
 
-# API detection rules - Need import to current terraform state file.
-
+# API detection rules
 resource "dynatrace_api_detection" "built_in_wordpress" {
   api_color       = "#b4e5f9"
   api_name        = "Built-In Wordpress"
