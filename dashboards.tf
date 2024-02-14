@@ -65,7 +65,7 @@ resource "dynatrace_dashboard_sharing" "team-idc-app" {
 }
 
 resource "dynatrace_json_dashboard" "dora_metrics_dashboard" {
-  contents = file("${path.module}/dashboards/dora_metrics_dashboard.json")
+  contents = file("${path.module}/dashboards/dev-platform/dora_metrics_dashboard.json")
 }
 
 resource "dynatrace_dashboard_sharing" "dora_metrics_dashboard" {
