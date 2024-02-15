@@ -107,3 +107,8 @@ resource "dynatrace_dashboard_sharing" "dns" {
     }
   }
 }
+
+module "dora_demo_sam_app_dashboard" {
+  source = ".modules/dashboard"
+  path   = "dev-platform/dora_demo_sam_app_dashboard.json" 
+}
