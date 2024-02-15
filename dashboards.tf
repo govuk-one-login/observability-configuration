@@ -1,3 +1,7 @@
+resource "dynatrace_json_dashboard" "signin-signup" {
+  contents = file("/dashboards/signin-signup.json")
+}
+
 resource "dynatrace_dashboard_sharing" "signin-signup" {
   dashboard_id = dynatrace_json_dashboard.signin-signup.id
 

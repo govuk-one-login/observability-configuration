@@ -1,3 +1,7 @@
+resource "dynatrace_json_dashboard" "signin-signup" {
+  contents = file("/dashboards/signin-signup.json")
+}
+
 data "dynatrace_iam_group" "all" {
   name = "all"
 }
