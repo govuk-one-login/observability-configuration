@@ -1,7 +1,3 @@
-resource "dynatrace_json_dashboard" "main" {
-  contents = file("${path.module}/dashboards/${var.path}")
-}
-
 data "dynatrace_iam_group" "all" {
   name = "all"
 }
