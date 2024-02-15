@@ -108,6 +108,17 @@ resource "dynatrace_dashboard_sharing" "dns" {
   }
 }
 
-resource "dynatrace_json_dashboard" "dora_demo_sam_app_dashboard" {
-  contents = file("${path.module}/dashboards/dev-platform/dora_demo_sam_app_dashboard.json")
+module "dora_demo_sam_app_dashboard" {
+  source = "./modules/dashboards"
+  path   = "dev-platform/dora_demo_sam_app_dashboard.json"
+}
+
+module "test_team_1_dashboard" {
+  source = "./modules/dashboards"
+  path   = "dev-platform/test_team_1_dashboard.json"
+}
+
+module "test_team_2_dashboard" {
+  source = "./modules/dashboards"
+  path   = "dev-platform/test_team_2_dashboard.json"
 }
