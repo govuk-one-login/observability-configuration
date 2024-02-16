@@ -114,7 +114,7 @@ module "dora_demo_sam_app_dashboard" {
 }
 
 resource "dynatrace_json_dashboard" "dora_demo_sam_app_dashboard" {
-  contents = file(./dashboards/dora_demo_sam_app_dashboard.json")
+  contents = file("./dashboards/dora_demo_sam_app_dashboard.json")
 }
 
 resource "dynatrace_dashboard_sharing" "dora_demo_sam_app_dashboard" {
@@ -141,7 +141,7 @@ module "test_team_1_dashboard" {
 }
 
 resource "dynatrace_json_dashboard" "test_team_1_dashboard" {
-  contents = file(./dashboards/test_team_1_dashboard.json")
+  contents = file("./dashboards/test_team_1_dashboard.json")
 }
 
 resource "dynatrace_dashboard_sharing" "test_team_1_dashboard" {
@@ -168,7 +168,7 @@ module "test_team_2_dashboard" {
 }
 
 resource "dynatrace_json_dashboard" "test_team_2_dashboard" {
-  contents = file(./dashboards/test_team_2_dashboard.json")
+  contents = file("./dashboards/test_team_2_dashboard.json")
 }
 
 resource "dynatrace_dashboard_sharing" "test_team_2_dashboard" {
