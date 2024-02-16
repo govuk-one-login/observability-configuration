@@ -1,5 +1,5 @@
-resource "dynatrace_json_dashboard" "signin-signup" {
-  contents = file("/dashboards/signin-signup.json")
+resource "dynatrace_json_dashboard" "main" {
+  contents = file("${path.module}/dashboards/${var.path}")
 }
 
 data "dynatrace_iam_group" "all" {

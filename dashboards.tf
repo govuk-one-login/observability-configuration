@@ -1,5 +1,5 @@
 resource "dynatrace_json_dashboard" "signin-signup" {
-  contents = file("/dashboards/signin-signup.json")
+  contents = file("${path.module}/dashboards/signin-signup.json")
 }
 
 resource "dynatrace_dashboard_sharing" "signin-signup" {
