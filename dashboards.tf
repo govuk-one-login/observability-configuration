@@ -113,12 +113,66 @@ module "dora_demo_sam_app_dashboard" {
   path   = "dev-platform/dora_demo_sam_app_dashboard.json"
 }
 
+resource "dynatrace_dashboard_sharing" "dora_demo_sam_app_dashboard" {
+  dashboard_id = dynatrace_json_dashboard.dora_demo_sam_app_dashboard.id
+
+  enabled = true
+
+  permissions {
+    permission {
+      level = "VIEW"
+      type  = "ALL"
+    }
+    permission {
+      id    = data.dynatrace_iam_group.all.id
+      level = "VIEW"
+      type  = "GROUP"
+    }
+  }
+}
+
 module "test_team_1_dashboard" {
   source = "./modules/dashboard"
   path   = "dev-platform/test_team_1_dashboard.json"
 }
 
+resource "dynatrace_dashboard_sharing" "test_team_1_dashboard" {
+  dashboard_id = dynatrace_json_dashboard.test_team_1_dashboard.id
+
+  enabled = true
+
+  permissions {
+    permission {
+      level = "VIEW"
+      type  = "ALL"
+    }
+    permission {
+      id    = data.dynatrace_iam_group.all.id
+      level = "VIEW"
+      type  = "GROUP"
+    }
+  }
+}
+
 module "test_team_2_dashboard" {
   source = "./modules/dashboard"
   path   = "dev-platform/test_team_2_dashboard.json"
+}
+
+resource "dynatrace_dashboard_sharing" "test_team_2_dashboard" {
+  dashboard_id = dynatrace_json_dashboard.test_team_2_dashboard.id
+
+  enabled = true
+
+  permissions {
+    permission {
+      level = "VIEW"
+      type  = "ALL"
+    }
+    permission {
+      id    = data.dynatrace_iam_group.all.id
+      level = "VIEW"
+      type  = "GROUP"
+    }
+  }
 }
