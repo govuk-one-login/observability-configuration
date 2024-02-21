@@ -32,13 +32,13 @@ resource "dynatrace_web_app_anomalies" "web_app_anomalies" {
   }
   traffic_drops {
     enabled = true
+    traffic_drops {
+        abnormal_state_abnormal_state = 1
+        traffic_drop_percentage = 50
+    }
   }
   traffic_spikes {
     enabled = false
-    traffic_spikes {
-      minutes_abnormal_state   = 1
-      traffic_spike_percentage = 50
-    }
   }
 }
 
@@ -517,8 +517,6 @@ resource "dynatrace_aws_anomalies" "aws_anomalies" {
   }
 }
 
-
-
 #VMware
 resource "dynatrace_vmware_anomalies" "vmware_anomalies" {
   dropped_packets_detection {
@@ -554,7 +552,6 @@ resource "dynatrace_vmware_anomalies" "vmware_anomalies" {
     detection_mode = "auto"
   }
 }
-
 
 #Kubernetes
 #Cluster
