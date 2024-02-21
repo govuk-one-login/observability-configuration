@@ -22,19 +22,19 @@ resource "dynatrace_web_app_anomalies" "web_app_anomalies" {
       }
       response_time_all {
         degradation_milliseconds = 100
-        degradation_percent = 50
+        degradation_percent      = 50
       }
       response_time_slowest {
         slowest_degradation_milliseconds = 1000
-        slowest_degradation_percent = 100
+        slowest_degradation_percent      = 100
       }
     }
   }
   traffic_drops {
     enabled = true
     traffic_drops {
-        abnormal_state_abnormal_state = 1
-        traffic_drop_percentage = 50
+      abnormal_state_abnormal_state = 1
+      traffic_drop_percentage       = 50
     }
   }
   traffic_spikes {
@@ -60,20 +60,20 @@ resource "dynatrace_mobile_app_anomalies" "mobile_app_anomalies" {
         min_action_rate = 10
       }
       duration_threshold_all {
-        duration_threshold = 200
+        duration_threshold  = 200
         slowdown_percentage = 50
       }
       duration_threshold_slowest {
-        duration_threshold = 100
+        duration_threshold  = 100
         slowdown_percentage = 100
       }
     }
   }
   unexpected_high_load {
-    enabled              = false
+    enabled = false
   }
   unexpected_low_load {
-    enabled = true
+    enabled              = true
     threshold_percentage = 50
   }
 }
@@ -85,12 +85,12 @@ resource "dynatrace_mobile_app_crash_rate" "mobile_app_crash_rate" {
     detection_mode = "auto"
     crash_rate_increase_auto {
       baseline_violation_percentage = 150
-      concurrent_users    = 100
-      sensitivity = "low"
+      concurrent_users              = 100
+      sensitivity                   = "low"
     }
   }
 }
- # Custom apps
+# Custom apps
 resource "dynatrace_custom_app_anomalies" "custom_app_anomalies" {
   error_rate_increase {
     enabled        = true
@@ -101,24 +101,24 @@ resource "dynatrace_custom_app_anomalies" "custom_app_anomalies" {
     }
   }
   slow_user_actions {
-    enabled = true
+    enabled        = true
     detection_mode = "auto"
     slow_user_actions_auto {
-        duration_avoid_overalerting {
-            min_action_rate = 10
-        } 
-        duration_threshold_all {
-            duration_threshold = 100
-            slowdown_percentage = 50
-        }
-        duration_threshold_slowest {
-            duration_threshold = 1000
-            slowdown_percentage = 100
-        }
+      duration_avoid_overalerting {
+        min_action_rate = 10
+      }
+      duration_threshold_all {
+        duration_threshold  = 100
+        slowdown_percentage = 50
+      }
+      duration_threshold_slowest {
+        duration_threshold  = 1000
+        slowdown_percentage = 100
+      }
     }
   }
   unexpected_high_load {
-    enabled              = false
+    enabled = false
   }
   unexpected_low_load {
     enabled              = true
@@ -133,8 +133,8 @@ resource "dynatrace_custom_app_crash_rate" "custom_app_crash_rate" {
     detection_mode = "auto"
     crash_rate_increase_auto {
       baseline_violation_percentage = 150
-      concurrent_users    = 100
-      sensitivity = "low"
+      concurrent_users              = 100
+      sensitivity                   = "low"
     }
   }
 }
@@ -154,10 +154,10 @@ resource "dynatrace_service_anomalies_v2" "service_detection_anomalies" {
     }
   }
   load_drops {
-    enabled                = false
+    enabled = false
   }
   load_spikes {
-    enabled                = false
+    enabled = false
   }
   response_time {
     enabled        = true
@@ -169,11 +169,11 @@ resource "dynatrace_service_anomalies_v2" "service_detection_anomalies" {
       }
       response_time_all {
         degradation_milliseconds = 100
-        degradation_percent = 50
+        degradation_percent      = 50
       }
       response_time_slowest {
         slowest_degradation_milliseconds = 1000
-        slowest_degradation_percent = 100
+        slowest_degradation_percent      = 100
       }
     }
   }
@@ -215,11 +215,11 @@ resource "dynatrace_database_anomalies_v2" "database_anomalies" {
       }
       response_time_all {
         degradation_milliseconds = 5
-        degradation_percent = 50
+        degradation_percent      = 50
       }
       response_time_slowest {
         slowest_degradation_milliseconds = 20
-        slowest_degradation_percent = 100
+        slowest_degradation_percent      = 100
       }
     }
   }
@@ -227,7 +227,7 @@ resource "dynatrace_database_anomalies_v2" "database_anomalies" {
 
 # Metric events
 resource "dynatrace_metric_events" "amazon_ecs_cpu_reservation_aws" {
-  count   = local.is_production ? 0 : 1
+  count                      = local.is_production ? 0 : 1
   enabled                    = true
   event_entity_dimension_key = "dt.entity.custom_device"
   summary                    = "Amazon ECS CPU reservation [AWS]"
@@ -256,7 +256,7 @@ resource "dynatrace_metric_events" "amazon_ecs_cpu_reservation_aws" {
 }
 
 resource "dynatrace_metric_events" "amazon_ecs_cpu_utilization_by_service_name_aws" {
-  count   = local.is_production ? 0 : 1
+  count                      = local.is_production ? 0 : 1
   enabled                    = true
   event_entity_dimension_key = "dt.entity.custom_device"
   summary                    = "Amazon ECS CPU utilization (by service name) [AWS]"
@@ -285,7 +285,7 @@ resource "dynatrace_metric_events" "amazon_ecs_cpu_utilization_by_service_name_a
 }
 
 resource "dynatrace_metric_events" "amazon_ecs_memory_reservation_aws" {
-  count   = local.is_production ? 0 : 1
+  count                      = local.is_production ? 0 : 1
   enabled                    = true
   event_entity_dimension_key = "dt.entity.custom_device"
   summary                    = "Amazon ECS Memory reservation [AWS]"
@@ -314,7 +314,7 @@ resource "dynatrace_metric_events" "amazon_ecs_memory_reservation_aws" {
 }
 
 resource "dynatrace_metric_events" "amazon_ecs_memory_utilization" {
-  count   = local.is_production ? 0 : 1
+  count                      = local.is_production ? 0 : 1
   enabled                    = true
   event_entity_dimension_key = "dt.entity.custom_device"
   summary                    = "Amazon ECS Memory utilization (by service name) [AWS]"
@@ -343,7 +343,7 @@ resource "dynatrace_metric_events" "amazon_ecs_memory_utilization" {
 }
 
 resource "dynatrace_metric_events" "aws_codebuild_cpu_utilized_percent" {
-  count   = local.is_production ? 0 : 1
+  count                      = local.is_production ? 0 : 1
   enabled                    = true
   event_entity_dimension_key = "dt.entity.custom_device"
   summary                    = "AWS CodeBuild CPU utilized percent (by build id/build number) [AWS]"
@@ -372,7 +372,7 @@ resource "dynatrace_metric_events" "aws_codebuild_cpu_utilized_percent" {
 }
 
 resource "dynatrace_metric_events" "aws_codebuild_memory_utilized_percent" {
-  count   = local.is_production ? 0 : 1
+  count                      = local.is_production ? 0 : 1
   enabled                    = true
   event_entity_dimension_key = "dt.entity.custom_device"
   summary                    = "AWS CodeBuild memory utilized percent (by build id/build number) [AWS]"
@@ -402,8 +402,8 @@ resource "dynatrace_metric_events" "aws_codebuild_memory_utilized_percent" {
 
 # Frequent issue detection
 resource "dynatrace_frequent_issues" "frequent_issue_detection" {
-  detect_apps = true
-  detect_txn = true
+  detect_apps  = true
+  detect_txn   = true
   detect_infra = true
 }
 
@@ -444,7 +444,7 @@ resource "dynatrace_host_anomalies_v2" "host_anomalies" {
   }
   network {
     high_network_detection {
-      enabled        = false
+      enabled = false
     }
     network_dropped_packets_detection {
       enabled        = true
@@ -455,10 +455,10 @@ resource "dynatrace_host_anomalies_v2" "host_anomalies" {
       detection_mode = "auto"
     }
     network_high_retransmission_detection {
-      enabled        = false
+      enabled = false
     }
     network_tcp_problems_detection {
-      enabled        = false
+      enabled = false
     }
   }
 }
@@ -476,7 +476,7 @@ resource "dynatrace_disk_anomalies_v2" "Disk_anomalies" {
       detection_mode = "auto"
     }
     disk_slow_writes_and_reads_detection {
-      enabled        = false
+      enabled = false
     }
   }
 }
@@ -496,7 +496,7 @@ resource "dynatrace_aws_anomalies" "aws_anomalies" {
     detection_mode = "auto"
   }
   rds_high_cpu_detection {
-    enabled = true
+    enabled        = true
     detection_mode = "auto"
   }
   rds_high_memory_detection {
@@ -508,11 +508,11 @@ resource "dynatrace_aws_anomalies" "aws_anomalies" {
     detection_mode = "auto"
   }
   rds_low_storage_detection {
-    enabled = true
+    enabled        = true
     detection_mode = "auto"
   }
   rds_restarts_sequence_detection {
-    enabled = true
+    enabled        = true
     detection_mode = "auto"
   }
 }
@@ -524,7 +524,7 @@ resource "dynatrace_vmware_anomalies" "vmware_anomalies" {
     detection_mode = "auto"
   }
   esxi_high_cpu_detection {
-    enabled = true
+    enabled        = true
     detection_mode = "auto"
   }
   esxi_high_memory_detection {
@@ -536,7 +536,7 @@ resource "dynatrace_vmware_anomalies" "vmware_anomalies" {
     detection_mode = "auto"
   }
   low_datastore_space_detection {
-    enabled = true
+    enabled        = true
     detection_mode = "auto"
   }
   overloaded_storage_detection {
@@ -548,7 +548,7 @@ resource "dynatrace_vmware_anomalies" "vmware_anomalies" {
     detection_mode = "auto"
   }
   undersized_storage_detection {
-    enabled = true
+    enabled        = true
     detection_mode = "auto"
   }
 }
