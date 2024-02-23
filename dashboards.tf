@@ -194,15 +194,15 @@ variable "teams" {
   default = {
     "team-a" = {
       header = "header-team-a"
-      owner = "team-a@company.org"
+      owner  = "team-a@company.org"
     }
     "team-b" = {
       header = "header-team-b"
-      owner = "team-b@company.org"
+      owner  = "team-b@company.org"
     }
     "team-c" = {
       header = "header-team-c"
-      owner = "team-c@company.org"
+      owner  = "team-c@company.org"
     }
   }
 }
