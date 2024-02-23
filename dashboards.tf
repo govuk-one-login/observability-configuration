@@ -210,5 +210,5 @@ variable "teams" {
 resource "dynatrace_json_dashboard" "Team-Dashboards" {
   for_each = var.teams
 
-  contents = templatefile("./dashboards/dev-platform/TEMPLATE_dashboard.json",each)
+  contents = templatefile("./dashboards/dev-platform/TEMPLATE_dashboard.json", each)
 }
