@@ -198,12 +198,12 @@ variable "teams" {
       samstackname = "fraud-cri-front"
     }
     "team-b" = {
-      header       = "Team B"
+      name       = "Team B"
       owner        = "team-b@company.org"
       samstackname = "fraud-cri-front"
     }
     "team-c" = {
-      header       = "Team C"
+      name       = "Team C"
       owner        = "team-c@company.org"
       samstackname = "fraud-cri-front"
     }
