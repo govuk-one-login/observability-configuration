@@ -207,7 +207,7 @@ variable "teams" {
   }
 }
 
-resource "dynatrace_json_dashboard" "Team-Dashboards" {
+resource "dynatrace_json_dashboard" "Team-DORA-Dashboards" {
   for_each = var.teams
 
   contents = templatefile("./dashboards/dev-platform/TEMPLATE_dashboard.json", {
@@ -215,3 +215,23 @@ resource "dynatrace_json_dashboard" "Team-Dashboards" {
     owner  = each.value.owner
   })
 }
+
+# resource "dynatrace_dashboard_sharing" "Team-DORA-Dashboards" {
+#   for_each = var.teams
+
+#   dashboard_id = dynatrace_json_dashboard.Team-DORA-Dashboards.id
+
+#   enabled = true
+
+#   permissions {
+#     permission {
+#       level = "VIEW"
+#       type  = "ALL"
+#     }
+#     permission {
+#       id    = data.dynatrace_iam_group.all.id
+#       level = "VIEW"
+#       type  = "GROUP"
+#     }
+#   }
+# }
