@@ -219,7 +219,7 @@ resource "dynatrace_json_dashboard" "Team-DORA-Dashboards" {
 resource "dynatrace_dashboard_sharing" "Team-DORA-Dashboards" {
   for_each = var.teams
 
-  dashboard_id = dynatrace_json_dashboard.tTeam-DORA-Dashboards.id
+  dashboard_id = dynatrace_json_dashboard.Team-DORA-Dashboards.id
 
   enabled = true
 
