@@ -188,3 +188,30 @@ resource "dynatrace_dashboard_sharing" "test_team_2_dashboard" {
     }
   }
 }
+
+variable "teams" {
+  description = "map"
+  default = {
+    "team-a" = {
+      header = "header-team-a"
+      owner  = "team-a@company.org"
+    }
+    "team-b" = {
+      header = "header-team-b"
+      owner  = "team-b@company.org"
+    }
+    "team-c" = {
+      header = "header-team-c"
+      owner  = "team-c@company.org"
+    }
+  }
+}
+
+resource "dynatrace_json_dashboard" "Team-Dashboards" {
+  for_each = var.teams
+
+  contents = templatefile("./dashboards/dev-platform/TEMPLATE_dashboard.json", {
+    header = each.key
+    owner  = each.value.owner
+  })
+}
