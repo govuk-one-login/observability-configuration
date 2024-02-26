@@ -193,16 +193,19 @@ variable "teams" {
   description = "map"
   default = {
     "team-a" = {
-      header = "header-team-a"
-      owner  = "team-a@company.org"
+      name         = "Team A"
+      owner        = "team-a@company.org"
+      samstackname = "fraud-cri-front"
     }
     "team-b" = {
-      header = "header-team-b"
-      owner  = "team-b@company.org"
+      header       = "Team B"
+      owner        = "team-b@company.org"
+      samstackname = "fraud-cri-front"
     }
     "team-c" = {
-      header = "header-team-c"
-      owner  = "team-c@company.org"
+      header       = "Team C"
+      owner        = "team-c@company.org"
+      samstackname = "fraud-cri-front"
     }
   }
 }
