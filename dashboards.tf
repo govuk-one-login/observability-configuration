@@ -216,22 +216,22 @@ resource "dynatrace_json_dashboard" "Team-DORA-Dashboards" {
   })
 }
 
-resource "dynatrace_dashboard_sharing" "Team-DORA-Dashboards" {
-  for_each = var.teams
+# resource "dynatrace_dashboard_sharing" "Team-DORA-Dashboards" {
+#   for_each = var.teams
 
-  dashboard_id = dynatrace_json_dashboard.Team-DORA-Dashboards.id
+#   dashboard_id = dynatrace_json_dashboard.Team-DORA-Dashboards.id
 
-  enabled = true
+#   enabled = true
 
-  permissions {
-    permission {
-      level = "VIEW"
-      type  = "ALL"
-    }
-    permission {
-      id    = data.dynatrace_iam_group.all.id
-      level = "VIEW"
-      type  = "GROUP"
-    }
-  }
-}
+#   permissions {
+#     permission {
+#       level = "VIEW"
+#       type  = "ALL"
+#     }
+#     permission {
+#       id    = data.dynatrace_iam_group.all.id
+#       level = "VIEW"
+#       type  = "GROUP"
+#     }
+#   }
+# }
