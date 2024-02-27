@@ -4,6 +4,15 @@ This repository contains Terraform configuration for Dynatrace.
 
 Key features of Dynatrace will be managed here.
 
+## Requirements
+- pre-commit:
+
+```bash
+pip install pre-commit
+pre-commit install -tpre-commit -tprepare-commit-msg -tcommit-msg
+```
+Note: Dont use "brew' on mac, this can fail to compile some modules.
+
 ## Setup
 
 To test, the following environment variables must be set:
@@ -33,7 +42,7 @@ Then, you can use `terraform plan` to test changes, `terraform apply` to apply t
 
 ## Contributing
 
-This repository is *public*, do not commit anything sensitive. If you feel you have to, reach out to the Observability team to discuss your use case.
+This repository is *PUBLIC*, do not commit anything sensitive. If you feel you have to, reach out to the Observability team to discuss your use case.
 
 ### Adding a dashboard
 
