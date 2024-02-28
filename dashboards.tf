@@ -193,19 +193,19 @@ variable "teams" {
   description = "map"
   default = {
     "team-a" = {
-      name         = "Team A"
+      name         = "CRI Orange"
       owner        = "team-a@company.org"
       samstackname = "fraud-cri-front"
     }
     "team-b" = {
-      name         = "Team B"
+      name         = "CRI Orange"
       owner        = "team-b@company.org"
-      samstackname = "fraud-cri-front"
+      samstackname = "ipv-cri-passport-front"
     }
     "team-c" = {
-      name         = "Team C"
+      name         = "Mobile App"
       owner        = "team-c@company.org"
-      samstackname = "fraud-cri-front"
+      samstackname = "backend-api"
     }
   }
 }
