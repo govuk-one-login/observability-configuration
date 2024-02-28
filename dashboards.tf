@@ -219,7 +219,7 @@ resource "dynatrace_json_dashboard" "Team-DORA-Dashboards" {
   for_each = var.teams
 
   contents = templatefile("./dashboards/dev-platform/TEMPLATE_dashboard.json", {
-    name         = each.key
+    name         = each.value.name
     owner        = each.value.owner
     samstackname = each.value.samstackname
   })
