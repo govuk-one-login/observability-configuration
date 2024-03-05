@@ -6,7 +6,7 @@ resource "dynatrace_failure_detection_parameters" "ignore_page_not_found" {
   }
 
   http_response_codes {
-    client_side_errors                        = "500-599"
+    client_side_errors                        = "400-599"
     server_side_errors                        = "500-599"
     fail_on_missing_response_code_client_side = false
     fail_on_missing_response_code_server_side = false
