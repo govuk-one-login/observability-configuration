@@ -1,0 +1,5751 @@
+ {
+  "metadata": {
+    "configurationVersions": [
+      7
+    ],
+    "clusterVersion": "1.285.97.20240220-045720"
+  },
+  "id": "ad2f5739-986e-4a48-9d66-05ea8082a4f1",
+  "dashboardMetadata": {
+    "name": "Spot Lambda Metrics",
+    "shared": true,
+    "owner": "mohammed.shareef@digital.cabinet-office.gov.uk",
+    "dashboardFilter": {
+      "timeframe": "-30d to now"
+    },
+    "popularity": 1,
+    "hasConsistentColors": false
+  },
+  "tiles": [
+    {
+      "name": "Invocations and Errors",
+      "nameSize": "small",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 38,
+        "left": 0,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.invocations",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-IdentityCreationFunction-fTaS5ip7Isbx",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.errors",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-IdentityCreationFunction-fTaS5ip7Isbx",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Invocations"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA",
+              "alias": "Errors"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-IdentityCreationFunction-fTaS5ip7Isbx~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-IdentityCreationFunction-fTaS5ip7Isbx~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Duration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 38,
+        "left": 988,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-IdentityCreationFunction-fTaS5ip7Isbx",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-IdentityCreationFunction-fTaS5ip7Isbx",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-IdentityCreationFunction-fTaS5ip7Isbx",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Average"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "STACKED_AREA",
+              "alias": "Minimum"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "BLUE",
+              "seriesType": "STACKED_AREA",
+              "alias": "Maximum"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "LambdaFunction code execution time.",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-IdentityCreationFunction-fTaS5ip7Isbx~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-IdentityCreationFunction-fTaS5ip7Isbx~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-IdentityCreationFunction-fTaS5ip7Isbx~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Duration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 494,
+        "left": 988,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-IdentitySigningFunction-m3PbW3SbXtAv",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-IdentitySigningFunction-m3PbW3SbXtAv",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-IdentitySigningFunction-m3PbW3SbXtAv",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Average"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "STACKED_AREA",
+              "alias": "Minimum"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "BLUE",
+              "seriesType": "STACKED_AREA",
+              "alias": "Maximum"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "LambdaFunction code execution time.",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-IdentitySigningFunction-m3PbW3SbXtAv~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-IdentitySigningFunction-m3PbW3SbXtAv~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-IdentitySigningFunction-m3PbW3SbXtAv~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Invocations and Errors",
+      "nameSize": "large",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 950,
+        "left": 0,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.invocations",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-TriggerFunction-eLY0e4q13Dcn",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.errors",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-TriggerFunction-eLY0e4q13Dcn",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Invocations"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA",
+              "alias": "Errors"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-TriggerFunction-eLY0e4q13Dcn~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-TriggerFunction-eLY0e4q13Dcn~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Concurrent Executions",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 950,
+        "left": 494,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.concExecutions",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-TriggerFunction-eLY0e4q13Dcn",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.throttlers",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-TriggerFunction-eLY0e4q13Dcn",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "Concurrent Executions"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "Throttles"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-TriggerFunction-eLY0e4q13Dcn~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-TriggerFunction-eLY0e4q13Dcn~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Duration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 950,
+        "left": 988,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-TriggerFunction-eLY0e4q13Dcn",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-TriggerFunction-eLY0e4q13Dcn",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-TriggerFunction-eLY0e4q13Dcn",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Average"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "STACKED_AREA",
+              "alias": "Minimum"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "BLUE",
+              "seriesType": "STACKED_AREA",
+              "alias": "Maximum"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "LambdaFunction code execution time.",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-TriggerFunction-eLY0e4q13Dcn~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-TriggerFunction-eLY0e4q13Dcn~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-TriggerFunction-eLY0e4q13Dcn~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Invocations and Errors",
+      "nameSize": "large",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1406,
+        "left": 0,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.invocations",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ValidationCompareFunction-Uy26cltSzaMb",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.errors",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ValidationCompareFunction-Uy26cltSzaMb",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Invocations"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA",
+              "alias": "Errors"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ValidationCompareFunction-Uy26cltSzaMb~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ValidationCompareFunction-Uy26cltSzaMb~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Concurrent Executions",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1406,
+        "left": 494,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.concExecutions",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ValidationCompareFunction-Uy26cltSzaMb",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.throttlers",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ValidationCompareFunction-Uy26cltSzaMb",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "Concurrent Executions"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "Throttles"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ValidationCompareFunction-Uy26cltSzaMb~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ValidationCompareFunction-Uy26cltSzaMb~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Duration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1406,
+        "left": 988,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ValidationCompareFunction-Uy26cltSzaMb",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ValidationCompareFunction-Uy26cltSzaMb",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ValidationCompareFunction-Uy26cltSzaMb",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Average"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "STACKED_AREA",
+              "alias": "Minimum"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "BLUE",
+              "seriesType": "STACKED_AREA",
+              "alias": "Maximum"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "LambdaFunction code execution time.",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ValidationCompareFunction-Uy26cltSzaMb~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ValidationCompareFunction-Uy26cltSzaMb~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ValidationCompareFunction-Uy26cltSzaMb~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Invocations and Errors",
+      "nameSize": "large",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1862,
+        "left": 0,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.invocations",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ValidationFunction-LnyZroTUQ1xo",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.errors",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ValidationFunction-LnyZroTUQ1xo",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Invocations"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA",
+              "alias": "Errors"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ValidationFunction-LnyZroTUQ1xo~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ValidationFunction-LnyZroTUQ1xo~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Concurrent Executions",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1862,
+        "left": 494,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.concExecutions",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ValidationFunction-LnyZroTUQ1xo",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.throttlers",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ValidationFunction-LnyZroTUQ1xo",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "Concurrent Executions"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "Throttles"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ValidationFunction-LnyZroTUQ1xo~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ValidationFunction-LnyZroTUQ1xo~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Duration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1862,
+        "left": 988,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ValidationFunction-LnyZroTUQ1xo",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ValidationFunction-LnyZroTUQ1xo",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ValidationFunction-LnyZroTUQ1xo",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Average"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "STACKED_AREA",
+              "alias": "Minimum"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "BLUE",
+              "seriesType": "STACKED_AREA",
+              "alias": "Maximum"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "LambdaFunction code execution time.",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ValidationFunction-LnyZroTUQ1xo~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ValidationFunction-LnyZroTUQ1xo~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ValidationFunction-LnyZroTUQ1xo~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Invocations and Errors",
+      "nameSize": "large",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2318,
+        "left": 0,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.invocations",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ValidationNodeFunction-XVadUEey3aEG",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.errors",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ValidationNodeFunction-XVadUEey3aEG",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Invocations"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA",
+              "alias": "Errors"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ValidationNodeFunction-XVadUEey3aEG~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ValidationNodeFunction-XVadUEey3aEG~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Concurrent Executions",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2318,
+        "left": 494,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.concExecutions",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ValidationNodeFunction-XVadUEey3aEG",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.throttlers",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ValidationNodeFunction-XVadUEey3aEG",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "Concurrent Executions"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "Throttles"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ValidationNodeFunction-XVadUEey3aEG~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ValidationNodeFunction-XVadUEey3aEG~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Duration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2318,
+        "left": 988,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ValidationNodeFunction-XVadUEey3aEG",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ValidationNodeFunction-XVadUEey3aEG",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ValidationNodeFunction-XVadUEey3aEG",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Average"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "STACKED_AREA",
+              "alias": "Minimum"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "BLUE",
+              "seriesType": "STACKED_AREA",
+              "alias": "Maximum"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "LambdaFunction code execution time.",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ValidationNodeFunction-XVadUEey3aEG~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ValidationNodeFunction-XVadUEey3aEG~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ValidationNodeFunction-XVadUEey3aEG~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Concurrent Executions",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 38,
+        "left": 494,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.concExecutions",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-IdentityCreationFunction-fTaS5ip7Isbx",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.throttlers",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-IdentityCreationFunction-fTaS5ip7Isbx",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "Concurrent Executions"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA",
+              "alias": "Throttles"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-IdentityCreationFunction-fTaS5ip7Isbx~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-IdentityCreationFunction-fTaS5ip7Isbx~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "di-ipv-spot-app-IdentityCreationFunction-fTaS5ip7lsbx",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 0,
+        "width": 608,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "di-ipv-spot-app-IdentitySigningFunction-m3PbW3SbXtAv",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 456,
+        "left": 0,
+        "width": 608,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "di-ipv-spot-app-TriggerFunction-eLY0e4q13Dcn",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 912,
+        "left": 0,
+        "width": 608,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "di-ipv-spot-app-ValidationCompareFunction-Uy26cltSzaMb",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 1368,
+        "left": 0,
+        "width": 646,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "di-ipv-spot-app-ValidationFunction-LnyZroTUQ1xo",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 1824,
+        "left": 0,
+        "width": 608,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "di-ipv-spot-app-ValidationNodeFunction-XVadUEey3aEG",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 2280,
+        "left": 0,
+        "width": 608,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "di-ipv-spot-app-GetEpocFunction-wnOBcOsv9YId",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 2736,
+        "left": 0,
+        "width": 608,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "Invocations and Errors",
+      "nameSize": "large",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 494,
+        "left": 0,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.invocations",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-IdentitySigningFunction-m3PbW3SbXtAv",
+                    "evaluator": "IN",
+                    "matchExactly": false
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.errors",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-IdentitySigningFunction-m3PbW3SbXtAv",
+                    "evaluator": "IN",
+                    "matchExactly": false
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Invocations"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA",
+              "alias": "Errors"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"di-ipv-spot-app-IdentitySigningFunction-m3PbW3SbXtAv~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"di-ipv-spot-app-IdentitySigningFunction-m3PbW3SbXtAv~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Invocations and Errors",
+      "nameSize": "large",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2774,
+        "left": 0,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.invocations",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-GetEpocFunction-wnOBcOsv9YId",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.errors",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-GetEpocFunction-wnOBcOsv9YId",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Invocations"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA",
+              "alias": "Errors"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-GetEpocFunction-wnOBcOsv9YId~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-GetEpocFunction-wnOBcOsv9YId~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Concurrent Executions",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2774,
+        "left": 494,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.concExecutions",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-GetEpocFunction-wnOBcOsv9YId",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.throttlers",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-GetEpocFunction-wnOBcOsv9YId",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "Concurrent Executions"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "Throttles"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-GetEpocFunction-wnOBcOsv9YId~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-GetEpocFunction-wnOBcOsv9YId~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Duration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2774,
+        "left": 988,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-GetEpocFunction-wnOBcOsv9YId",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-GetEpocFunction-wnOBcOsv9YId",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-GetEpocFunction-wnOBcOsv9YId",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Average"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "STACKED_AREA",
+              "alias": "Minimum"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "BLUE",
+              "seriesType": "STACKED_AREA",
+              "alias": "Maximum"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "LambdaFunction code execution time.",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-GetEpocFunction-wnOBcOsv9YId~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-GetEpocFunction-wnOBcOsv9YId~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-GetEpocFunction-wnOBcOsv9YId~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "di-ipv-spot-app-ApplyCredentialTrustPolicy-KeSVFl5My1lU",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 3192,
+        "left": 0,
+        "width": 608,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "Invocations and Errors",
+      "nameSize": "large",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 3230,
+        "left": 0,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.invocations",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ApplyCredentialTrustPolicy-KeSVFl5My1lU",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.errors",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ApplyCredentialTrustPolicy-KeSVFl5My1lU",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Invocations"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA",
+              "alias": "Errors"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ApplyCredentialTrustPolicy-KeSVFl5My1lU~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ApplyCredentialTrustPolicy-KeSVFl5My1lU~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Concurrent Executions",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 3230,
+        "left": 494,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.concExecutions",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ApplyCredentialTrustPolicy-KeSVFl5My1lU",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.throttlers",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ApplyCredentialTrustPolicy-KeSVFl5My1lU",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "Concurrent Executions"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "Throttles"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ApplyCredentialTrustPolicy-KeSVFl5My1lU~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ApplyCredentialTrustPolicy-KeSVFl5My1lU~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Duration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 3230,
+        "left": 988,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ApplyCredentialTrustPolicy-KeSVFl5My1lU",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ApplyCredentialTrustPolicy-KeSVFl5My1lU",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-ApplyCredentialTrustPolicy-KeSVFl5My1lU",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Average"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "STACKED_AREA",
+              "alias": "Minimum"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "BLUE",
+              "seriesType": "STACKED_AREA",
+              "alias": "Maximum"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "LambdaFunction code execution time.",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ApplyCredentialTrustPolicy-KeSVFl5My1lU~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ApplyCredentialTrustPolicy-KeSVFl5My1lU~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"di-ipv-spot-app-ApplyCredentialTrustPolicy-KeSVFl5My1lU~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "di-ipv-spot-app-OperationalProfileIdentityCreation-xVPqOXtOfMAg",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 3648,
+        "left": 0,
+        "width": 608,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "Invocations and Errors",
+      "nameSize": "large",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 3686,
+        "left": 0,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.invocations",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-OperationalProfileIdentityCreation-xVPqOXtOfMAg",
+                    "evaluator": "IN",
+                    "matchExactly": false
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.errors",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-OperationalProfileIdentityCreation-xVPqOXtOfMAg",
+                    "evaluator": "IN",
+                    "matchExactly": false
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Invocations"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA",
+              "alias": "Errors"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"di-ipv-spot-app-OperationalProfileIdentityCreation-xVPqOXtOfMAg~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"di-ipv-spot-app-OperationalProfileIdentityCreation-xVPqOXtOfMAg~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Concurrent Executions",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 3686,
+        "left": 494,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.concExecutions",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-OperationalProfileIdentityCreation-xVPqOXtOfMAg",
+                    "evaluator": "IN",
+                    "matchExactly": false
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.throttlers",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-OperationalProfileIdentityCreation-xVPqOXtOfMAg",
+                    "evaluator": "IN",
+                    "matchExactly": false
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "Concurrent Executions"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "Throttles"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"di-ipv-spot-app-OperationalProfileIdentityCreation-xVPqOXtOfMAg~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"di-ipv-spot-app-OperationalProfileIdentityCreation-xVPqOXtOfMAg~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Duration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 3686,
+        "left": 988,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-OperationalProfileIdentityCreation-xVPqOXtOfMAg",
+                    "evaluator": "IN",
+                    "matchExactly": false
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-OperationalProfileIdentityCreation-xVPqOXtOfMAg",
+                    "evaluator": "IN",
+                    "matchExactly": false
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-OperationalProfileIdentityCreation-xVPqOXtOfMAg",
+                    "evaluator": "IN",
+                    "matchExactly": false
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Average"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "STACKED_AREA",
+              "alias": "Minimum"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "BLUE",
+              "seriesType": "STACKED_AREA",
+              "alias": "Maximum"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "LambdaFunction code execution time.",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"di-ipv-spot-app-OperationalProfileIdentityCreation-xVPqOXtOfMAg~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"di-ipv-spot-app-OperationalProfileIdentityCreation-xVPqOXtOfMAg~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"di-ipv-spot-app-OperationalProfileIdentityCreation-xVPqOXtOfMAg~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "di-ipv-spot-app-DIDGenerationFunction-q9A8jNizK4AS",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 4104,
+        "left": 0,
+        "width": 608,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "Invocations and Errors",
+      "nameSize": "large",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 4142,
+        "left": 0,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.invocations",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-DIDGenerationFunction-q9A8jNizK4AS",
+                    "evaluator": "IN",
+                    "matchExactly": false
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.errors",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-DIDGenerationFunction-q9A8jNizK4AS",
+                    "evaluator": "IN",
+                    "matchExactly": false
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Invocations"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA",
+              "alias": "Errors"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"di-ipv-spot-app-DIDGenerationFunction-q9A8jNizK4AS~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"di-ipv-spot-app-DIDGenerationFunction-q9A8jNizK4AS~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Concurrent Executions",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 4142,
+        "left": 494,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.concExecutions",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-DIDGenerationFunction-q9A8jNizK4AS",
+                    "evaluator": "IN",
+                    "matchExactly": false
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.throttlers",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-DIDGenerationFunction-q9A8jNizK4AS",
+                    "evaluator": "IN",
+                    "matchExactly": false
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "Concurrent Executions"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "Throttles"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"di-ipv-spot-app-DIDGenerationFunction-q9A8jNizK4AS~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"di-ipv-spot-app-DIDGenerationFunction-q9A8jNizK4AS~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Duration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 4142,
+        "left": 988,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-DIDGenerationFunction-q9A8jNizK4AS",
+                    "evaluator": "IN",
+                    "matchExactly": false
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-DIDGenerationFunction-q9A8jNizK4AS",
+                    "evaluator": "IN",
+                    "matchExactly": false
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-DIDGenerationFunction-q9A8jNizK4AS",
+                    "evaluator": "IN",
+                    "matchExactly": false
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Average"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "STACKED_AREA",
+              "alias": "Minimum"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "BLUE",
+              "seriesType": "STACKED_AREA",
+              "alias": "Maximum"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "LambdaFunction code execution time.",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"di-ipv-spot-app-DIDGenerationFunction-q9A8jNizK4AS~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"di-ipv-spot-app-DIDGenerationFunction-q9A8jNizK4AS~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"di-ipv-spot-app-DIDGenerationFunction-q9A8jNizK4AS~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Concurrent Executions",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 494,
+        "left": 494,
+        "width": 494,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.concExecutions",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-IdentitySigningFunction-m3PbW3SbXtAv",
+                    "evaluator": "IN",
+                    "matchExactly": false
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.throttlers",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-spot-app-IdentitySigningFunction-m3PbW3SbXtAv",
+                    "evaluator": "IN",
+                    "matchExactly": false
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "Concurrent Executions"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "Throttles"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"di-ipv-spot-app-IdentitySigningFunction-m3PbW3SbXtAv~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"di-ipv-spot-app-IdentitySigningFunction-m3PbW3SbXtAv~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    }
+  ]
+}

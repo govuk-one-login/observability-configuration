@@ -1,0 +1,3456 @@
+ {
+  "metadata": {
+    "configurationVersions": [
+      7
+    ],
+    "clusterVersion": "1.285.92.20240216-135147"
+  },
+  "id": "f55b6535-4716-4b8c-ae70-b32a151e6942",
+  "dashboardMetadata": {
+    "name": "KIWI-CIC-Lambda-Metrics",
+    "shared": true,
+    "owner": "madan.karuppiah@digital.cabinet-office.gov.uk",
+    "popularity": 2,
+    "hasConsistentColors": false
+  },
+  "tiles": [
+    {
+      "name": "Invocations and Errors",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 38,
+        "left": 0,
+        "width": 494,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.invocations",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "CIC-Session-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.errors",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "CIC-Session-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Invocations"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA",
+              "alias": "Errors"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-Session-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-Session-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Duration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 38,
+        "left": 988,
+        "width": 494,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "CIC-Session-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "CIC-Session-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "CIC-Session-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Average"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "STACKED_AREA",
+              "alias": "Minimum"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "BLUE",
+              "seriesType": "STACKED_AREA",
+              "alias": "Maximum"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "LambdaFunction code execution time.",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-Session-cic-cri-api~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-Session-cic-cri-api~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-Session-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Concurrent Executions",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 38,
+        "left": 494,
+        "width": 494,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.concExecutions",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "CIC-Session-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.throttlers",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "CIC-Session-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "Concurrent Executions"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "Throttles"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-Session-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-Session-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Invocations and Errors",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 456,
+        "left": 0,
+        "width": 494,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.invocations",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "CIC-ClaimedIdentity-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.errors",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "CIC-ClaimedIdentity-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Invocations"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA",
+              "alias": "Errors"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-ClaimedIdentity-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-ClaimedIdentity-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Duration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 456,
+        "left": 988,
+        "width": 494,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "CIC-ClaimedIdentity-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "CIC-ClaimedIdentity-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "CIC-ClaimedIdentity-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Average"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "STACKED_AREA",
+              "alias": "Minimum"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "BLUE",
+              "seriesType": "STACKED_AREA",
+              "alias": "Maximum"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "LambdaFunction code execution time.",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-ClaimedIdentity-cic-cri-api~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-ClaimedIdentity-cic-cri-api~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-ClaimedIdentity-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Concurrent Executions",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 456,
+        "left": 494,
+        "width": 494,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.concExecutions",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "CIC-ClaimedIdentity-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.throttlers",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "CIC-ClaimedIdentity-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "Concurrent Executions"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "Throttles"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-ClaimedIdentity-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-ClaimedIdentity-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Invocations and Errors",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 874,
+        "left": 0,
+        "width": 494,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.invocations",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "Access-Token-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.errors",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "Access-Token-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Invocations"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA",
+              "alias": "Errors"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"Access-Token-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"Access-Token-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Duration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 874,
+        "left": 988,
+        "width": 494,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "Access-Token-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "Access-Token-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "Access-Token-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Average"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "STACKED_AREA",
+              "alias": "Minimum"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "BLUE",
+              "seriesType": "STACKED_AREA",
+              "alias": "Maximum"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "LambdaFunction code execution time.",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"Access-Token-cic-cri-api~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"Access-Token-cic-cri-api~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"Access-Token-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Concurrent Executions",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 874,
+        "left": 494,
+        "width": 494,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.concExecutions",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "Access-Token-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.throttlers",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "Access-Token-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "Concurrent Executions"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "Throttles"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"Access-Token-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"Access-Token-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Invocations and Errors",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1292,
+        "left": 0,
+        "width": 494,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.invocations",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "CIC-Authorization-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.errors",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "CIC-Authorization-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Invocations"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA",
+              "alias": "Errors"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-Authorization-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-Authorization-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Duration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1292,
+        "left": 988,
+        "width": 494,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "CIC-Authorization-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "CIC-Authorization-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "CIC-Authorization-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Average"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "STACKED_AREA",
+              "alias": "Minimum"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "BLUE",
+              "seriesType": "STACKED_AREA",
+              "alias": "Maximum"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "LambdaFunction code execution time.",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-Authorization-cic-cri-api~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-Authorization-cic-cri-api~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-Authorization-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Concurrent Executions",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1292,
+        "left": 494,
+        "width": 494,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.concExecutions",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "CIC-Authorization-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.throttlers",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "CIC-Authorization-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "Concurrent Executions"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "Throttles"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-Authorization-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-Authorization-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Invocations and Errors",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1710,
+        "left": 0,
+        "width": 494,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.invocations",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "User-Info-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.errors",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "User-Info-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Invocations"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA",
+              "alias": "Errors"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"User-Info-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"User-Info-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Duration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1710,
+        "left": 988,
+        "width": 494,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "User-Info-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "User-Info-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "User-Info-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Average"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "STACKED_AREA",
+              "alias": "Minimum"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "BLUE",
+              "seriesType": "STACKED_AREA",
+              "alias": "Maximum"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "LambdaFunction code execution time.",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"User-Info-cic-cri-api~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"User-Info-cic-cri-api~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"User-Info-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Concurrent Executions",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1710,
+        "left": 494,
+        "width": 494,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.concExecutions",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "User-Info-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.throttlers",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "User-Info-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "Concurrent Executions"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "Throttles"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"User-Info-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"User-Info-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 0,
+        "width": 608,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## Session Function - [Dashboard](https://bhe21058.live.dynatrace.com/ui/entity/SERVICE-27C8854E913CD19E?gtf=-2h&gf=all&sessionId=ysKYF619ryrYx1D7)"
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 418,
+        "left": 0,
+        "width": 608,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## Claimed Identity Function - [Dashboard](https://bhe21058.live.dynatrace.com/ui/entity/SERVICE-40B1F1FBFC275BF3?gtf=-2h&gf=all&sessionId=CE3fEM7sDXJnVEK7)"
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 836,
+        "left": 0,
+        "width": 608,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## Access Token Function - [Dashboard](https://bhe21058.live.dynatrace.com/ui/entity/SERVICE-D10BBFBE2311480D?gtf=-2h&gf=all&sessionId=BH2N8vRTwgVTJL6F)"
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 1254,
+        "left": 0,
+        "width": 608,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## Authorization Function - [Dashboard](https://bhe21058.live.dynatrace.com/ui/entity/SERVICE-72A38BF6D22EE1B4?gtf=-2h&gf=all&sessionId=u8Dl_ixW7gqmPqu6)"
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 1672,
+        "left": 0,
+        "width": 608,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## UserInfo Function - [Dashboard](https://bhe21058.live.dynatrace.com/ui/entity/SERVICE-0ED3B7044C6E5D37?gtf=-2h&gf=all&sessionId=L58fmpvSPlmAL8gO)"
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 2090,
+        "left": 0,
+        "width": 608,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## JsonWebKeys Function - [Dashboard](https://bhe21058.live.dynatrace.com/ui/entity/SERVICE-0ED3B7044C6E5D37?gtf=-2h&gf=all&sessionId=L58fmpvSPlmAL8gO)"
+    },
+    {
+      "name": "Concurrent Executions",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2128,
+        "left": 494,
+        "width": 494,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.concExecutions",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "JsonWebKeys-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.throttlers",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "JsonWebKeys-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "Concurrent Executions"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "Throttles"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"JsonWebKeys-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"JsonWebKeys-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Invocations and Errors",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2128,
+        "left": 0,
+        "width": 494,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.invocations",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "JsonWebKeys-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.errors",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "JsonWebKeys-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Invocations"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA",
+              "alias": "Errors"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"JsonWebKeys-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"JsonWebKeys-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Duration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2128,
+        "left": 988,
+        "width": 494,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "JsonWebKeys-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "JsonWebKeys-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "JsonWebKeys-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Average"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "STACKED_AREA",
+              "alias": "Minimum"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "BLUE",
+              "seriesType": "STACKED_AREA",
+              "alias": "Maximum"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "LambdaFunction code execution time.",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"JsonWebKeys-cic-cri-api~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"JsonWebKeys-cic-cri-api~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"JsonWebKeys-cic-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    }
+  ]
+}

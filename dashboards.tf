@@ -266,3 +266,202 @@ resource "dynatrace_dashboard_sharing" "aws_service_quotas" {
     }
   }
 }
+
+### Core ###
+
+module "core_lambda_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "core/lambda.json"
+}
+
+module "core_services_dashboard" {
+  source = "./modules/dashboard"
+  path   = "core/services.json"
+}
+
+
+### SPOT ###
+
+module "spot_lambda_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "spot/lambda-metrics.json"
+}
+
+
+### Kiwi ###
+
+# Cross-service
+module "kiwi_apigw_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "kiwi/apigw-metrics.json"
+}
+
+module "kiwi_ecs_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "kiwi/ecs-metrics.json"
+}
+
+module "kiwi_services_dashboard" {
+  source = "./modules/dashboard"
+  path   = "kiwi/services.json"
+}
+
+# CIC CRI
+module "cic_dashboard" {
+  source = "./modules/dashboard"
+  path   = "kiwi/cic-cri.json"
+}
+
+module "cic_lambda_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "kiwi/cic-lambda-metrics.json"
+}
+
+# F2F CRI
+module "f2f_dashboard" {
+  source = "./modules/dashboard"
+  path   = "kiwi/f2f-cri.json"
+}
+
+module "f2f_lambda_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "kiwi/f2f-lambda-metrics.json"
+}
+
+# IPVReturn CRI
+module "ipr_dashboard" {
+  source = "./modules/dashboard"
+  path   = "kiwi/ipr-cri.json"
+}
+
+module "ipr_lambda_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "kiwi/ipr-lambda-metrics.json"
+}
+
+
+### Lime ###
+
+# Cross-service
+module "lime_apigw_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "lime/apigw-metrics.json"
+}
+
+module "lime_ecs_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "lime/ecs-metrics.json"
+}
+
+module "lime_services_dashboard" {
+  source = "./modules/dashboard"
+  path   = "lime/services.json"
+}
+
+# Driving Licence CRI
+module "dl_lambda_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "lime/dl-lambda-metrics.json"
+}
+
+# Fraud CRI
+module "fraud_dashboard" {
+  source = "./modules/dashboard"
+  path   = "lime/fraud-cri.json"
+}
+module "fraud_lambda_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "lime/fraud-lambda-metrics.json"
+}
+
+# Passport CRI
+module "passport_dashboard" {
+  source = "./modules/dashboard"
+  path   = "lime/passport-cri.json"
+}
+module "passport_lambda_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "lime/passport-lambda-metrics.json"
+}
+
+
+### Orange ###
+
+# Cross-service
+module "orange_apigw_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "orange/apigw-metrics.json"
+}
+
+module "orange_ecs_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "orange/ecs-metrics.json"
+}
+
+module "orange_services_dashboard" {
+  source = "./modules/dashboard"
+  path   = "orange/services.json"
+}
+
+# Address CRI
+module "address_dashboard" {
+  source = "./modules/dashboard"
+  path   = "orange/address-cri.json"
+}
+
+module "address_lambda_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "orange/address-lambda-metrics.json"
+}
+
+# KBV CRI
+module "kbv_dashboard" {
+  source = "./modules/dashboard"
+  path   = "orange/kbv-cri.json"
+}
+module "kbv_lambda_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "orange/kbv-lambda-metrics.json"
+}
+
+### SLA ###
+module "core_sla_dashboard" {
+  source = "./modules/dashboard"
+  path   = "service-level-agreements/core.json"
+}
+
+module "kiwi_sla_dashboard" {
+  source = "./modules/dashboard"
+  path   = "service-level-agreements/kiwi.json"
+}
+
+module "lime_sla_dashboard" {
+  source = "./modules/dashboard"
+  path   = "service-level-agreements/lime.json"
+}
+
+module "orange_sla_dashboard" {
+  source = "./modules/dashboard"
+  path   = "service-level-agreements/orange.json"
+  
+resource "dynatrace_json_dashboard" "aws_service_quotas" {
+  contents = file("${path.module}/dashboards/aws_service_quotas.json")
+}
+
+resource "dynatrace_dashboard_sharing" "aws_service_quotas" {
+  dashboard_id = dynatrace_json_dashboard.aws_service_quotas.id
+
+  enabled = true
+
+  permissions {
+    permission {
+      level = "VIEW"
+      type  = "ALL"
+    }
+    permission {
+      id    = data.dynatrace_iam_group.all.id
+      level = "VIEW"
+      type  = "GROUP"
+    }
+  }
+}
