@@ -16,6 +16,27 @@ env:
   TF_VAR_synthetic_requests_cost: ${{ secrets.synthetic_requests_cost }}
 
 jobs:
+  Check_DashboardFormat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Check dashboard IDs not present
+        run: |
+          for file in dashboards/*.json dashboards/**/*.json; do
+            echo "Checking ${file}"
+            ID=$(jq '.id' < $file)
+            if [ "$ID" != null  ]
+            then
+              echo "Error: ${file} contains '.id' (${ID}) "
+              exit 1
+            fi
+          done
   Check_NonProd:
     env:
       DYNATRACE_API_TOKEN: ${{ secrets.NONPROD_DYNATRACE_API_TOKEN}}
