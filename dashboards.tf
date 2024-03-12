@@ -239,3 +239,25 @@ resource "dynatrace_dashboard_sharing" "Team-DORA-Dashboards" {
     }
   }
 }
+
+resource "dynatrace_json_dashboard" "aws_service_quotas" {
+  contents = file("${path.module}/dashboards/aws_service_quotas.json")
+}
+
+resource "dynatrace_dashboard_sharing" "aws_service_quotas" {
+  dashboard_id = dynatrace_json_dashboard.aws_service_quotas.id
+
+  enabled = true
+
+  permissions {
+    permission {
+      level = "VIEW"
+      type  = "ALL"
+    }
+    permission {
+      id    = data.dynatrace_iam_group.all.id
+      level = "VIEW"
+      type  = "GROUP"
+    }
+  }
+}

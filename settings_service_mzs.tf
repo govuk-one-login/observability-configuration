@@ -1,8 +1,8 @@
 resource "dynatrace_management_zone_v2" "all" {
   for_each = local.accounts
 
-  name        = each.value.name
-  description = "Resources & Services running in ${each.value.name} (${each.value.id}"
+  name        = "[AWS] ${each.value.name}"
+  description = "Resources & Services running in ${each.value.name} (${each.value.id})"
   rules {
     rule {
       type            = "SELECTOR"

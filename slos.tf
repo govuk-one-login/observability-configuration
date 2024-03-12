@@ -107,7 +107,7 @@ resource "dynatrace_slo_v2" "account_management_service" {
   custom_description = "Request-based SLO to determine the Availability, averaged across all resources within the AWS accounts that make up this Service (99.90%)"
   evaluation_type    = "AGGREGATE"
   evaluation_window  = "-1M"
-  filter             = "type(SERVICE),mzName(di-account-data-production,di-account-production,di-account-interventions-production,di-fraud-admin-interface-prod,di-fraud-ssf-production)"
+  filter             = "type(SERVICE),mzName([AWS] di-account-data-production,[AWS] di-account-production,[AWS] di-account-interventions-production,[AWS] di-fraud-admin-interface-prod,[AWS] di-fraud-ssf-production)"
   metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
   metric_name        = "account_management_service"
   target_success     = 99.9
@@ -125,7 +125,7 @@ resource "dynatrace_slo_v2" "identify_proofing_and_verification_service" {
   custom_description = "Request-based SLO to determine the Availability, averaged across all resources within the AWS accounts that make up this Service (99.90%)"
   evaluation_type    = "AGGREGATE"
   evaluation_window  = "-1M"
-  filter             = "type(SERVICE),mzName(di-ipv-cri-kbv-prod,di-facetoface-cri-prod,di-ipv-cri-dl-prod,di-ipv-cri-kbv-hmrc-prod,dcmaw-gds-prod,di-facetoface-prod,di-ipv-cri-passport-prod,di-ipv-cri-check-hmrc-prod,di-ipv-cri-passporta-prod,di-ipv-core-prod,di-ipv-cri-fraud-prod,di-ipv-cri-address-prod,di-ipvreturn-prod,di-ipv-spot-prod,di-ipv-contra-indicators-prod,di-ipv-cri-otg-hmrc-prod,di-bav-cri-prod,di-ticf-cri-production,gds-mobile-production-secrets,di-sts-prod)"
+  filter             = "type(SERVICE),mzName([AWS] di-ipv-cri-kbv-prod,[AWS] di-facetoface-cri-prod,[AWS] di-ipv-cri-dl-prod,[AWS] di-ipv-cri-kbv-hmrc-prod,[AWS] dcmaw-gds-prod,[AWS] di-facetoface-prod,[AWS] di-ipv-cri-passport-prod,[AWS] di-ipv-cri-check-hmrc-prod,[AWS] di-ipv-cri-passporta-prod,[AWS] di-ipv-core-prod,[AWS] di-ipv-cri-fraud-prod,[AWS] di-ipv-cri-address-prod,[AWS] di-ipvreturn-prod,[AWS] di-ipv-spot-prod,[AWS] di-ipv-contra-indicators-prod,[AWS] di-ipv-cri-otg-hmrc-prod,[AWS] di-bav-cri-prod,[AWS] di-ticf-cri-production,[AWS] gds-mobile-production-secrets,[AWS] di-sts-prod)"
   metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
   metric_name        = "identify_proofing_and_verification_service"
   target_success     = 99.5
@@ -143,7 +143,7 @@ resource "dynatrace_slo_v2" "identity_re_use_service" {
   custom_description = "Request-based SLO to determine the Availability, averaged across all resources within the AWS accounts that make up this Service (99.90%)"
   evaluation_type    = "AGGREGATE"
   evaluation_window  = "-1M"
-  filter             = "type(SERVICE),mzName(di-ipv-core-prod,di-id-reuse-core-production)"
+  filter             = "type(SERVICE),mzName([AWS] di-ipv-core-prod,[AWS] di-id-reuse-core-production)"
   metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
   metric_name        = "identity_re_use_service"
   target_success     = 99.9
@@ -161,7 +161,7 @@ resource "dynatrace_slo_v2" "sign_in_sign_up_service" {
   custom_description = "Request-based SLO to determine the Availability, averaged across all resources within the AWS accounts that make up this Service (99.90%)"
   evaluation_type    = "AGGREGATE"
   evaluation_window  = "-1M"
-  filter             = "type(SERVICE),mzName(gds-di-production)"
+  filter             = "type(SERVICE),mzName([AWS] gds-di-production)"
   metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
   metric_name        = "sign_in_sign_up_service"
   target_success     = 99.9
