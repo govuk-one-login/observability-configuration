@@ -193,22 +193,18 @@ variable "teams" {
   description = "map"
   default = {
     "team-a" = {
-      name         = "CRI Orange"
       owner        = "team-a@company.org"
       samstackname = "fraud-cri-front"
     }
     "team-b" = {
-      name         = "CRI Orange"
       owner        = "team-b@company.org"
       samstackname = "ipv-cri-passport-front"
     }
     "team-c" = {
-      name         = "Mobile App"
       owner        = "team-c@company.org"
       samstackname = "backend-api"
     }
     "team-d" = {
-      name         = "CRI Orange"
       owner        = "team-d@company.org"
       samstackname = "address-cri-front"
     }
@@ -219,7 +215,6 @@ resource "dynatrace_json_dashboard" "Team-DORA-Dashboards" {
   for_each = var.teams
 
   contents = templatefile("./dashboards/dev-platform/TEMPLATE_dashboard.json", {
-    name         = each.value.name
     owner        = each.value.owner
     samstackname = each.value.samstackname
   })
