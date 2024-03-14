@@ -189,6 +189,11 @@ resource "dynatrace_dashboard_sharing" "test_team_2_dashboard" {
   }
 }
 
+module "txma_shared_signals" {
+  source = "./modules/dashboard"
+  path   = "txma/txma_shared_signals_dashboard.json"
+}
+
 variable "teams" {
   description = "map"
   default = {
