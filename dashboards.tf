@@ -194,28 +194,6 @@ module "txma_shared_signals" {
   path   = "txma/txma_shared_signals_dashboard.json"
 }
 
-resource "dynatrace_json_dashboard" "txma_shared_signals" {
-  contents = file("./dashboards/txma/txma_shared_signals_dashboard.json")
-}
-
-resource "dynatrace_dashboard_sharing" "txma_shared_signals" {
-  dashboard_id = dynatrace_json_dashboard.txma_shared_signals.id
-
-  enabled = true
-
-  permissions {
-    permission {
-      level = "VIEW"
-      type  = "ALL"
-    }
-    permission {
-      id    = data.dynatrace_iam_group.all.id
-      level = "VIEW"
-      type  = "GROUP"
-    }
-  }
-}
-
 variable "teams" {
   description = "map"
   default = {
