@@ -194,6 +194,11 @@ module "txma_shared_signals" {
   path   = "txma/txma_shared_signals_dashboard.json"
 }
 
+module "account-interventions-service" {
+  source = "./modules/dashboard"
+  path   = "account-interventions-service/account_interventions_service_dashboard.json"
+}
+
 variable "teams" {
   description = "map"
   default = {
