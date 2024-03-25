@@ -215,7 +215,7 @@ variable "teams2" {
   description = "map"
   default = {
     "team-a" = {
-      owner        = "team-a@company.org"
+      owner         = "team-a@company.org"
       samstackname1 = "frontend"
       samstackname2 = "backend-api"
     }
@@ -247,7 +247,7 @@ resource "dynatrace_dashboard_sharing" "Team-DORA-Dashboards1" {
   for_each = var.teams1
 
   dashboard_id = dynatrace_json_dashboard.Team-DORA-Dashboards[each.key].id
-  enabled = true
+  enabled      = true
   permissions {
     permission {
       level = "VIEW"
@@ -265,7 +265,7 @@ resource "dynatrace_dashboard_sharing" "Team-DORA-Dashboards2" {
   for_each = var.teams2
 
   dashboard_id = dynatrace_json_dashboard.Team-DORA-Dashboards[each.key].id
-  enabled = true
+  enabled      = true
   permissions {
     permission {
       level = "VIEW"
