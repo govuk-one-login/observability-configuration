@@ -246,7 +246,7 @@ resource "dynatrace_json_dashboard" "Team-DORA-Dashboards2" {
 resource "dynatrace_dashboard_sharing" "Team-DORA-Dashboards1" {
   for_each = var.teams1
 
-  dashboard_id = dynatrace_json_dashboard.Team-DORA-Dashboards[each.key].id
+  dashboard_id = dynatrace_json_dashboard.Team-DORA-Dashboards1[each.key].id
   enabled      = true
   permissions {
     permission {
@@ -264,7 +264,7 @@ resource "dynatrace_dashboard_sharing" "Team-DORA-Dashboards1" {
 resource "dynatrace_dashboard_sharing" "Team-DORA-Dashboards2" {
   for_each = var.teams2
 
-  dashboard_id = dynatrace_json_dashboard.Team-DORA-Dashboards[each.key].id
+  dashboard_id = dynatrace_json_dashboard.Team-DORA-Dashboards2[each.key].id
   enabled      = true
   permissions {
     permission {
