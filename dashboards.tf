@@ -199,7 +199,7 @@ module "account-interventions-service" {
   path   = "account-interventions-service/account_interventions_service_dashboard.json"
 }
 
-variable "teams" {
+variable "teams1" {
   description = "map"
   default = {
     "team-a" = {
@@ -221,8 +221,20 @@ variable "teams" {
   }
 }
 
-resource "dynatrace_json_dashboard" "Team-DORA-Dashboards" {
-  for_each = var.teams
+variable "teams2" {
+  description = "map"
+  default = {
+    "team-a" = {
+      owner         = "team-a@company.org"
+      samstackname1 = "frontend"
+      samstackname2 = "backend-api"
+    }
+  }
+}
+
+# 1 Secure Pipelines on the Dashboard
+resource "dynatrace_json_dashboard" "Team-DORA-Dashboards1" {
+  for_each = var.teams1
 
   contents = templatefile("./dashboards/dev-platform/TEMPLATE_dashboard.json", {
     owner        = each.value.owner
@@ -230,13 +242,40 @@ resource "dynatrace_json_dashboard" "Team-DORA-Dashboards" {
   })
 }
 
-resource "dynatrace_dashboard_sharing" "Team-DORA-Dashboards" {
-  for_each = var.teams
+# 2 Secure Pipelines on the Dashboard
+resource "dynatrace_json_dashboard" "Team-DORA-Dashboards2" {
+  for_each = var.teams2
 
-  dashboard_id = dynatrace_json_dashboard.Team-DORA-Dashboards[each.key].id
+  contents = templatefile("./dashboards/dev-platform/TEMPLATE2_dashboard.json", {
+    owner         = each.value.owner
+    samstackname1 = each.value.samstackname1
+    samstackname2 = each.value.samstackname2
+  })
+}
 
-  enabled = true
+resource "dynatrace_dashboard_sharing" "Team-DORA-Dashboards1" {
+  for_each = var.teams1
 
+  dashboard_id = dynatrace_json_dashboard.Team-DORA-Dashboards1[each.key].id
+  enabled      = true
+  permissions {
+    permission {
+      level = "VIEW"
+      type  = "ALL"
+    }
+    permission {
+      id    = data.dynatrace_iam_group.all.id
+      level = "VIEW"
+      type  = "GROUP"
+    }
+  }
+}
+
+resource "dynatrace_dashboard_sharing" "Team-DORA-Dashboards2" {
+  for_each = var.teams2
+
+  dashboard_id = dynatrace_json_dashboard.Team-DORA-Dashboards2[each.key].id
+  enabled      = true
   permissions {
     permission {
       level = "VIEW"
