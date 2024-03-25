@@ -218,6 +218,7 @@ variable "teams2" {
       owner        = "team-a@company.org"
       samstackname1 = "frontend"
       samstackname2 = "backend-api"
+    }
   }
 }
 
