@@ -236,7 +236,7 @@ resource "dynatrace_json_dashboard" "Team-DORA-Dashboards1" {
 resource "dynatrace_json_dashboard" "Team-DORA-Dashboards2" {
   for_each = var.teams2
 
-  contents = templatefile("./dashboards/dev-platform/TEMPLATE_dashboard2.json", {
+  contents = templatefile("./dashboards/dev-platform/TEMPLATE2_dashboard.json", {
     owner         = each.value.owner
     samstackname1 = each.value.samstackname1
     samstackname2 = each.value.samstackname2
