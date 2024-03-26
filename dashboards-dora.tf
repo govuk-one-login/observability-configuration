@@ -167,7 +167,7 @@ variable "teams2" {
       samstackname1 = "ipv-cri-passport-api"
       samstackname2 = "ipv-cri-passport-front"
     }
-    
+
 
   }
 }
