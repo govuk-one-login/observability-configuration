@@ -141,6 +141,42 @@ variable "teams1" {
       owner        = "team-n@company.org"
       samstackname = "ipvreturn-waf"
     }
+    "team-ah" = {
+      owner        = "team-n@company.org"
+      samstackname = "kbv-cri-front"
+    }
+    "team-ai" = {
+      owner        = "team-n@company.org"
+      samstackname = "bv-cri-v1"
+    }
+    "team-aj" = {
+      owner        = "team-n@company.org"
+      samstackname = "kbv-hmrc-cri-api"
+    }
+    "team-ak" = {
+      owner        = "team-n@company.org"
+      samstackname = "kbv-hmrc-cri-front"
+    }
+    "team-al" = {
+      owner        = "team-n@company.org"
+      samstackname = "lambdanator"
+    }
+    "team-am" = {
+      owner        = "team-n@company.org"
+      samstackname = "otg-hmrc-service"
+    }
+    "team-an" = {
+      owner        = "team-n@company.org"
+      samstackname = "rum"
+    }
+    "team-ao" = {
+      owner        = "team-n@company.org"
+      samstackname = "shield-monitor"
+    }
+    "team-ap" = {
+      owner        = "team-n@company.org"
+      samstackname = "sns-topics"
+    }
   }
 }
 
@@ -167,7 +203,11 @@ variable "teams2" {
       samstackname1 = "ipv-cri-passport-api"
       samstackname2 = "ipv-cri-passport-front"
     }
-
+    "team-e" = {
+      owner         = "team-d@company.org"
+      samstackname1 = "passport-api"
+      samstackname2 = "passport-front"
+    }
 
   }
 }
