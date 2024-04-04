@@ -398,3 +398,10 @@ module "orange_sla_dashboard" {
   source = "./modules/dashboard"
   path   = "service-level-agreements/orange.json"
 }
+
+### Capacity & Performance Dashboards ### 
+
+module "performance_application" {
+  source = "./modules/dashboard"
+  path = "capacity/application-performance-review.json
+}
