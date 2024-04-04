@@ -18,7 +18,7 @@ variable "teamscloudfront1" {
 
 # 1 Secure Pipelines on the Dashboard
 resource "dynatrace_json_dashboard" "Team-Cloudfront-Dashboards" {
-  for_each = var.teams1
+  for_each = var.teamscloudfront1
 
   contents = templatefile("./dashboards/dev-platform/TEMPLATE_cloudfront_dashboard.json", {
     owneremail = each.value.owneremail
@@ -29,7 +29,7 @@ resource "dynatrace_json_dashboard" "Team-Cloudfront-Dashboards" {
 }
 
 resource "dynatrace_dashboard_sharing" "Team-Cloudfront-Dashboards" {
-  for_each = var.teams1
+  for_each = var.teamscloudfront1
 
   dashboard_id = dynatrace_json_dashboard.Team-Cloudfront-Dashboards[each.key].id
   enabled      = true
