@@ -1,4 +1,4 @@
-variable "teams1" {
+variable "teamscloudfront1" {
   description = "map"
   default = {
     "team-a" = {
