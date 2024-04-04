@@ -48,7 +48,10 @@ This repository is *PUBLIC*, do not commit anything sensitive. If you feel you h
 
 Dashboards should be created in the Dynatrace Web UI in the first instance, unless you really, really want to handcraft some JSON.
 
-Once you have the dashboard, under the context menu click `Export`. This will download a JSON file representing the dashboard. Save this JSON file under the `dashboards/` directory of this repo, potentially under a directory specific to your team (i.e. `dashboards/live-service/`). You can tailor the JSON that was produced if you want. Make sure to remove the Dashboard ID from your JSON file. 
+- Once you have the dashboard, under the context menu click `Export`. This will download a JSON file representing the dashboard.
+- Save this JSON file under the `dashboards/` directory of this repo, potentially under a directory specific to your team (i.e. `dashboards/live-service/`).
+- Optionally, you can tailor the JSON that was produced if you want.
+- Find the "ID" property in your dashboard and delete it from your JSON file. 
 
 Then add a block like this to `dashboards.tf`:
 
