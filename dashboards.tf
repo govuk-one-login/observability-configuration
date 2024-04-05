@@ -378,6 +378,23 @@ module "kbv_lambda_metrics_dashboard" {
   path   = "orange/kbv-lambda-metrics.json"
 }
 
+# Orchestration
+module "orch_ais_production" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "orchestration/account-interventions-prod.json"
+}
+module "orch_ais_staging" {
+  count  = local.is_production ? 0 : 1
+  source = "./modules/dashboard"
+  path   = "orchestration/account-interventions-staging.json"
+}
+module "orch_ais_integration" {
+  count  = local.is_production ? 0 : 1
+  source = "./modules/dashboard"
+  path   = "orchestration/account-interventions-integration.json"
+}
+
 ### SLA ###
 module "core_sla_dashboard" {
   source = "./modules/dashboard"
