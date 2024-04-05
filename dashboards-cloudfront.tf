@@ -3,15 +3,27 @@ variable "teamscloudfront1" {
   default = {
     "team-a" = {
       owneremail = "team-a@company.org"
-      teamname   = "di-bav-cri"
+      teamname   = "Kiwi - di-bav-cri"
       awsaccprod = "096369912800"
       awsaccint  = "603505715695"
     }
     "team-b" = {
       owneremail = "team-a@company.org"
-      teamname   = "di-bav-cri"
-      awsaccprod = "096369912800"
-      awsaccint  = "603505715695"
+      teamname   = "Kiwi - di-facetoface-cri"
+      awsaccprod = "377086294028"
+      awsaccint  = "766319219145"
+    }
+    "team-c" = {
+      owneremail = "team-a@company.org"
+      teamname   = "Kiwi - di-facetoface"
+      awsaccprod = "270790667266"
+      awsaccint  = "341874137503"
+    }
+    "team-d" = {
+      owneremail = "team-a@company.org"
+      teamname   = "Kiwi - di-ipvreturn"
+      awsaccprod = "821078365651"
+      awsaccint  = "988112579449"
     }
   }
 }
