@@ -20,3 +20,11 @@ module "signin-browser-monitor" {
   environment              = var.environment == "production" ? "production" : "integration"
   use_basic_authentication = var.environment != "production"
 }
+
+module "webchat-browser-monitor" {
+  source = "./modules/monitors/webchat"
+
+  domain_name = var.environment == "production" ? "home.account.gov.uk" : "home.integration.account.gov.uk"
+  enabled     = var.environment == "production" ? false : true
+  frequency   = var.environment == "production" ? 15 : 60
+}
