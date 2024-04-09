@@ -5,260 +5,327 @@ resource "dynatrace_unified_services_metrics" "environment" {
 }
 
 # Service detection rules for External Web Requests 
-resource "dynatrace_service_external_web_request" "YOTI" {
-  name    = "YOTI"
-  enabled = true
-  conditions {
-    condition {
-      attribute              = "HostName"
-      compare_operation_type = "StringEndsWith"
-      text_values            = local.is_production ? ["proxy.review-o.account.gov.uk"] : ["yotistub.review-o.staging.account.gov.uk"]
-    }
-  }
-  id_contributors {
-    port_for_service_id = false
-    application_id {
-      enable_id_contributor = false
-    }
-    context_root {
-      enable_id_contributor = false
-    }
-    public_domain_name {
-      enable_id_contributor = true
-      service_id_contributor {
-        contribution_type   = "OriginalValue"
-        copy_from_host_name = true
-      }
-    }
-  }
+
+# YOTI
+module "service_detection" {
+  source = "./modules/service_detection"
+  name   = "YOTI"
+  url    = local.is_production ? "proxy.review-o.account.gov.uk" : "yotistub.review-o.staging.account.gov.uk"
 }
 
-resource "dynatrace_service_external_web_request" "Ordnance_Survey" {
-  name    = "Ordnance Survey"
-  enabled = true
-  conditions {
-    condition {
-      attribute              = "HostName"
-      compare_operation_type = "StringEndsWith"
-      text_values            = ["api.os.uk"]
-    }
-  }
-  id_contributors {
-    port_for_service_id = false
-    application_id {
-      enable_id_contributor = false
-    }
-    context_root {
-      enable_id_contributor = false
-    }
-    public_domain_name {
-      enable_id_contributor = true
-      service_id_contributor {
-        contribution_type   = "OriginalValue"
-        copy_from_host_name = true
-      }
-    }
-  }
+# Ordnance Survey
+module "service_detection" {
+  source = "./modules/service_detection"
+  name   = "Ordnance Survey"
+  url    = "api.os.uk"
 }
 
-resource "dynatrace_service_external_web_request" "Zendesk" {
-  count   = local.is_production ? 1 : 0
-  name    = "Zendesk"
-  enabled = true
-  conditions {
-    condition {
-      attribute              = "HostName"
-      compare_operation_type = "StringEndsWith"
-      text_values            = ["zendesk.com"]
-    }
-  }
-  id_contributors {
-    port_for_service_id = false
-    application_id {
-      enable_id_contributor = false
-    }
-    context_root {
-      enable_id_contributor = false
-    }
-    public_domain_name {
-      enable_id_contributor = true
-      service_id_contributor {
-        contribution_type   = "OriginalValue"
-        copy_from_host_name = true
-      }
-    }
-  }
+# Crosscore API
+module "service_detection" {
+  source = "./modules/service_detection"
+  name   = "Crosscore API"
+  url    = local.is_production ? "api.crosscore.uk.experian.com" : "api.uat.crosscore.uk.experian.com"
 }
 
-resource "dynatrace_service_external_web_request" "Crosscore_API" {
-  name    = "Crosscore API"
-  enabled = true
-  conditions {
-    condition {
-      attribute              = "HostName"
-      compare_operation_type = "StringEndsWith"
-      text_values            = local.is_production ? ["api.crosscore.uk.experian.com"] : ["api.uat.crosscore.uk.experian.com"]
-    }
-  }
-  id_contributors {
-    port_for_service_id = false
-    application_id {
-      enable_id_contributor = false
-    }
-    context_root {
-      enable_id_contributor = false
-    }
-    public_domain_name {
-      enable_id_contributor = true
-      service_id_contributor {
-        contribution_type   = "OriginalValue"
-        copy_from_host_name = true
-      }
-    }
-  }
+# HMPO API
+module "service_detection" {
+  source = "./modules/service_detection"
+  name   = "HMPO API"
+  url    = local.is_production ? "api.dvadigital.homeoffice.gov.uk" : "api-dvadigital-cte.np.homeoffice.gov.uk"
 }
 
-resource "dynatrace_service_external_web_request" "HMPO_API" {
-  name    = "HMPO API"
-  enabled = true
-  conditions {
-    condition {
-      attribute              = "HostName"
-      compare_operation_type = "StringEndsWith"
-      text_values            = local.is_production ? ["api.dvadigital.homeoffice.gov.uk"] : ["api-dvadigital-cte.np.homeoffice.gov.uk"]
-    }
-  }
-  id_contributors {
-    port_for_service_id = false
-    application_id {
-      enable_id_contributor = false
-    }
-    context_root {
-      enable_id_contributor = false
-    }
-    public_domain_name {
-      enable_id_contributor = true
-      service_id_contributor {
-        contribution_type   = "OriginalValue"
-        copy_from_host_name = true
-      }
-    }
-  }
+# DVLA API
+module "service_detection" {
+  source = "./modules/service_detection"
+  name   = "DVLA API"
+  url    = local.is_production ? "driver-vehicle-licensing.api.gov.uk" : "uat.driver-vehicle-licensing.api.gov.uk"
 }
 
-resource "dynatrace_service_external_web_request" "DVA_API" {
-  count   = local.is_production ? 1 : 0
-  name    = "DVA API"
-  enabled = true
-  conditions {
-    condition {
-      attribute              = "HostName"
-      compare_operation_type = "StringEndsWith"
-      text_values            = ["driverlicensingcheck.nidirect.gov.uk"]
-    }
-  }
-  id_contributors {
-    port_for_service_id = false
-    application_id {
-      enable_id_contributor = false
-    }
-    context_root {
-      enable_id_contributor = false
-    }
-    public_domain_name {
-      enable_id_contributor = true
-      service_id_contributor {
-        contribution_type   = "OriginalValue"
-        copy_from_host_name = true
-      }
-    }
-  }
+# Post Office
+module "service_detection" {
+  source = "./modules/service_detection"
+  name   = "Post Office"
+  url    = "locations.pol-platform.co.uk"
 }
 
-resource "dynatrace_service_external_web_request" "DVLA_API" {
-  name    = "DVLA API"
-  enabled = true
-  conditions {
-    condition {
-      attribute              = "HostName"
-      compare_operation_type = "StringEndsWith"
-      text_values            = local.is_production ? ["driver-vehicle-licensing.api.gov.uk"] : ["uat.driver-vehicle-licensing.api.gov.uk"]
-    }
-  }
-  id_contributors {
-    port_for_service_id = false
-    application_id {
-      enable_id_contributor = false
-    }
-    context_root {
-      enable_id_contributor = false
-    }
-    public_domain_name {
-      enable_id_contributor = true
-      service_id_contributor {
-        contribution_type   = "OriginalValue"
-        copy_from_host_name = true
-      }
-    }
-  }
+# Zendesk Production only
+module "service_detection" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/service_detection"
+  name   = "Zendesk"
+  url    = "zendesk.com"
 }
 
-resource "dynatrace_service_external_web_request" "AWS" {
-  count   = local.is_production ? 1 : 0
-  name    = "AWS"
-  enabled = true
-  conditions {
-    condition {
-      attribute              = "HostName"
-      compare_operation_type = "StringEndsWith"
-      text_values            = ["amazonaws.com"]
-    }
-  }
-  id_contributors {
-    port_for_service_id = false
-    application_id {
-      enable_id_contributor = false
-    }
-    context_root {
-      enable_id_contributor = false
-    }
-    public_domain_name {
-      enable_id_contributor = true
-      service_id_contributor {
-        contribution_type   = "OriginalValue"
-        copy_from_host_name = true
-      }
-    }
-  }
+# DVA API Production only
+module "service_detection" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/service_detection"
+  name   = "DVA API"
+  url    = "driverlicensingcheck.nidirect.gov.uk"
 }
 
-resource "dynatrace_service_external_web_request" "Post_Office" {
-  name    = "Post Office"
-  enabled = true
-  conditions {
-    condition {
-      attribute              = "HostName"
-      compare_operation_type = "StringEndsWith"
-      text_values            = ["locations.pol-platform.co.uk"]
-    }
-  }
-  id_contributors {
-    port_for_service_id = false
-    application_id {
-      enable_id_contributor = false
-    }
-    context_root {
-      enable_id_contributor = false
-    }
-    public_domain_name {
-      enable_id_contributor = true
-      service_id_contributor {
-        contribution_type   = "OriginalValue"
-        copy_from_host_name = true
-      }
-    }
-  }
+# AWS Production only
+module "service_detection" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/service_detection"
+  name   = "AWS"
+  url    = "amazonaws.com"
 }
+
+# resource "dynatrace_service_external_web_request" "YOTI" {
+#   name    = "YOTI"
+#   enabled = true
+#   conditions {
+#     condition {
+#       attribute              = "HostName"
+#       compare_operation_type = "StringEndsWith"
+#       text_values            = local.is_production ? ["proxy.review-o.account.gov.uk"] : ["yotistub.review-o.staging.account.gov.uk"]
+#     }
+#   }
+#   id_contributors {
+#     port_for_service_id = false
+#     application_id {
+#       enable_id_contributor = false
+#     }
+#     context_root {
+#       enable_id_contributor = false
+#     }
+#     public_domain_name {
+#       enable_id_contributor = true
+#       service_id_contributor {
+#         contribution_type   = "OriginalValue"
+#         copy_from_host_name = true
+#       }
+#     }
+#   }
+# }
+
+# resource "dynatrace_service_external_web_request" "Ordnance_Survey" {
+#   name    = "Ordnance Survey"
+#   enabled = true
+#   conditions {
+#     condition {
+#       attribute              = "HostName"
+#       compare_operation_type = "StringEndsWith"
+#       text_values            = ["api.os.uk"]
+#     }
+#   }
+#   id_contributors {
+#     port_for_service_id = false
+#     application_id {
+#       enable_id_contributor = false
+#     }
+#     context_root {
+#       enable_id_contributor = false
+#     }
+#     public_domain_name {
+#       enable_id_contributor = true
+#       service_id_contributor {
+#         contribution_type   = "OriginalValue"
+#         copy_from_host_name = true
+#       }
+#     }
+#   }
+# }
+
+# resource "dynatrace_service_external_web_request" "Zendesk" {
+#   count   = local.is_production ? 1 : 0
+#   name    = "Zendesk"
+#   enabled = true
+#   conditions {
+#     condition {
+#       attribute              = "HostName"
+#       compare_operation_type = "StringEndsWith"
+#       text_values            = ["zendesk.com"]
+#     }
+#   }
+#   id_contributors {
+#     port_for_service_id = false
+#     application_id {
+#       enable_id_contributor = false
+#     }
+#     context_root {
+#       enable_id_contributor = false
+#     }
+#     public_domain_name {
+#       enable_id_contributor = true
+#       service_id_contributor {
+#         contribution_type   = "OriginalValue"
+#         copy_from_host_name = true
+#       }
+#     }
+#   }
+# }
+
+# resource "dynatrace_service_external_web_request" "Crosscore_API" {
+#   name    = "Crosscore API"
+#   enabled = true
+#   conditions {
+#     condition {
+#       attribute              = "HostName"
+#       compare_operation_type = "StringEndsWith"
+#       text_values            = local.is_production ? ["api.crosscore.uk.experian.com"] : ["api.uat.crosscore.uk.experian.com"]
+#     }
+#   }
+#   id_contributors {
+#     port_for_service_id = false
+#     application_id {
+#       enable_id_contributor = false
+#     }
+#     context_root {
+#       enable_id_contributor = false
+#     }
+#     public_domain_name {
+#       enable_id_contributor = true
+#       service_id_contributor {
+#         contribution_type   = "OriginalValue"
+#         copy_from_host_name = true
+#       }
+#     }
+#   }
+# }
+
+# resource "dynatrace_service_external_web_request" "HMPO_API" {
+#   name    = "HMPO API"
+#   enabled = true
+#   conditions {
+#     condition {
+#       attribute              = "HostName"
+#       compare_operation_type = "StringEndsWith"
+#       text_values            = local.is_production ? ["api.dvadigital.homeoffice.gov.uk"] : ["api-dvadigital-cte.np.homeoffice.gov.uk"]
+#     }
+#   }
+#   id_contributors {
+#     port_for_service_id = false
+#     application_id {
+#       enable_id_contributor = false
+#     }
+#     context_root {
+#       enable_id_contributor = false
+#     }
+#     public_domain_name {
+#       enable_id_contributor = true
+#       service_id_contributor {
+#         contribution_type   = "OriginalValue"
+#         copy_from_host_name = true
+#       }
+#     }
+#   }
+# }
+
+# resource "dynatrace_service_external_web_request" "DVA_API" {
+#   count   = local.is_production ? 1 : 0
+#   name    = "DVA API"
+#   enabled = true
+#   conditions {
+#     condition {
+#       attribute              = "HostName"
+#       compare_operation_type = "StringEndsWith"
+#       text_values            = ["driverlicensingcheck.nidirect.gov.uk"]
+#     }
+#   }
+#   id_contributors {
+#     port_for_service_id = false
+#     application_id {
+#       enable_id_contributor = false
+#     }
+#     context_root {
+#       enable_id_contributor = false
+#     }
+#     public_domain_name {
+#       enable_id_contributor = true
+#       service_id_contributor {
+#         contribution_type   = "OriginalValue"
+#         copy_from_host_name = true
+#       }
+#     }
+#   }
+# }
+
+# resource "dynatrace_service_external_web_request" "DVLA_API" {
+#   name    = "DVLA API"
+#   enabled = true
+#   conditions {
+#     condition {
+#       attribute              = "HostName"
+#       compare_operation_type = "StringEndsWith"
+#       text_values            = local.is_production ? ["driver-vehicle-licensing.api.gov.uk"] : ["uat.driver-vehicle-licensing.api.gov.uk"]
+#     }
+#   }
+#   id_contributors {
+#     port_for_service_id = false
+#     application_id {
+#       enable_id_contributor = false
+#     }
+#     context_root {
+#       enable_id_contributor = false
+#     }
+#     public_domain_name {
+#       enable_id_contributor = true
+#       service_id_contributor {
+#         contribution_type   = "OriginalValue"
+#         copy_from_host_name = true
+#       }
+#     }
+#   }
+# }
+
+# resource "dynatrace_service_external_web_request" "AWS" {
+#   count   = local.is_production ? 1 : 0
+#   name    = "AWS"
+#   enabled = true
+#   conditions {
+#     condition {
+#       attribute              = "HostName"
+#       compare_operation_type = "StringEndsWith"
+#       text_values            = ["amazonaws.com"]
+#     }
+#   }
+#   id_contributors {
+#     port_for_service_id = false
+#     application_id {
+#       enable_id_contributor = false
+#     }
+#     context_root {
+#       enable_id_contributor = false
+#     }
+#     public_domain_name {
+#       enable_id_contributor = true
+#       service_id_contributor {
+#         contribution_type   = "OriginalValue"
+#         copy_from_host_name = true
+#       }
+#     }
+#   }
+# }
+
+# resource "dynatrace_service_external_web_request" "Post_Office" {
+#   name    = "Post Office"
+#   enabled = true
+#   conditions {
+#     condition {
+#       attribute              = "HostName"
+#       compare_operation_type = "StringEndsWith"
+#       text_values            = ["locations.pol-platform.co.uk"]
+#     }
+#   }
+#   id_contributors {
+#     port_for_service_id = false
+#     application_id {
+#       enable_id_contributor = false
+#     }
+#     context_root {
+#       enable_id_contributor = false
+#     }
+#     public_domain_name {
+#       enable_id_contributor = true
+#       service_id_contributor {
+#         contribution_type   = "OriginalValue"
+#         copy_from_host_name = true
+#       }
+#     }
+#   }
+# }
 
 # Service detection rules for External Web Requests 
 resource "dynatrace_service_external_web_service" "Redis" {
