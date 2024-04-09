@@ -103,7 +103,7 @@ jobs:
       - name: Set up AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.GHA_ROLE_ARN }}
+          role-to-assume: arn:aws:iam::892537467220:role/ObservationConfigurationGitHubIde-GitHubActionsRole-MdPyTyImAExz
           aws-region: eu-west-2
 
       - uses: actions/setup-python@v5
@@ -112,6 +112,14 @@ jobs:
       - run: pip install -r requirements.txt
 
       - run: ./get-accounts.py
+      - run: ./get-accounts-v2.py
+      - run: cat accounts-v2.csv
+
+      - name: Set up AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.GHA_ROLE_ARN }}
+          aws-region: eu-west-2
 
       - uses: hashicorp/setup-terraform@v3
         with:
