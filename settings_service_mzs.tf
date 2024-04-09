@@ -158,6 +158,18 @@ resource "dynatrace_management_zone_v2" "all" {
     }
 
     rule {
+      type            = "SELECTOR"
+      enabled         = true
+      entity_selector = "type(SYNTHETIC_TEST)"
+    }
+
+    rule {
+      type            = "SELECTOR"
+      enabled         = true
+      entity_selector = "type(HTTP_CHECK)"
+    }
+
+    rule {
       type    = "DIMENSION"
       enabled = true
       dimension_rule {
