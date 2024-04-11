@@ -48,6 +48,13 @@ module "post_office" {
   url    = "locations.pol-platform.co.uk"
 }
 
+# Experian
+module "experian" {
+  source = "./modules/service_detection"
+  name   = "Experian"
+  url    = "uk-api.experian.com"
+}
+
 # Zendesk Production only
 module "zendesk" {
   count  = local.is_production ? 1 : 0
@@ -70,34 +77,6 @@ module "aws" {
   source = "./modules/service_detection"
   name   = "AWS"
   url    = "amazonaws.com"
-}
-
-resource "dynatrace_service_external_web_request" "Experian" {
-  name    = "Experian"
-  enabled = true
-  conditions {
-    condition {
-      attribute              = "HostName"
-      compare_operation_type = "StringEndsWith"
-      text_values            = ["uk-api.experian.com"]
-    }
-  }
-  id_contributors {
-    port_for_service_id = false
-    application_id {
-      enable_id_contributor = false
-    }
-    context_root {
-      enable_id_contributor = false
-    }
-    public_domain_name {
-      enable_id_contributor = true
-      service_id_contributor {
-        contribution_type   = "OriginalValue"
-        copy_from_host_name = true
-      }
-    }
-  }
 }
 
 # Service detection rules for External Web Requests 
