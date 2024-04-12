@@ -1,8 +1,8 @@
-# Please add your Team name and the Secure Pieplines you wish to graph
-# Below are 3 "variables" you cna choose to populate
-# 1 - teams1 - if you want to track only 1 pipeline
-# 2 - teams2 - if you want to track only 2 pipelines
-# 3 - teams3 - if you want to track only 3 pipelines
+# Please add your Team name and the Secure Pipelines you wish to graph
+# Below are 3 "variables" you can choose to populate:
+# 1 - "teams1" - if you want to track only 1 pipeline
+# 2 - "teams2" - if you want to track only 2 pipelines
+# 3 - "teams3" - if you want to track only 3 pipelines
 
 #######################################
 # Use this to track only 1 pipeline
