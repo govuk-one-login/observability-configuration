@@ -1,5 +1,5 @@
 resource "dynatrace_slo_v2" "perf001" {
-  name               = "NFR PERF001"
+  name               = "95% of user-facing requests < 1s"
   enabled            = true
   custom_description = "95% of user-facing requests to be served within 1 second"
   evaluation_type    = "AGGREGATE"
@@ -16,7 +16,7 @@ resource "dynatrace_slo_v2" "perf001" {
 }
 
 resource "dynatrace_slo_v2" "perf002" {
-  name               = "NFR PERF002"
+  name               = "99% of user-facing requests < 2.5s"
   enabled            = true
   custom_description = "99% of user-facing requests to be served within 2.5 second"
   evaluation_type    = "AGGREGATE"
@@ -89,7 +89,7 @@ resource "dynatrace_slo_v2" "experian_availability" {
   custom_description = "Experian Availability (99.9%)"
   evaluation_type    = "AGGREGATE"
   evaluation_window  = "-1M"
-  filter             = "type(SERVICE),entityId(SERVICE-85D75242ED17D58D)"
+  filter             = "type(SERVICE),entityId(SERVICE-818DC917074D5BBF)"
   metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
   metric_name        = "experian_availability"
   target_success     = 99.9
