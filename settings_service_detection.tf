@@ -79,6 +79,22 @@ module "aws" {
   url    = "amazonaws.com"
 }
 
+# Google APIs
+module "google_apis" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/service_detection"
+  name   = "Google APIs"
+  url    = "googleapis.com"
+}
+
+# Service Now
+module "service_now" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/service_detection"
+  name   = "Service Now"
+  url    = "service-now.com"
+}
+
 # Service detection rules for External Web Requests 
 resource "dynatrace_service_external_web_service" "Redis" {
   name    = "Redis"
