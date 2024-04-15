@@ -415,3 +415,10 @@ module "orange_sla_dashboard" {
   source = "./modules/dashboard"
   path   = "service-level-agreements/orange.json"
 }
+
+### DAP ###
+
+module "dap_dashboard" {
+  source = "./modules/dashboard"
+  path   = "dap/data-and-analytics-prod.json"
+}
