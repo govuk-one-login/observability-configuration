@@ -395,6 +395,23 @@ module "orch_ais_integration" {
   path   = "orchestration/account-interventions-integration.json"
 }
 
+# Authentication
+module "auth_ais_production" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "authentication/account-interventions-prod.json"
+}
+module "auth_ais_staging" {
+  count  = local.is_production ? 0 : 1
+  source = "./modules/dashboard"
+  path   = "authentication/account-interventions-staging.json"
+}
+module "aith_ais_integration" {
+  count  = local.is_production ? 0 : 1
+  source = "./modules/dashboard"
+  path   = "authentication/account-interventions-integration.json"
+}
+
 ### SLA ###
 module "core_sla_dashboard" {
   source = "./modules/dashboard"
