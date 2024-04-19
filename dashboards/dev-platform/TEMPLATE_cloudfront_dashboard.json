@@ -3,15 +3,14 @@
     "configurationVersions": [
       7
     ],
-    "clusterVersion": "1.289.80.20240411-174814"
+    "clusterVersion": "1.289.95.20240417-174357"
   },
   "dashboardMetadata": {
-    "name": "Traffic - ${teamname}",
+    "name": "DORA - frontend - ${samstackname}",
     "shared": true,
-    "owner": "${owneremail}",
+    "owner": "${owner}",
     "tags": [
-      "ALB",
-      "Cloudfront"
+      "DORA"
     ],
     "hasConsistentColors": false
   },
@@ -21,52 +20,79 @@
       "tileType": "MARKDOWN",
       "configured": true,
       "bounds": {
-        "top": 0,
+        "top": 38,
         "left": 0,
         "width": 304,
-        "height": 266
+        "height": 152
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "## Cloudfront - Requests\n\nThe total number of viewer requests received by CloudFront for all HTTP methods and for both HTTP and HTTPS requests\n\n[Cloudfront Info](https://docs.dynatrace.com/docs/setup-and-configuration/setup-on-cloud-platforms/amazon-web-services/amazon-web-services-integrations/aws-all-services/cloudfront)"
+      "markdown": "## Deployment frequency\nThis metric tracks how often a pipeline is triggered by the start of a deployment (when a commit is 'merged' into main)."
     },
     {
       "name": "Markdown",
       "tileType": "MARKDOWN",
       "configured": true,
       "bounds": {
-        "top": 532,
-        "left": 0,
+        "top": 38,
+        "left": 304,
         "width": 304,
-        "height": 266
+        "height": 152
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "## ALB Active Connections\n\nALB number of active connections\n\n[ALB Info](https://docs.dynatrace.com/docs/setup-and-configuration/setup-on-cloud-platforms/amazon-web-services/amazon-web-services-integrations/aws-all-services/app-network-load-balancer-builtin)"
+      "markdown": "## Lead Time for Change\n\nThis measures the time it takes the pipeline to execute all the way through to production. This metric only takes in successful deployments."
     },
     {
       "name": "Markdown",
       "tileType": "MARKDOWN",
       "configured": true,
       "bounds": {
-        "top": 266,
+        "top": 38,
+        "left": 912,
+        "width": 304,
+        "height": 152
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## Change Failure Rate \n\nThis metric measures the % of secure pipelines executions that end in failure. This is failure in any of the stages/steps of the overall pipeline. "
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 38,
+        "left": 608,
+        "width": 304,
+        "height": 152
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## Change Failure Timeline\n\n"
+    },
+    {
+      "name": "Pipeline Name: ${samstackname}",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 0,
+        "width": 684,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "${samstackname}",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 228,
         "left": 0,
         "width": 304,
-        "height": 266
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "markdown": "## ALB Requests\n\nALB number of requests\n\n[ALB Info](https://docs.dynatrace.com/docs/setup-and-configuration/setup-on-cloud-platforms/amazon-web-services/amazon-web-services-integrations/aws-all-services/app-network-load-balancer-builtin)"
-    },
-    {
-      "name": "Cloudfront - INT ACC - Requests",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 0,
-        "left": 304,
-        "width": 456,
-        "height": 266
+        "height": 190
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
@@ -76,14 +102,30 @@
           "id": "A",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(or(eq(sam-stack-name,\"frontend\")),or(eq(environment,build)),or(eq(stage,deploy)))):splitBy():count:sort(value(avg,descending))",
+          "rate": "NONE",
+          "enabled": false
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(or(eq(environment,build)),or(eq(sam-stack-name,\"${samstackname}\")),or(eq(stage,deploy)))):splitBy():count:sort(value(avg,descending))",
+          "rate": "NONE",
+          "enabled": false
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "metricSelector": "cloud.aws.cloudfront.requestsByAccountIdDistributionIdRegion:filter(and(or(eq(\"aws.account.id\",\"${awsaccint}\")))):splitBy():sum:sort(value(sum,descending))",
+          "metricSelector": "(devplatform.sam-pipelines.deployment:filter(and(or(eq(environment,build)),or(eq(sam-stack-name,\"${samstackname}\")),or(eq(stage,deploy)))):splitBy():count:sort(value(avg,descending)))",
           "rate": "NONE",
           "enabled": true
         }
       ],
       "visualConfig": {
-        "type": "GRAPH_CHART",
+        "type": "SINGLE_VALUE",
         "global": {},
         "rules": [
           {
@@ -91,492 +133,29 @@
             "unitTransform": "auto",
             "valueFormat": "auto",
             "properties": {
-              "color": "GREEN",
-              "seriesType": "LINE"
+              "color": "ROYALBLUE",
+              "seriesType": "LINE",
+              "alias": "sam-stack-name,\"frontend\""
             },
             "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
           },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
           {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.cloudfront.requestsByAccountIdDistributionIdRegion:filter(and(or(eq(\"aws.account.id\",\"${awsaccint}\")))):splitBy():sum:sort(value(sum,descending))):limit(100):names"
-      ]
-    },
-    {
-      "name": "Cloudfront - PROD ACC - Requests",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 0,
-        "left": 760,
-        "width": 494,
-        "height": 266
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.cloudfront.requestsByAccountIdDistributionIdRegion:filter(and(or(eq(\"aws.account.id\",\"${awsaccprod}\")))):splitBy():sum:sort(value(sum,descending))",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "TURQUOISE",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.cloudfront.requestsByAccountIdDistributionIdRegion:filter(and(or(eq(\"aws.account.id\",\"${awsaccprod}\")))):splitBy():sum:sort(value(sum,descending))):limit(100):names"
-      ]
-    },
-    {
-      "name": "ALB - PROD ACC - Requests",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 266,
-        "left": 760,
-        "width": 494,
-        "height": 266
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.applicationelb.requestCountByAccountIdLoadBalancerRegion:filter(and(or(eq(\"aws.account.id\",\"${awsaccprod}\")))):splitBy():sum:sort(value(sum,descending))",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "TURQUOISE",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.applicationelb.requestCountByAccountIdLoadBalancerRegion:filter(and(or(eq(\"aws.account.id\",\"${awsaccprod}\")))):splitBy():sum:sort(value(sum,descending))):limit(100):names"
-      ]
-    },
-    {
-      "name": "ALB - INT ACC - Requests",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 266,
-        "left": 304,
-        "width": 456,
-        "height": 266
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.applicationelb.requestCountByAccountIdLoadBalancerRegion:filter(and(or(eq(\"aws.account.id\",\"${awsaccint}\")))):splitBy():sum:sort(value(sum,descending))",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "BLUE",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.applicationelb.requestCountByAccountIdLoadBalancerRegion:filter(and(or(eq(\"aws.account.id\",\"${awsaccint}\")))):splitBy():sum:sort(value(sum,descending))):limit(100):names"
-      ]
-    },
-    {
-      "name": "ALB - INT ACC - Active Connections",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 532,
-        "left": 304,
-        "width": 456,
-        "height": 266
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.applicationelb.activeConnectionCountByAccountIdLoadBalancerRegion:filter(and(or(eq(\"aws.account.id\",\"${awsaccint}\")))):splitBy():sum:sort(value(sum,descending))",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "YELLOW",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.applicationelb.activeConnectionCountByAccountIdLoadBalancerRegion:filter(and(or(eq(\"aws.account.id\",\"${awsaccint}\")))):splitBy():sum:sort(value(sum,descending))):limit(100):names"
-      ]
-    },
-    {
-      "name": "ALB - PROD ACC - Active Connections",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 532,
-        "left": 760,
-        "width": 494,
-        "height": 266
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.applicationelb.activeConnectionCountByAccountIdLoadBalancerRegion:filter(and(or(eq(\"aws.account.id\",\"${awsaccprod}\")))):splitBy():sum:sort(value(sum,descending))",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
+            "matcher": "B:",
             "unitTransform": "auto",
             "valueFormat": "auto",
             "properties": {
               "color": "ORANGE",
+              "seriesType": "LINE",
+              "alias": "sam-stack-name,\"${samstackname}\""
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
               "seriesType": "LINE"
             },
             "seriesOverrides": []
@@ -584,25 +163,18 @@
         ],
         "axes": {
           "xAxis": {
-            "displayName": "",
             "visible": true
           },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
+          "yAxes": []
         },
         "heatmapSettings": {
-          "yAxis": "VALUE"
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
         },
         "thresholds": [
           {
@@ -637,7 +209,410 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.applicationelb.activeConnectionCountByAccountIdLoadBalancerRegion:filter(and(or(eq(\"aws.account.id\",\"${awsaccprod}\")))):splitBy():sum:sort(value(sum,descending))):limit(100):names"
+        "resolution=Inf&((devplatform.sam-pipelines.deployment:filter(and(or(eq(environment,build)),or(eq(sam-stack-name,${samstackname})),or(eq(stage,deploy)))):splitBy():count:sort(value(avg,descending)))):limit(100):names",
+        "resolution=null&((devplatform.sam-pipelines.deployment:filter(and(or(eq(environment,build)),or(eq(sam-stack-name,${samstackname})),or(eq(stage,deploy)))):splitBy():count:sort(value(avg,descending))))"
+      ]
+    },
+    {
+      "name": "${samstackname}",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 228,
+        "left": 304,
+        "width": 304,
+        "height": 190
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "devplatform.sam-pipelines.deployment.stage.timesincemerge:avg:default(0):filter(and(or(eq(build-success,\"1\")),or(eq(sam-stack-name,\"${samstackname}\")),or(eq(stage,\"deploy\")),or(eq(environment,\"production\")))):splitBy():sort(value(auto,descending)):setUnit(Second)\n",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "STACKED_COLUMN"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment.stage.timesincemerge:avg:default(0):filter(and(or(eq(build-success,\"1\")),or(eq(sam-stack-name,${samstackname})),or(eq(stage,deploy)),or(eq(environment,production)))):splitBy():sort(value(auto,descending)):setUnit(Second)):limit(100):names:fold(auto)",
+        "resolution=null&(devplatform.sam-pipelines.deployment.stage.timesincemerge:avg:default(0):filter(and(or(eq(build-success,\"1\")),or(eq(sam-stack-name,${samstackname})),or(eq(stage,deploy)),or(eq(environment,production)))):splitBy():sort(value(auto,descending)):setUnit(Second))"
+      ]
+    },
+    {
+      "name": "${samstackname}",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 228,
+        "left": 608,
+        "width": 304,
+        "height": 190
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(or(eq(sam-stack-name,\"frontend\")),or(eq(build-success,\"0\")))):splitBy(environment,commit-sha,stage):sort(value(auto,descending))",
+          "rate": "NONE",
+          "enabled": false
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(or(eq(sam-stack-name,\"${samstackname}\")),or(eq(build-success,\"0\")))):splitBy(environment,commit-sha,stage):sort(value(auto,descending))",
+          "rate": "NONE",
+          "enabled": false
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "metricSelector": "(devplatform.sam-pipelines.deployment:filter(and(or(eq(build-success,\"1\")),or(eq(sam-stack-name,\"frontend\")),or(eq(environment,production)))):splitBy(environment,commit-sha,stage):count:sort(value(auto,descending)):default(0,always))",
+          "rate": "NONE",
+          "enabled": false
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "environment",
+            "commit-sha",
+            "stage"
+          ],
+          "metricSelector": "(devplatform.sam-pipelines.deployment:filter(and(or(eq(build-success,\"1\")),or(eq(sam-stack-name,\"${samstackname}\")),or(eq(environment,production)))):splitBy(environment,commit-sha,stage):count:sort(value(auto,descending)):default(0,always))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "none",
+            "valueFormat": "0",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "fails - frontend"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "ORANGE",
+              "seriesType": "LINE",
+              "alias": "fails - ${samstackname}"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "none",
+            "valueFormat": "0",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "success - frontend"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "TURQUOISE",
+              "seriesType": "LINE",
+              "alias": "success - ${samstackname}"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "D"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#eedbfd"
+              },
+              {
+                "color": "#f5d30f"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&((devplatform.sam-pipelines.deployment:filter(and(or(eq(build-success,\"1\")),or(eq(sam-stack-name,${samstackname})),or(eq(environment,production)))):splitBy(environment,commit-sha,stage):count:sort(value(auto,descending)):default(0,always))):limit(100):names"
+      ]
+    },
+    {
+      "name": "${samstackname}",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 228,
+        "left": 912,
+        "width": 304,
+        "height": 190
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(or(eq(sam-stack-name,\"${samstackname}\")),or(eq(stage,deploy)),or(eq(environment,build)))):splitBy():count",
+          "rate": "NONE",
+          "enabled": false
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(or(eq(build-success,\"1\")),or(eq(sam-stack-name,\"${samstackname}\")),or(eq(environment,production)))):splitBy():count",
+          "rate": "NONE",
+          "enabled": false
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "metricSelector": "((devplatform.sam-pipelines.deployment:filter(and(or(eq(sam-stack-name,\"${samstackname}\")),or(eq(stage,deploy)),or(eq(environment,build)))):splitBy():count)\n-\n(devplatform.sam-pipelines.deployment:filter(and(or(eq(build-success,\"1\")),or(eq(sam-stack-name,\"${samstackname}\")),or(eq(environment,production)))):splitBy():count))",
+          "rate": "NONE",
+          "enabled": false
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "(((devplatform.sam-pipelines.deployment:filter(and(or(eq(sam-stack-name,\"${samstackname}\")),or(eq(stage,deploy)),or(eq(environment,build)))):splitBy():count)\n-\n(devplatform.sam-pipelines.deployment:filter(and(or(eq(build-success,\"1\")),or(eq(sam-stack-name,\"${samstackname}\")),or(eq(environment,production)))):splitBy():count))\n/\n(devplatform.sam-pipelines.deployment:filter(and(or(eq(\"sam-stack-name\",\"${samstackname}\")),or(eq(stage,deploy)),or(eq(environment,build)))):splitBy():count))*100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "%",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&((((devplatform.sam-pipelines.deployment:filter(and(or(eq(sam-stack-name,${samstackname})),or(eq(stage,deploy)),or(eq(environment,build)))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(or(eq(build-success,\"1\")),or(eq(sam-stack-name,${samstackname})),or(eq(environment,production)))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(or(eq(sam-stack-name,${samstackname})),or(eq(stage,deploy)),or(eq(environment,build)))):splitBy():count))*100):limit(100):names",
+        "resolution=null&((((devplatform.sam-pipelines.deployment:filter(and(or(eq(sam-stack-name,${samstackname})),or(eq(stage,deploy)),or(eq(environment,build)))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(or(eq(build-success,\"1\")),or(eq(sam-stack-name,${samstackname})),or(eq(environment,production)))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(or(eq(sam-stack-name,${samstackname})),or(eq(stage,deploy)),or(eq(environment,build)))):splitBy():count))*100)"
       ]
     }
   ]
