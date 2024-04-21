@@ -171,3 +171,21 @@ resource "dynatrace_slo_v2" "sign_in_sign_up_service" {
     fast_burn_threshold             = 10
   }
 }
+
+resource "dynatrace_slo_v2" "data_analytics_service" {
+  count              = local.is_production ? 1 : 0
+  name               = "Account Management Service (AVLB002)"
+  enabled            = true
+  custom_description = "Request-based SLO to determine the Availability, averaged across all resources within the AWS accounts that make up this Service (99.90%)"
+  evaluation_type    = "AGGREGATE"
+  evaluation_window  = "-1M"
+  filter             = "type(SERVICE),mzName([AWS] di-data-dap-production)"
+  metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
+  metric_name        = "account_management_service"
+  target_success     = 99.9
+  target_warning     = 99.95
+  error_budget_burn_rate {
+    burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
+  }
+}
