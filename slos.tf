@@ -109,7 +109,7 @@ resource "dynatrace_slo_v2" "yoti_availability" {
   evaluation_window  = "-1M"
   filter             = "type(SERVICE),entityId(SERVICE-C5EE09FA3C77F46F)"
   metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
-  metric_name        = "experian_availability"
+  metric_name        = "yoti_availability"
   target_success     = 99.9
   target_warning     = 99.95
   error_budget_burn_rate {
@@ -127,7 +127,7 @@ resource "dynatrace_slo_v2" "zendesk_availability" {
   evaluation_window  = "-1M"
   filter             = "type(SERVICE),entityId(SERVICE-90FD06AA9A3046B8)"
   metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
-  metric_name        = "experian_availability"
+  metric_name        = "zendesk_availability"
   target_success     = 99.9
   target_warning     = 99.95
   error_budget_burn_rate {
@@ -145,7 +145,7 @@ resource "dynatrace_slo_v2" "google_oauth_availability" {
   evaluation_window  = "-1M"
   filter             = "type(SERVICE),entityId(SERVICE-6639F9C59EB7A18A)"
   metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
-  metric_name        = "experian_availability"
+  metric_name        = "google_oauth_availability"
   target_success     = 99.9
   target_warning     = 99.95
   error_budget_burn_rate {
@@ -163,7 +163,7 @@ resource "dynatrace_slo_v2" "google_apis_availability" {
   evaluation_window  = "-1M"
   filter             = "type(SERVICE),entityId(SERVICE-C9807A7AEA6C6DFE)"
   metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
-  metric_name        = "experian_availability"
+  metric_name        = "google_apis_availability"
   target_success     = 99.9
   target_warning     = 99.95
   error_budget_burn_rate {
@@ -181,7 +181,7 @@ resource "dynatrace_slo_v2" "google_sheets_availability" {
   evaluation_window  = "-1M"
   filter             = "type(SERVICE),entityId(SERVICE-D58719FFAB1F810A)"
   metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
-  metric_name        = "experian_availability"
+  metric_name        = "google_sheets_availability"
   target_success     = 99.9
   target_warning     = 99.95
   error_budget_burn_rate {
@@ -199,7 +199,7 @@ resource "dynatrace_slo_v2" "service_now_availability" {
   evaluation_window  = "-1M"
   filter             = "type(SERVICE),entityId(SERVICE-41210C73E70E0781)"
   metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
-  metric_name        = "experian_availability"
+  metric_name        = "service_now_availability"
   target_success     = 99.9
   target_warning     = 99.95
   error_budget_burn_rate {
