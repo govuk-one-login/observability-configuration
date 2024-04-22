@@ -100,6 +100,114 @@ resource "dynatrace_slo_v2" "experian_availability" {
   }
 }
 
+resource "dynatrace_slo_v2" "yoti_availability" {
+  count              = local.is_production ? 1 : 0
+  name               = "YOTI Availability"
+  enabled            = true
+  custom_description = "YOTI Availability (99.9%)"
+  evaluation_type    = "AGGREGATE"
+  evaluation_window  = "-1M"
+  filter             = "type(SERVICE),entityId(SERVICE-C5EE09FA3C77F46F)"
+  metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
+  metric_name        = "experian_availability"
+  target_success     = 99.9
+  target_warning     = 99.95
+  error_budget_burn_rate {
+    burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
+  }
+}
+
+resource "dynatrace_slo_v2" "zendesk_availability" {
+  count              = local.is_production ? 1 : 0
+  name               = "Zendesk Availability"
+  enabled            = true
+  custom_description = "Zendesk Availability (99.9%)"
+  evaluation_type    = "AGGREGATE"
+  evaluation_window  = "-1M"
+  filter             = "type(SERVICE),entityId(SERVICE-90FD06AA9A3046B8)"
+  metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
+  metric_name        = "experian_availability"
+  target_success     = 99.9
+  target_warning     = 99.95
+  error_budget_burn_rate {
+    burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
+  }
+}
+
+resource "dynatrace_slo_v2" "google_oauth_availability" {
+  count              = local.is_production ? 1 : 0
+  name               = "Google OAuth2 Availability"
+  enabled            = true
+  custom_description = "Google OAuth2 Availability (99.9%)"
+  evaluation_type    = "AGGREGATE"
+  evaluation_window  = "-1M"
+  filter             = "type(SERVICE),entityId(SERVICE-6639F9C59EB7A18A)"
+  metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
+  metric_name        = "experian_availability"
+  target_success     = 99.9
+  target_warning     = 99.95
+  error_budget_burn_rate {
+    burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
+  }
+}
+
+resource "dynatrace_slo_v2" "google_apis_availability" {
+  count              = local.is_production ? 1 : 0
+  name               = "Google APIs Availability"
+  enabled            = true
+  custom_description = "Google APIs Availability (99.9%)"
+  evaluation_type    = "AGGREGATE"
+  evaluation_window  = "-1M"
+  filter             = "type(SERVICE),entityId(SERVICE-C9807A7AEA6C6DFE)"
+  metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
+  metric_name        = "experian_availability"
+  target_success     = 99.9
+  target_warning     = 99.95
+  error_budget_burn_rate {
+    burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
+  }
+}
+
+resource "dynatrace_slo_v2" "google_sheets_availability" {
+  count              = local.is_production ? 1 : 0
+  name               = "Google Sheets Availability"
+  enabled            = true
+  custom_description = "Google Sheets Availability (99.9%)"
+  evaluation_type    = "AGGREGATE"
+  evaluation_window  = "-1M"
+  filter             = "type(SERVICE),entityId(SERVICE-D58719FFAB1F810A)"
+  metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
+  metric_name        = "experian_availability"
+  target_success     = 99.9
+  target_warning     = 99.95
+  error_budget_burn_rate {
+    burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
+  }
+}
+
+resource "dynatrace_slo_v2" "service_now_availability" {
+  count              = local.is_production ? 1 : 0
+  name               = "Service Now Availability"
+  enabled            = true
+  custom_description = "Service Now Availability (99.9%)"
+  evaluation_type    = "AGGREGATE"
+  evaluation_window  = "-1M"
+  filter             = "type(SERVICE),entityId(SERVICE-41210C73E70E0781)"
+  metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
+  metric_name        = "experian_availability"
+  target_success     = 99.9
+  target_warning     = 99.95
+  error_budget_burn_rate {
+    burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
+  }
+}
+
 resource "dynatrace_slo_v2" "account_management_service" {
   count              = local.is_production ? 1 : 0
   name               = "Account Management Service (AVLB002)"
