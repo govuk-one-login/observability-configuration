@@ -25,7 +25,7 @@ module "web_application_staging" {
 }
 
 module "web_application_staging_subdomains" {
-  for_each = var.environment == "nonproduction" ? [] : toset(local.one_login_subdomains)
+  for_each = var.environment == "nonproduction" ? toset(local.one_login_subdomains) : []
   source   = "./modules/web_application"
 
   hostname       = "${each.key}.staging.account.gov.uk"
