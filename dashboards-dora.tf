@@ -62,10 +62,18 @@ variable "teams3" {
   description = "map"
   default = {
     "team-a" = {
+      title         = "frontend - backend-api - backend-api"
       owner         = "team-a@company.org"
       samstackname1 = "frontend"
       samstackname2 = "backend-api"
       samstackname3 = "backend-api"
+    }
+    "devplatform-demo-apps" = {
+      title         = "DevPlatform Demo SAM Applications"
+      owner         = "di-dev-platform-core@digital.cabinet-office.gov.uk"
+      samstackname1 = "demo-sam-app"
+      samstackname2 = "demo-sam-app2"
+      samstackname3 = "node-app"
     }
   }
 }
@@ -102,6 +110,7 @@ resource "dynatrace_json_dashboard" "Team-DORA-Dashboards3" {
   for_each = var.teams3
 
   contents = templatefile("./dashboards/dev-platform/TEMPLATE3_dashboard.json", {
+    title         = each.value.title
     owner         = each.value.owner
     samstackname1 = each.value.samstackname1
     samstackname2 = each.value.samstackname2
