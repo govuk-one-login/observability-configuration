@@ -1,18 +1,19 @@
- {
+{
   "metadata": {
     "configurationVersions": [
       7
     ],
-    "clusterVersion": "1.285.97.20240220-045720"
+    "clusterVersion": "1.290.39.20240422-114701"
   },
+  "id": "de8408dc-7226-4abf-8962-8354849c3c47",
   "dashboardMetadata": {
     "name": "Orange-ECS-Metrics",
     "shared": true,
-    "owner": "mohammed.shareef@digital.cabinet-office.gov.uk",
+    "owner": "liam.stockwell@digital.cabinet-office.gov.uk",
     "dashboardFilter": {
       "timeframe": "-30d to now"
     },
-    "popularity": 1,
+    "popularity": 2,
     "hasConsistentColors": false
   },
   "tiles": [
@@ -23,12 +24,12 @@
       "bounds": {
         "top": 494,
         "left": 0,
-        "width": 608,
+        "width": 1330,
         "height": 38
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "## KBV CRI ECS - [Dashboard](https://bhe21058.live.dynatrace.com/#customdevicegroupdetails;id=CUSTOM_DEVICE_GROUP-78DE759078ED6BB6;gtf=-2h;gf=all)"
+      "markdown": "## KBV CRI ECS - [Dashboard](https://bhe21058.live.dynatrace.com/#customdevicegroupdetails;id=CUSTOM_DEVICE_GROUP-78DE759078ED6BB6;gtf=-2h;gf=all) <<FIXLINK"
     },
     {
       "name": "Markdown",
@@ -37,12 +38,12 @@
       "bounds": {
         "top": 874,
         "left": 0,
-        "width": 608,
+        "width": 1330,
         "height": 38
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "## Address CRI ECS - [Dashboard](https://bhe21058.live.dynatrace.com/#customdevicegroupdetails;id=CUSTOM_DEVICE_GROUP-71A78B54B2661378;gtf=-2h;gf=all)"
+      "markdown": "## Address CRI ECS - [Dashboard](https://bhe21058.live.dynatrace.com/#customdevicegroupdetails;id=CUSTOM_DEVICE_GROUP-71A78B54B2661378;gtf=-2h;gf=all) <<FIXLINK\n"
     },
     {
       "name": "Memory Utilisation by Service",
@@ -60,11 +61,11 @@
       "queries": [
         {
           "id": "A",
-          "metric": "ext:cloud.aws.containerinsights.memoryUtilizedByServiceName",
-          "spaceAggregation": "AUTO",
+          "metric": "cloud.aws.ecs.containerinsights.memoryUtilizedByAccountIdClusterNameRegionServiceName",
+          "spaceAggregation": "SUM",
           "timeAggregation": "DEFAULT",
           "splitBy": [
-            "dt.entity.custom_device"
+            "clustername"
           ],
           "sortBy": "DESC",
           "sortByDimension": "",
@@ -72,21 +73,18 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "dt.entity.custom_device",
-                "filterType": "NAME",
+                "filter": "clustername",
+                "filterType": "DIMENSION",
                 "filterOperator": "OR",
-                "entityAttribute": "entityName",
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph",
-                    "evaluator": "IN",
-                    "matchExactly": false
+                    "value": "kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c",
+                    "evaluator": "EQ"
                   },
                   {
-                    "value": "kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c",
-                    "evaluator": "IN",
-                    "matchExactly": false
+                    "value": "address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph",
+                    "evaluator": "EQ"
                   }
                 ]
               }
@@ -111,20 +109,7 @@
               "seriesType": "LINE",
               "alias": "CPU Utilisation by Service"
             },
-            "seriesOverrides": [
-              {
-                "name": "address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph",
-                "color": "#ef651f"
-              },
-              {
-                "name": "kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c",
-                "color": "#ffee7c"
-              },
-              {
-                "name": "Select series",
-                "color": "#006bba"
-              }
-            ]
+            "seriesOverrides": []
           }
         ],
         "axes": {
@@ -184,7 +169,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(ext:cloud.aws.containerinsights.memoryUtilizedByServiceName:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),entityName(~\"kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c~\")\")),in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),entityName(~\"address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph~\")\"))))):splitBy(\"dt.entity.custom_device\"):sort(value(auto,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.ecs.containerinsights.memoryUtilizedByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph),eq(clustername,kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c)))):splitBy(clustername):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -203,11 +188,11 @@
       "queries": [
         {
           "id": "A",
-          "metric": "ext:cloud.aws.containerinsights.cpuUtilizedByServiceName",
-          "spaceAggregation": "AVG",
+          "metric": "cloud.aws.ecs.containerinsights.cpuUtilizedByAccountIdClusterNameRegionServiceName",
+          "spaceAggregation": "SUM",
           "timeAggregation": "DEFAULT",
           "splitBy": [
-            "dt.entity.custom_device"
+            "clustername"
           ],
           "sortBy": "DESC",
           "sortByDimension": "",
@@ -215,21 +200,18 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "dt.entity.custom_device",
-                "filterType": "NAME",
+                "filter": "clustername",
+                "filterType": "DIMENSION",
                 "filterOperator": "OR",
-                "entityAttribute": "entityName",
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph",
-                    "evaluator": "IN",
-                    "matchExactly": false
+                    "value": "kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c",
+                    "evaluator": "EQ"
                   },
                   {
-                    "value": "kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c",
-                    "evaluator": "IN",
-                    "matchExactly": false
+                    "value": "address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph",
+                    "evaluator": "EQ"
                   }
                 ]
               }
@@ -242,7 +224,7 @@
         }
       ],
       "visualConfig": {
-        "type": "STACKED_AREA",
+        "type": "GRAPH_CHART",
         "global": {},
         "rules": [
           {
@@ -251,23 +233,10 @@
             "valueFormat": "auto",
             "properties": {
               "color": "DEFAULT",
-              "seriesType": "STACKED_AREA",
+              "seriesType": "LINE",
               "alias": "CPU Utilisation by Service"
             },
-            "seriesOverrides": [
-              {
-                "name": "address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph",
-                "color": "#4556d7"
-              },
-              {
-                "name": "kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c",
-                "color": "#ffe11c"
-              },
-              {
-                "name": "Select series",
-                "color": "#9cd575"
-              }
-            ]
+            "seriesOverrides": []
           }
         ],
         "axes": {
@@ -295,7 +264,7 @@
         "thresholds": [
           {
             "axisTarget": "LEFT",
-            "columnId": "MemoryUtilization (by ServiceName)",
+            "columnId": "CpuUtilized",
             "rules": [
               {
                 "color": "#7dc540"
@@ -312,7 +281,10 @@
           }
         ],
         "tableSettings": {
-          "hiddenColumns": []
+          "hiddenColumns": [
+            "A:servicename.name",
+            "A:clustername.name"
+          ]
         },
         "graphChartSettings": {
           "connectNulls": false
@@ -327,7 +299,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(ext:cloud.aws.containerinsights.cpuUtilizedByServiceName:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),entityName(~\"kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c~\")\")),in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),entityName(~\"address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph~\")\"))))):splitBy(\"dt.entity.custom_device\"):avg:sort(value(avg,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.ecs.containerinsights.cpuUtilizedByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph),eq(clustername,kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c)))):splitBy(clustername):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -346,7 +318,7 @@
       "queries": [
         {
           "id": "A",
-          "metric": "ext:cloud.aws.ecs.cpuUtilizationByServiceName",
+          "metric": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName",
           "spaceAggregation": "MAX",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
@@ -356,16 +328,14 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "dt.entity.custom_device",
-                "filterType": "NAME",
+                "filter": "clustername",
+                "filterType": "DIMENSION",
                 "filterOperator": "OR",
-                "entityAttribute": "entityName",
                 "nestedFilters": [],
                 "criteria": [
                   {
                     "value": "kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c",
-                    "evaluator": "IN",
-                    "matchExactly": false
+                    "evaluator": "EQ"
                   }
                 ]
               }
@@ -378,8 +348,8 @@
         },
         {
           "id": "B",
-          "metric": "ext:cloud.aws.ecs.cpuUtilizationByServiceName",
-          "spaceAggregation": "MIN",
+          "metric": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName",
+          "spaceAggregation": "AVG",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
           "sortBy": "DESC",
@@ -388,16 +358,14 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "dt.entity.custom_device",
-                "filterType": "NAME",
+                "filter": "clustername",
+                "filterType": "DIMENSION",
                 "filterOperator": "OR",
-                "entityAttribute": "entityName",
                 "nestedFilters": [],
                 "criteria": [
                   {
                     "value": "kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c",
-                    "evaluator": "IN",
-                    "matchExactly": false
+                    "evaluator": "EQ"
                   }
                 ]
               }
@@ -410,8 +378,8 @@
         },
         {
           "id": "C",
-          "metric": "ext:cloud.aws.ecs.cpuUtilizationByServiceName",
-          "spaceAggregation": "AVG",
+          "metric": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName",
+          "spaceAggregation": "MIN",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
           "sortBy": "DESC",
@@ -420,16 +388,14 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "dt.entity.custom_device",
-                "filterType": "NAME",
+                "filter": "clustername",
+                "filterType": "DIMENSION",
                 "filterOperator": "OR",
-                "entityAttribute": "entityName",
                 "nestedFilters": [],
                 "criteria": [
                   {
                     "value": "kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c",
-                    "evaluator": "IN",
-                    "matchExactly": false
+                    "evaluator": "EQ"
                   }
                 ]
               }
@@ -442,7 +408,7 @@
         }
       ],
       "visualConfig": {
-        "type": "STACKED_AREA",
+        "type": "GRAPH_CHART",
         "global": {},
         "rules": [
           {
@@ -450,8 +416,8 @@
             "unitTransform": "auto",
             "valueFormat": "auto",
             "properties": {
-              "color": "BLUE",
-              "seriesType": "STACKED_AREA",
+              "color": "RED",
+              "seriesType": "LINE",
               "alias": "CPUUtilization (Maximum)"
             },
             "seriesOverrides": []
@@ -462,7 +428,7 @@
             "valueFormat": "auto",
             "properties": {
               "color": "YELLOW",
-              "seriesType": "STACKED_AREA",
+              "seriesType": "LINE",
               "alias": "CPUUtilization (Average)"
             },
             "seriesOverrides": []
@@ -473,7 +439,7 @@
             "valueFormat": "auto",
             "properties": {
               "color": "GREEN",
-              "seriesType": "STACKED_AREA",
+              "seriesType": "LINE",
               "alias": "CPUUtilization (Minimum)"
             },
             "seriesOverrides": []
@@ -536,7 +502,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(ext:cloud.aws.ecs.cpuUtilizationByServiceName:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),entityName(~\"kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c~\")\"))))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names,(ext:cloud.aws.ecs.cpuUtilizationByServiceName:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),entityName(~\"kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(ext:cloud.aws.ecs.cpuUtilizationByServiceName:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),entityName(~\"kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c)))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c)))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c)))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -546,7 +512,7 @@
       "bounds": {
         "top": 532,
         "left": 684,
-        "width": 684,
+        "width": 646,
         "height": 342
       },
       "tileFilter": {},
@@ -555,7 +521,7 @@
       "queries": [
         {
           "id": "A",
-          "metric": "ext:cloud.aws.ecs.memoryUtilizationByServiceName",
+          "metric": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName",
           "spaceAggregation": "MAX",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
@@ -565,16 +531,14 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "dt.entity.custom_device",
-                "filterType": "NAME",
+                "filter": "clustername",
+                "filterType": "DIMENSION",
                 "filterOperator": "OR",
-                "entityAttribute": "entityName",
                 "nestedFilters": [],
                 "criteria": [
                   {
                     "value": "kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c",
-                    "evaluator": "IN",
-                    "matchExactly": false
+                    "evaluator": "EQ"
                   }
                 ]
               }
@@ -587,7 +551,7 @@
         },
         {
           "id": "B",
-          "metric": "ext:cloud.aws.ecs.memoryUtilizationByServiceName",
+          "metric": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName",
           "spaceAggregation": "AVG",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
@@ -597,16 +561,14 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "dt.entity.custom_device",
-                "filterType": "NAME",
+                "filter": "clustername",
+                "filterType": "DIMENSION",
                 "filterOperator": "OR",
-                "entityAttribute": "entityName",
                 "nestedFilters": [],
                 "criteria": [
                   {
                     "value": "kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c",
-                    "evaluator": "IN",
-                    "matchExactly": false
+                    "evaluator": "EQ"
                   }
                 ]
               }
@@ -619,7 +581,7 @@
         },
         {
           "id": "C",
-          "metric": "ext:cloud.aws.ecs.memoryUtilizationByServiceName",
+          "metric": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName",
           "spaceAggregation": "MIN",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
@@ -629,16 +591,14 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "dt.entity.custom_device",
-                "filterType": "NAME",
+                "filter": "clustername",
+                "filterType": "DIMENSION",
                 "filterOperator": "OR",
-                "entityAttribute": "entityName",
                 "nestedFilters": [],
                 "criteria": [
                   {
                     "value": "kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c",
-                    "evaluator": "IN",
-                    "matchExactly": false
+                    "evaluator": "EQ"
                   }
                 ]
               }
@@ -659,7 +619,7 @@
             "unitTransform": "auto",
             "valueFormat": "auto",
             "properties": {
-              "color": "ROYALBLUE",
+              "color": "RED",
               "seriesType": "LINE",
               "alias": "MemoryUtilisation (Maximum)"
             },
@@ -745,7 +705,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(ext:cloud.aws.ecs.memoryUtilizationByServiceName:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),entityName(~\"kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c~\")\"))))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names,(ext:cloud.aws.ecs.memoryUtilizationByServiceName:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),entityName(~\"kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(ext:cloud.aws.ecs.memoryUtilizationByServiceName:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),entityName(~\"kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c)))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c)))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,kbv-cri-front-KBVFrontEcsCluster-jY9mo7EQJI3c)))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -764,7 +724,7 @@
       "queries": [
         {
           "id": "A",
-          "metric": "ext:cloud.aws.ecs.cpuUtilizationByServiceName",
+          "metric": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName",
           "spaceAggregation": "MAX",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
@@ -774,16 +734,14 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "dt.entity.custom_device",
-                "filterType": "NAME",
+                "filter": "clustername",
+                "filterType": "DIMENSION",
                 "filterOperator": "OR",
-                "entityAttribute": "entityName",
                 "nestedFilters": [],
                 "criteria": [
                   {
                     "value": "address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph",
-                    "evaluator": "IN",
-                    "matchExactly": false
+                    "evaluator": "EQ"
                   }
                 ]
               }
@@ -796,8 +754,8 @@
         },
         {
           "id": "B",
-          "metric": "ext:cloud.aws.ecs.cpuUtilizationByServiceName",
-          "spaceAggregation": "MIN",
+          "metric": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName",
+          "spaceAggregation": "AVG",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
           "sortBy": "DESC",
@@ -806,16 +764,14 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "dt.entity.custom_device",
-                "filterType": "NAME",
+                "filter": "clustername",
+                "filterType": "DIMENSION",
                 "filterOperator": "OR",
-                "entityAttribute": "entityName",
                 "nestedFilters": [],
                 "criteria": [
                   {
                     "value": "address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph",
-                    "evaluator": "IN",
-                    "matchExactly": false
+                    "evaluator": "EQ"
                   }
                 ]
               }
@@ -828,8 +784,8 @@
         },
         {
           "id": "C",
-          "metric": "ext:cloud.aws.ecs.cpuUtilizationByServiceName",
-          "spaceAggregation": "AVG",
+          "metric": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName",
+          "spaceAggregation": "MIN",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
           "sortBy": "DESC",
@@ -838,16 +794,14 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "dt.entity.custom_device",
-                "filterType": "NAME",
+                "filter": "clustername",
+                "filterType": "DIMENSION",
                 "filterOperator": "OR",
-                "entityAttribute": "entityName",
                 "nestedFilters": [],
                 "criteria": [
                   {
                     "value": "address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph",
-                    "evaluator": "IN",
-                    "matchExactly": false
+                    "evaluator": "EQ"
                   }
                 ]
               }
@@ -860,7 +814,7 @@
         }
       ],
       "visualConfig": {
-        "type": "STACKED_AREA",
+        "type": "GRAPH_CHART",
         "global": {},
         "rules": [
           {
@@ -868,8 +822,8 @@
             "unitTransform": "auto",
             "valueFormat": "auto",
             "properties": {
-              "color": "BLUE",
-              "seriesType": "STACKED_AREA",
+              "color": "RED",
+              "seriesType": "LINE",
               "alias": "CPUUtilization (Maximum)"
             },
             "seriesOverrides": []
@@ -880,7 +834,7 @@
             "valueFormat": "auto",
             "properties": {
               "color": "YELLOW",
-              "seriesType": "STACKED_AREA",
+              "seriesType": "LINE",
               "alias": "CPUUtilization (Average)"
             },
             "seriesOverrides": []
@@ -891,7 +845,7 @@
             "valueFormat": "auto",
             "properties": {
               "color": "GREEN",
-              "seriesType": "STACKED_AREA",
+              "seriesType": "LINE",
               "alias": "CPUUtilization (Minimum)"
             },
             "seriesOverrides": []
@@ -954,7 +908,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(ext:cloud.aws.ecs.cpuUtilizationByServiceName:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),entityName(~\"address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph~\")\"))))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names,(ext:cloud.aws.ecs.cpuUtilizationByServiceName:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),entityName(~\"address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(ext:cloud.aws.ecs.cpuUtilizationByServiceName:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),entityName(~\"address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph)))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph)))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph)))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -964,7 +918,7 @@
       "bounds": {
         "top": 912,
         "left": 684,
-        "width": 684,
+        "width": 646,
         "height": 342
       },
       "tileFilter": {},
@@ -973,7 +927,7 @@
       "queries": [
         {
           "id": "A",
-          "metric": "ext:cloud.aws.ecs.memoryUtilizationByServiceName",
+          "metric": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName",
           "spaceAggregation": "MAX",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
@@ -983,16 +937,14 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "dt.entity.custom_device",
-                "filterType": "NAME",
+                "filter": "clustername",
+                "filterType": "DIMENSION",
                 "filterOperator": "OR",
-                "entityAttribute": "entityName",
                 "nestedFilters": [],
                 "criteria": [
                   {
                     "value": "address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph",
-                    "evaluator": "IN",
-                    "matchExactly": false
+                    "evaluator": "EQ"
                   }
                 ]
               }
@@ -1005,8 +957,8 @@
         },
         {
           "id": "B",
-          "metric": "ext:cloud.aws.ecs.memoryUtilizationByServiceName",
-          "spaceAggregation": "MIN",
+          "metric": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName",
+          "spaceAggregation": "AVG",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
           "sortBy": "DESC",
@@ -1015,16 +967,14 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "dt.entity.custom_device",
-                "filterType": "NAME",
+                "filter": "clustername",
+                "filterType": "DIMENSION",
                 "filterOperator": "OR",
-                "entityAttribute": "entityName",
                 "nestedFilters": [],
                 "criteria": [
                   {
                     "value": "address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph",
-                    "evaluator": "IN",
-                    "matchExactly": false
+                    "evaluator": "EQ"
                   }
                 ]
               }
@@ -1037,8 +987,8 @@
         },
         {
           "id": "C",
-          "metric": "ext:cloud.aws.ecs.memoryUtilizationByServiceName",
-          "spaceAggregation": "AVG",
+          "metric": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName",
+          "spaceAggregation": "MIN",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
           "sortBy": "DESC",
@@ -1047,16 +997,14 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "dt.entity.custom_device",
-                "filterType": "NAME",
+                "filter": "clustername",
+                "filterType": "DIMENSION",
                 "filterOperator": "OR",
-                "entityAttribute": "entityName",
                 "nestedFilters": [],
                 "criteria": [
                   {
                     "value": "address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph",
-                    "evaluator": "IN",
-                    "matchExactly": false
+                    "evaluator": "EQ"
                   }
                 ]
               }
@@ -1077,7 +1025,7 @@
             "unitTransform": "auto",
             "valueFormat": "auto",
             "properties": {
-              "color": "ROYALBLUE",
+              "color": "RED",
               "seriesType": "LINE",
               "alias": "MemoryUtilisation (Maximum)"
             },
@@ -1090,7 +1038,7 @@
             "properties": {
               "color": "YELLOW",
               "seriesType": "LINE",
-              "alias": "MemoryUtilisation (Minimum)"
+              "alias": "MemoryUtilisation (Average)"
             },
             "seriesOverrides": []
           },
@@ -1101,7 +1049,7 @@
             "properties": {
               "color": "GREEN",
               "seriesType": "LINE",
-              "alias": "MemoryUtilisation (Average)"
+              "alias": "MemoryUtilisation (Minimum)"
             },
             "seriesOverrides": []
           }
@@ -1163,7 +1111,847 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(ext:cloud.aws.ecs.memoryUtilizationByServiceName:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),entityName(~\"address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph~\")\"))))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names,(ext:cloud.aws.ecs.memoryUtilizationByServiceName:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),entityName(~\"address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(ext:cloud.aws.ecs.memoryUtilizationByServiceName:filter(and(or(in(\"dt.entity.custom_device\",entitySelector(\"type(custom_device),entityName(~\"address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph)))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph)))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph)))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 1254,
+        "left": 0,
+        "width": 1330,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## NINO CRI ECS - [Dashboard](https://bhe21058.live.dynatrace.com/#customdevicegroupdetails;id=CUSTOM_DEVICE_GROUP-71A78B54B2661378;gtf=-2h;gf=all) <<FIXLINK\n"
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 1634,
+        "left": 0,
+        "width": 1330,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## OTG CRI ECS - [Dashboard](https://bhe21058.live.dynatrace.com/#customdevicegroupdetails;id=CUSTOM_DEVICE_GROUP-71A78B54B2661378;gtf=-2h;gf=all) <<FIXLINK\n"
+    },
+    {
+      "name": "CPU Utilization",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1672,
+        "left": 0,
+        "width": 684,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName",
+          "spaceAggregation": "MAX",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "clustername",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "clustername",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "clustername",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "CPUUtilization (Maximum)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "LINE",
+              "alias": "CPUUtilization (Average)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "CPUUtilization (Minimum)"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph)))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph)))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph)))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Memory Utilisation",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1672,
+        "left": 684,
+        "width": 646,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName",
+          "spaceAggregation": "MAX",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "clustername",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "clustername",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "clustername",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "MemoryUtilisation (Maximum)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "LINE",
+              "alias": "MemoryUtilisation (Average)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "MemoryUtilisation (Minimum)"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph)))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph)))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,address-cri-front-AddressFrontEcsCluster-kp4w96NqzGph)))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "CPU Utilization",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1292,
+        "left": 0,
+        "width": 684,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName",
+          "spaceAggregation": "MAX",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "clustername",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "cri-nino-stub-CriStubCluster-j32s2o2DZnUb",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "clustername",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "cri-nino-stub-CriStubCluster-j32s2o2DZnUb",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "clustername",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "cri-nino-stub-CriStubCluster-j32s2o2DZnUb",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "CPUUtilization (Maximum)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "LINE",
+              "alias": "CPUUtilization (Average)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "CPUUtilization (Minimum)"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,cri-nino-stub-CriStubCluster-j32s2o2DZnUb)))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,cri-nino-stub-CriStubCluster-j32s2o2DZnUb)))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,cri-nino-stub-CriStubCluster-j32s2o2DZnUb)))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Memory Utilisation",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1292,
+        "left": 684,
+        "width": 646,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName",
+          "spaceAggregation": "MAX",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "clustername",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "cri-nino-stub-CriStubCluster-j32s2o2DZnUb",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "clustername",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "cri-nino-stub-CriStubCluster-j32s2o2DZnUb",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "clustername",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "cri-nino-stub-CriStubCluster-j32s2o2DZnUb",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "MemoryUtilisation (Maximum)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "LINE",
+              "alias": "MemoryUtilisation (Average)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "MemoryUtilisation (Minimum)"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,cri-nino-stub-CriStubCluster-j32s2o2DZnUb)))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,cri-nino-stub-CriStubCluster-j32s2o2DZnUb)))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,cri-nino-stub-CriStubCluster-j32s2o2DZnUb)))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names"
       ]
     }
   ]
