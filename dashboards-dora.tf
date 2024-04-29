@@ -18,7 +18,7 @@ variable "teams1" {
     "team-b" = {
       title         = "ipv-cri-passport-front"
       owner         = "team-b@company.org"
-      samstackname1  = "ipv-cri-passport-front"
+      samstackname1 = "ipv-cri-passport-front"
     }
   }
 }
