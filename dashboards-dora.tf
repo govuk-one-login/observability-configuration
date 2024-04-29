@@ -11,12 +11,14 @@ variable "teams1" {
   description = "map"
   default = {
     "team-a" = {
-      owner        = "team-a@company.org"
-      samstackname = "fraud-cri-front"
+      title         = "fraud-cri-front"
+      owner         = "team-a@company.org"
+      samstackname1 = "fraud-cri-front"
     }
     "team-b" = {
-      owner        = "team-b@company.org"
-      samstackname = "ipv-cri-passport-front"
+      title         = "ipv-cri-passport-front"
+      owner         = "team-b@company.org"
+      samstackname1  = "ipv-cri-passport-front"
     }
   }
 }
@@ -28,26 +30,31 @@ variable "teams2" {
   description = "map"
   default = {
     "team-a" = {
+      title         = "frontend backend-api"
       owner         = "team-a@company.org"
       samstackname1 = "frontend"
       samstackname2 = "backend-api"
     }
     "team-b" = {
+      title         = "check-hmrc-cri-api check-hmrc-cri-front"
       owner         = "team-b@company.org"
       samstackname1 = "check-hmrc-cri-api"
       samstackname2 = "check-hmrc-cri-front"
     }
     "team-c" = {
+      title         = "core-front core-back"
       owner         = "team-c@company.org"
       samstackname1 = "core-front"
       samstackname2 = "core-back"
     }
     "team-d" = {
+      title         = "ipv-cri-passport-api ipv-cri-passport-front"
       owner         = "team-d@company.org"
       samstackname1 = "ipv-cri-passport-api"
       samstackname2 = "ipv-cri-passport-front"
     }
     "team-e" = {
+      title         = "passport-api passport-front"
       owner         = "team-d@company.org"
       samstackname1 = "passport-api"
       samstackname2 = "passport-front"
@@ -84,9 +91,10 @@ variable "teams3" {
 resource "dynatrace_json_dashboard" "Team-DORA-Dashboards1" {
   for_each = var.teams1
 
-  contents = templatefile("./dashboards/dev-platform/TEMPLATE_dashboard.json", {
-    owner        = each.value.owner
-    samstackname = each.value.samstackname
+  contents = templatefile("./dashboards/dev-platform/TEMPLATE1_dashboard.json", {
+    title         = each.value.title
+    owner         = each.value.owner
+    samstackname1 = each.value.samstackname1
   })
 }
 
@@ -97,6 +105,7 @@ resource "dynatrace_json_dashboard" "Team-DORA-Dashboards2" {
   for_each = var.teams2
 
   contents = templatefile("./dashboards/dev-platform/TEMPLATE2_dashboard.json", {
+    title         = each.value.title
     owner         = each.value.owner
     samstackname1 = each.value.samstackname1
     samstackname2 = each.value.samstackname2
