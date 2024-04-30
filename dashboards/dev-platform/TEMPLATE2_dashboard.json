@@ -8,7 +8,7 @@
   "dashboardMetadata": {
     "name": "DORA - ${title}",
     "shared": true,
-    "owner": "${owner}",
+    "owner": "${owner",
     "tags": [
       "DORA"
     ],
@@ -64,7 +64,7 @@
       "bounds": {
         "top": 0,
         "left": 0,
-        "width": 684,
+        "width": 1216,
         "height": 38
       },
       "tileFilter": {},
@@ -606,6 +606,208 @@
       "metricExpressions": [
         "resolution=Inf&(devplatform.sam-pipelines.deployment.stage.timesincemerge:filter(and(or(eq(build-success,\"1\")),or(eq(sam-stack-name,${samstackname1})),or(eq(stage,deploy)),or(eq(environment,production)))):splitBy():sort(value(auto,descending)):avg:setUnit(Second)):limit(100):names",
         "resolution=null&(devplatform.sam-pipelines.deployment.stage.timesincemerge:filter(and(or(eq(build-success,\"1\")),or(eq(sam-stack-name,${samstackname1})),or(eq(stage,deploy)),or(eq(environment,production)))):splitBy():sort(value(auto,descending)):avg:setUnit(Second))"
+      ]
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 38,
+        "left": 912,
+        "width": 304,
+        "height": 152
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## Pipeline versions\n\nVersions of the secure pipelines currently being used for the deployments"
+    },
+    {
+      "name": "${samstackname2}",
+      "nameSize": "",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 418,
+        "left": 912,
+        "width": 304,
+        "height": 190
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "pipeline-version",
+            "environment"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(or(eq(sam-stack-name,\"${samstackname2}\")),or(eq(stage,deploy)),or(eq(\"build-success\",\"1\")))):splitBy(\"pipeline-version\",\"environment\"):count:sort(dimension(\"pipeline-version\",descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TOP_LIST",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "C:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(devplatform.sam-pipelines.deployment:filter(and(or(eq(sam-stack-name,${samstackname2})),or(eq(stage,deploy)),or(eq(build-success,\"1\")))):splitBy(pipeline-version,environment):count:sort(dimension(pipeline-version,descending))):limit(100):names"
+      ]
+    },
+    {
+      "name": "${samstackname1}",
+      "nameSize": "",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 228,
+        "left": 912,
+        "width": 304,
+        "height": 190
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "pipeline-version",
+            "environment"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(or(eq(sam-stack-name,\"${samstackname1}\")),or(eq(stage,deploy)),or(eq(\"build-success\",\"1\")))):splitBy(\"pipeline-version\",\"environment\"):count:sort(dimension(\"pipeline-version\",descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TOP_LIST",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "C:",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "STACKED_COLUMN"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "C",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "C:pipeline-version.name",
+            "C:environment.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(devplatform.sam-pipelines.deployment:filter(and(or(eq(sam-stack-name,${samstackname1})),or(eq(stage,deploy)),or(eq(build-success,\"1\")))):splitBy(pipeline-version,environment):count:sort(dimension(pipeline-version,descending))):limit(100):names"
       ]
     }
   ]
