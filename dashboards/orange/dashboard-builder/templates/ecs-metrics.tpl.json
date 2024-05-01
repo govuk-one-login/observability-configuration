@@ -1,0 +1,1145 @@
+{
+  "metadata": {
+    "configurationVersions": [
+      7
+    ],
+    "clusterVersion": "1.290.46.20240425-162131"
+  },
+  "id": "de8408dc-7226-4abf-8962-8354849c3c47",
+  "dashboardMetadata": {
+    "name": "Orange-ECS-Metrics",
+    "shared": true,
+    "owner": "liam.stockwell@digital.cabinet-office.gov.uk",
+    "dashboardFilter": {
+      "timeframe": "-30d to now"
+    },
+    "popularity": 3,
+    "hasConsistentColors": false
+  },
+  "tiles": [
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 0,
+        "width": 1330,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## KBV CRI ECS"
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 380,
+        "left": 0,
+        "width": 1330,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## Address CRI ECS "
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 760,
+        "left": 0,
+        "width": 1330,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## NINO CRI ECS "
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 1140,
+        "left": 0,
+        "width": 1330,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## OTG CRI ECS "
+    },
+    {
+      "name": "Memory Utilisation",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 38,
+        "left": 684,
+        "width": 646,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"014243362159\")),or(contains(clustername,kbv-cri-front)))):splitBy():max",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"014243362159\")),or(contains(clustername,kbv-cri-front)))):splitBy():avg",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"014243362159\")),or(contains(clustername,kbv-cri-front)))):splitBy():min",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "MemoryUtilisation (Maximum)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "LINE",
+              "alias": "MemoryUtilisation (Average)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "MemoryUtilisation (Minimum)"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"014243362159\")),or(contains(clustername,kbv-cri-front)))):splitBy():max):limit(100):names,(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"014243362159\")),or(contains(clustername,kbv-cri-front)))):splitBy():avg):limit(100):names,(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"014243362159\")),or(contains(clustername,kbv-cri-front)))):splitBy():min):limit(100):names"
+      ]
+    },
+    {
+      "name": "CPU Utilization",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 38,
+        "left": 0,
+        "width": 684,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"014243362159\")),or(contains(clustername,kbv-cri-front)))):splitBy():max",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"014243362159\")),or(contains(clustername,kbv-cri-front)))):splitBy():avg",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"014243362159\")),or(contains(clustername,kbv-cri-front)))):splitBy():min",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "CPUUtilization (Maximum)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "LINE",
+              "alias": "CPUUtilization (Average)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "CPUUtilization (Minimum)"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "CPUUtilization",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "D:clustername.name",
+            "D:servicename.name",
+            "A:clustername.name",
+            "B:clustername.name",
+            "C:clustername.name",
+            "A:aws.account.id.name",
+            "A:aws.region.name",
+            "A:servicename.name",
+            "B:aws.account.id.name",
+            "B:aws.region.name",
+            "B:servicename.name",
+            "C:aws.account.id.name",
+            "C:aws.region.name",
+            "C:servicename.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"014243362159\")),or(contains(clustername,kbv-cri-front)))):splitBy():max):limit(100):names,(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"014243362159\")),or(contains(clustername,kbv-cri-front)))):splitBy():avg):limit(100):names,(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"014243362159\")),or(contains(clustername,kbv-cri-front)))):splitBy():min):limit(100):names"
+      ]
+    },
+    {
+      "name": "CPU Utilization",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 418,
+        "left": 0,
+        "width": 684,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"${address_account_id }\")),or(contains(clustername,address-cri-front)))):splitBy():max",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"${address_account_id }\")),or(contains(clustername,address-cri-front)))):splitBy():avg",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"${address_account_id }\")),or(contains(clustername,address-cri-front)))):splitBy():min",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "CPUUtilization (Maximum)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "LINE",
+              "alias": "CPUUtilization (Average)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "CPUUtilization (Minimum)"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"${address_account_id }\")),or(contains(clustername,address-cri-front)))):splitBy():max):limit(100):names,(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"${address_account_id }\")),or(contains(clustername,address-cri-front)))):splitBy():avg):limit(100):names,(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"${address_account_id }\")),or(contains(clustername,address-cri-front)))):splitBy():min):limit(100):names"
+      ]
+    },
+    {
+      "name": "Memory Utilisation",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 418,
+        "left": 684,
+        "width": 646,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"${address_account_id }\")),or(contains(clustername,address-cri-front)))):splitBy():max",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"${address_account_id }\")),or(contains(clustername,address-cri-front)))):splitBy():avg",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"${address_account_id }\")),or(contains(clustername,address-cri-front)))):splitBy():min",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "MemoryUtilisation (Maximum)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "LINE",
+              "alias": "MemoryUtilisation (Average)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "MemoryUtilisation (Minimum)"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"${address_account_id }\")),or(contains(clustername,address-cri-front)))):splitBy():max):limit(100):names,(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"${address_account_id }\")),or(contains(clustername,address-cri-front)))):splitBy():avg):limit(100):names,(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"${address_account_id }\")),or(contains(clustername,address-cri-front)))):splitBy():min):limit(100):names"
+      ]
+    },
+    {
+      "name": "CPU Utilization",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 798,
+        "left": 0,
+        "width": 684,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"388905755587\")),or(contains(clustername,cri-nino-stub)))):splitBy():max",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"388905755587\")),or(contains(clustername,cri-nino-stub)))):splitBy():avg",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"388905755587\")),or(contains(clustername,cri-nino-stub)))):splitBy():min",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "CPUUtilization (Maximum)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "LINE",
+              "alias": "CPUUtilization (Average)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "CPUUtilization (Minimum)"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "CPUUtilization",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:aws.account.id.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"388905755587\")),or(contains(clustername,cri-nino-stub)))):splitBy():max):limit(100):names,(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"388905755587\")),or(contains(clustername,cri-nino-stub)))):splitBy():avg):limit(100):names,(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"388905755587\")),or(contains(clustername,cri-nino-stub)))):splitBy():min):limit(100):names"
+      ]
+    },
+    {
+      "name": "Memory Utilisation",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 798,
+        "left": 684,
+        "width": 646,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"388905755587\")),or(contains(clustername,cri-nino-stub)))):splitBy():max",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"388905755587\")),or(contains(clustername,cri-nino-stub)))):splitBy():avg",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"388905755587\")),or(contains(clustername,cri-nino-stub)))):splitBy():min",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "MemoryUtilisation (Maximum)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "LINE",
+              "alias": "MemoryUtilisation (Average)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "MemoryUtilisation (Minimum)"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"388905755587\")),or(contains(clustername,cri-nino-stub)))):splitBy():max):limit(100):names,(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"388905755587\")),or(contains(clustername,cri-nino-stub)))):splitBy():avg):limit(100):names,(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"388905755587\")),or(contains(clustername,cri-nino-stub)))):splitBy():min):limit(100):names"
+      ]
+    },
+    {
+      "name": "CPU Utilisation by Service",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 1368,
+        "width": 684,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "clustername"
+          ],
+          "metricSelector": "cloud.aws.ecs.containerinsights.cpuUtilizedByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"${address_account_id }\"),eq(\"aws.account.id\",\"014243362159\")),or(contains(clustername,address-cri-front),contains(clustername,kbv-cri-front)))):splitBy(clustername):sum:sort(value(sum,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "CPU Utilisation by Service"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "CpuUtilized",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:servicename.name",
+            "A:clustername.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.ecs.containerinsights.cpuUtilizedByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"${address_account_id }\"),eq(\"aws.account.id\",\"014243362159\")),or(contains(clustername,address-cri-front),contains(clustername,kbv-cri-front)))):splitBy(clustername):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Memory Utilisation by Service",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 2052,
+        "width": 646,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "clustername"
+          ],
+          "metricSelector": "cloud.aws.ecs.containerinsights.memoryUtilizedByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"${address_account_id }\"),eq(\"aws.account.id\",\"014243362159\")),or(contains(clustername,address-cri-front),contains(clustername,kbv-cri-front)))):splitBy(clustername):sum:sort(value(sum,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "CPU Utilisation by Service"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "MemoryUtilization (by ServiceName)",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.ecs.containerinsights.memoryUtilizedByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"${address_account_id }\"),eq(\"aws.account.id\",\"014243362159\")),or(contains(clustername,address-cri-front),contains(clustername,kbv-cri-front)))):splitBy(clustername):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+      ]
+    }
+  ]
+}

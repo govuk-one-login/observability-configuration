@@ -3,7 +3,7 @@
     "configurationVersions": [
       7
     ],
-    "clusterVersion": "1.290.39.20240422-114701"
+    "clusterVersion": "1.290.46.20240425-162131"
   },
   "id": "64f1b471-4401-47e4-a907-b86b751df978",
   "dashboardMetadata": {
@@ -13,7 +13,7 @@
     "dashboardFilter": {
       "timeframe": "-30d to now"
     },
-    "popularity": 1,
+    "popularity": 4,
     "hasConsistentColors": false
   },
   "tiles": [
@@ -377,29 +377,33 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "stage",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "production",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
                 "filter": "apiname",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "kbv-cri-kbv-cri-api-v1",
+                    "value": "kbv-cri-private-kbv-cri-api-v1",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "kbv-cri-private-kbv-cri-api-v1",
+                    "value": "kbv-hmrc-cri-api-public",
+                    "evaluator": "EQ"
+                  },
+                  {
+                    "value": "kbv-cri-kbv-cri-api-v1",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
+                "filter": "aws.account.id",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "014243362159",
                     "evaluator": "EQ"
                   }
                 ]
@@ -423,13 +427,13 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "stage",
+                "filter": "aws.account.id",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "production",
+                    "value": "014243362159",
                     "evaluator": "EQ"
                   }
                 ]
@@ -446,6 +450,10 @@
                   },
                   {
                     "value": "kbv-cri-kbv-cri-api-v1",
+                    "evaluator": "EQ"
+                  },
+                  {
+                    "value": "kbv-hmrc-cri-api-public",
                     "evaluator": "EQ"
                   }
                 ]
@@ -469,13 +477,13 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "stage",
+                "filter": "aws.account.id",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "production",
+                    "value": "014243362159",
                     "evaluator": "EQ"
                   }
                 ]
@@ -486,6 +494,10 @@
                 "filterOperator": "OR",
                 "nestedFilters": [],
                 "criteria": [
+                  {
+                    "value": "kbv-hmrc-cri-api-public",
+                    "evaluator": "EQ"
+                  },
                   {
                     "value": "kbv-cri-private-kbv-cri-api-v1",
                     "evaluator": "EQ"
@@ -596,7 +608,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(stage,production)),or(eq(apiname,kbv-cri-private-kbv-cri-api-v1),eq(apiname,kbv-cri-kbv-cri-api-v1)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(or(eq(stage,production)),or(eq(apiname,kbv-cri-private-kbv-cri-api-v1),eq(apiname,kbv-cri-kbv-cri-api-v1)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(or(eq(stage,production)),or(eq(apiname,kbv-cri-private-kbv-cri-api-v1),eq(apiname,kbv-cri-kbv-cri-api-v1)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(\"aws.account.id\",\"014243362159\")),or(eq(apiname,kbv-cri-private-kbv-cri-api-v1),eq(apiname,kbv-cri-kbv-cri-api-v1),eq(apiname,kbv-hmrc-cri-api-public)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(or(eq(\"aws.account.id\",\"014243362159\")),or(eq(apiname,kbv-cri-private-kbv-cri-api-v1),eq(apiname,kbv-cri-kbv-cri-api-v1),eq(apiname,kbv-hmrc-cri-api-public)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(or(eq(\"aws.account.id\",\"014243362159\")),or(eq(apiname,kbv-cri-private-kbv-cri-api-v1),eq(apiname,kbv-cri-kbv-cri-api-v1),eq(apiname,kbv-hmrc-cri-api-public)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -625,13 +637,13 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "stage",
+                "filter": "aws.account.id",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "production",
+                    "value": "${address_account_id }",
                     "evaluator": "EQ"
                   }
                 ]
@@ -644,6 +656,10 @@
                 "criteria": [
                   {
                     "value": "address-cri-api-v1-PublicAddressApi",
+                    "evaluator": "EQ"
+                  },
+                  {
+                    "value": "address-cri-api-v1-PrivateAddressApi",
                     "evaluator": "EQ"
                   }
                 ]
@@ -667,25 +683,29 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
+                "filter": "aws.account.id",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "${address_account_id }",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
                 "filter": "apiname",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "address-cri-api-v1-PublicAddressApi",
+                    "value": "address-cri-api-v1-PrivateAddressApi",
                     "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
-                "filter": "stage",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
+                  },
                   {
-                    "value": "production",
+                    "value": "address-cri-api-v1-PublicAddressApi",
                     "evaluator": "EQ"
                   }
                 ]
@@ -709,25 +729,29 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "stage",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "production",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
                 "filter": "apiname",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
                 "nestedFilters": [],
                 "criteria": [
                   {
+                    "value": "address-cri-api-v1-PrivateAddressApi",
+                    "evaluator": "EQ"
+                  },
+                  {
                     "value": "address-cri-api-v1-PublicAddressApi",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
+                "filter": "aws.account.id",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "${address_account_id }",
                     "evaluator": "EQ"
                   }
                 ]
@@ -802,6 +826,7 @@
         "thresholds": [
           {
             "axisTarget": "LEFT",
+            "columnId": "Count",
             "rules": [
               {
                 "color": "#7dc540"
@@ -813,11 +838,15 @@
                 "color": "#dc172a"
               }
             ],
+            "queryId": "A",
             "visible": true
           }
         ],
         "tableSettings": {
-          "hiddenColumns": []
+          "hiddenColumns": [
+            "A:stage.name",
+            "A:aws.account.id.name"
+          ]
         },
         "graphChartSettings": {
           "connectNulls": false
@@ -832,7 +861,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(apiname,address-cri-api-v1-PublicAddressApi)),or(eq(stage,production)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(or(eq(apiname,address-cri-api-v1-PublicAddressApi)),or(eq(stage,production)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(or(eq(apiname,address-cri-api-v1-PublicAddressApi)),or(eq(stage,production)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(\"aws.account.id\",\"${address_account_id }\")),or(eq(apiname,address-cri-api-v1-PrivateAddressApi),eq(apiname,address-cri-api-v1-PublicAddressApi)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(or(eq(\"aws.account.id\",\"${address_account_id }\")),or(eq(apiname,address-cri-api-v1-PrivateAddressApi),eq(apiname,address-cri-api-v1-PublicAddressApi)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(or(eq(\"aws.account.id\",\"${address_account_id }\")),or(eq(apiname,address-cri-api-v1-PrivateAddressApi),eq(apiname,address-cri-api-v1-PublicAddressApi)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names"
       ]
     }
   ]
