@@ -3,7 +3,7 @@ resource "dynatrace_web_application" "web_application" {
   type                                 = "AUTO_INJECTED"
   cost_control_user_session_percentage = 100
   load_action_key_performance_metric   = "VISUALLY_COMPLETE"
-  real_user_monitoring_enabled         = true
+  real_user_monitoring_enabled         = var.enabled
   xhr_action_key_performance_metric    = "VISUALLY_COMPLETE"
   custom_action_apdex_settings {
     frustrating_fallback_threshold = 12000
