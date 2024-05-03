@@ -380,93 +380,30 @@ module "passport_lambda_metrics_dashboard" {
   path   = "lime/passport-lambda-metrics.json"
 }
 
-
 ### Orange ###
-
 module "orange_build_dashboard" {
-  count  = local.is_production ? 0 : 1
-  source = "./dashboards/orange/dashboard-builder"
-
-  team_email = "cri-orange-team@digital.cabinet-office.gov.uk"
-  team_name = "Orange"
-  kbv_hmrc_account_id       = "761723964695" //TODO
-  address_account_id        = "851725166715"
-  application_environment = "build"
-}
-
-module "orange_staging_dashboard" {
-  count  = local.is_production ? 0 : 1
-  source = "./dashboards/orange/dashboard-builder"
-
-  team_email = "cri-orange-team@digital.cabinet-office.gov.uk"
-  team_name = "Orange"
-  kbv_hmrc_account_id       = "761723964695" //TODO
-  address_account_id        = "851725166715"
-  application_environment = "staging"
-}
-
-module "orange_integration_dashboard" {
-  count  = local.is_production ? 0 : 1
-  source = "./dashboards/orange/dashboard-builder"
-
-  team_email = "cri-orange-team@digital.cabinet-office.gov.uk"
-  team_name = "Orange"
-  kbv_hmrc_account_id       = "761723964695" //TODO
-  address_account_id        = "851725166715"
-  application_environment = "integration"
-}
-
-module "orange_production_dashboard" {
   count  = local.is_production ? 1 : 0
   source = "./dashboards/orange/dashboard-builder"
 
-  team_email = "cri-orange-team@digital.cabinet-office.gov.uk"
-  team_name = "Orange"
-  kbv_hmrc_account_id       = "761723964695" //TODO
-  address_account_id        = "851725166715"
-  application_environment = "production"
+  team_email              = "cri-orange-team@digital.cabinet-office.gov.uk"
+  team_name               = "Orange"
+  kbv_hmrc_account_id     = "061089867205"
+  address_account_id      = "612168027154"
+  application_environment = "build"
+}
+module "orange_dev_dashboard" {
+  count  = local.is_production ? 0 : 1
+  source = "./dashboards/orange/dashboard-builder"
+
+  team_email              = "cri-orange-team@digital.cabinet-office.gov.uk"
+  team_name               = "Orange"
+  kbv_hmrc_account_id     = "880569019694 "
+  address_account_id      = "005455562524 "
+  application_environment = "dev"
 }
 
-# Cross-service
-module "orange_apigw_metrics_dashboard" {
-  source = "./modules/dashboard"
-  path   = "orange/apigw-metrics.json"
 
-
-}
-
-module "orange_ecs_metrics_dashboard" {
-  source = "./modules/dashboard"
-  path   = "orange/ecs-metrics.json"
-}
-
-module "orange_services_dashboard" {
-  source = "./modules/dashboard"
-  path   = "orange/services.json"
-}
-
-# Address CRI
-module "address_dashboard" {
-  source = "./modules/dashboard"
-  path   = "orange/address-cri.json"
-}
-
-module "address_lambda_metrics_dashboard" {
-  source = "./modules/dashboard"
-  path   = "orange/address-lambda-metrics.json"
-}
-
-# KBV CRI
-module "kbv_dashboard" {
-  source = "./modules/dashboard"
-  path   = "orange/kbv-cri.json"
-}
-module "kbv_lambda_metrics_dashboard" {
-  source = "./modules/dashboard"
-  path   = "orange/kbv-lambda-metrics.json"
-}
-
-# Orchestration
+### Orchestration ###
 module "orch_ais_production" {
   count  = local.is_production ? 1 : 0
   source = "./modules/dashboard"
