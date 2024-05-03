@@ -30,18 +30,18 @@ resource "kbv_cri_metrics_dashboard" "dashboard" {
 }
 
 
-resource "accountmanagement-slas_dashboard" "dashboard" {
+resource "accountmanagement_slas_dashboard" "dashboard" {
   template_path = "${path.module}/templates/accountmanagement-slas-Orange.tpl.json"
   combination = local.combination
 }
 
-resource "apigw-metrics_dashboard" "dashboard" {
+resource "apigw_metrics_dashboard" "dashboard" {
   template_path = "${path.module}/templates/apigw-metrics.tpl.json"
   combination = local.combination
 }
 
 
-resource "ecs-metrics_dashboard" "dashboard" {
+resource "ecs_metrics_dashboard" "dashboard" {
   template_path = "${path.module}/templates/ecs-metrics.tpl.json"
   combination = local.combination
 }
