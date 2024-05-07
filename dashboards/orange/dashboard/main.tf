@@ -1,22 +1,22 @@
-variable combination {
+variable params {
   description = "values to build a dashboard"
-  type = object({})
+  type = map(string)
 }
 
 variable template_path {
   description = "path to the dashboards template"
 }
 
-resource "dashboard" "main" {
-  contents = templatefile(var.template_path, var.combination)
+resource "dynatrace_json_dashboard" "dashboard" {
+  contents = templatefile(var.template_path, var.params)
 }
 
 data "dynatrace_iam_group" "all" {
   name = "all"
 }
 
-resource "dynatrace_dashboard_sharing" "main" {
-  dashboard_id = dashboard.main.id
+resource "dynatrace_dashboard_sharing" "dashboard_sharing" {
+  dashboard_id = dynatrace_json_dashboard.dashboard.id
 
   enabled = true
 

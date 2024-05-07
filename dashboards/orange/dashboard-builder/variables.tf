@@ -14,5 +14,5 @@ variable team_email{
   description = "Team Email for board ownership"
 }
 variable team_name {
-  description = "Team Name for Identification of hte boards"
+  description = "Team Name for Identification of the boards"
 }

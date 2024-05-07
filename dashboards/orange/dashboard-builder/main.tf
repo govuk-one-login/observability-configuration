@@ -1,5 +1,5 @@
 locals {
-  combination = {
+  params = {
     kbv_hmrc_account_id   = var.kbv_hmrc_account_id
     address_account_id    = var.address_account_id
     team_email            = var.team_email
@@ -8,47 +8,55 @@ locals {
   }
 }
 
-resource "address_cri_dashboard" "dashboard" {
+module "address_cri_dashboard" {
+  source = "../dashboard"
   template_path = "${path.module}/templates/address-cri.tpl.json"
-  combination = local.combination
+  params = local.params
 }
 
-resource "address_cri_metrics_dashboard" "dashboard" {
+module "address_cri_metrics_dashboard" {
+  source = "../dashboard"
   template_path = "${path.module}/templates/address-lambda-metrics.tpl.json"
-  combination = local.combination
+  params = local.params
 }
 
 
-resource "kbv_cri_dashboard" "dashboard" {
+module "kbv_cri_dashboard"  {
+  source = "../dashboard"
   template_path = "${path.module}/templates/kbv-cri.tpl.json"
-  combination = local.combination
+  params = local.params
 }
 
-resource "kbv_cri_metrics_dashboard" "dashboard" {
+module "kbv_cri_metrics_dashboard"  {
+  source = "../dashboard"
   template_path = "${path.module}/templates/kbv-lambda-metrics.tpl.json"
-  combination = local.combination
+  params = local.params
 }
 
 
-resource "accountmanagement_slas_dashboard" "dashboard" {
+module "accountmanagement_slas_dashboard"  {
+  source = "../dashboard"
   template_path = "${path.module}/templates/accountmanagement-slas-Orange.tpl.json"
-  combination = local.combination
+  params = local.params
 }
 
-resource "apigw_metrics_dashboard" "dashboard" {
+module "apigw_metrics_dashboard"  {
+  source = "../dashboard"
   template_path = "${path.module}/templates/apigw-metrics.tpl.json"
-  combination = local.combination
+  params = local.params
 }
 
 
-resource "ecs_metrics_dashboard" "dashboard" {
+module "ecs_metrics_dashboard"  {
+  source = "../dashboard"
   template_path = "${path.module}/templates/ecs-metrics.tpl.json"
-  combination = local.combination
+  params = local.params
 }
 
-resource "services_dashboard" "dashboard" {
+module "services_dashboard"  {
+  source = "../dashboard"
   template_path = "${path.module}/templates/services.tpl.json"
-  combination = local.combination
+  params = local.params
 }
 
 
