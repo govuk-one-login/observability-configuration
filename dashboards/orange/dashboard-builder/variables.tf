@@ -2,8 +2,8 @@ variable "address_account_id" {
   description = "ID for the Address AWS account"
 }
 
-variable "kbv_hmrc_account_id" {
-  description = "ID for the KBV HMRC AWS account"
+variable "kbv_account_id" {
+  description = "ID for the KBV AWS account"
 }
 
 variable "application_environment" {

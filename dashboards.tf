@@ -382,12 +382,12 @@ module "passport_lambda_metrics_dashboard" {
 
 ### Orange ###
 module "orange_build_dashboard" {
-  count  = local.is_production ? 1 : 0
+  count  = local.is_production ? 0 : 1
   source = "./dashboards/orange/dashboard-builder"
 
   team_email              = "cri-orange-team@digital.cabinet-office.gov.uk"
   team_name               = "Orange"
-  kbv_hmrc_account_id     = "061089867205"
+  kbv_account_id          = "061089867205"
   address_account_id      = "612168027154"
   application_environment = "build"
 }
@@ -397,8 +397,8 @@ module "orange_dev_dashboard" {
 
   team_email              = "cri-orange-team@digital.cabinet-office.gov.uk"
   team_name               = "Orange"
-  kbv_hmrc_account_id     = "880569019694 "
-  address_account_id      = "005455562524 "
+  kbv_account_id          = "113550310462"
+  address_account_id      = "005455562524"
   application_environment = "dev"
 }
 

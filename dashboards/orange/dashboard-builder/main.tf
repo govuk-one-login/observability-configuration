@@ -1,6 +1,6 @@
 locals {
   params = {
-    kbv_hmrc_account_id   = var.kbv_hmrc_account_id
+    kbv_account_id   = var.kbv_account_id
     address_account_id    = var.address_account_id
     team_email            = var.team_email
     team_name             = var.team_name
