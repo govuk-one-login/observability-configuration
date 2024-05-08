@@ -381,6 +381,26 @@ module "passport_lambda_metrics_dashboard" {
 }
 
 ### Orange ###
+module "orange_production_dashboard" {
+  count  = local.is_production ? 1 : 0
+  source = "./dashboards/orange/dashboard-builder"
+
+  team_email              = "cri-orange-team@digital.cabinet-office.gov.uk"
+  team_name               = "Orange"
+  kbv_account_id          = "014243362159"
+  address_account_id      = "608988268245"
+  application_environment = "production"
+}
+module "orange_integration_dashboard" {
+  count  = local.is_production ? 0 : 1
+  source = "./dashboards/orange/dashboard-builder"
+
+  team_email              = "cri-orange-team@digital.cabinet-office.gov.uk"
+  team_name               = "Orange"
+  kbv_account_id          = "023997819930"
+  address_account_id      = "993720532118"
+  application_environment = "integration"
+}
 module "orange_build_dashboard" {
   count  = local.is_production ? 0 : 1
   source = "./dashboards/orange/dashboard-builder"
@@ -389,6 +409,16 @@ module "orange_build_dashboard" {
   team_name               = "Orange"
   kbv_account_id          = "061089867205"
   address_account_id      = "612168027154"
+  application_environment = "build"
+}
+module "orange_staging_dashboard" {
+  count  = local.is_production ? 0 : 1
+  source = "./dashboards/orange/dashboard-builder"
+
+  team_email              = "cri-orange-team@digital.cabinet-office.gov.uk"
+  team_name               = "Orange"
+  kbv_account_id          = "510556704934"
+  address_account_id      = "318282704185"
   application_environment = "build"
 }
 module "orange_dev_dashboard" {
