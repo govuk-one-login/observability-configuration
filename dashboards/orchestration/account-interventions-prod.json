@@ -1,0 +1,761 @@
+{
+  "metadata": {
+    "configurationVersions": [
+      7
+    ],
+    "clusterVersion": "1.288.51.20240326-091619"
+  },
+  "dashboardMetadata": {
+    "name": "Orchestration - Account Interventions",
+    "shared": true,
+    "owner": "ethan.mills@digital.cabinet-office.gov.uk",
+    "tags": [
+      "orchestration"
+    ],
+    "dashboardFilter": {
+      "managementZone": {
+        "id": "-4996023964396670867",
+        "name": "[AWS] gds-di-production"
+      }
+    },
+    "popularity": 1,
+    "hasConsistentColors": false
+  },
+  "tiles": [
+    {
+      "name": "Interventions Received",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 0,
+        "width": 760,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.aisResultByAccountIdLogGroupRegionServiceNameServiceTypeblockedreproveIdentityresetPasswordsuspended:filter(eq(blocked,true)):splitBy():count",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.aisResultByAccountIdLogGroupRegionServiceNameServiceTypeblockedreproveIdentityresetPasswordsuspended:filter(and(eq(blocked,false),eq(suspended,true),eq(reproveidentity,false),eq(resetpassword,false))):splitBy():count",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.aisResultByAccountIdLogGroupRegionServiceNameServiceTypeblockedreproveIdentityresetPasswordsuspended:filter(and(eq(blocked,false),eq(suspended,false),eq(reproveidentity,false),eq(resetpassword,false))):splitBy():count",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.aisResultByAccountIdLogGroupRegionServiceNameServiceTypeblockedreproveIdentityresetPasswordsuspended:filter(and(eq(blocked,false),eq(suspended,true),eq(reproveidentity,true),eq(resetpassword,false))):splitBy():count",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "E",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.aisResultByAccountIdLogGroupRegionServiceNameServiceTypeblockedreproveIdentityresetPasswordsuspended:filter(and(eq(blocked,false),eq(suspended,true),eq(reproveidentity,false),eq(resetpassword,true))):splitBy():count",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "F",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.aisResultByAccountIdLogGroupRegionServiceNameServiceTypeblockedreproveIdentityresetPasswordsuspended:filter(and(eq(blocked,false),eq(suspended,true),eq(reproveidentity,\"true\"),eq(resetpassword,true))):splitBy():count",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Blocked"
+            },
+            "seriesOverrides": [
+              {
+                "name": "Select series",
+                "color": "#471e64"
+              }
+            ]
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Suspended"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "No intervention"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Reprove ID"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "E:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Reset Password"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "F:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Reset+Reprove"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C",
+                "D",
+                "E",
+                "F"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.authentication.aisResultByAccountIdLogGroupRegionServiceNameServiceTypeblockedreproveIdentityresetPasswordsuspended:filter(eq(blocked,true)):splitBy():count):limit(100):names,(cloud.aws.authentication.aisResultByAccountIdLogGroupRegionServiceNameServiceTypeblockedreproveIdentityresetPasswordsuspended:filter(and(eq(blocked,false),eq(suspended,true),eq(reproveidentity,false),eq(resetpassword,false))):splitBy():count):limit(100):names,(cloud.aws.authentication.aisResultByAccountIdLogGroupRegionServiceNameServiceTypeblockedreproveIdentityresetPasswordsuspended:filter(and(eq(blocked,false),eq(suspended,false),eq(reproveidentity,false),eq(resetpassword,false))):splitBy():count):limit(100):names,(cloud.aws.authentication.aisResultByAccountIdLogGroupRegionServiceNameServiceTypeblockedreproveIdentityresetPasswordsuspended:filter(and(eq(blocked,false),eq(suspended,true),eq(reproveidentity,true),eq(resetpassword,false))):splitBy():count):limit(100):names,(cloud.aws.authentication.aisResultByAccountIdLogGroupRegionServiceNameServiceTypeblockedreproveIdentityresetPasswordsuspended:filter(and(eq(blocked,false),eq(suspended,true),eq(reproveidentity,false),eq(resetpassword,true))):splitBy():count):limit(100):names,(cloud.aws.authentication.aisResultByAccountIdLogGroupRegionServiceNameServiceTypeblockedreproveIdentityresetPasswordsuspended:filter(and(eq(blocked,false),eq(suspended,true),eq(reproveidentity,true),eq(resetpassword,true))):splitBy():count):limit(100):names"
+      ]
+    },
+    {
+      "name": "Error Codes",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 760,
+        "width": 228,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:filter(not(eq(statuscode,\"200\"))):splitBy():count:default(0,always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:filter(not(eq(statuscode,\"200\"))):splitBy():count:default(0,always)):limit(100):names:fold(auto)",
+        "resolution=null&(cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:filter(not(eq(statuscode,\"200\"))):splitBy():count:default(0,always))"
+      ]
+    },
+    {
+      "name": "Response Time (ms)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 266,
+        "left": 0,
+        "width": 760,
+        "height": 228
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:filter(eq(statuscode,\"200\")):splitBy():median",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:filter(eq(statuscode,\"200\")):splitBy():percentile(95.0)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:filter(eq(statuscode,\"200\")):splitBy():percentile(99.0)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "ROYALBLUE",
+              "seriesType": "LINE",
+              "alias": "Median"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "ROYALBLUE",
+              "seriesType": "LINE",
+              "alias": "P95"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "ROYALBLUE",
+              "seriesType": "LINE",
+              "alias": "P99"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:filter(eq(statuscode,\"200\")):splitBy():median):limit(100):names,(cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:filter(eq(statuscode,\"200\")):splitBy():percentile(95.0)):limit(100):names,(cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:filter(eq(statuscode,\"200\")):splitBy():percentile(99.0)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Response Time Breakdown",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 494,
+        "left": 0,
+        "width": 760,
+        "height": 152
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "servicetype",
+            "statuscode"
+          ],
+          "metricSelector": "cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:merge(\"servicename\",\"loggroup\"):fold(min)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "servicetype",
+            "statuscode"
+          ],
+          "metricSelector": "cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:merge(\"servicename\",\"loggroup\"):fold(median)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "servicetype",
+            "statuscode"
+          ],
+          "metricSelector": "cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:merge(\"servicename\",\"loggroup\"):fold(percentile(95))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "servicetype",
+            "statuscode"
+          ],
+          "metricSelector": "cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:merge(\"servicename\",\"loggroup\"):fold(percentile(99))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "E",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "servicetype",
+            "statuscode"
+          ],
+          "metricSelector": "cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:merge(\"servicename\",\"loggroup\"):fold(max)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "ms",
+            "valueFormat": "0",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Min"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "ms",
+            "valueFormat": "0",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Median"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "ms",
+            "valueFormat": "0",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "P95"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "ms",
+            "valueFormat": "0",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "P99"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "E:",
+            "unitTransform": "ms",
+            "valueFormat": "0",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Max"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 500,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 997,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 500,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 999,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "B",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 500,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 1000,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "C",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 1000,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 2000,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "D",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 1000,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 2000,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "E",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "isThresholdBackgroundAppliedToCell": true,
+          "hiddenColumns": [
+            "A:aws.account.id",
+            "A:aws.region",
+            "A:servicetype",
+            "A:aws.account.id.name",
+            "A:aws.region.name",
+            "A:servicetype.name",
+            "A:statuscode.name",
+            "B:aws.account.id.name",
+            "B:aws.region.name",
+            "B:servicetype.name",
+            "B:statuscode.name",
+            "C:aws.account.id.name",
+            "C:aws.region.name",
+            "C:servicetype.name",
+            "C:statuscode.name",
+            "D:aws.account.id.name",
+            "D:aws.region.name",
+            "D:servicetype.name",
+            "D:statuscode.name",
+            "E:aws.account.id.name",
+            "E:aws.region.name",
+            "E:servicetype.name",
+            "E:statuscode.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:merge(servicename,loggroup):fold(min)):names:fold(auto),(cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:merge(servicename,loggroup):fold(median)):names:fold(auto),(cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:merge(servicename,loggroup):fold(percentile(95))):names:fold(auto),(cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:merge(servicename,loggroup):fold(percentile(99))):names:fold(auto),(cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:merge(servicename,loggroup):fold(max)):names:fold(auto)"
+      ]
+    }
+  ]
+}

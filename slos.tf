@@ -1,5 +1,5 @@
 resource "dynatrace_slo_v2" "perf001" {
-  name               = "NFR PERF001"
+  name               = "95% of user-facing requests < 1s"
   enabled            = true
   custom_description = "95% of user-facing requests to be served within 1 second"
   evaluation_type    = "AGGREGATE"
@@ -16,7 +16,7 @@ resource "dynatrace_slo_v2" "perf001" {
 }
 
 resource "dynatrace_slo_v2" "perf002" {
-  name               = "NFR PERF002"
+  name               = "99% of user-facing requests < 2.5s"
   enabled            = true
   custom_description = "99% of user-facing requests to be served within 2.5 second"
   evaluation_type    = "AGGREGATE"
@@ -89,9 +89,117 @@ resource "dynatrace_slo_v2" "experian_availability" {
   custom_description = "Experian Availability (99.9%)"
   evaluation_type    = "AGGREGATE"
   evaluation_window  = "-1M"
-  filter             = "type(SERVICE),entityId(SERVICE-85D75242ED17D58D)"
+  filter             = "type(SERVICE),entityId(SERVICE-818DC917074D5BBF)"
   metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
   metric_name        = "experian_availability"
+  target_success     = 99.9
+  target_warning     = 99.95
+  error_budget_burn_rate {
+    burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
+  }
+}
+
+resource "dynatrace_slo_v2" "yoti_availability" {
+  count              = local.is_production ? 1 : 0
+  name               = "YOTI Availability"
+  enabled            = true
+  custom_description = "YOTI Availability (99.9%)"
+  evaluation_type    = "AGGREGATE"
+  evaluation_window  = "-1M"
+  filter             = "type(SERVICE),entityId(SERVICE-C5EE09FA3C77F46F)"
+  metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
+  metric_name        = "yoti_availability"
+  target_success     = 99.9
+  target_warning     = 99.95
+  error_budget_burn_rate {
+    burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
+  }
+}
+
+resource "dynatrace_slo_v2" "zendesk_availability" {
+  count              = local.is_production ? 1 : 0
+  name               = "Zendesk Availability"
+  enabled            = true
+  custom_description = "Zendesk Availability (99.9%)"
+  evaluation_type    = "AGGREGATE"
+  evaluation_window  = "-1M"
+  filter             = "type(SERVICE),entityId(SERVICE-90FD06AA9A3046B8)"
+  metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
+  metric_name        = "zendesk_availability"
+  target_success     = 99.9
+  target_warning     = 99.95
+  error_budget_burn_rate {
+    burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
+  }
+}
+
+resource "dynatrace_slo_v2" "google_oauth_availability" {
+  count              = local.is_production ? 1 : 0
+  name               = "Google OAuth2 Availability"
+  enabled            = true
+  custom_description = "Google OAuth2 Availability (99.9%)"
+  evaluation_type    = "AGGREGATE"
+  evaluation_window  = "-1M"
+  filter             = "type(SERVICE),entityId(SERVICE-6639F9C59EB7A18A)"
+  metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
+  metric_name        = "google_oauth_availability"
+  target_success     = 99.9
+  target_warning     = 99.95
+  error_budget_burn_rate {
+    burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
+  }
+}
+
+resource "dynatrace_slo_v2" "google_apis_availability" {
+  count              = local.is_production ? 1 : 0
+  name               = "Google APIs Availability"
+  enabled            = true
+  custom_description = "Google APIs Availability (99.9%)"
+  evaluation_type    = "AGGREGATE"
+  evaluation_window  = "-1M"
+  filter             = "type(SERVICE),entityId(SERVICE-C9807A7AEA6C6DFE)"
+  metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
+  metric_name        = "google_apis_availability"
+  target_success     = 99.9
+  target_warning     = 99.95
+  error_budget_burn_rate {
+    burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
+  }
+}
+
+resource "dynatrace_slo_v2" "google_sheets_availability" {
+  count              = local.is_production ? 1 : 0
+  name               = "Google Sheets Availability"
+  enabled            = true
+  custom_description = "Google Sheets Availability (99.9%)"
+  evaluation_type    = "AGGREGATE"
+  evaluation_window  = "-1M"
+  filter             = "type(SERVICE),entityId(SERVICE-D58719FFAB1F810A)"
+  metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
+  metric_name        = "google_sheets_availability"
+  target_success     = 99.9
+  target_warning     = 99.95
+  error_budget_burn_rate {
+    burn_rate_visualization_enabled = true
+    fast_burn_threshold             = 10
+  }
+}
+
+resource "dynatrace_slo_v2" "service_now_availability" {
+  count              = local.is_production ? 1 : 0
+  name               = "Service Now Availability"
+  enabled            = true
+  custom_description = "Service Now Availability (99.9%)"
+  evaluation_type    = "AGGREGATE"
+  evaluation_window  = "-1M"
+  filter             = "type(SERVICE),entityId(SERVICE-41210C73E70E0781)"
+  metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
+  metric_name        = "service_now_availability"
   target_success     = 99.9
   target_warning     = 99.95
   error_budget_burn_rate {

@@ -42,6 +42,12 @@ resource "dynatrace_dashboard_sharing" "slos" {
   }
 }
 
+module "service_dashboard" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "service-dashboard.json"
+}
+
 resource "dynatrace_json_dashboard" "team-idc-app" {
   contents = file("${path.module}/dashboards/team-idc-app.json")
 }
@@ -221,6 +227,42 @@ resource "dynatrace_dashboard_sharing" "aws_service_quotas" {
   }
 }
 
+### Authentication ###
+
+module "di_auth_check_experian_build_dashboard" {
+  count  = local.is_production ? 0 : 1
+  source = "./dashboards/authentication/di-auth-check-experian"
+
+  api_account_id          = "761723964695"
+  check_account_id        = "851725166715"
+  application_environment = "build"
+}
+module "di_auth_check_experian_staging_dashboard" {
+  count  = local.is_production ? 0 : 1
+  source = "./dashboards/authentication/di-auth-check-experian"
+
+  api_account_id          = "758531536632"
+  check_account_id        = "891377189576"
+  application_environment = "staging"
+}
+module "di_auth_check_experian_integration_dashboard" {
+  count  = local.is_production ? 0 : 1
+  source = "./dashboards/authentication/di-auth-check-experian"
+
+  api_account_id          = "761723964695"
+  check_account_id        = "211125427676"
+  application_environment = "integration"
+}
+module "di_auth_check_experian_production_dashboard" {
+  count  = local.is_production ? 1 : 0
+  source = "./dashboards/authentication/di-auth-check-experian"
+
+  api_account_id          = "172348255554"
+  check_account_id        = "637423504848"
+  application_environment = "production"
+}
+
+
 ### Core ###
 
 module "core_lambda_metrics_dashboard" {
@@ -378,6 +420,40 @@ module "kbv_lambda_metrics_dashboard" {
   path   = "orange/kbv-lambda-metrics.json"
 }
 
+# Orchestration
+module "orch_ais_production" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "orchestration/account-interventions-prod.json"
+}
+module "orch_ais_staging" {
+  count  = local.is_production ? 0 : 1
+  source = "./modules/dashboard"
+  path   = "orchestration/account-interventions-staging.json"
+}
+module "orch_ais_integration" {
+  count  = local.is_production ? 0 : 1
+  source = "./modules/dashboard"
+  path   = "orchestration/account-interventions-integration.json"
+}
+
+# Authentication
+module "auth_ais_production" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "authentication/account-interventions-prod.json"
+}
+module "auth_ais_staging" {
+  count  = local.is_production ? 0 : 1
+  source = "./modules/dashboard"
+  path   = "authentication/account-interventions-staging.json"
+}
+module "aith_ais_integration" {
+  count  = local.is_production ? 0 : 1
+  source = "./modules/dashboard"
+  path   = "authentication/account-interventions-integration.json"
+}
+
 ### SLA ###
 module "core_sla_dashboard" {
   source = "./modules/dashboard"
@@ -399,9 +475,16 @@ module "orange_sla_dashboard" {
   path   = "service-level-agreements/orange.json"
 }
 
+
 ### Capacity & Performance Dashboards ### 
 
 module "performance_application" {
   source = "./modules/dashboard"
   path   = "capacity/application-performance-review.json"
+
+### DAP ###
+
+module "dap_dashboard" {
+  source = "./modules/dashboard"
+  path   = "dap/data-and-analytics-prod.json"
 }
