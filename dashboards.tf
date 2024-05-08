@@ -405,6 +405,3 @@ module "performance_application" {
   source = "./modules/dashboard"
   path   = "capacity/application-performance-review.json"
 }
-  source = "./modules/dashboard"
-  path = "capacity/application-performance-review.json"
-}
