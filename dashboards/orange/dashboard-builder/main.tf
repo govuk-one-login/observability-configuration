@@ -46,6 +46,18 @@ module "otg_cri_metrics_dashboard"  {
   params = local.params
 }
 
+module "check_hmrc_cri_dashboard"  {
+  source = "../dashboard"
+  template_path = "${path.module}/templates/check-hmrc-cri.tpl.json"
+  params = local.params
+}
+
+module "check_hmrc_cri_metrics_dashboard"  {
+  source = "../dashboard"
+  template_path = "${path.module}/templates/check-hmrc-lambda-metrics.tpl.json"
+  params = local.params
+}
+
 
 module "accountmanagement_slas_dashboard"  {
   source = "../dashboard"

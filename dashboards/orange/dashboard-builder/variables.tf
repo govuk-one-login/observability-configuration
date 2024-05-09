@@ -6,6 +6,10 @@ variable "kbv_account_id" {
   description = "ID for the KBV AWS account"
 }
 
+variable "check_hmrc_account_id" {
+  description = "ID for the CHECK-HMRC (NINO) AWS account"
+}
+
 variable "otg_account_id" {
   description = "ID for the OTG AWS account"
 }
