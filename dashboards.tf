@@ -387,6 +387,7 @@ module "orange_production_dashboard" {
 
   team_email              = "cri-orange-team@digital.cabinet-office.gov.uk"
   team_name               = "Orange"
+  otg_account_id          = "062058603578"
   kbv_account_id          = "014243362159"
   address_account_id      = "608988268245"
   application_environment = "production"
@@ -397,6 +398,7 @@ module "orange_integration_dashboard" {
 
   team_email              = "cri-orange-team@digital.cabinet-office.gov.uk"
   team_name               = "Orange"
+  otg_account_id          = "129123440403"
   kbv_account_id          = "023997819930"
   address_account_id      = "993720532118"
   application_environment = "integration"
@@ -407,6 +409,7 @@ module "orange_build_dashboard" {
 
   team_email              = "cri-orange-team@digital.cabinet-office.gov.uk"
   team_name               = "Orange"
+  otg_account_id          = "112471649314"
   kbv_account_id          = "061089867205"
   address_account_id      = "612168027154"
   application_environment = "build"
@@ -417,6 +420,7 @@ module "orange_staging_dashboard" {
 
   team_email              = "cri-orange-team@digital.cabinet-office.gov.uk"
   team_name               = "Orange"
+  otg_account_id          = "740431785165"
   kbv_account_id          = "510556704934"
   address_account_id      = "318282704185"
   application_environment = "build"
@@ -427,6 +431,7 @@ module "orange_dev_dashboard" {
 
   team_email              = "cri-orange-team@digital.cabinet-office.gov.uk"
   team_name               = "Orange"
+  otg_account_id          = "366077495114"
   kbv_account_id          = "113550310462"
   address_account_id      = "005455562524"
   application_environment = "dev"

@@ -6,6 +6,10 @@ variable "kbv_account_id" {
   description = "ID for the KBV AWS account"
 }
 
+variable "otg_account_id" {
+  description = "ID for the OTG AWS account"
+}
+
 variable "application_environment" {
   description = "Environment of the application within the Auth Check Experian AWS account"
 }
