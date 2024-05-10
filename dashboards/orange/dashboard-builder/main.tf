@@ -2,6 +2,7 @@ locals {
   params = {
     kbv_account_id   = var.kbv_account_id
     address_account_id    = var.address_account_id
+    check_hmrc_account_id = var.check_hmrc_account_id
     otg_account_id        = var.otg_account_id
     team_email            = var.team_email
     team_name             = var.team_name
@@ -43,6 +44,18 @@ module "otg_cri_dashboard"  {
 module "otg_cri_metrics_dashboard"  {
   source = "../dashboard"
   template_path = "${path.module}/templates/otg-lambda-metrics.tpl.json"
+  params = local.params
+}
+
+module "check_hmrc_cri_dashboard"  {
+  source = "../dashboard"
+  template_path = "${path.module}/templates/check-hmrc-cri.tpl.json"
+  params = local.params
+}
+
+module "check_hmrc_cri_metrics_dashboard"  {
+  source = "../dashboard"
+  template_path = "${path.module}/templates/check-hmrc-lambda-metrics.tpl.json"
   params = local.params
 }
 
