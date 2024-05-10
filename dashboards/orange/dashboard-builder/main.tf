@@ -2,6 +2,7 @@ locals {
   params = {
     kbv_account_id   = var.kbv_account_id
     address_account_id    = var.address_account_id
+    otg_account_id        = var.otg_account_id
     team_email            = var.team_email
     team_name             = var.team_name
     application_environment = var.application_environment
@@ -30,6 +31,18 @@ module "kbv_cri_dashboard"  {
 module "kbv_cri_metrics_dashboard"  {
   source = "../dashboard"
   template_path = "${path.module}/templates/kbv-lambda-metrics.tpl.json"
+  params = local.params
+}
+
+module "otg_cri_dashboard"  {
+  source = "../dashboard"
+  template_path = "${path.module}/templates/otg-cri.tpl.json"
+  params = local.params
+}
+
+module "otg_cri_metrics_dashboard"  {
+  source = "../dashboard"
+  template_path = "${path.module}/templates/otg-lambda-metrics.tpl.json"
   params = local.params
 }
 
