@@ -457,6 +457,45 @@ module "orange_dev_dashboard" {
   application_environment = "dev"
 }
 
+# Address CRI
+module "address_dashboard" {
+  source = "./modules/dashboard"
+  path   = "orange/dashboard-builder/templates/single-account/address-cri.json"
+}
+module "address_lambda_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "orange/dashboard-builder/templates/single-account/address-lambda-metrics.json"
+}
+
+# check_hmrc CRI
+module "check_hmrc_dashboard" {
+  source = "./modules/dashboard"
+  path   = "orange/dashboard-builder/templates/single-account/check-hmrc-cri.json"
+}
+module "check_hmrc_lambda_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "orange/dashboard-builder/templates/single-account/check-hmrc-lambda-metrics.json"
+}
+
+# kbv CRI
+module "kbv_dashboard" {
+  source = "./modules/dashboard"
+  path   = "orange/dashboard-builder/templates/single-account/kbv-cri.json"
+}
+module "kbv_lambda_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "orange/dashboard-builder/templates/single-account/kbv-lambda-metrics.json"
+}
+
+# otg CRI
+module "otg_dashboard" {
+  source = "./modules/dashboard"
+  path   = "orange/dashboard-builder/templates/single-account/otg-cri.json"
+}
+module "otg_lambda_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "orange/dashboard-builder/templates/single-account/otg-lambda-metrics.json"
+}
 
 ### Orchestration ###
 module "orch_ais_production" {
