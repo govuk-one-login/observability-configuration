@@ -195,9 +195,24 @@ resource "dynatrace_dashboard_sharing" "test_team_2_dashboard" {
   }
 }
 
-module "txma_shared_signals" {
+module "txma-shared-signals-integration" {
   source = "./modules/dashboard"
-  path   = "txma/txma_shared_signals_dashboard.json"
+  path   = "txma/txma-shared-signals-integration.json"
+}
+
+module "txma-shared-signals-production" {
+  source = "./modules/dashboard"
+  path   = "txma/txma-shared-signals-production.json"
+}
+
+module "txma-integration" {
+  source = "./modules/dashboard"
+  path   = "txma/txma-integration.json"
+}
+
+module "txma-production" {
+  source = "./modules/dashboard"
+  path   = "txma/txma-production.json"
 }
 
 module "account-interventions-service" {
@@ -499,7 +514,7 @@ module "orange_sla_dashboard" {
 }
 
 
-### Capacity & Performance Dashboards ### 
+### Capacity & Performance Dashboards ###
 
 module "performance_application" {
   source = "./modules/dashboard"
