@@ -396,75 +396,35 @@ module "passport_lambda_metrics_dashboard" {
 }
 
 ### Orange ###
-module "orange_production_dashboard" {
-  count  = local.is_production ? 1 : 0
-  source = "./dashboards/orange/dashboard-builder"
-
-  team_email              = "cri-orange-team@digital.cabinet-office.gov.uk"
-  team_name               = "Orange"
-  check_hmrc_account_id   = "239207391607"
-  otg_account_id          = "062058603578"
-  kbv_account_id          = "014243362159"
-  address_account_id      = "608988268245"
-  application_environment = "production"
+# multi-account boards
+module "accountmanagement_slas_dashboard" {
+  source = "./modules/dashboard"
+  path   = "orange/accountmanagement-slas-Orange.json"
 }
-module "orange_integration_dashboard" {
-  count  = local.is_production ? 0 : 1
-  source = "./dashboards/orange/dashboard-builder"
 
-  team_email              = "cri-orange-team@digital.cabinet-office.gov.uk"
-  team_name               = "Orange"
-  check_hmrc_account_id   = "488209198322"
-  otg_account_id          = "129123440403"
-  kbv_account_id          = "023997819930"
-  address_account_id      = "993720532118"
-  application_environment = "integration"
+module "apigw_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "orange/apigw-metrics.json"
 }
-module "orange_build_dashboard" {
-  count  = local.is_production ? 0 : 1
-  source = "./dashboards/orange/dashboard-builder"
 
-  team_email              = "cri-orange-team@digital.cabinet-office.gov.uk"
-  team_name               = "Orange"
-  check_hmrc_account_id   = "233812152557"
-  otg_account_id          = "112471649314"
-  kbv_account_id          = "061089867205"
-  address_account_id      = "612168027154"
-  application_environment = "build"
+module "ecs_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "orange/ecs-metrics.json"
 }
-module "orange_staging_dashboard" {
-  count  = local.is_production ? 0 : 1
-  source = "./dashboards/orange/dashboard-builder"
 
-  team_email              = "cri-orange-team@digital.cabinet-office.gov.uk"
-  team_name               = "Orange"
-  check_hmrc_account_id   = "210034536979"
-  otg_account_id          = "740431785165"
-  kbv_account_id          = "510556704934"
-  address_account_id      = "318282704185"
-  application_environment = "staging"
-}
-module "orange_dev_dashboard" {
-  count  = local.is_production ? 0 : 1
-  source = "./dashboards/orange/dashboard-builder"
-
-  team_email              = "cri-orange-team@digital.cabinet-office.gov.uk"
-  team_name               = "Orange"
-  check_hmrc_account_id   = "562670266496"
-  otg_account_id          = "366077495114"
-  kbv_account_id          = "113550310462"
-  address_account_id      = "005455562524"
-  application_environment = "dev"
+module "services_dashboard" {
+  source = "./modules/dashboard"
+  path   = "orange/services.json"
 }
 
 # Address CRI
 module "address_dashboard" {
   source = "./modules/dashboard"
-  path   = "orange/dashboard-builder/templates/single-account/address-cri.json"
+  path   = "orange/address-cri.json"
 }
 module "address_lambda_metrics_dashboard" {
   source = "./modules/dashboard"
-  path   = "orange/dashboard-builder/templates/single-account/address-lambda-metrics.json"
+  path   = "orange/address-lambda-metrics.json"
 }
 
 # check_hmrc CRI
@@ -474,27 +434,27 @@ module "check_hmrc_dashboard" {
 }
 module "check_hmrc_lambda_metrics_dashboard" {
   source = "./modules/dashboard"
-  path   = "orange/dashboard-builder/templates/single-account/check-hmrc-lambda-metrics.json"
+  path   = "orange/check-hmrc-lambda-metrics.json"
 }
 
 # kbv CRI
 module "kbv_dashboard" {
   source = "./modules/dashboard"
-  path   = "orange/dashboard-builder/templates/single-account/kbv-cri.json"
+  path   = "orange/kbv-cri.json"
 }
 module "kbv_lambda_metrics_dashboard" {
   source = "./modules/dashboard"
-  path   = "orange/dashboard-builder/templates/single-account/kbv-lambda-metrics.json"
+  path   = "orange/kbv-lambda-metrics.json"
 }
 
 # otg CRI
 module "otg_dashboard" {
   source = "./modules/dashboard"
-  path   = "orange/dashboard-builder/templates/single-account/otg-cri.json"
+  path   = "orange/otg-cri.json"
 }
 module "otg_lambda_metrics_dashboard" {
   source = "./modules/dashboard"
-  path   = "orange/dashboard-builder/templates/single-account/otg-lambda-metrics.json"
+  path   = "orange/otg-lambda-metrics.json"
 }
 
 ### Orchestration ###
