@@ -394,7 +394,7 @@ resource "dynatrace_metric_events" "aws_codebuild_memory_utilized_percent" {
   query_definition {
     type        = "METRIC_KEY"
     aggregation = "AVG"
-    metric_key  = "ext:cloud.aws.codebuild.memoryUtilizedPercentByBuildIdBuildNumber"
+    metric_key  = "cloud.aws.codebuild.memoryUtilizedPercentByAccountIdBuildIdBuildNumberProjectNameRegion"
     entity_filter {
     }
   }
