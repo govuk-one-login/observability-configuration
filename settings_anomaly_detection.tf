@@ -492,8 +492,7 @@ resource "dynatrace_aws_anomalies" "aws_anomalies" {
     detection_mode = "auto"
   }
   lambda_high_error_rate_detection {
-    enabled        = false
-    detection_mode = "auto"
+    enabled = false
   }
   rds_high_cpu_detection {
     enabled        = true
