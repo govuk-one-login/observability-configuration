@@ -336,7 +336,7 @@ resource "dynatrace_metric_events" "amazon_ecs_memory_utilization" {
   query_definition {
     type        = "METRIC_KEY"
     aggregation = "AVG"
-    metric_key  = "ext:cloud.aws.ecs.memoryUtilizationByServiceName"
+    metric_key  = "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName"
     entity_filter {
     }
   }
@@ -365,7 +365,7 @@ resource "dynatrace_metric_events" "aws_codebuild_cpu_utilized_percent" {
   query_definition {
     type        = "METRIC_KEY"
     aggregation = "AVG"
-    metric_key  = "ext:cloud.aws.codebuild.cpuUtilizedPercentByBuildIdBuildNumber"
+    metric_key  = "cloud.aws.codebuild.cpuUtilizedPercentByAccountIdBuildIdBuildNumberProjectNameRegion"
     entity_filter {
     }
   }
