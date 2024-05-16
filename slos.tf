@@ -22,7 +22,7 @@ resource "dynatrace_slo_v2" "perf002" {
   evaluation_type    = "AGGREGATE"
   evaluation_window  = "-1M"
   filter             = "type(CUSTOM_DEVICE)"
-  metric_expression  = "((cloud.aws.apigateway.latencyByAccountIdApiNameRegionStage:avg:partition("\~"latency\~"",value("\~"good\~"",le(2500))):splitBy():count:default(0))/(cloud.aws.apigateway.latencyByAccountIdApiNameRegionStage:avg:splitBy():count)*(100)):default(100,always)"
+  metric_expression  = "((cloud.aws.apigateway.latencyByAccountIdApiNameRegionStage:avg:partition(\"latency\",value(\"good\",le(2500))):splitBy():count:default(0))/(cloud.aws.apigateway.latencyByAccountIdApiNameRegionStage:avg:splitBy():count)*(100)):default(100,always)"
   metric_name        = "nfr_perf002"
   target_success     = 99
   target_warning     = 99.5
