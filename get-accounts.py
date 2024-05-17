@@ -1,43 +1,67 @@
 #!/usr/bin/env python3
+import sys
 import csv
-import requests
-from pathlib import Path
-from os import environ
+import boto3
 
-api_token = environ['DYNATRACE_API_TOKEN']
-api_url = environ['DYNATRACE_ENV_URL']
+orgs = boto3.client('organizations')
 
-def get_all_credentials():
-  return requests.get(f'{api_url}/api/config/v1/aws/credentials',
-                      headers={
-                        'Authorization': f'Api-Token {api_token}'
-                      }).json()
 
-def get_credential_account_id(id):
-  return requests.get(f'{api_url}/api/config/v1/aws/credentials/{id}',
-                      headers={
-                        'Authorization': f'Api-Token {api_token}'
-                      }).json()['authenticationData']['roleBasedAuthentication']['accountId']
 
-def list_accounts():
-  for credential in get_all_credentials():
-    account_id = get_credential_account_id(credential['id'])
-    yield {
-      'name': credential['name'],
-      'id': account_id
-    }
+non_production_configs = [
+  {
+    'ou': 'ou-xvhe-98ompuj8',
+    'name': 'build'
+  },
+  {
+    'ou': 'ou-xvhe-90rbpmd6',
+    'name': 'dev'
+  },
+  {
+    'ou': 'ou-xvhe-tziggy32',
+    'name': 'staging'
+  }
+]
+
+production_configs = [
+  {
+    'ou': 'ou-xvhe-o7ufh54l',
+    'name': 'integration'
+  },
+  {
+    'ou': 'ou-xvhe-rjk6poda',
+    'name': 'production'
+  }
+]
+
+def get_accounts_in_ou(ou):
+  for response in orgs.get_paginator('list_accounts_for_parent').paginate(ParentId=ou):
+    for account in response['Accounts']:
+      yield account
 
 def main():
-  path = Path(__file__).parent / 'accounts.csv'
-  with open(path, 'w', newline='') as f:
-    fieldnames = ['name', 'id']
-    writer = csv.DictWriter(f, fieldnames)
+  output = []
 
+  if sys.argv[1] == "production":
+    for config in production_configs:
+      for account in get_accounts_in_ou(config['ou']):
+        output.append({
+          'id': account['Id'],
+          'name': account['Name'],
+          'environment': config['name']
+        })
+  else:
+    for config in non_production_configs:
+      for account in get_accounts_in_ou(config['ou']):
+        output.append({
+          'id': account['Id'],
+          'name': account['Name'],
+          'environment': config['name']
+        })
+
+  with open('accounts.csv', 'w') as f:
+    writer = csv.DictWriter(f, ['id', 'name', 'environment'])
     writer.writeheader()
-
-    for account in list_accounts():
-      writer.writerow(account)
-    
+    writer.writerows(output)
 
 if __name__ == '__main__':
   main()
