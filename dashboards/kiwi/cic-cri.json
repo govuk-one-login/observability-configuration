@@ -132,17 +132,7 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "CIC-SessionConfig-cic-cri-api",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
                     "value": "Access-Token-cic-cri-api",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "JsonWebKeys-cic-cri-api",
                     "evaluator": "IN",
                     "matchExactly": true
                   },
@@ -152,17 +142,27 @@
                     "matchExactly": true
                   },
                   {
+                    "value": "User-Info-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  },
+                  {
                     "value": "CIC-Authorization-cic-cri-api",
                     "evaluator": "IN",
                     "matchExactly": true
                   },
                   {
-                    "value": "CIC-Session-cic-cri-api",
+                    "value": "CIC-SessionConfig-cic-cri-api",
                     "evaluator": "IN",
                     "matchExactly": true
                   },
                   {
-                    "value": "User-Info-cic-cri-api",
+                    "value": "JsonWebKeys-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  },
+                  {
+                    "value": "CIC-Session-cic-cri-api",
                     "evaluator": "IN",
                     "matchExactly": true
                   }
@@ -1778,113 +1778,6 @@
       ]
     },
     {
-      "name": "CPU Utilisation",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1292,
-        "left": 304,
-        "width": 722,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "cloud.aws.ecs.containerinsights.cpuUtilizedByAccountIdClusterNameRegionServiceName",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "STACKED_AREA",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "STACKED_AREA",
-              "alias": "CPU Utilisation by Service"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "MemoryUtilization (by ServiceName)",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.ecs.containerinsights.cpuUtilizedByAccountIdClusterNameRegionServiceName:splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
       "name": "Memory Utilisation",
       "tileType": "DATA_EXPLORER",
       "configured": true,
@@ -2103,6 +1996,127 @@
       },
       "metricExpressions": [
         "resolution=null&(cloud.aws.ecs.containerinsights.memoryUtilizedByAccountIdClusterNameRegionServiceName:splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "CPU Utilisation",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1292,
+        "left": 304,
+        "width": 722,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "cloud.aws.ecs.containerinsights.cpuUtilizedByAccountIdClusterNameRegionServiceName",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "servicename",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "cic-cri-front-CICFrontEcsService-G7NkOt9sXyBp",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "STACKED_AREA",
+              "alias": "CPU Utilisation by Service"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "MemoryUtilization (by ServiceName)",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.ecs.containerinsights.cpuUtilizedByAccountIdClusterNameRegionServiceName:filter(and(or(eq(servicename,cic-cri-front-CICFrontEcsService-G7NkOt9sXyBp)))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
       ]
     }
   ]
