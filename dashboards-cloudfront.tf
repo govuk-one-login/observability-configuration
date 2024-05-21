@@ -2,25 +2,25 @@ variable "teamscloudfront1" {
   description = "map"
   default = {
     "team-a" = {
-      owneremail = "viveak.vadivelkarasan@digital.cabinet-office.gov.uk"
+      owneremail = "cri-kiwi-team@digital.cabinet-office.gov.uk"
       teamname   = "Kiwi - BAV-CRI"
       awsaccprod = "096369912800"
       awsaccint  = "603505715695"
     }
     "team-b" = {
-      owneremail = "viveak.vadivelkarasan@digital.cabinet-office.gov.uk"
+      owneremail = "cri-kiwi-team@digital.cabinet-office.gov.uk"
       teamname   = "Kiwi - F2F-CRI"
       awsaccprod = "377086294028"
       awsaccint  = "766319219145"
     }
     "team-c" = {
-      owneremail = "viveak.vadivelkarasan@digital.cabinet-office.gov.uk"
+      owneremail = "cri-kiwi-team@digital.cabinet-office.gov.uk"
       teamname   = "Kiwi - CIC-CRI"
       awsaccprod = "270790667266"
       awsaccint  = "341874137503"
     }
     "team-d" = {
-      owneremail = "viveak.vadivelkarasan@digital.cabinet-office.gov.uk"
+      owneremail = "cri-kiwi-team@digital.cabinet-office.gov.uk"
       teamname   = "Kiwi - IPVReturn-CRI"
       awsaccprod = "821078365651"
       awsaccint  = "988112579449"
