@@ -249,7 +249,7 @@ resource "dynatrace_metric_events" "amazon_ecs_cpu_reservation_aws" {
   query_definition {
     type        = "METRIC_KEY"
     aggregation = "AVG"
-    metric_key  = "ext:cloud.aws.ecs.cpuReservation"
+    metric_key  = "cloud.aws.ecs.containerinsights.cpuReservedByAccountIdClusterNameRegion"
     entity_filter {
     }
   }
@@ -278,7 +278,7 @@ resource "dynatrace_metric_events" "amazon_ecs_cpu_utilization_by_service_name_a
   query_definition {
     type        = "METRIC_KEY"
     aggregation = "AVG"
-    metric_key  = "ext:cloud.aws.ecs.cpuUtilizationByServiceName"
+    metric_key  = "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName"
     entity_filter {
     }
   }
@@ -307,7 +307,7 @@ resource "dynatrace_metric_events" "amazon_ecs_memory_reservation_aws" {
   query_definition {
     type        = "METRIC_KEY"
     aggregation = "AVG"
-    metric_key  = "ext:cloud.aws.ecs.memoryReservation"
+    metric_key  = "cloud.aws.ecs.containerinsights.memoryReservedByAccountIdClusterNameRegion"
     entity_filter {
     }
   }
@@ -336,7 +336,7 @@ resource "dynatrace_metric_events" "amazon_ecs_memory_utilization" {
   query_definition {
     type        = "METRIC_KEY"
     aggregation = "AVG"
-    metric_key  = "ext:cloud.aws.ecs.memoryUtilizationByServiceName"
+    metric_key  = "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName"
     entity_filter {
     }
   }
@@ -365,7 +365,7 @@ resource "dynatrace_metric_events" "aws_codebuild_cpu_utilized_percent" {
   query_definition {
     type        = "METRIC_KEY"
     aggregation = "AVG"
-    metric_key  = "ext:cloud.aws.codebuild.cpuUtilizedPercentByBuildIdBuildNumber"
+    metric_key  = "cloud.aws.codebuild.cpuUtilizedPercentByAccountIdBuildIdBuildNumberProjectNameRegion"
     entity_filter {
     }
   }
@@ -394,7 +394,7 @@ resource "dynatrace_metric_events" "aws_codebuild_memory_utilized_percent" {
   query_definition {
     type        = "METRIC_KEY"
     aggregation = "AVG"
-    metric_key  = "ext:cloud.aws.codebuild.memoryUtilizedPercentByBuildIdBuildNumber"
+    metric_key  = "cloud.aws.codebuild.memoryUtilizedPercentByAccountIdBuildIdBuildNumberProjectNameRegion"
     entity_filter {
     }
   }
