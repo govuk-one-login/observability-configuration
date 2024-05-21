@@ -430,7 +430,7 @@ module "address_lambda_metrics_dashboard" {
 # check_hmrc CRI
 module "check_hmrc_dashboard" {
   source = "./modules/dashboard"
-  path   = "orange/dashboard-builder/templates/single-account/check-hmrc-cri.json"
+  path   = "orange/check-hmrc-cri.json"
 }
 module "check_hmrc_lambda_metrics_dashboard" {
   source = "./modules/dashboard"
