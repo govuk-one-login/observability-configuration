@@ -3,13 +3,13 @@
     "configurationVersions": [
       7
     ],
-    "clusterVersion": "1.291.94.20240511-084321"
+    "clusterVersion": "1.291.99.20240515-061005"
   },
   "dashboardMetadata": {
-    "name": "Performance [DRAFT]",
+    "name": "Performance BE & FE",
     "shared": true,
     "owner": "andrew.loughran@digital.cabinet-office.gov.uk",
-    "popularity": 3,
+    "popularity": 1,
     "hasConsistentColors": false
   },
   "tiles": [
@@ -455,7 +455,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(builtin:cloud.aws.alb.requests:splitBy():avg:sort(value(avg,descending))):names"
+        "resolution=null&(builtin:cloud.aws.alb.requests:splitBy():avg:sort(value(avg,descending)):names"
       ]
     },
     {
@@ -569,7 +569,7 @@
         "top": 1292,
         "left": 684,
         "width": 684,
-        "height": 722
+        "height": 760
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
@@ -686,7 +686,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(builtin:cloud.aws.lambda.duration:splitBy(\"dt.entity.aws_lambda_function\"):avg:sort(value(avg,descending))):names,(builtin:cloud.aws.lambda.duration:splitBy(\"dt.entity.aws_lambda_function\"):max:sort(value(max,descending))):names"
+        "resolution=Inf&(builtin:cloud.aws.lambda.duration:splitBy(\"dt.entity.aws_lambda_function\"):avg:sort(value(avg,descending)))):names,(builtin:cloud.aws.lambda.duration:splitBy(\"dt.entity.aws_lambda_function\"):max:sort(value(max,descending)))):names"
       ]
     },
     {
@@ -917,7 +917,7 @@
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "## How to use this dashboard.\n\nPlease use this dashboard and filter the management zone in the top right to the account that you wish to target.\n\nThis doesn't provide much value if you scope it to all accounts against the environment."
+      "markdown": "## How to use this dashboard.\n\nPlease use this dashboard and filter the management zone in the top right to the account that you wish to target.\n\nThis doesn't provide much value if you scope it to all accounts against the environment.\n\nThe CloudFront metrics report on all the distributions in the account, so you'll need to make sure you're looking at the appropriate CFN infront of your FE/BE relative to what you've got deployed."
     },
     {
       "name": "Failed Lambda Invocations",
@@ -1224,7 +1224,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1558,
+        "top": 1786,
         "left": 0,
         "width": 684,
         "height": 266
@@ -2085,7 +2085,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":splitBy(apiname,resource,method):sum:sort(value(avg,descending))):names"
+        "resolution=Inf&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":splitBy(apiname,resource,method):sum:sort(value(sum,descending)):limit(20))):names"
       ]
     },
     {
@@ -2217,7 +2217,224 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":splitBy(apiname,resource,method):sum:sort(value(avg,descending))):names"
+        "resolution=Inf&(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":splitBy(apiname,resource,method):sum:sort(value(sum,descending)):limit(20))):names"
+      ]
+    },
+    {
+      "name": "CloudFront Stats (by distributionId)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 760,
+        "width": 608,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "cloud.aws.cloudfront.requestsByAccountIdDistributionIdRegion",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "distributionid"
+          ],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.cloudfront.requestsByAccountIdDistributionIdRegion:splitBy(distributionid):sort(value(auto,descending)):limit(20))):names"
+      ]
+    },
+    {
+      "name": "CloudFront Request (by distributionId)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1558,
+        "left": 0,
+        "width": 684,
+        "height": 228
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "cloud.aws.cloudfront.requestsByAccountIdDistributionIdRegion",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "distributionid"
+          ],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            },
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "RIGHT",
+              "queryIds": [
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.cloudfront.requestsByAccountIdDistributionIdRegion:splitBy(distributionid):sort(value(auto,descending)):limit(20))):names"
       ]
     }
   ]
