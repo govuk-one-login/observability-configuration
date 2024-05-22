@@ -114,87 +114,6 @@ resource "dynatrace_dashboard_sharing" "dns" {
   }
 }
 
-module "dora_demo_sam_app_dashboard" {
-  source = "./modules/dashboard"
-  path   = "dev-platform/dora_demo_sam_app_dashboard.json"
-}
-
-resource "dynatrace_json_dashboard" "dora_demo_sam_app_dashboard" {
-  contents = file("./dashboards/dev-platform/dora_demo_sam_app_dashboard.json")
-}
-
-resource "dynatrace_dashboard_sharing" "dora_demo_sam_app_dashboard" {
-  dashboard_id = dynatrace_json_dashboard.dora_demo_sam_app_dashboard.id
-
-  enabled = true
-
-  permissions {
-    permission {
-      level = "VIEW"
-      type  = "ALL"
-    }
-    permission {
-      id    = data.dynatrace_iam_group.all.id
-      level = "VIEW"
-      type  = "GROUP"
-    }
-  }
-}
-
-module "test_team_1_dashboard" {
-  source = "./modules/dashboard"
-  path   = "dev-platform/test_team_1_dashboard.json"
-}
-
-resource "dynatrace_json_dashboard" "test_team_1_dashboard" {
-  contents = file("./dashboards/dev-platform/test_team_1_dashboard.json")
-}
-
-resource "dynatrace_dashboard_sharing" "test_team_1_dashboard" {
-  dashboard_id = dynatrace_json_dashboard.test_team_1_dashboard.id
-
-  enabled = true
-
-  permissions {
-    permission {
-      level = "VIEW"
-      type  = "ALL"
-    }
-    permission {
-      id    = data.dynatrace_iam_group.all.id
-      level = "VIEW"
-      type  = "GROUP"
-    }
-  }
-}
-
-module "test_team_2_dashboard" {
-  source = "./modules/dashboard"
-  path   = "dev-platform/test_team_2_dashboard.json"
-}
-
-resource "dynatrace_json_dashboard" "test_team_2_dashboard" {
-  contents = file("./dashboards/dev-platform/test_team_2_dashboard.json")
-}
-
-resource "dynatrace_dashboard_sharing" "test_team_2_dashboard" {
-  dashboard_id = dynatrace_json_dashboard.test_team_2_dashboard.id
-
-  enabled = true
-
-  permissions {
-    permission {
-      level = "VIEW"
-      type  = "ALL"
-    }
-    permission {
-      id    = data.dynatrace_iam_group.all.id
-      level = "VIEW"
-      type  = "GROUP"
-    }
-  }
-}
-
 module "txma-shared-signals-integration" {
   source = "./modules/dashboard"
   path   = "txma/txma-shared-signals-integration.json"
@@ -526,4 +445,11 @@ module "performance_application" {
 module "dap_dashboard" {
   source = "./modules/dashboard"
   path   = "dap/data-and-analytics-prod.json"
+}
+
+### DevPlatform ###
+
+module "pipelines_dora_dashboard" {
+  source = "./modules/dashboard"
+  path   = "dev-platform/pipelines_dora_metrics_dashboard.json"
 }
