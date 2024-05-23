@@ -31,6 +31,24 @@ variable "teamscloudfront1" {
       awsaccprod = "172348255554"
       awsaccint  = "761723964695"
     }
+    "team-f" = {
+      owneremail = "cri-orange-team@digital.cabinet-office.gov.uk"
+      teamname   = "Orange - NINo-CRI"
+      awsaccprod = "239207391607"
+      awsaccint  = "488209198322"
+    }
+    "team-g" = {
+      owneremail = "cri-orange-team@digital.cabinet-office.gov.uk"
+      teamname   = "Orange - Address-CRI"
+      awsaccprod = "608988268245"
+      awsaccint  = "993720532118"
+    }
+    "team-h" = {
+      owneremail = "cri-orange-team@digital.cabinet-office.gov.uk"
+      teamname   = "Orange - Experian-KBV-CRI"
+      awsaccprod = "014243362159"
+      awsaccint  = "023997819930"
+    }
   }
 }
 
