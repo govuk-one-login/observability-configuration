@@ -3,7 +3,7 @@
     "configurationVersions": [
       7
     ],
-    "clusterVersion": "1.291.99.20240515-061005"
+    "clusterVersion": "1.292.40.20240522-160528"
   },
   "dashboardMetadata": {
     "name": "Traffic - ${teamname}",
@@ -359,14 +359,28 @@
       ]
     },
     {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 798,
+        "left": 0,
+        "width": 304,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## WAF\n\n"
+    },
+    {
       "name": "WAF (Prod)",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 418,
-        "left": 0,
-        "width": 456,
-        "height": 418
+        "top": 798,
+        "left": 304,
+        "width": 494,
+        "height": 266
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
@@ -374,65 +388,19 @@
       "queries": [
         {
           "id": "A",
-          "metric": "cloud.aws.wafv2.blockedRequestsByAccountIdRegionRuleWebACL",
-          "spaceAggregation": "SUM",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "webacl"
-          ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "aws.account.id",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "${awsaccprod}",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "splitBy": [],
+          "metricSelector": "cloud.aws.wafv2.blockedRequestsByAccountIdRegionRuleWebACL:filter(and(or(eq(\"aws.account.id\",\"${awsaccprod}\")))):splitBy():sum:sort(value(sum,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         },
         {
           "id": "B",
-          "metric": "cloud.aws.wafv2.countedRequestsByAccountIdRegionRuleWebACL",
-          "spaceAggregation": "SUM",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "webacl"
-          ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "aws.account.id",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "${awsaccprod}",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "splitBy": [],
+          "metricSelector": "cloud.aws.wafv2.countedRequestsByAccountIdRegionRuleWebACL:filter(and(or(eq(\"aws.account.id\",\"${awsaccprod}\")))):splitBy():sum:sort(value(sum,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         }
@@ -447,8 +415,7 @@
             "valueFormat": "auto",
             "properties": {
               "color": "RED",
-              "seriesType": "LINE",
-              "alias": "Blocked"
+              "seriesType": "LINE"
             },
             "seriesOverrides": []
           },
@@ -457,9 +424,8 @@
             "unitTransform": "auto",
             "valueFormat": "auto",
             "properties": {
-              "color": "BLUE",
-              "seriesType": "LINE",
-              "alias": "Counted"
+              "color": "GREEN",
+              "seriesType": "LINE"
             },
             "seriesOverrides": []
           }
@@ -520,7 +486,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.wafv2.blockedRequestsByAccountIdRegionRuleWebACL:filter(and(or(eq(\"aws.account.id\",\"${awsaccprod}\")))):splitBy(webacl):sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.wafv2.countedRequestsByAccountIdRegionRuleWebACL:filter(and(or(eq(\"aws.account.id\",\"${awsaccprod}\")))):splitBy(webacl):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.wafv2.blockedRequestsByAccountIdRegionRuleWebACL:filter(and(or(eq(\"aws.account.id\",\"${awsaccprod}\")))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.wafv2.countedRequestsByAccountIdRegionRuleWebACL:filter(and(or(eq(\"aws.account.id\",\"${awsaccprod}\")))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names"
       ]
     }
   ]
