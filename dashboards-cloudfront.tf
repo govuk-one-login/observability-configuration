@@ -49,6 +49,12 @@ variable "teamscloudfront1" {
       awsaccprod = "014243362159"
       awsaccint  = "023997819930"
     }
+    "team-i" = {
+      owneremail = "pranjal.bhatnagar@digital.cabinet-office.gov.uk"
+      teamname   = "Mobile - ID Check"
+      awsaccprod = "671922655609"
+      awsaccint  = "110965769736"
+    }
   }
 }
 
