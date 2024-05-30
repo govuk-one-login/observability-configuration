@@ -26,10 +26,11 @@ locals {
 resource "dynatrace_json_dashboard" "Team-DORA-Dashboards1" {
   for_each = local.secure_pipelines
 
-  contents = templatefile("./dashboards/dev-platform/TEMPLATE1_dashboard.json", {
-    title         = "${each.value.team} ${each.value.samstackname1}"
-    owner         = each.value.email
-    samstackname1 = each.value.samstackname1
+  contents = templatefile("./dashboards/dev-platform/teams_pipeline_dora_dashboard.tftpl", {
+    title                  = "${each.value.team} ${each.value.samstackname1}"
+    owner                  = each.value.email
+    sam_stack_names_string = each.value.samstackname1
+    sam_stack_names        = ["${each.value.samstackname1}"]
   })
 }
 
@@ -39,11 +40,11 @@ resource "dynatrace_json_dashboard" "Team-DORA-Dashboards1" {
 resource "dynatrace_json_dashboard" "Team-DORA-Dashboards2" {
   for_each = local.dora_dashboards2
 
-  contents = templatefile("./dashboards/dev-platform/TEMPLATE2_dashboard.json", {
-    title         = "${each.value.team} ${each.value.samstackname1} ${each.value.samstackname2}"
-    owner         = each.value.email
-    samstackname1 = each.value.samstackname1
-    samstackname2 = each.value.samstackname2
+  contents = templatefile("./dashboards/dev-platform/teams_pipeline_dora_dashboard.tftpl", {
+    title                  = "${each.value.team} ${each.value.samstackname1} ${each.value.samstackname2}"
+    owner                  = each.value.email
+    sam_stack_names_string = "${each.value.samstackname1} & ${each.value.samstackname2}"
+    sam_stack_names        = ["${each.value.samstackname1}", "${each.value.samstackname2}"]
   })
 }
 
@@ -53,12 +54,11 @@ resource "dynatrace_json_dashboard" "Team-DORA-Dashboards2" {
 resource "dynatrace_json_dashboard" "Team-DORA-Dashboards3" {
   for_each = local.dora_dashboards3
 
-  contents = templatefile("./dashboards/dev-platform/TEMPLATE3_dashboard.json", {
-    title         = "${each.value.team} ${each.value.samstackname1} ${each.value.samstackname2} ${each.value.samstackname3}"
-    owner         = each.value.email
-    samstackname1 = each.value.samstackname1
-    samstackname2 = each.value.samstackname2
-    samstackname3 = each.value.samstackname3
+  contents = templatefile("./dashboards/dev-platform/teams_pipeline_dora_dashboard.tftpl", {
+    title                  = "${each.value.team} ${each.value.samstackname1} ${each.value.samstackname2} ${each.value.samstackname3}"
+    owner                  = each.value.email
+    sam_stack_names_string = "${each.value.samstackname1} & ${each.value.samstackname2} & ${each.value.samstackname3}"
+    sam_stack_names        = ["${each.value.samstackname1}", "${each.value.samstackname2}", "${each.value.samstackname3}"]
   })
 }
 
