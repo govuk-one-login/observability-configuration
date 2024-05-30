@@ -45,7 +45,13 @@ resource "dynatrace_dashboard_sharing" "slos" {
 module "service_dashboard" {
   count  = local.is_production ? 1 : 0
   source = "./modules/dashboard"
-  path   = "service-dashboard.json"
+  path   = "service-health-overview.json"
+}
+
+module "ls_lambda_errors" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "ls-operations-lambda-errors.json"
 }
 
 resource "dynatrace_json_dashboard" "team-idc-app" {

@@ -1,0 +1,1596 @@
+{
+    "metadata": {
+      "configurationVersions": [
+        7
+      ],
+      "clusterVersion": "1.291.94.20240511-084321"
+    },
+    "dashboardMetadata": {
+      "name": "Live Service Operations - Lambda Errors",
+      "shared": false,
+      "owner": "christopher.dodd@digital.cabinet-office.gov.uk",
+      "tags": [
+        "Technical Service Desk",
+        "Live Services",
+        "Production"
+      ],
+      "popularity": 9,
+      "hasConsistentColors": false
+    },
+    "tiles": [
+      {
+        "name": "Elasticache Usage on Auth",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 0,
+          "left": 0,
+          "width": 1216,
+          "height": 304
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [],
+            "metricSelector": "cloud.aws.elasticache.databaseMemoryUsageCountedForEvictPercentageByAccountIdNodeGroupIdRegionReplicationGroupId:filter(and(or(eq(\"aws.account.id\",\"172348255554\")))):splitBy():max",
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "B",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [],
+            "metricSelector": "cloud.aws.elasticache.evictionsByAccountIdRegion:filter(and(or(eq(\"aws.account.id\",\"172348255554\")))):splitBy():avg",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "Database Memory Usage"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "B:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "Evictions"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A",
+                  "B"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.elasticache.databaseMemoryUsageCountedForEvictPercentageByAccountIdNodeGroupIdRegionReplicationGroupId:filter(and(or(eq(\"aws.account.id\",\"172348255554\")))):splitBy():max):limit(100):names,(cloud.aws.elasticache.evictionsByAccountIdRegion:filter(and(or(eq(\"aws.account.id\",\"172348255554\")))):splitBy():avg):limit(100):names"
+        ]
+      },
+      {
+        "name": "DCMAW Errors",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 304,
+          "left": 608,
+          "width": 608,
+          "height": 266
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "aws.account.id",
+              "resource"
+            ],
+            "metricSelector": "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"671922655609\")))):splitBy(\"aws.account.id\",resource):sum",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"671922655609\")))):splitBy(\"aws.account.id\",resource):sum):limit(100):names"
+        ]
+      },
+      {
+        "name": "Authentication Errors",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 304,
+          "left": 0,
+          "width": 608,
+          "height": 266
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "D",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "aws.account.id",
+              "resource"
+            ],
+            "metricSelector": "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"172348255554\")))):splitBy(\"aws.account.id\",resource):sum",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "D:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "D"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"172348255554\")))):splitBy(\"aws.account.id\",resource):sum):limit(100):names"
+        ]
+      },
+      {
+        "name": "F2F Errors",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 570,
+          "left": 0,
+          "width": 608,
+          "height": 266
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "B",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "aws.account.id",
+              "resource"
+            ],
+            "metricSelector": "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"270790667266\")))):splitBy(\"aws.account.id\",resource):sum",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "B:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "B"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"270790667266\")))):splitBy(\"aws.account.id\",resource):sum):limit(100):names"
+        ]
+      },
+      {
+        "name": "Account Management Errors",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 570,
+          "left": 608,
+          "width": 608,
+          "height": 266
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "aws.account.id",
+              "resource"
+            ],
+            "metricSelector": "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"026991849909\")))):splitBy(\"aws.account.id\",resource):sum",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"026991849909\")))):splitBy(\"aws.account.id\",resource):sum):limit(100):names"
+        ]
+      },
+      {
+        "name": "IPV Return Errors",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 836,
+          "left": 608,
+          "width": 608,
+          "height": 266
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "B",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "aws.account.id",
+              "resource"
+            ],
+            "metricSelector": "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"821078365651\")))):splitBy(\"aws.account.id\",resource):sum",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "B:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "B"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"821078365651\")))):splitBy(\"aws.account.id\",resource):sum):limit(100):names"
+        ]
+      },
+      {
+        "name": "IPV Core",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 836,
+          "left": 0,
+          "width": 608,
+          "height": 266
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "aws.account.id",
+              "resource"
+            ],
+            "metricSelector": "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"075701497069\")))):splitBy(\"aws.account.id\",resource):sum",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"075701497069\")))):splitBy(\"aws.account.id\",resource):sum):limit(100):names"
+        ]
+      },
+      {
+        "name": "Fraud Errors",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1102,
+          "left": 0,
+          "width": 608,
+          "height": 266
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "B",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "aws.account.id",
+              "resource"
+            ],
+            "metricSelector": "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"378781532883\")))):splitBy(\"aws.account.id\",resource):sum",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "B:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "B"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": true
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"378781532883\")))):splitBy(\"aws.account.id\",resource):sum):limit(100):names"
+        ]
+      },
+      {
+        "name": "KBV Errors",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1102,
+          "left": 608,
+          "width": 608,
+          "height": 266
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "B",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "aws.account.id",
+              "resource"
+            ],
+            "metricSelector": "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"014243362159\")))):splitBy(\"aws.account.id\",resource):sum",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "B:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "B"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"014243362159\")))):splitBy(\"aws.account.id\",resource):sum):limit(100):names"
+        ]
+      },
+      {
+        "name": "TxMA Event Errors",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1368,
+          "left": 608,
+          "width": 608,
+          "height": 266
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "B",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "aws.account.id",
+              "resource"
+            ],
+            "metricSelector": "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"451773080033\")))):splitBy(\"aws.account.id\",resource):sum",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "B:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "B"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"451773080033\")))):splitBy(\"aws.account.id\",resource):sum):limit(100):names"
+        ]
+      },
+      {
+        "name": "TxMA Audit Errors",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1368,
+          "left": 0,
+          "width": 608,
+          "height": 266
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "aws.account.id",
+              "resource"
+            ],
+            "metricSelector": "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"348043515437\")))):splitBy(\"aws.account.id\",resource):sum",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"348043515437\")))):splitBy(\"aws.account.id\",resource):sum):limit(100):names"
+        ]
+      },
+      {
+        "name": "Address Errors",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1634,
+          "left": 0,
+          "width": 608,
+          "height": 266
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "aws.account.id",
+              "resource"
+            ],
+            "metricSelector": "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"608988268245\")))):splitBy(\"aws.account.id\",resource):sum",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {
+            "hideLegend": false
+          },
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": true
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"608988268245\")))):splitBy(\"aws.account.id\",resource):sum):limit(100):names"
+        ]
+      },
+      {
+        "name": "Driving Licence Errors",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1634,
+          "left": 608,
+          "width": 608,
+          "height": 266
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "B",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "aws.account.id",
+              "resource"
+            ],
+            "metricSelector": "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"161017977784\")))):splitBy(\"aws.account.id\",resource):sum",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "B:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "B"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"161017977784\")))):splitBy(\"aws.account.id\",resource):sum):limit(100):names"
+        ]
+      },
+      {
+        "name": "SPOT Errors",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1900,
+          "left": 608,
+          "width": 608,
+          "height": 266
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "B",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "aws.account.id",
+              "resource"
+            ],
+            "metricSelector": "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"101836073728\")))):splitBy(\"aws.account.id\",resource):sum",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "B:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "B"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"101836073728\")))):splitBy(\"aws.account.id\",resource):sum):limit(100):names"
+        ]
+      },
+      {
+        "name": "Passport Errors",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1900,
+          "left": 0,
+          "width": 608,
+          "height": 266
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "B",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "aws.account.id",
+              "resource"
+            ],
+            "metricSelector": "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"194537773050\")))):splitBy(\"aws.account.id\",resource):sum",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "B:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "B"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"194537773050\")))):splitBy(\"aws.account.id\",resource):sum):limit(100):names"
+        ]
+      }
+    ]
+  }
