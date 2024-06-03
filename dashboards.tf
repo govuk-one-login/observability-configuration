@@ -76,28 +76,6 @@ resource "dynatrace_dashboard_sharing" "team-idc-app" {
   }
 }
 
-resource "dynatrace_json_dashboard" "dora_metrics_dashboard" {
-  contents = file("${path.module}/dashboards/dev-platform/dora_metrics_dashboard.json")
-}
-
-resource "dynatrace_dashboard_sharing" "dora_metrics_dashboard" {
-  dashboard_id = dynatrace_json_dashboard.dora_metrics_dashboard.id
-
-  enabled = true
-
-  permissions {
-    permission {
-      level = "VIEW"
-      type  = "ALL"
-    }
-    permission {
-      id    = data.dynatrace_iam_group.all.id
-      level = "VIEW"
-      type  = "GROUP"
-    }
-  }
-}
-
 resource "dynatrace_json_dashboard" "dns" {
   contents = file("${path.module}/dashboards/dns.json")
 }
