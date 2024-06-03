@@ -1,4 +1,4 @@
- {
+{
   "metadata": {
     "configurationVersions": [
       7
@@ -27,6 +27,388 @@
       "isAutoRefreshDisabled": false
     },
     {
+      "name": "DynamoDB Latency",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1596,
+        "left": 0,
+        "width": 684,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "operation"
+          ],
+          "metricSelector": "cloud.aws.dynamodb.successfulRequestLatencyByAccountIdOperationRegionTableName:filter(and(or(eq(\"aws.account.id\",\"561961276815\")))):splitBy(\"operation\"):fold(min)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "operation"
+          ],
+          "metricSelector": "cloud.aws.dynamodb.successfulRequestLatencyByAccountIdOperationRegionTableName:filter(and(or(eq(\"aws.account.id\",\"561961276815\")))):splitBy(\"operation\"):fold(avg)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "operation"
+          ],
+          "metricSelector": "cloud.aws.dynamodb.successfulRequestLatencyByAccountIdOperationRegionTableName:filter(and(or(eq(\"aws.account.id\",\"561961276815\")))):splitBy(\"operation\"):fold(max)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "MilliSecond",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Min"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "MilliSecond",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Avg"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "MilliSecond",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Max"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "SuccessfulRequestLatency",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:Operation.name",
+            "B:Operation.name",
+            "C:Operation.name",
+            "D:Operation.name",
+            "E:Operation.name",
+            "D:tablename.name",
+            "D:operation.name",
+            "A:operation.name",
+            "B:operation.name",
+            "C:operation.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.dynamodb.successfulRequestLatencyByAccountIdOperationRegionTableName:filter(and(or(eq(\"aws.account.id\",\"561961276815\")))):splitBy(operation):fold(min)):names:fold(auto),(cloud.aws.dynamodb.successfulRequestLatencyByAccountIdOperationRegionTableName:filter(and(or(eq(\"aws.account.id\",\"561961276815\")))):splitBy(operation):fold(avg)):names:fold(auto),(cloud.aws.dynamodb.successfulRequestLatencyByAccountIdOperationRegionTableName:filter(and(or(eq(\"aws.account.id\",\"561961276815\")))):splitBy(operation):fold(max)):names:fold(auto)"
+      ]
+    },
+    {
+      "name": "SQS Age of Oldest Message & Number of Messages sent",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1292,
+        "left": 0,
+        "width": 684,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(contains(queuename,shared-signals)))):splitBy(queuename):sum:sort(value(sum,descending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(contains(queuename,shared-signals)))):splitBy(queuename):sum:sort(value(sum,descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "ApproximateAgeOfOldestMessage",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:dt.entity.custom_device.name",
+            "B:dt.entity.custom_device.name",
+            "A:queuename.name",
+            "B:queuename.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(contains(queuename,shared-signals)))):splitBy(queuename):sum:sort(value(sum,descending))):names,(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(contains(queuename,shared-signals)))):splitBy(queuename):sum:sort(value(sum,descending))):names"
+      ]
+    },
+    {
+      "name": "SQS Dynamic Queues",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1292,
+        "left": 684,
+        "width": 646,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(contains(queuename,txma-dynamic-sqs-set-push-queue)))):splitBy(queuename):sum:sort(value(sum,descending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(contains(queuename,txma-dynamic-sqs-set-push-queue)))):splitBy(queuename):sum:sort(value(sum,descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Age - Queue"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "ApproximateAgeOfOldestMessage",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:dt.entity.custom_device.name",
+            "B:dt.entity.custom_device.name",
+            "A:queuename.name",
+            "B:queuename.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(contains(queuename,txma-dynamic-sqs-set-push-queue)))):splitBy(queuename):sum:sort(value(sum,descending))):names,(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(contains(queuename,txma-dynamic-sqs-set-push-queue)))):splitBy(queuename):sum:sort(value(sum,descending))):names"
+      ]
+    },
+    {
       "name": "API Latency",
       "tileType": "DATA_EXPLORER",
       "configured": true,
@@ -42,97 +424,34 @@
       "queries": [
         {
           "id": "A",
-          "metric": "cloud.aws.apigateway.latencyByAccountIdApiNameRegion",
-          "spaceAggregation": "MIN",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [
             "apiname"
           ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "aws.account.id",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "561961276815",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")))):splitBy(apiname):min:sort(value(min,descending))",
           "rate": "NONE",
           "enabled": true
         },
         {
           "id": "B",
-          "metric": "cloud.aws.apigateway.latencyByAccountIdApiNameRegion",
-          "spaceAggregation": "AVG",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [
             "apiname"
           ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "aws.account.id",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "561961276815",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")))):splitBy(apiname):avg:sort(value(avg,descending))",
           "rate": "NONE",
           "enabled": true
         },
         {
           "id": "C",
-          "metric": "cloud.aws.apigateway.latencyByAccountIdApiNameRegion",
-          "spaceAggregation": "MAX",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [
             "apiname"
           ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "aws.account.id",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "561961276815",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")))):splitBy(apiname):max:sort(value(max,descending))",
           "rate": "NONE",
           "enabled": true
         }
@@ -227,7 +546,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(cloud.aws.apigateway.latencyByAccountIdApiNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")))):splitBy(apiname):min:sort(value(min,descending)):limit(20)):names,(cloud.aws.apigateway.latencyByAccountIdApiNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")))):splitBy(apiname):avg:sort(value(avg,descending)):limit(20)):names,(cloud.aws.apigateway.latencyByAccountIdApiNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")))):splitBy(apiname):max:sort(value(max,descending)):limit(20)):names"
+        "resolution=Inf&(cloud.aws.apigateway.latencyByAccountIdApiNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")))):splitBy(apiname):min:sort(value(min,descending))):names,(cloud.aws.apigateway.latencyByAccountIdApiNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")))):splitBy(apiname):avg:sort(value(avg,descending))):names,(cloud.aws.apigateway.latencyByAccountIdApiNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")))):splitBy(apiname):max:sort(value(max,descending))):names"
       ]
     },
     {
@@ -246,127 +565,34 @@
       "queries": [
         {
           "id": "A",
-          "metric": "cloud.aws.apigateway.4xxErrorByAccountIdApiNameRegion",
-          "spaceAggregation": "SUM",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "aws.account.id",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "561961276815",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
-                "filter": "apiname",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "shared-signals-shared-signals-api-endpoint",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "splitBy": [
+            "apiname"
+          ],
+          "metricSelector": "cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameRegion\":filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(eq(apiname,shared-signals-shared-signals-api-endpoint)))):splitBy(apiname):sum:sort(value(sum,descending))",
           "rate": "NONE",
           "enabled": true
         },
         {
           "id": "B",
-          "metric": "cloud.aws.apigateway.5xxErrorByAccountIdApiNameRegion",
-          "spaceAggregation": "SUM",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "apiname",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "shared-signals-shared-signals-api-endpoint",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
-                "filter": "aws.account.id",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "561961276815",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "splitBy": [
+            "apiname"
+          ],
+          "metricSelector": "cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(eq(apiname,shared-signals-shared-signals-api-endpoint)))):splitBy(apiname):sum:sort(value(sum,descending))",
           "rate": "NONE",
           "enabled": true
         },
         {
           "id": "C",
-          "metric": "cloud.aws.apigateway.countByAccountIdApiNameRegion",
-          "spaceAggregation": "SUM",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "apiname",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "shared-signals-shared-signals-api-endpoint",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
-                "filter": "aws.account.id",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "561961276815",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "splitBy": [
+            "apiname"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(eq(apiname,shared-signals-shared-signals-api-endpoint)))):splitBy(apiname):sum:sort(value(sum,descending))",
           "rate": "NONE",
           "enabled": true
         }
@@ -457,7 +683,7 @@
         "resolution": "1m"
       },
       "metricExpressions": [
-        "resolution=1m&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameRegion\":filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(eq(apiname,shared-signals-shared-signals-api-endpoint)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(eq(apiname,shared-signals-shared-signals-api-endpoint)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.countByAccountIdApiNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(eq(apiname,shared-signals-shared-signals-api-endpoint)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+        "resolution=1m&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameRegion\":filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(eq(apiname,shared-signals-shared-signals-api-endpoint)))):splitBy(apiname):sum:sort(value(sum,descending))):limit(100):names,(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(eq(apiname,shared-signals-shared-signals-api-endpoint)))):splitBy(apiname):sum:sort(value(sum,descending))):limit(100):names,(cloud.aws.apigateway.countByAccountIdApiNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(eq(apiname,shared-signals-shared-signals-api-endpoint)))):splitBy(apiname):sum:sort(value(sum,descending))):limit(100):names"
       ]
     },
     {
@@ -477,106 +703,12 @@
       "queries": [
         {
           "id": "B",
-          "metric": "builtin:cloud.aws.lambda.duration",
-          "spaceAggregation": "SUM",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [
-            "dt.entity.aws_lambda_function"
+            "functionname"
           ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "TAG",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "[AWS]Environment:staging",
-                    "evaluator": "IN"
-                  },
-                  {
-                    "value": "[AWS]Environment:Staging",
-                    "evaluator": "IN"
-                  }
-                ]
-              },
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "shared-signals-update-user-config-entry",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-retry-write-to-set-push-queue",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-get-user",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-mock-receiver-function",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-provision-user-stack",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-create-sets",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-mock-receiver-oauth-function",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-get-jwks-function",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-push-events-to-receiver",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-mock-access-token-function",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-delete-user-resources",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-write-to-set-push-queue",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "cloud.aws.lambda.durationByAccountIdFunctionNameRegion:filter(and (not(contains(\"functionname\",\"AWS\")),not(contains(\"functionname\",\"aws\")),not(contains(\"functionname\",\"deployment\")), not(contains(\"functionname\",\"Scan\")),not(contains(\"functionname\",\"vpc\")), eq(\"aws.account.id\",\"561961276815\"))):splitBy(functionname)",
           "rate": "NONE",
           "enabled": true
         }
@@ -645,7 +777,7 @@
           "hiddenColumns": []
         },
         "graphChartSettings": {
-          "connectNulls": false
+          "connectNulls": true
         },
         "honeycombSettings": {
           "showHive": true,
@@ -657,7 +789,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Environment:staging~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Environment:Staging~\")\"))),or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-delete-user-resources~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-get-jwks-function~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-write-to-set-push-queue~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-update-user-config-entry~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-push-events-to-receiver~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-get-user~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-mock-receiver-function~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-provision-user-stack~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-create-sets~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-mock-access-token-function~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-mock-receiver-oauth-function~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-retry-write-to-set-push-queue~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.lambda.durationByAccountIdFunctionNameRegion:filter(and(not(contains(functionname,AWS)),not(contains(functionname,aws)),not(contains(functionname,deployment)),not(contains(functionname,Scan)),not(contains(functionname,vpc)),eq(\"aws.account.id\",\"561961276815\"))):splitBy(functionname)):limit(100):names"
       ]
     },
     {
@@ -676,106 +808,12 @@
       "queries": [
         {
           "id": "D",
-          "metric": "builtin:cloud.aws.lambda.concExecutions",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [
-            "dt.entity.aws_lambda_function"
+            "functionname"
           ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "TAG",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "[AWS]Environment:Staging",
-                    "evaluator": "IN"
-                  },
-                  {
-                    "value": "[AWS]Environment:staging",
-                    "evaluator": "IN"
-                  }
-                ]
-              },
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "shared-signals-mock-receiver-oauth-function",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-update-user-config-entry",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-create-sets",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-get-user",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-mock-access-token-function",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-retry-write-to-set-push-queue",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-get-jwks-function",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-provision-user-stack",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-delete-user-resources",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-mock-receiver-function",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-push-events-to-receiver",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "shared-signals-write-to-set-push-queue",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "cloud.aws.lambda.concurrentExecutionsByAccountIdFunctionNameRegion:filter(and (not(contains(\"functionname\",\"AWS\")),not(contains(\"functionname\",\"aws\")),not(contains(\"functionname\",\"deployment\")), not(contains(\"functionname\",\"Scan\")),not(contains(\"functionname\",\"vpc\")), eq(\"aws.account.id\",\"561961276815\"))):splitBy(functionname)",
           "rate": "NONE",
           "enabled": true
         }
@@ -844,7 +882,7 @@
           "hiddenColumns": []
         },
         "graphChartSettings": {
-          "connectNulls": false
+          "connectNulls": true
         },
         "honeycombSettings": {
           "showHive": true,
@@ -856,17 +894,17 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Environment:staging~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Environment:Staging~\")\"))),or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-delete-user-resources~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-get-jwks-function~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-write-to-set-push-queue~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-push-events-to-receiver~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-update-user-config-entry~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-mock-receiver-function~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-get-user~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-provision-user-stack~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-create-sets~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-mock-access-token-function~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-mock-receiver-oauth-function~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"shared-signals-retry-write-to-set-push-queue~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.lambda.concurrentExecutionsByAccountIdFunctionNameRegion:filter(and(not(contains(functionname,AWS)),not(contains(functionname,aws)),not(contains(functionname,deployment)),not(contains(functionname,Scan)),not(contains(functionname,vpc)),eq(\"aws.account.id\",\"561961276815\"))):splitBy(functionname)):limit(100):names"
       ]
     },
     {
-      "name": "Invocations",
+      "name": "Throttled",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
         "top": 684,
-        "left": 684,
-        "width": 646,
+        "left": 0,
+        "width": 684,
         "height": 304
       },
       "tileFilter": {},
@@ -874,13 +912,13 @@
       "customName": "Table",
       "queries": [
         {
-          "id": "A",
+          "id": "B",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [
-            "dt.entity.aws_lambda_function"
+            "functionname"
           ],
-          "metricSelector": "builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Environment:staging~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Environment:Staging~\")\"))),or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.contains(~\"shared-signals~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)",
+          "metricSelector": "cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion:filter(and (not(contains(\"functionname\",\"AWS\")),not(contains(\"functionname\",\"aws\")),not(contains(\"functionname\",\"deployment\")), not(contains(\"functionname\",\"Scan\")),not(contains(\"functionname\",\"vpc\")), eq(\"aws.account.id\",\"561961276815\"))):splitBy(functionname):sort(value(auto,descending))",
           "rate": "NONE",
           "enabled": true
         }
@@ -890,7 +928,7 @@
         "global": {},
         "rules": [
           {
-            "matcher": "A:",
+            "matcher": "B:",
             "properties": {
               "color": "DEFAULT"
             },
@@ -909,7 +947,7 @@
         "thresholds": [
           {
             "axisTarget": "LEFT",
-            "columnId": "LambdaFunction number of times a function is invoked",
+            "columnId": "Throttles",
             "rules": [
               {
                 "color": "#7dc540"
@@ -921,13 +959,16 @@
                 "color": "#dc172a"
               }
             ],
-            "queryId": "A",
+            "queryId": "B",
             "visible": true
           }
         ],
         "tableSettings": {
+          "isThresholdBackgroundAppliedToCell": false,
           "hiddenColumns": [
-            "A:dt.entity.aws_lambda_function.name"
+            "A:dt.entity.service.name",
+            "A:dt.entity.aws_lambda_function.name",
+            "B:functionname.name"
           ]
         },
         "graphChartSettings": {
@@ -943,7 +984,97 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Environment:staging~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Environment:Staging~\")\"))),or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.contains(~\"shared-signals~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)):names"
+        "resolution=Inf&(cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion:filter(and(not(contains(functionname,AWS)),not(contains(functionname,aws)),not(contains(functionname,deployment)),not(contains(functionname,Scan)),not(contains(functionname,vpc)),eq(\"aws.account.id\",\"561961276815\"))):splitBy(functionname):sort(value(auto,descending))):names"
+      ]
+    },
+    {
+      "name": "Invocations",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 684,
+        "left": 684,
+        "width": 646,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Table",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "functionname"
+          ],
+          "metricSelector": "cloud.aws.lambda.invocationsByAccountIdFunctionNameRegion:filter(and (not(contains(\"functionname\",\"AWS\")),not(contains(\"functionname\",\"aws\")),not(contains(\"functionname\",\"deployment\")), not(contains(\"functionname\",\"Scan\")),not(contains(\"functionname\",\"vpc\")), eq(\"aws.account.id\",\"561961276815\"))):splitBy(functionname):sort(value(auto,descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "Invocations",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "B",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:dt.entity.aws_lambda_function.name",
+            "B:functionname.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.lambda.invocationsByAccountIdFunctionNameRegion:filter(and(not(contains(functionname,AWS)),not(contains(functionname,aws)),not(contains(functionname,deployment)),not(contains(functionname,Scan)),not(contains(functionname,vpc)),eq(\"aws.account.id\",\"561961276815\"))):splitBy(functionname):sort(value(auto,descending))):names:fold(sum)"
       ]
     },
     {
@@ -961,13 +1092,13 @@
       "customName": "Data explorer results",
       "queries": [
         {
-          "id": "A",
+          "id": "B",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [
-            "dt.entity.aws_lambda_function"
+            "functionname"
           ],
-          "metricSelector": "builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Environment:staging~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Environment:Staging~\")\"))),or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.contains(~\"shared-signals~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)",
+          "metricSelector": "cloud.aws.lambda.errorsByAccountIdFunctionNameRegion:filter(and (not(contains(\"functionname\",\"AWS\")),not(contains(\"functionname\",\"aws\")),not(contains(\"functionname\",\"deployment\")), not(contains(\"functionname\",\"Scan\")),not(contains(\"functionname\",\"vpc\")), eq(\"aws.account.id\",\"561961276815\"))):splitBy(functionname):sort(value(auto,descending))",
           "rate": "NONE",
           "enabled": true
         }
@@ -977,9 +1108,12 @@
         "global": {},
         "rules": [
           {
-            "matcher": "A:",
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
             "properties": {
-              "color": "DEFAULT"
+              "color": "DEFAULT",
+              "seriesType": "LINE"
             },
             "seriesOverrides": []
           }
@@ -1023,10 +1157,12 @@
         }
       },
       "queriesSettings": {
-        "resolution": ""
+        "resolution": "12h",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
       },
       "metricExpressions": [
-        "resolution=Inf&(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Environment:staging~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Environment:Staging~\")\"))),or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.contains(~\"shared-signals~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)):limit(100):names"
+        "resolution=12h&(cloud.aws.lambda.errorsByAccountIdFunctionNameRegion:filter(and(not(contains(functionname,AWS)),not(contains(functionname,aws)),not(contains(functionname,deployment)),not(contains(functionname,Scan)),not(contains(functionname,vpc)),eq(\"aws.account.id\",\"561961276815\"))):splitBy(functionname):sort(value(auto,descending))):limit(100):names:fold(sum)"
       ]
     },
     {
@@ -1044,13 +1180,13 @@
       "customName": "Data explorer results",
       "queries": [
         {
-          "id": "B",
+          "id": "C",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [
-            "dt.entity.aws_lambda_function"
+            "functionname"
           ],
-          "metricSelector": "builtin:cloud.aws.lambda.errorsRate:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Environment:staging~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Environment:Staging~\")\"))),or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.contains(~\"shared-signals~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)",
+          "metricSelector": "(cloud.aws.lambda.errorsByAccountIdFunctionNameRegion:filter(and (not(contains(\"functionname\",\"AWS\")),not(contains(\"functionname\",\"aws\")),not(contains(\"functionname\",\"deployment\")), not(contains(\"functionname\",\"Scan\")),not(contains(\"functionname\",\"vpc\")), eq(\"aws.account.id\",\"561961276815\"))):splitBy(\"functionname\"))/ (cloud.aws.lambda.invocationsByAccountIdFunctionNameRegion:filter(and (not(contains(\"functionname\",\"AWS\")),not(contains(\"functionname\",\"aws\")),not(contains(\"functionname\",\"deployment\")), not(contains(\"functionname\",\"Scan\")),not(contains(\"functionname\",\"vpc\")), eq(\"aws.account.id\",\"561961276815\"))):splitBy(\"functionname\")) * 100",
           "rate": "NONE",
           "enabled": true
         }
@@ -1060,13 +1196,9 @@
         "global": {},
         "rules": [
           {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
+            "matcher": "C:",
             "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "LambdaFunction rate of failed invocations to all invocations %"
+              "color": "DEFAULT"
             },
             "seriesOverrides": []
           }
@@ -1082,9 +1214,9 @@
               "visible": true,
               "min": "AUTO",
               "max": "AUTO",
-              "position": "LEFT",
+              "position": "RIGHT",
               "queryIds": [
-                "B"
+                "C"
               ],
               "defaultAxis": true
             }
@@ -1126,477 +1258,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(builtin:cloud.aws.lambda.errorsRate:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Environment:staging~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Environment:Staging~\")\"))),or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.contains(~\"shared-signals~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
-      "name": "DynamoDB Latency",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1596,
-        "left": 0,
-        "width": 684,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "Operation"
-          ],
-          "metricSelector": "builtin:cloud.aws.dynamo.requests.latency:filter(and(or(in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(dynamo_db_table),tag(~\"[AWS]Environment:staging~\")\")),in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(dynamo_db_table),tag(~\"[AWS]Environment:Staging~\")\"))),in(\"dt.entity.dynamo_db_table\", entitySelector(\"type(~\"DYNAMO_DB_TABLE~\"), entityName.contains(~\"shared-signals-infra-user-config~\")\")))):splitBy(\"Operation\"):fold(min)",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "Operation"
-          ],
-          "metricSelector": "builtin:cloud.aws.dynamo.requests.latency:filter(and(or(in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(dynamo_db_table),tag(~\"[AWS]Environment:staging~\")\")),in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(dynamo_db_table),tag(~\"[AWS]Environment:Staging~\")\"))),in(\"dt.entity.dynamo_db_table\", entitySelector(\"type(~\"DYNAMO_DB_TABLE~\"), entityName.contains(~\"shared-signals-infra-user-config~\")\")))):splitBy(\"Operation\"):fold(avg)",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "Operation"
-          ],
-          "metricSelector": "builtin:cloud.aws.dynamo.requests.latency:filter(and(or(in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(dynamo_db_table),tag(~\"[AWS]Environment:staging~\")\")),in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(dynamo_db_table),tag(~\"[AWS]Environment:Staging~\")\"))),in(\"dt.entity.dynamo_db_table\", entitySelector(\"type(~\"DYNAMO_DB_TABLE~\"), entityName.contains(~\"shared-signals-infra-user-config~\")\")))):splitBy(\"Operation\"):fold(max)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "TABLE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "MilliSecond",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Min"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "unitTransform": "MilliSecond",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Avg"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "C:",
-            "unitTransform": "MilliSecond",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Max"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE",
-          "showLabels": false
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "DynamoDB number of successful request latency for operation",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "A:Operation.name",
-            "B:Operation.name",
-            "C:Operation.name",
-            "D:Operation.name",
-            "E:Operation.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(builtin:cloud.aws.dynamo.requests.latency:filter(and(or(in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(dynamo_db_table),tag(~\"[AWS]Environment:staging~\")\")),in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(dynamo_db_table),tag(~\"[AWS]Environment:Staging~\")\"))),in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(~\"DYNAMO_DB_TABLE~\"), entityName.contains(~\"shared-signals-infra-user-config~\")\")))):splitBy(Operation):fold(min)):names:fold(auto),(builtin:cloud.aws.dynamo.requests.latency:filter(and(or(in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(dynamo_db_table),tag(~\"[AWS]Environment:staging~\")\")),in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(dynamo_db_table),tag(~\"[AWS]Environment:Staging~\")\"))),in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(~\"DYNAMO_DB_TABLE~\"), entityName.contains(~\"shared-signals-infra-user-config~\")\")))):splitBy(Operation):fold(avg)):names:fold(auto),(builtin:cloud.aws.dynamo.requests.latency:filter(and(or(in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(dynamo_db_table),tag(~\"[AWS]Environment:staging~\")\")),in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(dynamo_db_table),tag(~\"[AWS]Environment:Staging~\")\"))),in(\"dt.entity.dynamo_db_table\",entitySelector(\"type(~\"DYNAMO_DB_TABLE~\"), entityName.contains(~\"shared-signals-infra-user-config~\")\")))):splitBy(Operation):fold(max)):names:fold(auto)"
-      ]
-    },
-    {
-      "name": "SQS Age of Oldest Message & Number of Messages sent",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1292,
-        "left": 0,
-        "width": 684,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "queuename"
-          ],
-          "metricSelector": "cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(contains(queuename,shared-signals)))):splitBy(queuename):sum:sort(value(sum,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "queuename"
-          ],
-          "metricSelector": "cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(contains(queuename,shared-signals)))):splitBy(queuename):sum:sort(value(sum,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "TABLE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE",
-          "showLabels": false
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "ApproximateAgeOfOldestMessage",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "A:dt.entity.custom_device.name",
-            "B:dt.entity.custom_device.name",
-            "A:queuename.name",
-            "B:queuename.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(contains(queuename,shared-signals)))):splitBy(queuename):sum:sort(value(sum,descending)):limit(20)):names,(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(contains(queuename,shared-signals)))):splitBy(queuename):sum:sort(value(sum,descending)):limit(20)):names"
-      ]
-    },
-    {
-      "name": "SQS Dynamic Queues",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1292,
-        "left": 684,
-        "width": 646,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "queuename"
-          ],
-          "metricSelector": "cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(contains(queuename,txma-dynamic-sqs-set-push-queue)))):splitBy(queuename):sum:sort(value(sum,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "queuename"
-          ],
-          "metricSelector": "cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(contains(queuename,txma-dynamic-sqs-set-push-queue)))):splitBy(queuename):sum:sort(value(sum,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "TABLE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Age - Queue"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE",
-          "showLabels": false
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "ApproximateAgeOfOldestMessage",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "A:dt.entity.custom_device.name",
-            "B:dt.entity.custom_device.name",
-            "A:queuename.name",
-            "B:queuename.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(contains(queuename,txma-dynamic-sqs-set-push-queue)))):splitBy(queuename):sum:sort(value(sum,descending)):limit(20)):names,(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"561961276815\")),or(contains(queuename,txma-dynamic-sqs-set-push-queue)))):splitBy(queuename):sum:sort(value(sum,descending)):limit(20)):names"
-      ]
-    },
-    {
-      "name": "Throttled",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 684,
-        "left": 0,
-        "width": 684,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Table",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "dt.entity.aws_lambda_function"
-          ],
-          "metricSelector": "builtin:cloud.aws.lambda.throttlers:filter(and(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(AWS_LAMBDA_FUNCTION),entityName.contains(~\"shared-signals~\")\")),or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Environment:staging~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Environment:Staging~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(100)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "TABLE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Throttled"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "LambdaFunction throttled function invocation count",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "isThresholdBackgroundAppliedToCell": false,
-          "hiddenColumns": [
-            "A:dt.entity.service.name",
-            "A:dt.entity.aws_lambda_function.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(builtin:cloud.aws.lambda.throttlers:filter(and(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(AWS_LAMBDA_FUNCTION),entityName.contains(~\"shared-signals~\")\")),or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Environment:staging~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Environment:Staging~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(100)):names"
+        "resolution=null&((cloud.aws.lambda.errorsByAccountIdFunctionNameRegion:filter(and(not(contains(functionname,AWS)),not(contains(functionname,aws)),not(contains(functionname,deployment)),not(contains(functionname,Scan)),not(contains(functionname,vpc)),eq(\"aws.account.id\",\"561961276815\"))):splitBy(functionname))/(cloud.aws.lambda.invocationsByAccountIdFunctionNameRegion:filter(and(not(contains(functionname,AWS)),not(contains(functionname,aws)),not(contains(functionname,deployment)),not(contains(functionname,Scan)),not(contains(functionname,vpc)),eq(\"aws.account.id\",\"561961276815\"))):splitBy(functionname))*100):limit(100):names"
       ]
     }
   ]
