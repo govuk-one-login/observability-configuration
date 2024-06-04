@@ -55,6 +55,24 @@ variable "teamscloudfront1" {
       awsaccprod = "671922655609"
       awsaccint  = "110965769736"
     }
+    "team-j" = {
+      owneremail = "cri-lime-team@digital.cabinet-office.gov.uk"
+      teamname   = "Lime - Fraud-CRI"
+      awsaccprod = "378781532883"
+      awsaccint  = "867638632908"
+    }
+    "team-k" = {
+      owneremail = "cri-lime-team@digital.cabinet-office.gov.uk"
+      teamname   = "Lime - Passport-CRI"
+      awsaccprod = "194537773050"
+      awsaccint  = "142452478840"
+    }
+    "team-l" = {
+      owneremail = "cri-lime-team@digital.cabinet-office.gov.uk"
+      teamname   = "LIME - Driving-Licence-CRI"
+      awsaccprod = "161017977784"
+      awsaccint  = "372912692139"
+    }
   }
 }
 
