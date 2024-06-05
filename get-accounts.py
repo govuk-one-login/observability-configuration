@@ -30,6 +30,10 @@ production_configs = [
   {
     'ou': 'ou-xvhe-rjk6poda',
     'name': 'production'
+  },
+  {
+    'ou': 'ou-xvhe-k3zukq3l',
+    'name': 'production-tooling'
   }
 ]
 
