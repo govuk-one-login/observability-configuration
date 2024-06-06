@@ -226,35 +226,6 @@ resource "dynatrace_database_anomalies_v2" "database_anomalies" {
 }
 
 # Metric events
-resource "dynatrace_metric_events" "amazon_ecs_cpu_reservation_aws" {
-  count                      = local.is_production ? 0 : 1
-  enabled                    = true
-  event_entity_dimension_key = "dt.entity.custom_device"
-  summary                    = "Amazon ECS CPU reservation [AWS]"
-  event_template {
-    description = "The {metricname} value of {severity} was {alert_condition} your custom threshold of {threshold}."
-    davis_merge = true
-    event_type  = "RESOURCE"
-    title       = "Amazon ECS CPU reservation [AWS]"
-  }
-  model_properties {
-    type               = "STATIC_THRESHOLD"
-    alert_condition    = "ABOVE"
-    alert_on_no_data   = false
-    dealerting_samples = 10
-    samples            = 10
-    threshold          = 95
-    violating_samples  = 3
-  }
-  query_definition {
-    type        = "METRIC_KEY"
-    aggregation = "AVG"
-    metric_key  = "cloud.aws.ecs.containerinsights.cpuReservedByAccountIdClusterNameRegion"
-    entity_filter {
-    }
-  }
-}
-
 resource "dynatrace_metric_events" "amazon_ecs_cpu_utilization_by_service_name_aws" {
   count                      = local.is_production ? 0 : 1
   enabled                    = true
@@ -279,35 +250,6 @@ resource "dynatrace_metric_events" "amazon_ecs_cpu_utilization_by_service_name_a
     type        = "METRIC_KEY"
     aggregation = "AVG"
     metric_key  = "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName"
-    entity_filter {
-    }
-  }
-}
-
-resource "dynatrace_metric_events" "amazon_ecs_memory_reservation_aws" {
-  count                      = local.is_production ? 0 : 1
-  enabled                    = true
-  event_entity_dimension_key = "dt.entity.custom_device"
-  summary                    = "Amazon ECS Memory reservation [AWS]"
-  event_template {
-    description = "The {metricname} value of {severity} was {alert_condition} your custom threshold of {threshold}."
-    davis_merge = true
-    event_type  = "RESOURCE"
-    title       = "Amazon ECS Memory reservation [AWS]"
-  }
-  model_properties {
-    type               = "STATIC_THRESHOLD"
-    alert_condition    = "ABOVE"
-    alert_on_no_data   = false
-    dealerting_samples = 10
-    samples            = 10
-    threshold          = 95
-    violating_samples  = 3
-  }
-  query_definition {
-    type        = "METRIC_KEY"
-    aggregation = "AVG"
-    metric_key  = "cloud.aws.ecs.containerinsights.memoryReservedByAccountIdClusterNameRegion"
     entity_filter {
     }
   }
