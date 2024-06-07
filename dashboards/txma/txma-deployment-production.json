@@ -1,0 +1,3032 @@
+{
+  "metadata": {
+    "configurationVersions": [
+      7
+    ],
+    "clusterVersion": "1.293.111.20240607-142608"
+  },
+  "dashboardMetadata": {
+    "name": "TxMA - Deployment - Prod",
+    "shared": true,
+    "owner": "richa.misra@digital.cabinet-office.gov.uk",
+    "popularity": 2,
+    "hasConsistentColors": false
+  },
+  "tiles": [
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 38,
+        "width": 2964,
+        "height": 114
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "# TxMA Deployment Metrics\nThis dashboard displays deployment metrics for the TxMA team. The aim being to identify any areas of the pipeline that can be optimised."
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 152,
+        "left": 38,
+        "width": 1976,
+        "height": 114
+      },
+      "tileFilter": {
+        "timeframe": "-72h to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "markdown": "## Secure Pipelines Versions\n\n\nThe metrics in this section are all gathered via Secure Pipelines. They indicate what version of Secure Pipelines each of the pipeline stacks is currently using.\n\n----"
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 304,
+        "left": 38,
+        "width": 152,
+        "height": 380
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "markdown": "### Pipeline Versions\n\nVersions of the secure pipelines currently being used for deployments on INT and Prod"
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 722,
+        "left": 38,
+        "width": 4218,
+        "height": 114
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## Currently deployed applications\n\nThe versions of each application deployed to the Prod environments. The commit hash, and deployment time are shown for each application.\n\n----"
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 874,
+        "left": 38,
+        "width": 190,
+        "height": 646
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "### Applications"
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 1558,
+        "left": 38,
+        "width": 190,
+        "height": 1064
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "markdown": "### Infrastructure"
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 2660,
+        "left": 38,
+        "width": 190,
+        "height": 456
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "markdown": "### Config"
+    },
+    {
+      "name": "Audit",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1064,
+        "left": 266,
+        "width": 798,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"audit\"),eq(\"environment\",\"build\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,audit),eq(environment,production),eq(deployment-status,completed))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,audit),eq(environment,build))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "Shared Signals",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1216,
+        "left": 266,
+        "width": 798,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"shared-signals\"),eq(\"environment\",\"build\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,shared-signals),eq(environment,production),eq(deployment-status,completed))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,shared-signals),eq(environment,build))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "TICF Query Results",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1368,
+        "left": 266,
+        "width": 798,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"txma-query-results\"),eq(\"environment\",\"build\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-query-results),eq(environment,production),eq(deployment-status,completed))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-query-results),eq(environment,build))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "Audit Infra",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1558,
+        "left": 266,
+        "width": 798,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"audit-infra\"),eq(\"environment\",\"build\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,audit-infra),eq(environment,production),eq(deployment-status,completed))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,audit-infra),eq(environment,build))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "Data Analysis Infra",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1710,
+        "left": 266,
+        "width": 798,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"txma-data-analysis\"),eq(\"environment\",\"build\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-data-analysis),eq(environment,production),eq(deployment-status,completed))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-data-analysis),eq(environment,build))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "Core Infra",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1862,
+        "left": 266,
+        "width": 798,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"txma-core-infra\"),eq(\"environment\",\"build\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-core-infra),eq(environment,production),eq(deployment-status,completed))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-core-infra),eq(environment,build))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "Query Results Config",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2964,
+        "left": 266,
+        "width": 798,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"txma-qr-config\"),eq(\"environment\",\"build\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-qr-config),eq(environment,production),eq(deployment-status,completed))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-qr-config),eq(environment,build))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "Event Processing Config",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2964,
+        "left": 1102,
+        "width": 874,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"event-processing-config\"),eq(\"environment\",\"build\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,event-processing-config),eq(environment,production),eq(deployment-status,completed))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,event-processing-config),eq(environment,build))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "Pipeline versions - Last 72 hours",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 304,
+        "left": 228,
+        "width": 760,
+        "height": 380
+      },
+      "tileFilter": {
+        "timeframe": "-72h to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Pipeline versions - last 7 days",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "pipeline-version"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(or(eq(\"account-id\",\"348043515437\"),eq(\"account-id\",\"451773080033\"),eq(\"account-id\",\"513850971016\"),eq(\"account-id\",\"552549398917\"),eq(\"account-id\",\"658501491317\"),eq(\"account-id\",\"423448613278\"),eq(\"account-id\",\"729485541398\"),eq(\"account-id\",\"064855880671\"),eq(\"account-id\",\"168392494868\"),eq(\"account-id\",\"561961276815\"))):splitBy(pipeline-version):sort(dimension(\"pipeline-version\",descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TOP_LIST",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:pipeline-version.name",
+            "A:sam-stack-name.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1M",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "COUNT"
+      },
+      "metricExpressions": [
+        "resolution=1M&(devplatform.sam-pipelines.deployment:filter(or(eq(account-id,\"348043515437\"),eq(account-id,\"451773080033\"),eq(account-id,\"513850971016\"),eq(account-id,\"552549398917\"),eq(account-id,\"658501491317\"),eq(account-id,\"423448613278\"),eq(account-id,\"729485541398\"),eq(account-id,\"064855880671\"),eq(account-id,\"168392494868\"),eq(account-id,\"561961276815\"))):splitBy(pipeline-version):sort(dimension(pipeline-version,descending))):limit(100):names:fold(count)"
+      ]
+    },
+    {
+      "name": "Event Processing",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 874,
+        "left": 266,
+        "width": 798,
+        "height": 190
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"event-processing\"),eq(\"environment\",\"production\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,event-processing),eq(environment,production),eq(deployment-status,completed))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:sam-stack-name.name",
+            "A:account-id.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,event-processing),eq(environment,production))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "TICF Integration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 874,
+        "left": 1102,
+        "width": 874,
+        "height": 190
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"txma-ticf-integration\"),eq(\"environment\",\"production\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-ticf-integration),eq(environment,production),eq(deployment-status,completed))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-ticf-integration),eq(environment,production))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "Event Self Serve",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1064,
+        "left": 1102,
+        "width": 874,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"event-processing-self\"),eq(\"environment\",\"production\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,event-processing-self),eq(environment,production),eq(deployment-status,completed))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,event-processing-self),eq(environment,production))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "Event Replay",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1216,
+        "left": 1102,
+        "width": 874,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"txma-event-replay\"),eq(\"environment\",\"production\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-event-replay),eq(environment,production),eq(deployment-status,completed))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-event-replay),eq(environment,production))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "RP Events",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1368,
+        "left": 1102,
+        "width": 874,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"rp-events\"),eq(\"environment\",\"production\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,rp-events),eq(environment,production),eq(deployment-status,completed))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,rp-events),eq(environment,production))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "Query Results Infra",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1558,
+        "left": 1102,
+        "width": 874,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"txma-qr-infra\"),eq(\"environment\",\"production\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-qr-infra),eq(environment,production),eq(deployment-status,completed))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-qr-infra),eq(environment,production))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "Shared Signals Infra",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1710,
+        "left": 1102,
+        "width": 874,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"shared-signals-infra\"),eq(\"environment\",\"production\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,shared-signals-infra),eq(environment,production),eq(deployment-status,completed))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,shared-signals-infra),eq(environment,production))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "RP Events Infra",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1862,
+        "left": 1102,
+        "width": 874,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"rp-events-infra\"),eq(\"environment\",\"production\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,rp-events-infra),eq(environment,production),eq(deployment-status,completed))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:build-success.name",
+            "A:deployment-status.name",
+            "A:duration.name",
+            "A:end-time-utc.name",
+            "A:environment.name",
+            "A:pipeline-version.name",
+            "A:repository.name",
+            "A:sam-stack-name.name",
+            "A:stage.name",
+            "A:start-time.name",
+            "A:start-time-utc.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,rp-events-infra),eq(environment,production))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "DNS Records Query Results",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2014,
+        "left": 1102,
+        "width": 874,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"txma-qr-dns-records\"),eq(\"environment\",\"production\"),eq(\"account-id\",\"513850971016\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-qr-dns-records),eq(environment,production),eq(account-id,\"939155637197\"))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-qr-dns-records),eq(environment,production),eq(account-id,\"513850971016\"))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "DNS Records Shared Signals",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2166,
+        "left": 1102,
+        "width": 874,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"ssf-dns-records\"),eq(\"environment\",\"production\"),eq(\"account-id\",\"658501491317\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,ssf-dns-records),eq(environment,production),eq(account-id,\"201941283288\"))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,ssf-dns-records),eq(environment,production),eq(account-id,\"658501491317\"))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "DNS Records Audit",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2318,
+        "left": 1102,
+        "width": 874,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"txma-audit-dns-records\"),eq(\"environment\",\"production\"),eq(\"account-id\",\"348043515437\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-audit-dns-records),eq(environment,production),eq(account-id,\"761029721660\"))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-audit-dns-records),eq(environment,production),eq(account-id,\"348043515437\"))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "DNS Delegation",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2470,
+        "left": 266,
+        "width": 798,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"txma-dns-delegation\"),eq(\"environment\",\"production\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-dns-delegation),eq(environment,production),eq(deployment-status,completed))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-dns-delegation),eq(environment,production))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "DNS Zones Audit",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2318,
+        "left": 266,
+        "width": 798,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"dns-zones\"),eq(\"environment\",\"production\"),eq(\"account-id\",\"348043515437\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,dns-zones),eq(environment,production),eq(account-id,\"761029721660\"))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,dns-zones),eq(environment,production),eq(account-id,\"348043515437\"))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "DNS Zones Shared Signals",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2166,
+        "left": 266,
+        "width": 798,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"dns-zones\"),eq(\"environment\",\"production\"),eq(\"account-id\",\"658501491317\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,dns-zones),eq(environment,production),eq(account-id,\"201941283288\"))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,dns-zones),eq(environment,production),eq(account-id,\"658501491317\"))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "DNS Zones Query Results",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2014,
+        "left": 266,
+        "width": 798,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"dns-zones\"),eq(\"environment\",\"production\"),eq(\"account-id\",\"513850971016\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-audit-dns-records),eq(environment,production),eq(account-id,\"761029721660\"))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,dns-zones),eq(environment,production),eq(account-id,\"513850971016\"))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "Audit Config",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2660,
+        "left": 266,
+        "width": 798,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"audit-config\"),eq(\"environment\",\"production\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,audit-config),eq(environment,production),eq(deployment-status,completed))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,audit-config),eq(environment,production))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "Shared Signals Config",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2812,
+        "left": 266,
+        "width": 798,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"ssf-config\"),eq(\"environment\",\"production\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,ssf-config),eq(environment,production),eq(deployment-status,completed))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,ssf-config),eq(environment,production))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "RP Events Config",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2812,
+        "left": 1102,
+        "width": 874,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"rp-events-config\"),eq(\"environment\",\"production\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,rp-events-config),eq(environment,production),eq(deployment-status,completed))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,rp-events-config),eq(environment,production))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    },
+    {
+      "name": "Data Analysis Config",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2660,
+        "left": 1102,
+        "width": 874,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "account-id",
+            "sam-stack-name",
+            "commit-sha",
+            "start-time",
+            "end-time"
+          ],
+          "metricSelector": "devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"txma-d-analysis-config\"),eq(\"environment\",\"production\"))):splitBy(account-id,sam-stack-name, \"commit-sha\",start-time,\"end-time\"):sort(dimension(\"end-time\",descending)):limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-d-analysis-config),eq(environment,production),eq(deployment-status,completed))):splitBy(commit-sha,end-time):sort(dimension(end-time,descending)):limit(1)",
+            "A:commit-sha.name",
+            "A:end-time.name",
+            "A:account-id.name",
+            "A:sam-stack-name.name",
+            "A:start-time.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": false,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,txma-d-analysis-config),eq(environment,production))):splitBy(account-id,sam-stack-name,commit-sha,start-time,end-time):sort(dimension(end-time,descending)):limit(1)):names:last"
+      ]
+    }
+  ]
+}
