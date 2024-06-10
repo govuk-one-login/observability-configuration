@@ -118,6 +118,11 @@ module "txma-production" {
   path   = "txma/txma-production.json"
 }
 
+module "txma-deployment-production" {
+  source = "./modules/dashboard"
+  path   = "txma/txma-deployment-production.json"
+}
+
 module "account-interventions-service" {
   source = "./modules/dashboard"
   path   = "account-interventions-service/account_interventions_service_dashboard.json"
