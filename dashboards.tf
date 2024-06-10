@@ -381,6 +381,11 @@ module "orch_ais_integration" {
   source = "./modules/dashboard"
   path   = "orchestration/account-interventions-integration.json"
 }
+module "orch_pod_check_production" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "orchestration/pod-check-prod.json"
+}
 
 # Authentication
 module "auth_ais_production" {
