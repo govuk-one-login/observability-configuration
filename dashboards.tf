@@ -428,6 +428,11 @@ module "performance_application" {
   path   = "capacity/application-performance-review.json"
 }
 
+module "critical_conformance" {
+  source = "./modules/dashboard"
+  path   = "capacity/critical-conformance.json"
+}
+
 ### DAP ###
 
 module "dap_dashboard" {
