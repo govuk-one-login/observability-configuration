@@ -433,6 +433,11 @@ module "critical_conformance" {
   path   = "capacity/critical-conformance.json"
 }
 
+module "pab_conformance" {
+  source = "./modules/dashboard"
+  path   = "capacity/pab-conformance.json"
+}
+
 ### DAP ###
 
 module "dap_dashboard" {
