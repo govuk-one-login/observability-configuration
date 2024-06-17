@@ -1260,6 +1260,300 @@
       "metricExpressions": [
         "resolution=null&((cloud.aws.lambda.errorsByAccountIdFunctionNameRegion:filter(and(not(contains(functionname,AWS)),not(contains(functionname,aws)),not(contains(functionname,deployment)),not(contains(functionname,Scan)),not(contains(functionname,vpc)),eq(\"aws.account.id\",\"561961276815\"))):splitBy(functionname))/(cloud.aws.lambda.invocationsByAccountIdFunctionNameRegion:filter(and(not(contains(functionname,AWS)),not(contains(functionname,aws)),not(contains(functionname,deployment)),not(contains(functionname,Scan)),not(contains(functionname,vpc)),eq(\"aws.account.id\",\"561961276815\"))):splitBy(functionname))*100):limit(100):names"
       ]
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 1938,
+        "left": 0,
+        "width": 266,
+        "height": 494
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## RP performance metrics\n----------------------------\nDisplays SLI/SLO related metrics"
+    },
+    {
+      "name": "Number of events delivered within 5secs",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1938,
+        "left": 304,
+        "width": 532,
+        "height": 190
+      },
+      "tileFilter": {
+        "timeframe": "-24h to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region"
+          ],
+          "metricSelector": "cloud.aws.txma.rpevents.logs.rpeventsEventReceiverFunctionEventsDispatchedWithin5sByAccountIdRegion:filter(eq(\"aws.account.id\",168392494868)):count",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region"
+          ],
+          "metricSelector": "cloud.aws.txma.rpevents.logs.rpeventsEventReceiverFunctionEventsNotDispatchedWithin5sByAccountIdRegion:filter(eq(\"aws.account.id\",168392494868)):count",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "EventsDispatchedWithin5sByAccountIdRegion"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "EventsNotDispatchedWithin5s"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "value": 1,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "value": 0,
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "B",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "isThresholdBackgroundAppliedToCell": true,
+          "hiddenColumns": [
+            "A:aws.region",
+            "A:aws.account.id.name",
+            "A:aws.region.name",
+            "B:aws.account.id.name",
+            "B:aws.region.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.txma.rpevents.logs.rpeventsEventReceiverFunctionEventsDispatchedWithin5sByAccountIdRegion:filter(eq(\"aws.account.id\",\"168392494868\")):count):names,(cloud.aws.txma.rpevents.logs.rpeventsEventReceiverFunctionEventsNotDispatchedWithin5sByAccountIdRegion:filter(eq(\"aws.account.id\",\"168392494868\")):count):names"
+      ]
+    },
+    {
+      "name": "Response received for attempted deliveries",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2128,
+        "left": 304,
+        "width": 532,
+        "height": 190
+      },
+      "tileFilter": {
+        "timeframe": "-24h to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region"
+          ],
+          "metricSelector": "(cloud.aws.txma.sharedsignals.logs.sharedsignalsPushEventsToReceiverFunctionResponse202ByAccountIdRegion:filter(eq(\"aws.account.id\",561961276815)):count/\ncloud.aws.txma.sharedsignals.logs.sharedsignalsPushEventsToReceiverFunctionAttemptedDeliveryByAccountIdRegion:filter(eq(\"aws.account.id\",561961276815)):count) * 100",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region"
+          ],
+          "metricSelector": "(cloud.aws.txma.sharedsignals.logs.sharedsignalsPushEventsToReceiverFunctionResponseNot202ByAccountIdRegion:filter(eq(\"aws.account.id\",561961276815)):count/\ncloud.aws.txma.sharedsignals.logs.sharedsignalsPushEventsToReceiverFunctionAttemptedDeliveryByAccountIdRegion:filter(eq(\"aws.account.id\",561961276815)):count)*100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "%Response202"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "0,0",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "%ResponseNot202"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 1,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "value": 0,
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "B",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "isThresholdBackgroundAppliedToCell": true,
+          "hiddenColumns": [
+            "A:aws.region",
+            "A:aws.account.id.name",
+            "A:aws.region.name",
+            "B:aws.account.id.name",
+            "B:aws.region.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&((cloud.aws.txma.sharedsignals.logs.sharedsignalsPushEventsToReceiverFunctionResponse202ByAccountIdRegion:filter(eq(\"aws.account.id\",\"561961276815\")):count/cloud.aws.txma.sharedsignals.logs.sharedsignalsPushEventsToReceiverFunctionAttemptedDeliveryByAccountIdRegion:filter(eq(\"aws.account.id\",\"561961276815\")):count)*100):names,((cloud.aws.txma.sharedsignals.logs.sharedsignalsPushEventsToReceiverFunctionResponseNot202ByAccountIdRegion:filter(eq(\"aws.account.id\",\"561961276815\")):count/cloud.aws.txma.sharedsignals.logs.sharedsignalsPushEventsToReceiverFunctionAttemptedDeliveryByAccountIdRegion:filter(eq(\"aws.account.id\",\"561961276815\")):count)*100):names"
+      ]
     }
   ]
 }
