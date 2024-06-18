@@ -6,97 +6,12 @@
     "clusterVersion": "1.291.99.20240515-061005"
   },
   "dashboardMetadata": {
-    "name": "KIWI-CIC",
+    "name": "KIWI - CIC",
     "shared": true,
     "owner": "madan.karuppiah@digital.cabinet-office.gov.uk",
     "hasConsistentColors": false
   },
   "tiles": [
-    {
-      "name": "Frontend Request",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 380,
-        "left": 1026,
-        "width": 304,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "dt.entity.service"
-          ],
-          "metricSelector": "builtin:service.requestCount.total:filter(and(or(in(\"dt.entity.service\",entitySelector(\"type(service),entityName.equals(~\"di-cic-front~\")\"))))):splitBy(\"dt.entity.service\"):sort(value(auto,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "STACKED_COLUMN"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(builtin:service.requestCount.total:filter(and(or(in(\"dt.entity.service\",entitySelector(\"type(service),entityName.equals(~\"di-cic-front~\")\"))))):splitBy(\"dt.entity.service\"):sort(value(auto,descending)):limit(20)):limit(100):names",
-        "resolution=null&(builtin:service.requestCount.total:filter(and(or(in(\"dt.entity.service\",entitySelector(\"type(service),entityName.equals(~\"di-cic-front~\")\"))))):splitBy(\"dt.entity.service\"):sort(value(auto,descending)):limit(20))"
-      ]
-    },
     {
       "name": "CIC Lambda Function Invocations",
       "tileType": "DATA_EXPLORER",
@@ -132,7 +47,17 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
+                    "value": "CIC-Session-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  },
+                  {
                     "value": "Access-Token-cic-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  },
+                  {
+                    "value": "User-Info-cic-cri-api",
                     "evaluator": "IN",
                     "matchExactly": true
                   },
@@ -142,7 +67,7 @@
                     "matchExactly": true
                   },
                   {
-                    "value": "User-Info-cic-cri-api",
+                    "value": "JsonWebKeys-cic-cri-api",
                     "evaluator": "IN",
                     "matchExactly": true
                   },
@@ -153,16 +78,6 @@
                   },
                   {
                     "value": "CIC-SessionConfig-cic-cri-api",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "JsonWebKeys-cic-cri-api",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  },
-                  {
-                    "value": "CIC-Session-cic-cri-api",
                     "evaluator": "IN",
                     "matchExactly": true
                   }
@@ -259,7 +174,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-Authorization-cic-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-ClaimedIdentity-cic-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"JsonWebKeys-cic-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-Session-cic-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-SessionConfig-cic-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"User-Info-cic-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"Access-Token-cic-cri-api~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)):limit(100):names"
+        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-ClaimedIdentity-cic-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-Authorization-cic-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"JsonWebKeys-cic-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-Session-cic-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"User-Info-cic-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"Access-Token-cic-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"CIC-SessionConfig-cic-cri-api~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -465,493 +380,12 @@
       ]
     },
     {
-      "name": "Frontend 4xx Error",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 684,
-        "left": 1026,
-        "width": 304,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "dt.entity.service"
-          ],
-          "metricSelector": "builtin:service.errors.fourxx.count:filter(and(or(in(\"dt.entity.service\",entitySelector(\"type(service),entityName.equals(~\"di-cic-front~\")\"))))):splitBy(\"dt.entity.service\"):sort(value(auto,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "STACKED_COLUMN"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(builtin:service.errors.fourxx.count:filter(and(or(in(\"dt.entity.service\",entitySelector(\"type(service),entityName.equals(~\"di-cic-front~\")\"))))):splitBy(\"dt.entity.service\"):sort(value(auto,descending)):limit(20)):limit(100):names",
-        "resolution=null&(builtin:service.errors.fourxx.count:filter(and(or(in(\"dt.entity.service\",entitySelector(\"type(service),entityName.equals(~\"di-cic-front~\")\"))))):splitBy(\"dt.entity.service\"):sort(value(auto,descending)):limit(20))"
-      ]
-    },
-    {
-      "name": "Frontend Requests",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 380,
-        "left": 1330,
-        "width": 646,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "dt.entity.service"
-          ],
-          "metricSelector": "builtin:service.requestCount.total:filter(and(or(in(\"dt.entity.service\",entitySelector(\"type(service),entityName.equals(~\"di-cic-front~\")\")))))",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "STACKED_COLUMN",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "ROYALBLUE",
-              "seriesType": "STACKED_COLUMN"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(builtin:service.requestCount.total:filter(and(or(in(\"dt.entity.service\",entitySelector(\"type(service),entityName.equals(~\"di-cic-front~\")\")))))):limit(100):names"
-      ]
-    },
-    {
-      "name": "Frontend 4xx Errors",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 684,
-        "left": 1330,
-        "width": 646,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "dt.entity.service"
-          ],
-          "metricSelector": "builtin:service.errors.fourxx.rate:filter(and(or(in(\"dt.entity.service\",entitySelector(\"type(service),entityName.equals(~\"di-cic-front~\")\")))))",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "STACKED_COLUMN",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "YELLOW",
-              "seriesType": "STACKED_COLUMN"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "RIGHT",
-              "queryIds": [
-                "B"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(builtin:service.errors.fourxx.rate:filter(and(or(in(\"dt.entity.service\",entitySelector(\"type(service),entityName.equals(~\"di-cic-front~\")\")))))):limit(100):names"
-      ]
-    },
-    {
-      "name": "Frontend 5xx Error",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 988,
-        "left": 1026,
-        "width": 304,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "dt.entity.service"
-          ],
-          "metricSelector": "builtin:service.errors.fivexx.count:filter(and(or(in(\"dt.entity.service\",entitySelector(\"type(service),entityName.equals(~\"di-cic-front~\")\"))))):splitBy(\"dt.entity.service\"):sort(value(auto,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "ROYALBLUE",
-              "seriesType": "STACKED_COLUMN"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(builtin:service.errors.fivexx.count:filter(and(or(in(\"dt.entity.service\",entitySelector(\"type(service),entityName.equals(~\"di-cic-front~\")\"))))):splitBy(\"dt.entity.service\"):sort(value(auto,descending)):limit(20)):limit(100):names",
-        "resolution=null&(builtin:service.errors.fivexx.count:filter(and(or(in(\"dt.entity.service\",entitySelector(\"type(service),entityName.equals(~\"di-cic-front~\")\"))))):splitBy(\"dt.entity.service\"):sort(value(auto,descending)):limit(20))"
-      ]
-    },
-    {
-      "name": "Frontend 5xx Errors",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 988,
-        "left": 1330,
-        "width": 646,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "dt.entity.service"
-          ],
-          "metricSelector": "builtin:service.errors.fivexx.rate:filter(and(or(in(\"dt.entity.service\",entitySelector(\"type(service),entityName.equals(~\"di-cic-front~\")\")))))",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "STACKED_COLUMN",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "C:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "GREEN",
-              "seriesType": "STACKED_COLUMN"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "RIGHT",
-              "queryIds": [
-                "C"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(builtin:service.errors.fivexx.rate:filter(and(or(in(\"dt.entity.service\",entitySelector(\"type(service),entityName.equals(~\"di-cic-front~\")\")))))):limit(100):names"
-      ]
-    },
-    {
       "name": "Markdown",
       "tileType": "MARKDOWN",
       "configured": true,
       "bounds": {
-        "top": 0,
-        "left": 1292,
+        "top": 38,
+        "left": 836,
         "width": 342,
         "height": 38
       },
@@ -964,8 +398,8 @@
       "tileType": "MARKDOWN",
       "configured": true,
       "bounds": {
-        "top": 0,
-        "left": 646,
+        "top": 38,
+        "left": 418,
         "width": 342,
         "height": 38
       },
@@ -978,7 +412,7 @@
       "tileType": "MARKDOWN",
       "configured": true,
       "bounds": {
-        "top": 0,
+        "top": 38,
         "left": 0,
         "width": 342,
         "height": 38
@@ -986,6 +420,20 @@
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
       "markdown": "## [CIC Lambda Metrics](https://bhe21058.live.dynatrace.com/#dashboard;gtf=-30d%20to%20now;gf=all;id=f55b6535-4716-4b8c-ae70-b32a151e6942)\n"
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 38,
+        "left": 1216,
+        "width": 342,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## [CIC CloudFront Metrics](https://bhe21058.live.dynatrace.com/#dashboard;gtf=-30d%20to%20now;gf=all;id=4c3b573b-e6a8-4be2-acd8-0bba24e78566)\n"
     },
     {
       "name": "Backend Requests",
@@ -1003,31 +451,10 @@
       "queries": [
         {
           "id": "A",
-          "metric": "cloud.aws.apigateway.countByAccountIdApiNameRegionStage",
-          "spaceAggregation": "SUM",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "apiname",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "f2f-cri-api - F2F Credential Issuer Private API",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameRegion:filter(and(and(eq(apiname,\"cic-cri-api - CIC Credential Issuer Private API\")),and(eq(\"aws.region\",eu-west-2)))):splitBy():sum:sort(value(sum,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         }
@@ -1095,8 +522,188 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(cloud.aws.apigateway.countByAccountIdApiNameRegionStage:filter(and(or(eq(apiname,\"f2f-cri-api - F2F Credential Issuer Private API\")))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names",
-        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameRegionStage:filter(and(or(eq(apiname,\"f2f-cri-api - F2F Credential Issuer Private API\")))):splitBy():sum:sort(value(sum,descending)):limit(20))"
+        "resolution=Inf&(cloud.aws.apigateway.countByAccountIdApiNameRegion:filter(and(and(eq(apiname,\"cic-cri-api - CIC Credential Issuer Private API\")),and(eq(\"aws.region\",eu-west-2)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names",
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameRegion:filter(and(and(eq(apiname,\"cic-cri-api - CIC Credential Issuer Private API\")),and(eq(\"aws.region\",eu-west-2)))):splitBy():sum:sort(value(sum,descending)):limit(20))"
+      ]
+    },
+    {
+      "name": "Backend 4XX Error",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 684,
+        "left": 0,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameRegionStage\":filter(and(and(eq(apiname,\"cic-cri-api - CIC Credential Issuer Private API\")),and(eq(\"aws.region\",eu-west-2)))):splitBy():sort(value(sum,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_COLUMN"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameRegionStage\":filter(and(and(eq(apiname,\"cic-cri-api - CIC Credential Issuer Private API\")),and(eq(\"aws.region\",eu-west-2)))):splitBy():sort(value(sum,descending)):limit(20)):limit(100):names",
+        "resolution=null&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameRegionStage\":filter(and(and(eq(apiname,\"cic-cri-api - CIC Credential Issuer Private API\")),and(eq(\"aws.region\",eu-west-2)))):splitBy():sort(value(sum,descending)):limit(20))"
+      ]
+    },
+    {
+      "name": "Backend 5XX Errors",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 988,
+        "left": 0,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":filter(and(and(eq(apiname,\"cic-cri-api - CIC Credential Issuer Private API\")),and(eq(\"aws.region\",eu-west-2)))):splitBy():sum:sort(value(sum,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_COLUMN"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":filter(and(and(eq(apiname,\"cic-cri-api - CIC Credential Issuer Private API\")),and(eq(\"aws.region\",eu-west-2)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names",
+        "resolution=null&(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":filter(and(and(eq(apiname,\"cic-cri-api - CIC Credential Issuer Private API\")),and(eq(\"aws.region\",eu-west-2)))):splitBy():sum:sort(value(sum,descending)):limit(20))"
       ]
     },
     {
@@ -1115,17 +722,10 @@
       "queries": [
         {
           "id": "A",
-          "metric": "cloud.aws.apigateway.countByAccountIdApiNameRegionStage",
-          "spaceAggregation": "SUM",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameRegion:filter(and(and(eq(apiname,\"cic-cri-api - CIC Credential Issuer Private API\")),and(eq(\"aws.region\",eu-west-2)))):splitBy():sum:sort(value(auto,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         }
@@ -1200,118 +800,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameRegionStage:splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
-      "name": "Backend 4XX Error",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 684,
-        "left": 0,
-        "width": 304,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "cloud.aws.apigateway.4xxErrorByAccountIdApiNameRegionStage",
-          "spaceAggregation": "SUM",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "apiname",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "cic-cri-api - CIC Credential Issuer Private API",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "GREEN",
-              "seriesType": "STACKED_COLUMN"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameRegionStage\":filter(and(or(eq(apiname,\"cic-cri-api - CIC Credential Issuer Private API\")))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names",
-        "resolution=null&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameRegionStage\":filter(and(or(eq(apiname,\"cic-cri-api - CIC Credential Issuer Private API\")))):splitBy():sum:sort(value(sum,descending)):limit(20))"
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameRegion:filter(and(and(eq(apiname,\"cic-cri-api - CIC Credential Issuer Private API\")),and(eq(\"aws.region\",eu-west-2)))):splitBy():sum:sort(value(auto,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -1330,31 +819,10 @@
       "queries": [
         {
           "id": "B",
-          "metric": "cloud.aws.apigateway.4xxErrorByAccountIdApiNameRegion",
-          "spaceAggregation": "SUM",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "apiname",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "cic-cri-api - CIC Credential Issuer Private API",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameRegionStage\":filter(and(and(eq(apiname,\"cic-cri-api - CIC Credential Issuer Private API\")),and(eq(\"aws.region\",eu-west-2)))):splitBy():sort(value(auto,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         }
@@ -1429,118 +897,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameRegion\":filter(and(or(eq(apiname,\"cic-cri-api - CIC Credential Issuer Private API\")))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
-      "name": "Backend 5XX Errors",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 988,
-        "left": 0,
-        "width": 304,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "cloud.aws.apigateway.5xxErrorByAccountIdApiNameRegion",
-          "spaceAggregation": "SUM",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "apiname",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "cic-cri-api - CIC Credential Issuer Private API",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "GREEN",
-              "seriesType": "STACKED_COLUMN"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":filter(and(or(eq(apiname,\"cic-cri-api - CIC Credential Issuer Private API\")))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names",
-        "resolution=null&(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":filter(and(or(eq(apiname,\"cic-cri-api - CIC Credential Issuer Private API\")))):splitBy():sum:sort(value(sum,descending)):limit(20))"
+        "resolution=null&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameRegionStage\":filter(and(and(eq(apiname,\"cic-cri-api - CIC Credential Issuer Private API\")),and(eq(\"aws.region\",eu-west-2)))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -1559,31 +916,10 @@
       "queries": [
         {
           "id": "C",
-          "metric": "cloud.aws.apigateway.5xxErrorByAccountIdApiNameRegion",
-          "spaceAggregation": "SUM",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "apiname",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "cic-cri-api - CIC Credential Issuer Private API",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegionStage\":filter(and(and(eq(apiname,\"cic-cri-api - CIC Credential Issuer Private API\")),and(eq(\"aws.region\",eu-west-2)))):splitBy():sum:sort(value(auto,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         }
@@ -1658,131 +994,15 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":filter(and(or(eq(apiname,\"cic-cri-api - CIC Credential Issuer Private API\")))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegionStage\":filter(and(and(eq(apiname,\"cic-cri-api - CIC Credential Issuer Private API\")),and(eq(\"aws.region\",eu-west-2)))):splitBy():sum:sort(value(auto,descending)):limit(20)):limit(100):names"
       ]
     },
     {
-      "name": "CPU Utilisation",
+      "name": "Frontend Request",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1292,
-        "left": 0,
-        "width": 304,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "cloud.aws.ecs.containerinsights.cpuUtilizedByAccountIdClusterNameRegionServiceName",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "servicename",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "cic-cri-front-CICFrontEcsService-G7NkOt9sXyBp",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "STACKED_AREA",
-              "alias": "CPU Utilisation by Service"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "CpuUtilized (by ServiceName)",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "A:ServiceName.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.ecs.containerinsights.cpuUtilizedByAccountIdClusterNameRegionServiceName:filter(and(or(eq(servicename,cic-cri-front-CICFrontEcsService-G7NkOt9sXyBp)))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names",
-        "resolution=null&(cloud.aws.ecs.containerinsights.cpuUtilizedByAccountIdClusterNameRegionServiceName:filter(and(or(eq(servicename,cic-cri-front-CICFrontEcsService-G7NkOt9sXyBp)))):splitBy():sort(value(auto,descending)):limit(20))"
-      ]
-    },
-    {
-      "name": "Memory Utilisation",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1292,
+        "top": 380,
         "left": 1026,
         "width": 304,
         "height": 304
@@ -1793,31 +1013,10 @@
       "queries": [
         {
           "id": "A",
-          "metric": "cloud.aws.ecs.containerinsights.memoryUtilizedByAccountIdClusterNameRegionServiceName",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "servicename",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "cic-cri-front-CICFrontEcsService-G7NkOt9sXyBp",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdRegion:filter(and(and(eq(\"aws.account.id\",\"270790667266\")),and(eq(apiid,y55apwo050)),and(eq(\"aws.region\",eu-west-2)))):splitBy():sum:sort(value(sum,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         }
@@ -1828,12 +1027,9 @@
         "rules": [
           {
             "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
             "properties": {
               "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "CPU Utilisation by Service"
+              "seriesType": "STACKED_COLUMN"
             },
             "seriesOverrides": []
           }
@@ -1855,7 +1051,6 @@
         "thresholds": [
           {
             "axisTarget": "LEFT",
-            "columnId": "MemoryUtilization (by ServiceName)",
             "rules": [
               {
                 "color": "#7dc540"
@@ -1867,7 +1062,6 @@
                 "color": "#dc172a"
               }
             ],
-            "queryId": "A",
             "visible": true
           }
         ],
@@ -1887,16 +1081,196 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(cloud.aws.ecs.containerinsights.memoryUtilizedByAccountIdClusterNameRegionServiceName:filter(and(or(eq(servicename,cic-cri-front-CICFrontEcsService-G7NkOt9sXyBp)))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names",
-        "resolution=null&(cloud.aws.ecs.containerinsights.memoryUtilizedByAccountIdClusterNameRegionServiceName:filter(and(or(eq(servicename,cic-cri-front-CICFrontEcsService-G7NkOt9sXyBp)))):splitBy():sort(value(auto,descending)):limit(20))"
+        "resolution=Inf&(cloud.aws.apigateway.countByAccountIdApiIdRegion:filter(and(and(eq(\"aws.account.id\",\"270790667266\")),and(eq(apiid,y55apwo050)),and(eq(\"aws.region\",eu-west-2)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names",
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiIdRegion:filter(and(and(eq(\"aws.account.id\",\"270790667266\")),and(eq(apiid,y55apwo050)),and(eq(\"aws.region\",eu-west-2)))):splitBy():sum:sort(value(sum,descending)):limit(20))"
       ]
     },
     {
-      "name": "Memory Utilisation",
+      "name": "Frontend 4xx Error",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1292,
+        "top": 684,
+        "left": 1026,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.\"4xxByAccountIdApiIdRegionStage\":filter(and(and(eq(\"aws.account.id\",\"270790667266\")),and(eq(apiid,y55apwo050)),and(eq(\"aws.region\",eu-west-2)))):splitBy():sum:sort(value(sum,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "STACKED_COLUMN"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.apigateway.\"4xxByAccountIdApiIdRegionStage\":filter(and(and(eq(\"aws.account.id\",\"270790667266\")),and(eq(apiid,y55apwo050)),and(eq(\"aws.region\",eu-west-2)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names",
+        "resolution=null&(cloud.aws.apigateway.\"4xxByAccountIdApiIdRegionStage\":filter(and(and(eq(\"aws.account.id\",\"270790667266\")),and(eq(apiid,y55apwo050)),and(eq(\"aws.region\",eu-west-2)))):splitBy():sum:sort(value(sum,descending)):limit(20))"
+      ]
+    },
+    {
+      "name": "Frontend 5xx Error",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 988,
+        "left": 1026,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.\"5xxByAccountIdApiIdRegionStage\":filter(and(and(eq(\"aws.account.id\",\"270790667266\")),and(eq(apiid,y55apwo050)),and(eq(\"aws.region\",eu-west-2)))):splitBy():sum:sort(value(sum,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "ROYALBLUE",
+              "seriesType": "STACKED_COLUMN"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.apigateway.\"5xxByAccountIdApiIdRegionStage\":filter(and(and(eq(\"aws.account.id\",\"270790667266\")),and(eq(apiid,y55apwo050)),and(eq(\"aws.region\",eu-west-2)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names",
+        "resolution=null&(cloud.aws.apigateway.\"5xxByAccountIdApiIdRegionStage\":filter(and(and(eq(\"aws.account.id\",\"270790667266\")),and(eq(apiid,y55apwo050)),and(eq(\"aws.region\",eu-west-2)))):splitBy():sum:sort(value(sum,descending)):limit(20))"
+      ]
+    },
+    {
+      "name": "Frontend Requests",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 380,
         "left": 1330,
         "width": 646,
         "height": 304
@@ -1907,23 +1281,18 @@
       "queries": [
         {
           "id": "A",
-          "metric": "cloud.aws.ecs.containerinsights.memoryUtilizedByAccountIdClusterNameRegionServiceName",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdRegion:filter(and(and(eq(\"aws.account.id\",\"270790667266\")),and(eq(apiid,y55apwo050)),and(eq(\"aws.region\",eu-west-2)))):splitBy(apiid):count:sort(value(auto,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         }
       ],
       "visualConfig": {
-        "type": "GRAPH_CHART",
+        "type": "STACKED_COLUMN",
         "global": {},
         "rules": [
           {
@@ -1931,9 +1300,8 @@
             "unitTransform": "auto",
             "valueFormat": "auto",
             "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "CPU Utilisation by Service"
+              "color": "ROYALBLUE",
+              "seriesType": "STACKED_COLUMN"
             },
             "seriesOverrides": []
           }
@@ -1963,7 +1331,6 @@
         "thresholds": [
           {
             "axisTarget": "LEFT",
-            "columnId": "MemoryUtilization (by ServiceName)",
             "rules": [
               {
                 "color": "#7dc540"
@@ -1975,7 +1342,6 @@
                 "color": "#dc172a"
               }
             ],
-            "queryId": "A",
             "visible": true
           }
         ],
@@ -1995,7 +1361,205 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.ecs.containerinsights.memoryUtilizedByAccountIdClusterNameRegionServiceName:splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiIdRegion:filter(and(and(eq(\"aws.account.id\",\"270790667266\")),and(eq(apiid,y55apwo050)),and(eq(\"aws.region\",eu-west-2)))):splitBy(apiid):count:sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Frontend 4xx Errors",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 684,
+        "left": 1330,
+        "width": 646,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.\"4xxByAccountIdApiIdRegionStage\":filter(and(and(eq(\"aws.account.id\",\"270790667266\")),and(eq(apiid,y55apwo050)),and(eq(\"aws.region\",eu-west-2)))):splitBy(apiid):sort(value(auto,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_COLUMN",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "STACKED_COLUMN"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "RIGHT",
+              "queryIds": [
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.\"4xxByAccountIdApiIdRegionStage\":filter(and(and(eq(\"aws.account.id\",\"270790667266\")),and(eq(apiid,y55apwo050)),and(eq(\"aws.region\",eu-west-2)))):splitBy(apiid):sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Frontend 5xx Errors",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 988,
+        "left": 1330,
+        "width": 646,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.\"5xxByAccountIdApiIdRegionStage\":filter(and(and(eq(\"aws.account.id\",\"270790667266\")),and(eq(apiid,y55apwo050)),and(eq(\"aws.region\",eu-west-2)))):splitBy(apiid):sort(value(auto,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_COLUMN",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_COLUMN"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "RIGHT",
+              "queryIds": [
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.\"5xxByAccountIdApiIdRegionStage\":filter(and(and(eq(\"aws.account.id\",\"270790667266\")),and(eq(apiid,y55apwo050)),and(eq(\"aws.region\",eu-west-2)))):splitBy(apiid):sort(value(auto,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -2014,31 +1578,10 @@
       "queries": [
         {
           "id": "A",
-          "metric": "cloud.aws.ecs.containerinsights.cpuUtilizedByAccountIdClusterNameRegionServiceName",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "servicename",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "cic-cri-front-CICFrontEcsService-G7NkOt9sXyBp",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "cloud.aws.ecs.containerinsights.cpuUtilizedByAccountIdClusterNameRegionServiceName:filter(and(and(eq(servicename,cic-cri-front-CICFrontEcsService-G7NkOt9sXyBp)),and(eq(\"clustername\",\"cic-cri-front-CICFrontEcsCluster-yhlMfIJ8BlQh\")))):splitBy():sort(value(auto,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         }
@@ -2116,8 +1659,310 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.ecs.containerinsights.cpuUtilizedByAccountIdClusterNameRegionServiceName:filter(and(or(eq(servicename,cic-cri-front-CICFrontEcsService-G7NkOt9sXyBp)))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.ecs.containerinsights.cpuUtilizedByAccountIdClusterNameRegionServiceName:filter(and(and(eq(servicename,cic-cri-front-CICFrontEcsService-G7NkOt9sXyBp)),and(eq(clustername,cic-cri-front-CICFrontEcsCluster-yhlMfIJ8BlQh)))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
       ]
+    },
+    {
+      "name": "CPU Utilisation",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1292,
+        "left": 0,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.ecs.containerinsights.cpuUtilizedByAccountIdClusterNameRegionServiceName:filter(and(and(eq(servicename,cic-cri-front-CICFrontEcsService-G7NkOt9sXyBp)),and(eq(\"clustername\",\"cic-cri-front-CICFrontEcsCluster-yhlMfIJ8BlQh\")))):splitBy():sort(value(sum,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "STACKED_AREA",
+              "alias": "CPU Utilisation by Service"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "CpuUtilized (by ServiceName)",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:ServiceName.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.ecs.containerinsights.cpuUtilizedByAccountIdClusterNameRegionServiceName:filter(and(and(eq(servicename,cic-cri-front-CICFrontEcsService-G7NkOt9sXyBp)),and(eq(clustername,cic-cri-front-CICFrontEcsCluster-yhlMfIJ8BlQh)))):splitBy():sort(value(sum,descending)):limit(20)):limit(100):names",
+        "resolution=null&(cloud.aws.ecs.containerinsights.cpuUtilizedByAccountIdClusterNameRegionServiceName:filter(and(and(eq(servicename,cic-cri-front-CICFrontEcsService-G7NkOt9sXyBp)),and(eq(clustername,cic-cri-front-CICFrontEcsCluster-yhlMfIJ8BlQh)))):splitBy():sort(value(sum,descending)):limit(20))"
+      ]
+    },
+    {
+      "name": "Memory Utilisation",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1292,
+        "left": 1026,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(and(eq(servicename,cic-cri-front-CICFrontEcsService-G7NkOt9sXyBp)),and(eq(\"clustername\",\"cic-cri-front-CICFrontEcsCluster-yhlMfIJ8BlQh\")))):splitBy():sort(value(sum,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "CPU Utilisation by Service"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "MemoryUtilization (by ServiceName)",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(and(eq(servicename,cic-cri-front-CICFrontEcsService-G7NkOt9sXyBp)),and(eq(clustername,cic-cri-front-CICFrontEcsCluster-yhlMfIJ8BlQh)))):splitBy():sort(value(sum,descending)):limit(20)):limit(100):names",
+        "resolution=null&(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(and(eq(servicename,cic-cri-front-CICFrontEcsService-G7NkOt9sXyBp)),and(eq(clustername,cic-cri-front-CICFrontEcsCluster-yhlMfIJ8BlQh)))):splitBy():sort(value(sum,descending)):limit(20))"
+      ]
+    },
+    {
+      "name": "Memory Utilisation",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1292,
+        "left": 1330,
+        "width": 646,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(and(eq(servicename,cic-cri-front-CICFrontEcsService-G7NkOt9sXyBp)),and(eq(\"clustername\",\"cic-cri-front-CICFrontEcsCluster-yhlMfIJ8BlQh\")))):splitBy():sort(value(auto,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "CPU Utilisation by Service"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "MemoryUtilization (by ServiceName)",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(and(eq(servicename,cic-cri-front-CICFrontEcsService-G7NkOt9sXyBp)),and(eq(clustername,cic-cri-front-CICFrontEcsCluster-yhlMfIJ8BlQh)))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 38,
+        "left": 1596,
+        "width": 342,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## [CIC SQS Metrics](https://bhe21058.live.dynatrace.com/#dashboard;id=ff8fb43d-2e04-48e8-92a5-a58fdc5793e8;gtf=-30d%20to%20now;gf=all)\n"
     }
   ]
 }

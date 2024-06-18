@@ -228,12 +228,19 @@ module "kiwi_apigw_metrics_dashboard" {
   source = "./modules/dashboard"
   path   = "kiwi/apigw-metrics.json"
 }
-
 module "kiwi_ecs_metrics_dashboard" {
   source = "./modules/dashboard"
   path   = "kiwi/ecs-metrics.json"
 }
+module "kiwi_sqs_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "kiwi/sqs-metrics.json"
+}
 
+module "kiwi_traffic_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "kiwi/traffic-metrics.json"
+}
 module "kiwi_services_dashboard" {
   source = "./modules/dashboard"
   path   = "kiwi/services.json"
@@ -270,6 +277,17 @@ module "ipr_dashboard" {
 module "ipr_lambda_metrics_dashboard" {
   source = "./modules/dashboard"
   path   = "kiwi/ipr-lambda-metrics.json"
+}
+
+# BAV CRI
+module "bav_dashboard" {
+  source = "./modules/dashboard"
+  path   = "kiwi/bav-cri.json"
+}
+
+module "bav_lambda_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "kiwi/bav-lambda-metrics.json"
 }
 
 
