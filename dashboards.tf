@@ -198,6 +198,20 @@ module "core_services_dashboard" {
   path   = "core/services.json"
 }
 
+module "core_apigw_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "core/apigw-metrics.json"
+}
+module "core_sqs_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "core/sqs-metrics.json"
+}
+
+module "core_traffic_dashboard" {
+  source = "./modules/dashboard"
+  path   = "core/traffic.json"
+}
+
 
 ### SPOT ###
 
