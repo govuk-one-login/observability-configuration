@@ -494,7 +494,7 @@ resource "dynatrace_api_detection" "built_in_go_database" {
   }
 }
 
-# Terraform resource does not exist for Deep monitoring in version 1.49.1
+# Terraform resource does not exist for Deep monitoring in version 1.58.5
 # Not in use - URL-based sampling
 # Not in use - Span capturing
 

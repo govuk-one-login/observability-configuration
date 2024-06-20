@@ -141,7 +141,11 @@ resource "dynatrace_process_group_detection_flags" "process_group_detection_flag
 
 # Advanced detection rules
 resource "dynatrace_process_group_detection" "aws_ecs_family_ecsservicetaskdefinition" {
-  enabled      = true
+  enabled = true
+  process_detection {
+    property         = "AWS_ECS_FAMILY"
+    contained_string = "ECSServiceTaskDefinition"
+  }
   group_extraction {
     property        = "AWS_ECS_FAMILY"
     standalone_rule = true
@@ -149,10 +153,6 @@ resource "dynatrace_process_group_detection" "aws_ecs_family_ecsservicetaskdefin
       remove_ids = true
       to         = "-ECSServiceTaskDefinition"
     }
-  }
-  process_detection {
-    contained_string = "ECSServiceTaskDefinition"
-    property         = "AWS_ECS_FAMILY"
   }
 }
 
