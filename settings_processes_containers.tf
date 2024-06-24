@@ -138,6 +138,24 @@ resource "dynatrace_process_group_detection_flags" "process_group_detection_flag
 }
 
 # Not in use - Simple detection rules
+
+# Advanced detection rules
+resource "dynatrace_process_group_detection" "aws_ecs_family_ecsservicetaskdefinition" {
+  enabled = true
+  process_detection {
+    property         = "AWS_ECS_FAMILY"
+    contained_string = "ECSServiceTaskDefinition"
+  }
+  group_extraction {
+    property        = "AWS_ECS_FAMILY"
+    standalone_rule = true
+    delimiter {
+      remove_ids = true
+      to         = "-ECSServiceTaskDefinition"
+    }
+  }
+}
+
 # Not in use - Declarative process grouping
 
 # Container monitoring
