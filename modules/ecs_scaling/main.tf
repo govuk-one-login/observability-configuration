@@ -5,7 +5,7 @@ locals {
   }
 }
 
-resource "dynatrace_json_dashboard" "main" {
+resource "dynatrace_json_dashboard" "ecs_scaling" {
   contents = templatefile("../../dashboards/scaling/ecs-service.json.tpl", local.ecs_scaling)
 }
 
