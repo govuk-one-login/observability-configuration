@@ -14,7 +14,7 @@ data "dynatrace_iam_group" "all" {
 }
 
 resource "dynatrace_dashboard_sharing" "main" {
-  dashboard_id = dynatrace_json_dashboard.main.id
+  dashboard_id = dynatrace_json_dashboard.ecs_scaling.id
 
   enabled = true
 
