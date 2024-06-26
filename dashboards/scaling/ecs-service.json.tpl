@@ -38,7 +38,7 @@
           "splitBy": [
             "apiid"
           ],
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdRegion:filter(and(or(eq(apiid,${var.apigwid})))):splitBy(apiid):count:sort(value(avg,descending)):limit(20)",
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdRegion:filter(and(or(eq(apiid,${apigwid})))):splitBy(apiid):count:sort(value(avg,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         },
@@ -47,7 +47,7 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "metricSelector": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(servicename,${var.service_name})))):splitBy():sort(value(auto,descending)):limit(20)",
+          "metricSelector": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(servicename,${service_name})))):splitBy():sort(value(auto,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         },
@@ -56,7 +56,7 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "metricSelector": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(servicename,${var.service_name})))):splitBy():sort(value(auto,descending)):limit(20)",
+          "metricSelector": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(servicename,${service_name})))):splitBy():sort(value(auto,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         }
@@ -174,7 +174,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiIdRegion:filter(and(or(eq(apiid,${var.apigwid})))):splitBy(apiid):count:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(servicename,${var.service_name})))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(servicename,${var.service_name})))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiIdRegion:filter(and(or(eq(apiid,${apigwid})))):splitBy(apiid):count:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(servicename,${service_name})))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:filter(and(or(eq(servicename,${service_name})))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -209,7 +209,7 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "${var.service_name}",
+                    "value": "${service_name}",
                     "evaluator": "EQ"
                   }
                 ]
@@ -238,7 +238,7 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "${var.service_name}",
+                    "value": "${service_name}",
                     "evaluator": "EQ"
                   }
                 ]
@@ -267,7 +267,7 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "${var.service_name}",
+                    "value": "${service_name}",
                     "evaluator": "EQ"
                   }
                 ]
@@ -364,7 +364,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.ecs.containerinsights.desiredTaskCountByAccountIdClusterNameRegionServiceName:filter(and(or(eq(servicename,${var.service_name})))):splitBy(servicename):sort(value(auto,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.containerinsights.runningTaskCountByAccountIdClusterNameRegionServiceName:filter(and(or(eq(servicename,${var.service_name})))):splitBy(servicename):sort(value(auto,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.containerinsights.pendingTaskCountByAccountIdClusterNameRegionServiceName:filter(and(or(eq(servicename,${var.service_name})))):splitBy(servicename):sort(value(auto,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.ecs.containerinsights.desiredTaskCountByAccountIdClusterNameRegionServiceName:filter(and(or(eq(servicename,${service_name})))):splitBy(servicename):sort(value(auto,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.containerinsights.runningTaskCountByAccountIdClusterNameRegionServiceName:filter(and(or(eq(servicename,${service_name})))):splitBy(servicename):sort(value(auto,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.containerinsights.pendingTaskCountByAccountIdClusterNameRegionServiceName:filter(and(or(eq(servicename,${service_name})))):splitBy(servicename):sort(value(auto,descending)):limit(20)):limit(100):names"
       ]
     },
     {

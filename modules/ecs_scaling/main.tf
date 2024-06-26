@@ -1,5 +1,12 @@
+locals {
+  ecs_scaling = {
+    apigwid      = var.apigwud
+    service_name = var.service_name
+  }
+}
+
 resource "dynatrace_json_dashboard" "main" {
-  contents = jsonencode(file("./dashboards/${var.path}"))
+  contents = templatefile(".dashboards/scaling/ecs-service.json.tpl", local.ecs_scaling)
 }
 
 data "dynatrace_iam_group" "all" {
