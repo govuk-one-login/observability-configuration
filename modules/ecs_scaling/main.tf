@@ -1,6 +1,6 @@
 locals {
   ecs_scaling = {
-    apigwid      = var.apigwud
+    apigwid      = var.apigwid
     service_name = var.service_name
   }
 }
