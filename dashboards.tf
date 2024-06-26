@@ -442,8 +442,7 @@ module "pab_conformance" {
 
 module "demo_node_app_build" {
   count  = local.is_production ? 0 : 1 # Only create in non_production
-  source = "./modules/ecs_scaling"
-  path   = "scaling/ecs-service.json"
+  source = "./dashboards/scaling/ecs_scaling"
 
   service_name = "node-app-ContainerService-ozXYrbF86Fau"
   apigwid      = "dcbmiq3klk"
