@@ -480,6 +480,37 @@ module "demo_node_app_build" {
   apigwid      = "dcbmiq3klk"
 }
 
+### Stub Scaling
+
+module "passport_stub_prod" {
+  count  = local.is_production ? 1 : 0 # Only create in production
+  source = "./dashboards/scaling/ecs_scaling"
+
+  service_name = "core-passport-stub-CoreStubCluster-NQ5KEj5sHd23"
+  apigwid      = "ekid21luu0"
+}
+
+module "dcmaw_stub_prod" {
+  count  = local.is_production ? 1 : 0 # Only create in production
+  source = "./dashboards/scaling/ecs_scaling"
+
+  service_name = "cri-dcmaw-stub-CriStubCluster-FHnsWcylw9xF"
+  apigwid      = "b8p08dkt2j"
+}
+
+module "orch_stub_prod" {
+  count  = local.is_production ? 1 : 0 # Only create in production
+  source = "./dashboards/scaling/ecs_scaling"
+
+  service_name = "orch-stub-OrchStubCluster-MX5ABExn4UBe"
+  apigwid      = "auybpw27y5"
+}
+
+
+
+
+
+
 ### DAP ###
 
 module "dap_dashboard" {
