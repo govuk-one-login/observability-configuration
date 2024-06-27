@@ -549,3 +549,10 @@ module "pipelines_dora_dashboard" {
   source = "./modules/dashboard"
   path   = "dev-platform/pipelines_dora_metrics_dashboard.json"
 }
+
+### ID Check ###
+
+module "standard_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "id-check/standard-metrics.json"
+}
