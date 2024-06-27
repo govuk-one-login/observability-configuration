@@ -21,8 +21,8 @@ module "web_application_staging" {
   source = "./modules/web_application"
 
   hostname       = "staging.account.gov.uk"
-  enabled        = false
-  opt_in_enabled = false
+  enabled        = true
+  opt_in_enabled = true
 }
 
 module "web_application_staging_subdomains" {
@@ -30,6 +30,6 @@ module "web_application_staging_subdomains" {
   source   = "./modules/web_application"
 
   hostname       = "${each.key}.staging.account.gov.uk"
-  enabled        = false
-  opt_in_enabled = false
+  enabled        = true
+  opt_in_enabled = true
 }
