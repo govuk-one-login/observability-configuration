@@ -470,6 +470,13 @@ module "pab_conformance" {
   path   = "capacity/pab-conformance.json"
 }
 
+
+module "auth_performance_application" {
+  count  = local.is_production ? 0 : 1 # Only create in non_production
+  source = "./modules/dashboard"
+  path   = "capacity/Auth-application-performance.json"
+}
+
 ### Scaling Dashboards ###
 
 module "demo_node_app_build" {
