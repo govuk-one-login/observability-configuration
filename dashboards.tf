@@ -414,6 +414,12 @@ module "orch_ais_integration" {
   path   = "orchestration/account-interventions-integration.json"
 }
 
+module "orch_authentication" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "orchestration/authentication.json"
+}
+
 module "orch_oidc_api_gateway_statistics" {
   count  = local.is_production ? 1 : 0
   source = "./modules/dashboard"
