@@ -1,0 +1,1730 @@
+{
+  "metadata": {
+    "configurationVersions": [
+      7
+    ],
+    "clusterVersion": "1.295.45.20240703-112037"
+  },
+  "dashboardMetadata": {
+    "name": "Orchestration - OIDC API Gateway Statistics",
+    "shared": true,
+    "owner": "isaac.au@digital.cabinet-office.gov.uk",
+    "popularity": 1,
+    "hasConsistentColors": false
+  },
+  "tiles": [
+    {
+      "name": "Overall Latency",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 0,
+        "width": 988,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "apiname",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "production-di-authentication-api",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(apiname,production-di-authentication-api)))):splitBy():percentile(95.0):sort(value(percentile(95.0),descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(apiname,production-di-authentication-api)))):splitBy():percentile(99.0):sort(value(percentile(99.0),descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Average"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "95th percentile"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "99th percentile"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m"
+      },
+      "metricExpressions": [
+        "resolution=1m&(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(apiname,production-di-authentication-api)))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(apiname,production-di-authentication-api)))):splitBy():percentile(95.0):sort(value(percentile(95.0),descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(apiname,production-di-authentication-api)))):splitBy():percentile(99.0):sort(value(percentile(99.0),descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "By Endpoint",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 304,
+        "left": 0,
+        "width": 304,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "/.well-known/openid-configuration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 342,
+        "left": 494,
+        "width": 494,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(stage,production)),or(eq(resource,\"/.well-known/openid-configuration\")),or(eq(apiname,production-di-authentication-api)))):splitBy():count:sort(value(avg,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(stage,production)),or(eq(apiname,production-di-authentication-api)),or(eq(resource,\"/.well-known/openid-configuration\")))):splitBy():avg:sort(value(avg,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(stage,production)),or(eq(resource,\"/.well-known/openid-configuration\")),or(eq(apiname,production-di-authentication-api)))):splitBy():percentile(95.0):sort(value(percentile(95.0),descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(stage,production)),or(eq(resource,\"/.well-known/openid-configuration\")),or(eq(apiname,production-di-authentication-api)))):splitBy():percentile(99.0):sort(value(percentile(99.0),descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "request"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "average latency"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "95th percentile latency"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "99th percentile latency"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "RIGHT",
+              "queryIds": [
+                "B"
+              ],
+              "defaultAxis": true
+            },
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "C",
+                "D"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(stage,production)),or(eq(resource,\"/.well-known/openid-configuration\")),or(eq(apiname,production-di-authentication-api)))):splitBy():count:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(stage,production)),or(eq(apiname,production-di-authentication-api)),or(eq(resource,\"/.well-known/openid-configuration\")))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(stage,production)),or(eq(resource,\"/.well-known/openid-configuration\")),or(eq(apiname,production-di-authentication-api)))):splitBy():percentile(95.0):sort(value(percentile(95.0),descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(stage,production)),or(eq(resource,\"/.well-known/openid-configuration\")),or(eq(apiname,production-di-authentication-api)))):splitBy():percentile(99.0):sort(value(percentile(99.0),descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "/auth-code",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 646,
+        "left": 0,
+        "width": 494,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(stage,production)),or(eq(apiname,production-di-authentication-api)),or(eq(resource,\"/auth-code\")))):splitBy():count:sort(value(avg,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(stage,production)),or(eq(apiname,production-di-authentication-api)),or(eq(resource,\"/auth-code\")))):splitBy():avg:sort(value(avg,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(stage,production)),or(eq(resource,\"/auth-code\")),or(eq(apiname,production-di-authentication-api)))):splitBy():percentile(95.0):sort(value(percentile(95.0),descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(stage,production)),or(eq(resource,\"/auth-code\")),or(eq(apiname,production-di-authentication-api)))):splitBy():percentile(99.0):sort(value(percentile(99.0),descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "request"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "average latency"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "95th percentile latency"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "99th percentile latency"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "RIGHT",
+              "queryIds": [
+                "B"
+              ],
+              "defaultAxis": true
+            },
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "C",
+                "D"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(stage,production)),or(eq(apiname,production-di-authentication-api)),or(eq(resource,\"/auth-code\")))):splitBy():count:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(stage,production)),or(eq(apiname,production-di-authentication-api)),or(eq(resource,\"/auth-code\")))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(stage,production)),or(eq(resource,\"/auth-code\")),or(eq(apiname,production-di-authentication-api)))):splitBy():percentile(95.0):sort(value(percentile(95.0),descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(or(eq(stage,production)),or(eq(resource,\"/auth-code\")),or(eq(apiname,production-di-authentication-api)))):splitBy():percentile(99.0):sort(value(percentile(99.0),descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "/.well-known/jwks.json",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 342,
+        "left": 0,
+        "width": 494,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(apiname,production-di-authentication-api)),and(eq(resource,\"/.well-known/jwks.json\"))):splitBy():count:sort(value(avg,descending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),or(eq(resource,\"/.well-known/jwks.json\")),or(eq(apiname,production-di-authentication-api))):splitBy():avg:sort(value(avg,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/.well-known/jwks.json\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(95.0):sort(value(percentile(95.0),descending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/.well-known/jwks.json\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(99.0):sort(value(percentile(99.0),descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "request"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "average latency"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "95th percentile latency"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "99th percentile latency"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "RIGHT",
+              "queryIds": [
+                "B"
+              ],
+              "defaultAxis": true
+            },
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "C",
+                "D"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(apiname,production-di-authentication-api)),and(eq(resource,\"/.well-known/jwks.json\"))):splitBy():count:sort(value(avg,descending))):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),or(eq(resource,\"/.well-known/jwks.json\")),or(eq(apiname,production-di-authentication-api))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/.well-known/jwks.json\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(95.0):sort(value(percentile(95.0),descending))):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/.well-known/jwks.json\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(99.0):sort(value(percentile(99.0),descending))):limit(100):names"
+      ]
+    },
+    {
+      "name": "/authorize",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 646,
+        "left": 494,
+        "width": 494,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(apiname,production-di-authentication-api)),and(eq(resource,\"/authorize\"))):splitBy():count:sort(value(avg,descending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),or(eq(resource,\"/authorize\")),or(eq(apiname,production-di-authentication-api))):splitBy():avg:sort(value(avg,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/authorize\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(95.0):sort(value(percentile(95.0),descending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/authorize\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(99.0):sort(value(percentile(99.0),descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "request"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "average latency"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "95th percentile latency"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "99th percentile latency"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "RIGHT",
+              "queryIds": [
+                "B"
+              ],
+              "defaultAxis": true
+            },
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "C",
+                "D"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(apiname,production-di-authentication-api)),and(eq(resource,\"/authorize\"))):splitBy():count:sort(value(avg,descending))):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),or(eq(resource,\"/authorize\")),or(eq(apiname,production-di-authentication-api))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/authorize\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(95.0):sort(value(percentile(95.0),descending))):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/authorize\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(99.0):sort(value(percentile(99.0),descending))):limit(100):names"
+      ]
+    },
+    {
+      "name": "/ipv-callback",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 950,
+        "left": 0,
+        "width": 494,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(apiname,production-di-authentication-api)),and(eq(resource,\"/ipv-callback\"))):splitBy():count:sort(value(avg,descending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),or(eq(resource,\"/ipv-callback\")),or(eq(apiname,production-di-authentication-api))):splitBy():avg:sort(value(avg,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/ipv-callback\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(95.0):sort(value(percentile(95.0),descending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/ipv-callback\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(99.0):sort(value(percentile(99.0),descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "request"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "average latency"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "95th percentile latency"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "99th percentile latency"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "RIGHT",
+              "queryIds": [
+                "B"
+              ],
+              "defaultAxis": true
+            },
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "C",
+                "D"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(apiname,production-di-authentication-api)),and(eq(resource,\"/ipv-callback\"))):splitBy():count:sort(value(avg,descending))):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),or(eq(resource,\"/ipv-callback\")),or(eq(apiname,production-di-authentication-api))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/ipv-callback\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(95.0):sort(value(percentile(95.0),descending))):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/ipv-callback\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(99.0):sort(value(percentile(99.0),descending))):limit(100):names"
+      ]
+    },
+    {
+      "name": "/token",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1254,
+        "left": 0,
+        "width": 494,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(apiname,production-di-authentication-api)),and(eq(resource,\"/token\"))):splitBy():count:sort(value(avg,descending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),or(eq(resource,\"/token\")),or(eq(apiname,production-di-authentication-api))):splitBy():avg:sort(value(avg,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/token\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(95.0):sort(value(percentile(95.0),descending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/token\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(99.0):sort(value(percentile(99.0),descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "request"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "average latency"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "95th percentile latency"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "99th percentile latency"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "RIGHT",
+              "queryIds": [
+                "B"
+              ],
+              "defaultAxis": true
+            },
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "C",
+                "D"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(apiname,production-di-authentication-api)),and(eq(resource,\"/token\"))):splitBy():count:sort(value(avg,descending))):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),or(eq(resource,\"/token\")),or(eq(apiname,production-di-authentication-api))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/token\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(95.0):sort(value(percentile(95.0),descending))):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/token\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(99.0):sort(value(percentile(99.0),descending))):limit(100):names"
+      ]
+    },
+    {
+      "name": "/trustmark",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1254,
+        "left": 494,
+        "width": 494,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(apiname,production-di-authentication-api)),and(eq(resource,\"/trustmark\"))):splitBy():count:sort(value(avg,descending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),or(eq(resource,\"/trustmark\")),or(eq(apiname,production-di-authentication-api))):splitBy():avg:sort(value(avg,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/trustmark\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(95.0):sort(value(percentile(95.0),descending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/trustmark\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(99.0):sort(value(percentile(99.0),descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "request"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "average latency"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "95th percentile latency"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "99th percentile latency"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "RIGHT",
+              "queryIds": [
+                "B"
+              ],
+              "defaultAxis": true
+            },
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "C",
+                "D"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(apiname,production-di-authentication-api)),and(eq(resource,\"/trustmark\"))):splitBy():count:sort(value(avg,descending))):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),or(eq(resource,\"/trustmark\")),or(eq(apiname,production-di-authentication-api))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/trustmark\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(95.0):sort(value(percentile(95.0),descending))):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/trustmark\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(99.0):sort(value(percentile(99.0),descending))):limit(100):names"
+      ]
+    },
+    {
+      "name": "/userinfo",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1558,
+        "left": 0,
+        "width": 494,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(apiname,production-di-authentication-api)),and(eq(resource,\"/userinfo\"))):splitBy():count:sort(value(avg,descending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),or(eq(resource,\"/userinfo\")),or(eq(apiname,production-di-authentication-api))):splitBy():avg:sort(value(avg,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/userinfo\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(95.0):sort(value(percentile(95.0),descending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/userinfo\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(99.0):sort(value(percentile(99.0),descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "request"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "average latency"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "95th percentile latency"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "99th percentile latency"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "RIGHT",
+              "queryIds": [
+                "B"
+              ],
+              "defaultAxis": true
+            },
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "C",
+                "D"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(apiname,production-di-authentication-api)),and(eq(resource,\"/userinfo\"))):splitBy():count:sort(value(avg,descending))):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),or(eq(resource,\"/userinfo\")),or(eq(apiname,production-di-authentication-api))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/userinfo\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(95.0):sort(value(percentile(95.0),descending))):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/userinfo\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(99.0):sort(value(percentile(99.0),descending))):limit(100):names"
+      ]
+    },
+    {
+      "name": "/logout",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 950,
+        "left": 494,
+        "width": 494,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(apiname,production-di-authentication-api)),and(eq(resource,\"/logout\"))):splitBy():count:sort(value(avg,descending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),or(eq(resource,\"/logout\")),or(eq(apiname,production-di-authentication-api))):splitBy():avg:sort(value(avg,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/logout\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(95.0):sort(value(percentile(95.0),descending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/logout\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(99.0):sort(value(percentile(99.0),descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "request"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "average latency"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "95th percentile latency"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "99th percentile latency"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "RIGHT",
+              "queryIds": [
+                "B"
+              ],
+              "defaultAxis": true
+            },
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "C",
+                "D"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(apiname,production-di-authentication-api)),and(eq(resource,\"/logout\"))):splitBy():count:sort(value(avg,descending))):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),or(eq(resource,\"/logout\")),or(eq(apiname,production-di-authentication-api))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/logout\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(95.0):sort(value(percentile(95.0),descending))):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(resource,\"/logout\")),and(eq(apiname,production-di-authentication-api))):splitBy():percentile(99.0):sort(value(percentile(99.0),descending))):limit(100):names"
+      ]
+    }
+  ]
+}
