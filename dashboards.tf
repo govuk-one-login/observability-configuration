@@ -420,6 +420,12 @@ module "orch_oidc_api_gateway_statistics" {
   path   = "orchestration/oidc-api-gateway-statistics.json"
 }
 
+module "orch_dcmaw_journeys" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "orchestration/dcmaw-journeys.json"
+}
+
 # Authentication
 module "auth_ais_production" {
   count  = local.is_production ? 1 : 0
