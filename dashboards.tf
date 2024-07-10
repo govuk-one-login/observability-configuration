@@ -581,3 +581,13 @@ module "standard_metrics_dashboard" {
   source = "./modules/dashboard"
   path   = "id-check/standard-metrics.json"
 }
+
+module "deployment_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "id-check/deployment-metrics.json"
+}
+
+module "service_quotas_dashboard" {
+  source = "./modules/dashboard"
+  path   = "id-check/service-quotas.json"
+}
