@@ -5,7 +5,6 @@
     ],
     "clusterVersion": "1.295.55.20240710-172154"
   },
-  "id": "d17c4707-334d-40c1-a3a7-32e83f840fe3",
   "dashboardMetadata": {
     "name": "Service Health Overview",
     "shared": false,
@@ -549,15 +548,15 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "production-orchestration-redirect-lambda",
-                    "evaluator": "EQ"
-                  },
-                  {
                     "value": "production-processing-identity-lambda",
                     "evaluator": "EQ"
                   },
                   {
                     "value": "production-ipv-callback-lambda",
+                    "evaluator": "EQ"
+                  },
+                  {
+                    "value": "production-orchestration-redirect-lambda",
                     "evaluator": "EQ"
                   }
                 ]
@@ -2565,129 +2564,6 @@
       ]
     },
     {
-      "name": "basic DBS check",
-      "nameSize": "small",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 342,
-        "left": 228,
-        "width": 228,
-        "height": 228
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Sign Ins By RP",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType",
-          "spaceAggregation": "SUM",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "clientname"
-          ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "clientname",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "basic DBS check",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "none",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": true
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "1m",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "SUM"
-      },
-      "metricExpressions": [
-        "resolution=1m&(cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(and(or(eq(clientname,\"basic DBS check\")))):splitBy(clientname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
       "name": "Apprenticeship Service",
       "nameSize": "small",
       "tileType": "DATA_EXPLORER",
@@ -2736,7 +2612,7 @@
         }
       ],
       "visualConfig": {
-        "type": "GRAPH_CHART",
+        "type": "STACKED_COLUMN",
         "global": {},
         "rules": [
           {
@@ -2745,7 +2621,7 @@
             "valueFormat": "none",
             "properties": {
               "color": "DEFAULT",
-              "seriesType": "LINE"
+              "seriesType": "STACKED_COLUMN"
             },
             "seriesOverrides": []
           }
@@ -2811,6 +2687,129 @@
       ]
     },
     {
+      "name": "basic DBS check",
+      "nameSize": "small",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 342,
+        "left": 228,
+        "width": 228,
+        "height": 228
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Sign Ins By RP",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType",
+          "spaceAggregation": "SUM",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "clientname"
+          ],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "clientname",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "basic DBS check",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_COLUMN",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "none",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "STACKED_COLUMN"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      },
+      "metricExpressions": [
+        "resolution=1m&(cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(and(or(eq(clientname,\"basic DBS check\")))):splitBy(clientname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
       "name": "production-account-management",
       "nameSize": "small",
       "tileType": "DATA_EXPLORER",
@@ -2859,7 +2858,7 @@
         }
       ],
       "visualConfig": {
-        "type": "GRAPH_CHART",
+        "type": "STACKED_COLUMN",
         "global": {},
         "rules": [
           {
@@ -2868,7 +2867,7 @@
             "valueFormat": "none",
             "properties": {
               "color": "DEFAULT",
-              "seriesType": "LINE"
+              "seriesType": "STACKED_COLUMN"
             },
             "seriesOverrides": []
           }
@@ -2982,7 +2981,7 @@
         }
       ],
       "visualConfig": {
-        "type": "GRAPH_CHART",
+        "type": "STACKED_COLUMN",
         "global": {},
         "rules": [
           {
@@ -2991,7 +2990,7 @@
             "valueFormat": "none",
             "properties": {
               "color": "DEFAULT",
-              "seriesType": "LINE"
+              "seriesType": "STACKED_COLUMN"
             },
             "seriesOverrides": []
           }
@@ -3105,7 +3104,7 @@
         }
       ],
       "visualConfig": {
-        "type": "GRAPH_CHART",
+        "type": "STACKED_COLUMN",
         "global": {},
         "rules": [
           {
@@ -3114,7 +3113,7 @@
             "valueFormat": "none",
             "properties": {
               "color": "DEFAULT",
-              "seriesType": "LINE"
+              "seriesType": "STACKED_COLUMN"
             },
             "seriesOverrides": []
           }
@@ -3180,498 +3179,6 @@
       ]
     },
     {
-      "name": "Apprenticeship Assessment Service",
-      "nameSize": "small",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 570,
-        "left": 0,
-        "width": 228,
-        "height": 228
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Sign Ins By RP",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType",
-          "spaceAggregation": "SUM",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "clientname"
-          ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "clientname",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "Apprenticeship Assessment Service",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "none",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": true
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "1m",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "SUM"
-      },
-      "metricExpressions": [
-        "resolution=1m&(cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(and(or(eq(clientname,\"Apprenticeship Assessment Service\")))):splitBy(clientname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
-      "name": "HMRC Digital Tax Platform",
-      "nameSize": "small",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 570,
-        "left": 228,
-        "width": 228,
-        "height": 228
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Sign Ins By RP",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType",
-          "spaceAggregation": "SUM",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "clientname"
-          ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "clientname",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "HMRC Digital Tax Platform",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "none",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": true
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "1m",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "SUM"
-      },
-      "metricExpressions": [
-        "resolution=1m&(cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(and(or(eq(clientname,\"HMRC Digital Tax Platform\")))):splitBy(clientname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
-      "name": "Early years child development training",
-      "nameSize": "small",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 570,
-        "left": 456,
-        "width": 228,
-        "height": 228
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Sign Ins By RP",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType",
-          "spaceAggregation": "SUM",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "clientname"
-          ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "clientname",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "Early years child development training",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "none",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": true
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "1m",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "SUM"
-      },
-      "metricExpressions": [
-        "resolution=1m&(cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(and(or(eq(clientname,\"Early years child development training\")))):splitBy(clientname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
-      "name": "Claim Criminal Injuries Compensation",
-      "nameSize": "small",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 570,
-        "left": 684,
-        "width": 228,
-        "height": 228
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Sign Ins By RP",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType",
-          "spaceAggregation": "SUM",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "clientname"
-          ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "clientname",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "Claim Criminal Injuries Compensation",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "none",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": true
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "1m",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "SUM"
-      },
-      "metricExpressions": [
-        "resolution=1m&(cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(and(or(eq(clientname,\"Claim Criminal Injuries Compensation\")))):splitBy(clientname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
       "name": "Armed Forces Veteran Card",
       "nameSize": "small",
       "tileType": "DATA_EXPLORER",
@@ -3720,7 +3227,7 @@
         }
       ],
       "visualConfig": {
-        "type": "GRAPH_CHART",
+        "type": "STACKED_COLUMN",
         "global": {},
         "rules": [
           {
@@ -3729,7 +3236,7 @@
             "valueFormat": "none",
             "properties": {
               "color": "DEFAULT",
-              "seriesType": "LINE"
+              "seriesType": "STACKED_COLUMN"
             },
             "seriesOverrides": []
           }
@@ -3795,6 +3302,498 @@
       ]
     },
     {
+      "name": "Claim Criminal Injuries Compensation",
+      "nameSize": "small",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 570,
+        "left": 684,
+        "width": 228,
+        "height": 228
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Sign Ins By RP",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType",
+          "spaceAggregation": "SUM",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "clientname"
+          ],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "clientname",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "Claim Criminal Injuries Compensation",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_COLUMN",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "none",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "STACKED_COLUMN"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      },
+      "metricExpressions": [
+        "resolution=1m&(cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(and(or(eq(clientname,\"Claim Criminal Injuries Compensation\")))):splitBy(clientname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Early years child development training",
+      "nameSize": "small",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 570,
+        "left": 456,
+        "width": 228,
+        "height": 228
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Sign Ins By RP",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType",
+          "spaceAggregation": "SUM",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "clientname"
+          ],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "clientname",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "Early years child development training",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_COLUMN",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "none",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "STACKED_COLUMN"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      },
+      "metricExpressions": [
+        "resolution=1m&(cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(and(or(eq(clientname,\"Early years child development training\")))):splitBy(clientname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "HMRC Digital Tax Platform",
+      "nameSize": "small",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 570,
+        "left": 228,
+        "width": 228,
+        "height": 228
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Sign Ins By RP",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType",
+          "spaceAggregation": "SUM",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "clientname"
+          ],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "clientname",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "HMRC Digital Tax Platform",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_COLUMN",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "none",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "STACKED_COLUMN"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      },
+      "metricExpressions": [
+        "resolution=1m&(cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(and(or(eq(clientname,\"HMRC Digital Tax Platform\")))):splitBy(clientname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Apprenticeship Assessment Service",
+      "nameSize": "small",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 570,
+        "left": 0,
+        "width": 228,
+        "height": 228
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Sign Ins By RP",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType",
+          "spaceAggregation": "SUM",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "clientname"
+          ],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "clientname",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "Apprenticeship Assessment Service",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_COLUMN",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "none",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "STACKED_COLUMN"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      },
+      "metricExpressions": [
+        "resolution=1m&(cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(and(or(eq(clientname,\"Apprenticeship Assessment Service\")))):splitBy(clientname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
       "name": "Vehicle Operator License",
       "nameSize": "small",
       "tileType": "DATA_EXPLORER",
@@ -3843,7 +3842,7 @@
         }
       ],
       "visualConfig": {
-        "type": "GRAPH_CHART",
+        "type": "STACKED_COLUMN",
         "global": {},
         "rules": [
           {
@@ -3852,7 +3851,7 @@
             "valueFormat": "none",
             "properties": {
               "color": "DEFAULT",
-              "seriesType": "LINE"
+              "seriesType": "STACKED_COLUMN"
             },
             "seriesOverrides": []
           }
@@ -3966,7 +3965,7 @@
         }
       ],
       "visualConfig": {
-        "type": "GRAPH_CHART",
+        "type": "STACKED_COLUMN",
         "global": {},
         "rules": [
           {
@@ -3975,7 +3974,7 @@
             "valueFormat": "none",
             "properties": {
               "color": "DEFAULT",
-              "seriesType": "LINE"
+              "seriesType": "STACKED_COLUMN"
             },
             "seriesOverrides": []
           }
@@ -4089,7 +4088,7 @@
         }
       ],
       "visualConfig": {
-        "type": "GRAPH_CHART",
+        "type": "STACKED_COLUMN",
         "global": {},
         "rules": [
           {
@@ -4098,7 +4097,7 @@
             "valueFormat": "none",
             "properties": {
               "color": "DEFAULT",
-              "seriesType": "LINE"
+              "seriesType": "STACKED_COLUMN"
             },
             "seriesOverrides": []
           }
@@ -4212,7 +4211,7 @@
         }
       ],
       "visualConfig": {
-        "type": "GRAPH_CHART",
+        "type": "STACKED_COLUMN",
         "global": {},
         "rules": [
           {
@@ -4221,7 +4220,7 @@
             "valueFormat": "none",
             "properties": {
               "color": "DEFAULT",
-              "seriesType": "LINE"
+              "seriesType": "STACKED_COLUMN"
             },
             "seriesOverrides": []
           }
@@ -4335,7 +4334,7 @@
         }
       ],
       "visualConfig": {
-        "type": "GRAPH_CHART",
+        "type": "STACKED_COLUMN",
         "global": {},
         "rules": [
           {
@@ -4344,7 +4343,7 @@
             "valueFormat": "none",
             "properties": {
               "color": "DEFAULT",
-              "seriesType": "LINE"
+              "seriesType": "STACKED_COLUMN"
             },
             "seriesOverrides": []
           }
