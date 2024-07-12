@@ -185,6 +185,25 @@ module "di_auth_check_experian_production_dashboard" {
   application_environment = "production"
 }
 
+module "di_auth_ticf_staging_dashboard" {
+  count  = local.is_production ? 0 : 1
+  source = "./dashboards/authentication/di-auth-ticf"
+
+  application_environment = "staging"
+}
+module "di_auth_ticf_integration_dashboard" {
+  count  = local.is_production ? 0 : 1
+  source = "./dashboards/authentication/di-auth-ticf"
+
+  application_environment = "integration"
+}
+module "di_auth_ticf_production_dashboard" {
+  count  = local.is_production ? 1 : 0
+  source = "./dashboards/authentication/di-auth-ticf"
+
+  application_environment = "production"
+}
+
 
 ### Core ###
 
