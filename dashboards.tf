@@ -128,6 +128,11 @@ module "account-interventions-service" {
   path   = "account-interventions-service/account_interventions_service_dashboard.json"
 }
 
+module "encrypted-vc-storage" {
+  source = "./modules/dashboard"
+  path   = "encrypted-vc-storage/encrypted_vc_storage_dashboard.json"
+}
+
 resource "dynatrace_json_dashboard" "aws_service_quotas" {
   contents = file("${path.module}/dashboards/aws_service_quotas.json")
 }
