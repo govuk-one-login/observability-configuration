@@ -615,3 +615,35 @@ module "service_quotas_dashboard" {
   source = "./modules/dashboard"
   path   = "id-check/service-quotas.json"
 }
+
+### STS ###
+
+module "sts_standard_metrics_prod" {
+  count  = local.is_production ? 1 : 0 # Only create in production
+  source = "./modules/dashboard"
+  path   = "mobile-platform/sts/standard-metrics-prod.json"
+}
+
+module "sts_deployments_prod" {
+  count  = local.is_production ? 1 : 0 # Only create in production
+  source = "./modules/dashboard"
+  path   = "mobile-platform/sts/deployments-prod.json"
+}
+
+module "sts_service_quotas_prod" {
+  count  = local.is_production ? 1 : 0 # Only create in production
+  source = "./modules/dashboard"
+  path   = "mobile-platform/sts/service-quotas-prod.json"
+}
+
+module "sts_lambdas_prod" {
+  count  = local.is_production ? 1 : 0 # Only create in production
+  source = "./modules/dashboard"
+  path   = "mobile-platform/sts/lambdas-prod.json"
+}
+
+module "sts_tps_prod" {
+  count  = local.is_production ? 1 : 0 # Only create in production
+  source = "./modules/dashboard"
+  path   = "mobile-platform/sts/tps-prod.json"
+}
