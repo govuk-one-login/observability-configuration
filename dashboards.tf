@@ -651,3 +651,8 @@ module "sts_tps_prod" {
   source = "./modules/dashboard"
   path   = "mobile-platform/sts/tps-prod.json"
 }
+
+module "home_summary_dahsboard" {
+  source = "./modules/dashboard"
+  path   = "home/home-summary-dashboard.json"
+}
