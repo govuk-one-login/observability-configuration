@@ -78,3 +78,43 @@ module "web_application_staging_subdomains" {
   enabled        = true
   opt_in_enabled = true
 }
+
+module "web_application_integration" {
+  count  = var.environment == "nonproduction" ? 1 : 0
+  source = "./modules/web_application"
+
+  hostname       = "integration.account.gov.uk"
+  name           = "Integration"
+  enabled        = true
+  opt_in_enabled = true
+}
+
+module "web_application_integration_subdomains" {
+  for_each = var.environment == "nonproduction" ? local.one_login_subdomains : {}
+  source   = "./modules/web_application"
+
+  hostname       = "${each.value["hostname"]}.integration.account.gov.uk"
+  name           = "${each.value["name"]} Integration"
+  enabled        = true
+  opt_in_enabled = true
+}
+
+module "web_application_production" {
+  count  = var.environment == "production" ? 1 : 0
+  source = "./modules/web_application"
+
+  hostname       = "account.gov.uk"
+  name           = "Production"
+  enabled        = true
+  opt_in_enabled = true
+}
+
+module "web_application_production_subdomains" {
+  for_each = var.environment == "production" ? local.one_login_subdomains : {}
+  source   = "./modules/web_application"
+
+  hostname       = "${each.value["hostname"]}.account.gov.uk"
+  name           = "${each.value["name"]} Production"
+  enabled        = true
+  opt_in_enabled = true
+}
