@@ -1,5 +1,5 @@
 resource "dynatrace_web_application" "web_application" {
-  name                                 = var.hostname
+  name                                 = var.name
   type                                 = "AUTO_INJECTED"
   cost_control_user_session_percentage = 100
   load_action_key_performance_metric   = "VISUALLY_COMPLETE"
