@@ -18,7 +18,7 @@ locals {
     },
     {
       hostname = "review-b"
-      name = "Address CRI"
+      name = "Document App CRI"
     },
     {
       hostname = "review-bav"
