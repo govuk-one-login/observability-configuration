@@ -1,6 +1,9 @@
 variable "hostname" {
 }
 
+variable "name" {
+}
+
 variable "enabled" {
   type    = bool
   default = true
