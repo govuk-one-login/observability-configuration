@@ -2,59 +2,59 @@ locals {
   one_login_subdomains = [
     {
       hostname = "signin"
-      name = "Authentication"
+      name     = "Authentication"
     },
     {
       hostname = "home"
-      name = "Home"
+      name     = "Home"
     },
     {
       hostname = "identity",
-      name = "IPV Core"
+      name     = "IPV Core"
     },
     {
       hostname = "review-a"
-      name = "Address CRI"
+      name     = "Address CRI"
     },
     {
       hostname = "review-b"
-      name = "Document App CRI"
+      name     = "Document App CRI"
     },
     {
       hostname = "review-bav"
-      name = "Bank Account Verification CRI"
+      name     = "Bank Account Verification CRI"
     },
     {
       hostname = "review-c"
-      name = "Claimed Identity Collector CRI"
+      name     = "Claimed Identity Collector CRI"
     },
     {
       hostname = "review-d"
-      name = "Driving License CRI"
+      name     = "Driving License CRI"
     },
     {
       hostname = "review-f"
-      name = "Fraud CRI"
+      name     = "Fraud CRI"
     },
     {
       hostname = "review-hc"
-      name = "HMRC NINO Check CRI"
+      name     = "HMRC NINO Check CRI"
     },
     {
       hostname = "review-k"
-      name = "Experian KBV CRI"
+      name     = "Experian KBV CRI"
     },
     {
       hostname = "review-o"
-      name = "Face to Face CRI"
+      name     = "Face to Face CRI"
     },
     {
       hostname = "review-pa"
-      name = "Passport CRI"
+      name     = "Passport CRI"
     },
     {
       hostname = "review-hk"
-      name = "HMRC KBV CRI"
+      name     = "HMRC KBV CRI"
     }
   ]
 }
