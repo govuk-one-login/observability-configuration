@@ -20,32 +20,16 @@ resource "dynatrace_dashboard_sharing" "signin-signup" {
   }
 }
 
-resource "dynatrace_json_dashboard" "slos" {
-  contents = file("${path.module}/dashboards/slos.json")
-}
-
-resource "dynatrace_dashboard_sharing" "slos" {
-  dashboard_id = dynatrace_json_dashboard.slos.id
-
-  enabled = true
-
-  permissions {
-    permission {
-      level = "VIEW"
-      type  = "ALL"
-    }
-    permission {
-      id    = data.dynatrace_iam_group.all.id
-      level = "VIEW"
-      type  = "GROUP"
-    }
-  }
-}
-
 module "service_dashboard" {
   count  = local.is_production ? 1 : 0
   source = "./modules/dashboard"
   path   = "service-health-overview.json"
+}
+
+module "slo_dashboard" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "slos.json"
 }
 
 module "ls_lambda_errors" {
