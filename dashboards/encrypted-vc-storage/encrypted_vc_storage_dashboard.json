@@ -1090,354 +1090,6 @@
       ]
     },
     {
-      "name": "SQS Stats",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1520,
-        "left": 608,
-        "width": 912,
-        "height": 190
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "queuename"
-          ],
-          "metricSelector": "cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion:filter(contains(\"queuename\",\"id-reuse-storage-main\")):splitBy(\"queuename\"):count",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "queuename"
-          ],
-          "metricSelector": "cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion:filter(contains(\"queuename\",\"id-reuse-storage-main\")):splitBy(\"queuename\"):count",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "E",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "queuename"
-          ],
-          "metricSelector": "cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(contains(\"queuename\",\"id-reuse-storage-main\")):splitBy(\"queuename\"):count",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "F",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "queuename"
-          ],
-          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesDelayedByAccountIdQueueNameRegion:filter(contains(\"queuename\",\"id-reuse-storage-main\")):splitBy(\"queuename\"):count",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "queuename"
-          ],
-          "metricSelector": "cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(contains(\"queuename\",\"id-reuse-storage-main\")):splitBy(\"queuename\"):max",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "D",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "queuename"
-          ],
-          "metricSelector": "cloud.aws.sqs.sentMessageSizeByAccountIdQueueNameRegion:filter(contains(\"queuename\",\"id-reuse-storage-main\")):splitBy(\"queuename\"):avg",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "G",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "queuename"
-          ],
-          "metricSelector": "cloud.aws.sqs.sentMessageSizeByAccountIdQueueNameRegion:filter(contains(\"queuename\",\"id-reuse-storage-main\")):splitBy(\"queuename\"):max",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "TABLE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "C:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Received"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Sent"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "E:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Deleted"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Oldest"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "F:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Delayed"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "D:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Avg Size"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "G:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Max Size"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "ApproximateAgeOfOldestMessage",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "value": 60,
-                "color": "#f5d30f"
-              },
-              {
-                "value": 600,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "columnId": "NumberOfMessagesSent",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "B",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "columnId": "NumberOfMessagesReceived",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "C",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "columnId": "NumberOfMessagesDeleted",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "E",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "columnId": "ApproximateNumberOfMessagesDelayed",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "value": 10,
-                "color": "#f5d30f"
-              },
-              {
-                "value": 50,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "F",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "columnId": "SentMessageSize",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "value": 130560,
-                "color": "#f5d30f"
-              },
-              {
-                "value": 261120,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "D",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "columnId": "SentMessageSize",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "value": 130560,
-                "color": "#f5d30f"
-              },
-              {
-                "value": 261120,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "G",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "isThresholdBackgroundAppliedToCell": true,
-          "hiddenColumns": [
-            "A:queuename.name",
-            "B:queuename.name",
-            "C:dt.entity.custom_device.name",
-            "C:queuename.name",
-            "D:queuename.name",
-            "E:queuename.name",
-            "F:queuename.name",
-            "G:queuename.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion:filter(contains(queuename,id-reuse-storage-main)):splitBy(queuename):count):names,(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion:filter(contains(queuename,id-reuse-storage-main)):splitBy(queuename):count):names,(cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(contains(queuename,id-reuse-storage-main)):splitBy(queuename):count):names,(cloud.aws.sqs.approximateNumberOfMessagesDelayedByAccountIdQueueNameRegion:filter(contains(queuename,id-reuse-storage-main)):splitBy(queuename):count):names,(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(contains(queuename,id-reuse-storage-main)):splitBy(queuename):max):names,(cloud.aws.sqs.sentMessageSizeByAccountIdQueueNameRegion:filter(contains(queuename,id-reuse-storage-main)):splitBy(queuename):avg):names,(cloud.aws.sqs.sentMessageSizeByAccountIdQueueNameRegion:filter(contains(queuename,id-reuse-storage-main)):splitBy(queuename):max):names"
-      ]
-    },
-    {
       "name": "Lambdas: Invocations, Errors & Latency (builtin:service)",
       "tileType": "DATA_EXPLORER",
       "configured": true,
@@ -6472,6 +6124,356 @@
       },
       "metricExpressions": [
         "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-SummariseDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"id-reuse-storage-main-AuthorizerFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-PersistDataSlicerFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-DecryptDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-VcUpdateFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-AccountDeletionFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-EncryptDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-AuditEventsFunction~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):fold:sum):names:fold(avg),(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-SummariseDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"id-reuse-storage-main-AuthorizerFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-PersistDataSlicerFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-DecryptDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-VcUpdateFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-AccountDeletionFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-EncryptDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-AuditEventsFunction~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):fold:sum):names:fold(avg),(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-SummariseDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"id-reuse-storage-main-AuthorizerFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-PersistDataSlicerFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-DecryptDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-VcUpdateFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-AccountDeletionFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-EncryptDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-AuditEventsFunction~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):fold:sum):names:fold(avg),(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-SummariseDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"id-reuse-storage-main-AuthorizerFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-PersistDataSlicerFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-DecryptDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-VcUpdateFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-AccountDeletionFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-EncryptDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-AuditEventsFunction~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):min):names:fold(avg),(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-SummariseDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"id-reuse-storage-main-AuthorizerFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-PersistDataSlicerFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-DecryptDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-VcUpdateFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-AccountDeletionFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-EncryptDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-AuditEventsFunction~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):fold:avg):names:fold(avg),(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-SummariseDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"id-reuse-storage-main-AuthorizerFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-PersistDataSlicerFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-DecryptDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-VcUpdateFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-AccountDeletionFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-EncryptDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-AuditEventsFunction~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):fold:percentile(95)):names:fold(avg),(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-SummariseDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"id-reuse-storage-main-AuthorizerFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-PersistDataSlicerFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-DecryptDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-VcUpdateFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-AccountDeletionFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-EncryptDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-AuditEventsFunction~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):fold:percentile(99)):names:fold(avg),(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-SummariseDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName(~\"id-reuse-storage-main-AuthorizerFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-PersistDataSlicerFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-DecryptDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-VcUpdateFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-AccountDeletionFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-EncryptDataFunction~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"id-reuse-storage-main-AuditEventsFunction~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):fold:max):names:fold(avg)"
+      ]
+    },
+    {
+      "name": "SQS Stats",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1520,
+        "left": 608,
+        "width": 912,
+        "height": 190
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion:filter(contains(\"queuename\",\"id-reuse-storage-main\")):splitBy(\"queuename\"):fold(sum)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion:filter(contains(\"queuename\",\"id-reuse-storage-main\")):splitBy(\"queuename\"):fold(sum)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "E",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(contains(\"queuename\",\"id-reuse-storage-main\")):splitBy(\"queuename\"):fold(sum)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "F",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesDelayedByAccountIdQueueNameRegion:filter(contains(\"queuename\",\"id-reuse-storage-main\")):splitBy(\"queuename\"):fold(sum)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(contains(\"queuename\",\"id-reuse-storage-main\")):splitBy(\"queuename\"):fold(max)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.sentMessageSizeByAccountIdQueueNameRegion:filter(contains(\"queuename\",\"id-reuse-storage-main\")):splitBy(\"queuename\"):fold(avg)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "G",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.sentMessageSizeByAccountIdQueueNameRegion:filter(contains(\"queuename\",\"id-reuse-storage-main\")):splitBy(\"queuename\"):fold(max)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Received"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Sent"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "E:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Deleted"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "F:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Delayed"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Oldest"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Avg Size"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "G:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Max Size"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "ApproximateAgeOfOldestMessage",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 60,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 600,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "NumberOfMessagesSent",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "B",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "NumberOfMessagesReceived",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "C",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "NumberOfMessagesDeleted",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "E",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "ApproximateNumberOfMessagesDelayed",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 10,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 50,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "F",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "SentMessageSize",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 130560,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 261120,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "D",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "SentMessageSize",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 130560,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 261120,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "G",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "isThresholdBackgroundAppliedToCell": true,
+          "hiddenColumns": [
+            "A:queuename.name",
+            "B:queuename.name",
+            "C:dt.entity.custom_device.name",
+            "C:queuename.name",
+            "D:queuename.name",
+            "E:queuename.name",
+            "F:queuename.name",
+            "G:queuename.name",
+            "H:queuename.name",
+            "I:queuename.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion:filter(contains(queuename,id-reuse-storage-main)):splitBy(queuename):fold(sum)):names:fold(auto),(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion:filter(contains(queuename,id-reuse-storage-main)):splitBy(queuename):fold(sum)):names:fold(auto),(cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(contains(queuename,id-reuse-storage-main)):splitBy(queuename):fold(sum)):names:fold(auto),(cloud.aws.sqs.approximateNumberOfMessagesDelayedByAccountIdQueueNameRegion:filter(contains(queuename,id-reuse-storage-main)):splitBy(queuename):fold(sum)):names:fold(auto),(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(contains(queuename,id-reuse-storage-main)):splitBy(queuename):fold(max)):names:fold(auto),(cloud.aws.sqs.sentMessageSizeByAccountIdQueueNameRegion:filter(contains(queuename,id-reuse-storage-main)):splitBy(queuename):fold(avg)):names:fold(auto),(cloud.aws.sqs.sentMessageSizeByAccountIdQueueNameRegion:filter(contains(queuename,id-reuse-storage-main)):splitBy(queuename):fold(max)):names:fold(auto)"
       ]
     }
   ]
