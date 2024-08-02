@@ -25,11 +25,11 @@ resource "dynatrace_calculated_service_metric" "liveserviceshub" {
     request_attribute = "null"
   }
   dimensionDefinition {
-    name= "Dimension"
-    dimension = "{Relative-URL} onelogingovuk.service-now.com/csm"
-    topX= 100
-    topXDirection = "DESCENDING"
-    topXAggregation =  "SINGLE_VALUE"
+    name            = "Dimension"
+    dimension       = "{Relative-URL} onelogingovuk.service-now.com/csm"
+    topX            = 100
+    topXDirection   = "DESCENDING"
+    topXAggregation = "SINGLE_VALUE"
   }
 }
 # Terraform resource does not exist for Request naming
