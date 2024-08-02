@@ -25,9 +25,9 @@ resource "dynatrace_calculated_service_metric" "liveserviceshub" {
     request_attribute = "null"
   }
   dimension_definition {
-    name            = "Dimension"
-    dimension       = "{Relative-URL} onelogingovuk.service-now.com/csm"
-    top_x            = 100
+    name              = "Dimension"
+    dimension         = "{Relative-URL} onelogingovuk.service-now.com/csm"
+    top_x             = 100
     top_x_direction   = "DESCENDING"
     top_x_aggregation = "SINGLE_VALUE"
   }
