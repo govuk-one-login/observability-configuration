@@ -31,6 +31,7 @@ resource "dynatrace_calculated_service_metric" "liveserviceshub" {
     topXDirection = "DESCENDING"
     topXAggregation =  "SINGLE_VALUE"
   }
+}
 # Terraform resource does not exist for Request naming
 
 # API detection rules
