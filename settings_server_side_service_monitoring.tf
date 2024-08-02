@@ -1,7 +1,36 @@
 # Server-side service monitoring
 # Not in use - Service naming
 # Not in use - Request attributes
-# Not in use - Calculated service metrics
+# Calculated service metrics
+resource "dynatrace_calculated_service_metric" "liveserviceshub" {
+  name             = "LiveServicesHub"
+  enabled          = true
+  management_zones = []
+  metric_key       = "calc:service.liveserviceshub"
+  unit             = "MILLI_SECOND_PER_MINUTE"
+  conditions {
+    condition {
+      attribute = "SERVICE_TYPE"
+      comparison {
+        negate = false
+        service_type {
+          operator = "EQUALS_ANY_OF"
+          values   = ["WEB_REQUEST_SERVICE", "WEB_SERVICE"]
+        }
+      }
+    }
+  }
+  metric_definition {
+    metric            = "REQUEST_COUNT"
+    request_attribute = "null"
+  }
+  dimensionDefinition {
+    name= "Dimension"
+    dimension = "{Relative-URL} onelogingovuk.service-now.com/csm"
+    topX= 100
+    topXDirection = "DESCENDING"
+    topXAggregation =  "SINGLE_VALUE"
+  }
 # Terraform resource does not exist for Request naming
 
 # API detection rules
