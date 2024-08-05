@@ -22,7 +22,6 @@ resource "dynatrace_calculated_service_metric" "liveserviceshub" {
   }
   metric_definition {
     metric            = "REQUEST_COUNT"
-    request_attribute = "null"
   }
   dimension_definition {
     name              = "Dimension"
