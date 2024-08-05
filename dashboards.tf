@@ -392,6 +392,10 @@ module "check_hmrc_step_function_metrics_dashboard" {
   source = "./modules/dashboard"
   path   = "orange/orange-check-hmrc-step-function.json"
 }
+module "otg_step_function_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "orange/orange-otg-step-function.json"
+}
 
 # kbv CRI
 module "kbv_dashboard" {
