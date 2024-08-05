@@ -7,7 +7,7 @@ resource "dynatrace_calculated_service_metric" "liveserviceshub" {
   enabled          = true
   management_zones = []
   metric_key       = "calc:service.liveserviceshub"
-  unit             = "MILLI_SECOND_PER_MINUTE"
+  unit             = "COUNT"
   conditions {
     condition {
       attribute = "SERVICE_TYPE"
