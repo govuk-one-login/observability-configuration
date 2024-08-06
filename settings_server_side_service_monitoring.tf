@@ -3,6 +3,7 @@
 # Not in use - Request attributes
 # Calculated service metrics
 resource "dynatrace_calculated_service_metric" "liveserviceshub" {
+  count            = local.is_production ? 1 : 0
   name             = "LiveServicesHub"
   enabled          = true
   management_zones = []
