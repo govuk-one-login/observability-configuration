@@ -193,6 +193,13 @@ module "di_auth_ticf_production_dashboard" {
   application_environment = "production"
 }
 
+module "authentication_services" {
+  count  = local.is_production ? 1 : 0 # Only create in production
+  source = "./modules/dashboard"
+  path   = "authentication/authentication_services.json"
+}
+
+
 
 ### Core ###
 
