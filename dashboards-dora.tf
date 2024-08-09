@@ -18,6 +18,10 @@ locals {
     for f in csvdecode(file("./dashboards/dev-platform/template3.csv")) :
     "${f.team}-${f.samstackname1}-${f.samstackname2}-${f.samstackname3}" => f
   }
+
+  secure_pipelines_multiple_sam_stack_names = {
+    for f in csvdecode(file("./dashboards/dev-platform/pipelines-list-multi-sam-stack-names.csv")) : "${f.team}" => f...
+  }
 }
 
 #######################################
@@ -59,6 +63,23 @@ resource "dynatrace_json_dashboard" "Team-DORA-Dashboards3" {
     owner                  = each.value.email
     sam_stack_names_string = "${each.value.samstackname1} & ${each.value.samstackname2} & ${each.value.samstackname3}"
     sam_stack_names        = ["${each.value.samstackname1}", "${each.value.samstackname2}", "${each.value.samstackname3}"]
+  })
+}
+
+########################################
+# Secure Pipelines with multiple SamStackName on the Dashboard
+#######################################
+resource "dynatrace_json_dashboard" "Team-DORA-Dashboards4" {
+  for_each = local.secure_pipelines_multiple_sam_stack_names
+
+  contents = templatefile("./dashboards/dev-platform/teams_pipeline_dora_dashboard_multiple_ssn.tftpl", {
+    team                       = each.key
+    owner                      = each.value[0].email
+    application_name           = [for app in each.value : app.application_name]
+    sam_stack_name_build       = [for app in each.value : app.sam_stack_name_build]
+    sam_stack_name_staging     = [for app in each.value : app.sam_stack_name_staging]
+    sam_stack_name_production  = [for app in each.value : app.sam_stack_name_production]
+    sam_stack_name_integration = [for app in each.value : app.sam_stack_name_integration]
   })
 }
 
@@ -114,4 +135,23 @@ resource "dynatrace_dashboard_sharing" "Team-DORA-Dashboards3" {
       type  = "GROUP"
     }
   }
+}
+
+resource "dynatrace_dashboard_sharing" "Team-DORA-Dashboards4" {
+  for_each = local.secure_pipelines_multiple_sam_stack_names
+
+  dashboard_id = dynatrace_json_dashboard.Team-DORA-Dashboards4[each.key].id
+  enabled      = true
+  permissions {
+    permission {
+      level = "VIEW"
+      type  = "ALL"
+    }
+    permission {
+      id    = data.dynatrace_iam_group.all.id
+      level = "VIEW"
+      type  = "GROUP"
+    }
+  }
+
 }
