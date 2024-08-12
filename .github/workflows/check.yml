@@ -36,6 +36,18 @@ jobs:
               exit 1
             fi
           done
+          
+      - name: Check dashboard tiles are sorted by name
+        run: |
+          for file in dashboards/signin-signup.json; do
+            echo "Checking ${file}"
+            ID=$(jq -r '.tiles | if sort_by(.name) == . then "ok" else "not ok" end' < $file)
+            if [ "$ID" != "ok" ]; then
+              echo "Error: ${file} tiles are not sorted by name"
+              exit 1
+            fi
+          done
+
   Check_NonProd:
     env:
       DYNATRACE_API_TOKEN: ${{ secrets.NONPROD_DYNATRACE_API_TOKEN}}
