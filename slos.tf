@@ -233,7 +233,7 @@ resource "dynatrace_slo_v2" "identify_proofing_and_verification_service" {
   custom_description = "Request-based SLO to determine the Availability, averaged across all resources within the AWS accounts that make up this Service (99.90%)"
   evaluation_type    = "AGGREGATE"
   evaluation_window  = "-1M"
-  filter             = "type(SERVICE),mzName([AWS] di-ipv-cri-kbv-prod,[AWS] di-facetoface-cri-prod,[AWS] di-ipv-cri-dl-prod,[AWS] di-ipv-cri-kbv-hmrc-prod,[AWS] dcmaw-gds-prod,[AWS] di-facetoface-prod,[AWS] di-ipv-cri-passport-prod,[AWS] di-ipv-cri-check-hmrc-prod,[AWS] di-ipv-cri-passporta-prod,[AWS] di-ipv-core-prod,[AWS] di-ipv-cri-fraud-prod,[AWS] di-ipv-cri-address-prod,[AWS] di-ipvreturn-prod,[AWS] di-ipv-spot-prod,[AWS] di-ipv-contra-indicators-prod,[AWS] di-ipv-cri-otg-hmrc-prod,[AWS] di-bav-cri-prod,[AWS] di-ticf-cri-production,[AWS] gds-mobile-production-secrets,[AWS] di-sts-prod)"
+  filter             = "type(SERVICE),mzName([AWS] di-ipv-cri-kbv-prod,[AWS] di-facetoface-cri-prod,[AWS] di-ipv-cri-dl-prod,[AWS] di-ipv-cri-kbv-hmrc-prod,[AWS] dcmaw-gds-prod,[AWS] di-facetoface-prod,[AWS] di-ipv-cri-passport-prod,[AWS] di-ipv-cri-check-hmrc-prod,[AWS] di-ipv-cri-passporta-prod,[AWS] di-ipv-core-prod,[AWS] di-ipv-cri-fraud-prod,[AWS] di-ipv-cri-address-prod,[AWS] di-ipvreturn-prod,[AWS] di-ipv-spot-prod,[AWS] di-ipv-contra-indicators-prod,[AWS] di-ipv-cri-otg-hmrc-prod,[AWS] di-bav-cri-prod,[AWS] di-ticf-cri-production,[AWS] gds-mobile-production-secrets,[AWS] di-sts-prod,[AWS] di-id-reuse-core-production)"
   metric_expression  = "(100)*(builtin:service.errors.total.successCount:splitBy())/(builtin:service.requestCount.total:splitBy())"
   metric_name        = "identify_proofing_and_verification_service"
   target_success     = 99.5
