@@ -63,6 +63,38 @@ module "zendesk" {
   url    = "zendesk.com"
 }
 
+# ReadID Token Production Only
+module "readid_token" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/service_detection"
+  name   = "ReadID Token"
+  url    = "https://gds.readid.com/oauth/token"
+}
+
+# ReadID sessions Production Only
+module "readid_sessions" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/service_detection"
+  name   = "ReadID sessions"
+  url    = "https://gds.readid.com/odata/v1/ODataServlet/Sessions('<masked>')"
+}
+
+# HMRC NINo Production only
+module "hmrc_nino" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/service_detection"
+  name   = "HMRC NINo"
+  url    = "https://api.service.hmrc.gov.uk/individuals/authentication/authenticator/api/match"
+}
+
+# OTG Production only
+module "otg" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/service_detection"
+  name   = "OTG"
+  url    = "https://api.service.hmrc.gov.uk/oauth/token"
+}
+
 # DVA API Production only
 module "dva_api" {
   count  = local.is_production ? 1 : 0
