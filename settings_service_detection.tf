@@ -72,7 +72,7 @@ resource "dynatrace_service_external_web_service" "readid_token" {
       attribute              = "HostName"
       compare_operation_type = "StringEndsWith"
       text_values            = ["readid.com"]
-    },
+    }
     condition {
       attribute              = "Url"
       compare_operation_type = "Contains"
@@ -99,7 +99,7 @@ resource "dynatrace_service_external_web_service" "readid_sessions" {
       attribute              = "HostName"
       compare_operation_type = "StringEndsWith"
       text_values            = ["readid.com"]
-    },
+    }
     condition {
       attribute              = "Url"
       compare_operation_type = "Contains"
@@ -126,7 +126,7 @@ resource "dynatrace_service_external_web_service" "hmrc_nino" {
       attribute              = "HostName"
       compare_operation_type = "StringEndsWith"
       text_values            = ["api.service.hmrc.gov.uk"]
-    },
+    }
     condition {
       attribute              = "Url"
       compare_operation_type = "Contains"
@@ -153,7 +153,7 @@ resource "dynatrace_service_external_web_service" "otg" {
       attribute              = "HostName"
       compare_operation_type = "StringEndsWith"
       text_values            = ["api.service.hmrc.gov.uk"]
-    },
+    }
     condition {
       attribute              = "Url"
       compare_operation_type = "Contains"
