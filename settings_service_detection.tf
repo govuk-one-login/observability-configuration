@@ -80,6 +80,7 @@ resource "dynatrace_service_external_web_service" "readid_token" {
     }
   }
   id_contributors {
+    detect_as_web_request_service = true
     public_domain_name {
       enable_id_contributor = true
       service_id_contributor {
@@ -107,6 +108,7 @@ resource "dynatrace_service_external_web_service" "readid_sessions" {
     }
   }
   id_contributors {
+    detect_as_web_request_service = true
     public_domain_name {
       enable_id_contributor = true
       service_id_contributor {
@@ -134,6 +136,7 @@ resource "dynatrace_service_external_web_service" "hmrc_nino" {
     }
   }
   id_contributors {
+    detect_as_web_request_service = true
     public_domain_name {
       enable_id_contributor = true
       service_id_contributor {
@@ -161,6 +164,7 @@ resource "dynatrace_service_external_web_service" "otg" {
     }
   }
   id_contributors {
+    detect_as_web_request_service = true
     public_domain_name {
       enable_id_contributor = true
       service_id_contributor {
