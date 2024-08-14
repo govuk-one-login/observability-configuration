@@ -3,13 +3,13 @@
     "configurationVersions": [
       7
     ],
-    "clusterVersion": "1.297.40.20240805-142422"
+    "clusterVersion": "1.297.48.20240809-112401"
   },
   "dashboardMetadata": {
     "name": "Service Health Overview",
     "shared": true,
     "owner": "christopher.dodd@digital.cabinet-office.gov.uk",
-    "popularity": 6,
+    "popularity": 10,
     "tilesNameSize": "medium",
     "hasConsistentColors": false
   },
@@ -35,8 +35,8 @@
       "tileType": "SERVICE_VERSATILE",
       "configured": true,
       "bounds": {
-        "top": 342,
-        "left": 2166,
+        "top": 38,
+        "left": 2774,
         "width": 304,
         "height": 304
       },
@@ -51,8 +51,8 @@
       "tileType": "SERVICE_VERSATILE",
       "configured": true,
       "bounds": {
-        "top": 342,
-        "left": 1862,
+        "top": 38,
+        "left": 2470,
         "width": 304,
         "height": 304
       },
@@ -272,11 +272,11 @@
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "production-processing-identity-lambda",
+                    "value": "production-ipv-callback-lambda",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "production-ipv-callback-lambda",
+                    "value": "production-processing-identity-lambda",
                     "evaluator": "EQ"
                   }
                 ]
@@ -369,138 +369,6 @@
       },
       "metricExpressions": [
         "resolution=null&(cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:filter(and(or(eq(servicename,production-ipv-callback-lambda),eq(servicename,production-processing-identity-lambda),eq(servicename,production-orchestration-redirect-lambda)))):splitBy(servicename):sort(value(auto,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
-      "name": "API Gateway 4xx/5xx",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2584,
-        "left": 798,
-        "width": 266,
-        "height": 266
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "B",
-          "metric": "cloud.aws.apigateway.4xxErrorByAccountIdApiNameRegion",
-          "spaceAggregation": "SUM",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "C",
-          "metric": "cloud.aws.apigateway.5xxErrorByAccountIdApiNameRegion",
-          "spaceAggregation": "SUM",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "B:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "C:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A",
-                "B",
-                "C"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE",
-          "showLabels": false
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameRegion\":splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -697,7 +565,7 @@
       "configured": true,
       "bounds": {
         "top": 342,
-        "left": 2774,
+        "left": 2470,
         "width": 304,
         "height": 304
       },
@@ -713,7 +581,7 @@
       "configured": true,
       "bounds": {
         "top": 342,
-        "left": 2470,
+        "left": 2166,
         "width": 304,
         "height": 304
       },
@@ -721,6 +589,38 @@
       "isAutoRefreshDisabled": false,
       "assignedEntities": [
         "SERVICE-41210C73E70E0781"
+      ]
+    },
+    {
+      "name": "Service or request",
+      "tileType": "SERVICE_VERSATILE",
+      "configured": true,
+      "bounds": {
+        "top": 342,
+        "left": 2774,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "assignedEntities": [
+        "SERVICE-C9807A7AEA6C6DFE"
+      ]
+    },
+    {
+      "name": "Service or request",
+      "tileType": "SERVICE_VERSATILE",
+      "configured": true,
+      "bounds": {
+        "top": 646,
+        "left": 1862,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "assignedEntities": [
+        "SERVICE-6639F9C59EB7A18A"
       ]
     },
     {
@@ -736,38 +636,6 @@
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
       "assignedEntities": [
-        "SERVICE-C9807A7AEA6C6DFE"
-      ]
-    },
-    {
-      "name": "Service or request",
-      "tileType": "SERVICE_VERSATILE",
-      "configured": true,
-      "bounds": {
-        "top": 38,
-        "left": 2470,
-        "width": 304,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "assignedEntities": [
-        "SERVICE-6639F9C59EB7A18A"
-      ]
-    },
-    {
-      "name": "Service or request",
-      "tileType": "SERVICE_VERSATILE",
-      "configured": true,
-      "bounds": {
-        "top": 38,
-        "left": 2774,
-        "width": 304,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "assignedEntities": [
         "SERVICE-D58719FFAB1F810A"
       ]
     },
@@ -776,7 +644,7 @@
       "tileType": "SERVICE_VERSATILE",
       "configured": true,
       "bounds": {
-        "top": 646,
+        "top": 342,
         "left": 1862,
         "width": 304,
         "height": 304
@@ -4058,8 +3926,8 @@
       "tileType": "HEADER",
       "configured": true,
       "bounds": {
-        "top": 988,
-        "left": 1862,
+        "top": 1064,
+        "left": 1140,
         "width": 1026,
         "height": 38
       },
@@ -4071,8 +3939,8 @@
       "tileType": "SERVICES",
       "configured": true,
       "bounds": {
-        "top": 1026,
-        "left": 1862,
+        "top": 1102,
+        "left": 1140,
         "width": 266,
         "height": 266
       },
@@ -4103,8 +3971,8 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1026,
-        "left": 2128,
+        "top": 1102,
+        "left": 1406,
         "width": 380,
         "height": 266
       },
@@ -4236,8 +4104,8 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1026,
-        "left": 2508,
+        "top": 1102,
+        "left": 1786,
         "width": 380,
         "height": 266
       },
@@ -4347,7 +4215,7 @@
       "configured": true,
       "bounds": {
         "top": 1672,
-        "left": 1064,
+        "left": 988,
         "width": 1254,
         "height": 38
       },
@@ -4832,7 +4700,7 @@
       "configured": true,
       "bounds": {
         "top": 1710,
-        "left": 1444,
+        "left": 1368,
         "width": 304,
         "height": 266
       },
@@ -4848,7 +4716,7 @@
       "configured": true,
       "bounds": {
         "top": 1976,
-        "left": 1558,
+        "left": 1482,
         "width": 456,
         "height": 266
       },
@@ -4950,7 +4818,7 @@
       "configured": true,
       "bounds": {
         "top": 1976,
-        "left": 1064,
+        "left": 988,
         "width": 494,
         "height": 266
       },
@@ -5073,7 +4941,7 @@
       "configured": true,
       "bounds": {
         "top": 2242,
-        "left": 1064,
+        "left": 988,
         "width": 494,
         "height": 266
       },
@@ -5196,7 +5064,7 @@
       "configured": true,
       "bounds": {
         "top": 2242,
-        "left": 1558,
+        "left": 1482,
         "width": 266,
         "height": 266
       },
@@ -5317,7 +5185,7 @@
       "configured": true,
       "bounds": {
         "top": 1710,
-        "left": 1748,
+        "left": 1672,
         "width": 304,
         "height": 266
       },
@@ -5333,7 +5201,7 @@
       "configured": true,
       "bounds": {
         "top": 1710,
-        "left": 1064,
+        "left": 988,
         "width": 380,
         "height": 266
       },
@@ -5482,11 +5350,11 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "552549398917",
+                    "value": "513850971016",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "513850971016",
+                    "value": "658501491317",
                     "evaluator": "EQ"
                   },
                   {
@@ -5494,11 +5362,11 @@
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "451773080033",
+                    "value": "552549398917",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "658501491317",
+                    "value": "451773080033",
                     "evaluator": "EQ"
                   }
                 ]
@@ -5530,7 +5398,15 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
+                    "value": "348043515437",
+                    "evaluator": "EQ"
+                  },
+                  {
                     "value": "552549398917",
+                    "evaluator": "EQ"
+                  },
+                  {
+                    "value": "658501491317",
                     "evaluator": "EQ"
                   },
                   {
@@ -5538,15 +5414,7 @@
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "348043515437",
-                    "evaluator": "EQ"
-                  },
-                  {
                     "value": "451773080033",
-                    "evaluator": "EQ"
-                  },
-                  {
-                    "value": "658501491317",
                     "evaluator": "EQ"
                   }
                 ]
@@ -5770,8 +5638,8 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1292,
-        "left": 1862,
+        "top": 1368,
+        "left": 1140,
         "width": 1026,
         "height": 266
       },
@@ -5876,7 +5744,7 @@
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "## POD Dashboards\n\n[Fraud](https://bhe21058.live.dynatrace.com/#dashboard;gtf=-7d%20to%20now;gf=all;id=1588f7b7-0df7-4730-b726-6b9320bc7cc7)\n\n[Data/TxMA](https://bhe21058.live.dynatrace.com/#dashboard;gtf=-30m;gf=all;id=32dde1b0-b8fa-4212-8fe0-3ec7b515481c)\n\n[Auth](https://bhe21058.live.dynatrace.com/#dashboard;gtf=-2h;gf=4772377103048064055;id=82fc5589-4397-417b-8118-ea31caf14e06)"
+      "markdown": "## POD Dashboards\n\n[Data/TxMA](https://bhe21058.live.dynatrace.com/#dashboard;gtf=-30m;gf=all;id=32dde1b0-b8fa-4212-8fe0-3ec7b515481c)\n\n[Auth](https://bhe21058.live.dynatrace.com/#dashboard;gtf=-2h;gf=all;id=c31ecb67-5343-40be-b889-fb0ecc42ac1b)"
     },
     {
       "name": "DB System Errors",
@@ -5988,7 +5856,7 @@
       "configured": true,
       "bounds": {
         "top": 1710,
-        "left": 2052,
+        "left": 1976,
         "width": 266,
         "height": 266
       },
@@ -6189,6 +6057,294 @@
       },
       "metricExpressions": [
         "resolution=null&(cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:splitBy(tablename):avg:default(0,always)):limit(100):names"
+      ]
+    },
+    {
+      "name": "ReadID Proxy API Gateway (2xx/4xx/5xx)",
+      "nameSize": "small",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 646,
+        "left": 2470,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,tivr86o96d)),and(eq(\"aws.account.id\",\"671922655609\")))):splitBy(\"apiid\"):sum\n-\ncloud.aws.apigateway.\"5xxByAccountIdApiIdMethodRegionResourceStage\":filter(and(or(eq(\"aws.account.id\",\"671922655609\")),and(eq(\"apiid\",\"tivr86o96d\")))):splitBy(\"apiid\"):sum\n-\ncloud.aws.apigateway.\"4xxByAccountIdApiIdMethodRegionResourceStage\":filter(and(or(eq(\"aws.account.id\",\"671922655609\")),and(eq(\"apiid\",\"tivr86o96d\")))):splitBy(\"apiid\"):sum",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.\"5xxByAccountIdApiIdMethodRegionResourceStage\":filter(and(or(eq(\"aws.account.id\",\"671922655609\")),and(eq(\"apiid\",\"tivr86o96d\")))):splitBy(\"apiid\"):sum",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.\"4xxByAccountIdApiIdMethodRegionResourceStage\":filter(and(or(eq(\"aws.account.id\",\"671922655609\")),and(eq(\"apiid\",\"tivr86o96d\")))):splitBy(\"apiid\"):sum",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "2xx"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "5xx"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "4xx"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,tivr86o96d)),and(eq(\"aws.account.id\",\"671922655609\")))):splitBy(apiid):sum - cloud.aws.apigateway.\"5xxByAccountIdApiIdMethodRegionResourceStage\":filter(and(or(eq(\"aws.account.id\",\"671922655609\")),and(eq(apiid,tivr86o96d)))):splitBy(apiid):sum - cloud.aws.apigateway.\"4xxByAccountIdApiIdMethodRegionResourceStage\":filter(and(or(eq(\"aws.account.id\",\"671922655609\")),and(eq(apiid,tivr86o96d)))):splitBy(apiid):sum):limit(100):names,(cloud.aws.apigateway.\"5xxByAccountIdApiIdMethodRegionResourceStage\":filter(and(or(eq(\"aws.account.id\",\"671922655609\")),and(eq(apiid,tivr86o96d)))):splitBy(apiid):sum):limit(100):names,(cloud.aws.apigateway.\"4xxByAccountIdApiIdMethodRegionResourceStage\":filter(and(or(eq(\"aws.account.id\",\"671922655609\")),and(eq(apiid,tivr86o96d)))):splitBy(apiid):sum):limit(100):names"
+      ]
+    },
+    {
+      "name": "API Gateway 4xx/5xx",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2584,
+        "left": 798,
+        "width": 266,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "metric": "cloud.aws.apigateway.4xxErrorByAccountIdApiNameRegion",
+          "spaceAggregation": "SUM",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiname"
+          ],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "cloud.aws.apigateway.5xxErrorByAccountIdApiNameRegion",
+          "spaceAggregation": "SUM",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiname"
+          ],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameRegion\":splitBy(apiname):sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":splitBy(apiname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
       ]
     }
   ]
