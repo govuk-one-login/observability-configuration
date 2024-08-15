@@ -75,7 +75,7 @@ resource "dynatrace_service_external_web_request" "readid_token" {
     }
     condition {
       attribute              = "Url"
-      compare_operation_type = "Contains"
+      compare_operation_type = "StringContains"
       text_values            = ["oauth/token"]
     }
   }
@@ -109,7 +109,7 @@ resource "dynatrace_service_external_web_request" "readid_sessions" {
     }
     condition {
       attribute              = "Url"
-      compare_operation_type = "Contains"
+      compare_operation_type = "StringContains"
       text_values            = ["odata/v1/ODataServlet"]
     }
   }
@@ -143,7 +143,7 @@ resource "dynatrace_service_external_web_request" "hmrc_nino" {
     }
     condition {
       attribute              = "Url"
-      compare_operation_type = "Contains"
+      compare_operation_type = "StringContains"
       text_values            = ["individuals/authentication"]
     }
   }
@@ -177,7 +177,7 @@ resource "dynatrace_service_external_web_request" "otg" {
     }
     condition {
       attribute              = "Url"
-      compare_operation_type = "Contains"
+      compare_operation_type = "StringContains"
       text_values            = ["oauth/token"]
     }
   }
