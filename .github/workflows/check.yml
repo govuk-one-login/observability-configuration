@@ -48,6 +48,18 @@ jobs:
             fi
           done
 
+      - name: Check DORA dashboards limit
+        run: |
+          echo "DORA Dashboards: checking pipeline count per team"
+          LIST=$(cut -f1 -d, dashboards/dev-platform/pipelines-list-multi-sam-stack-names.csv | tail -n +2 | sort | uniq -c)
+          echo $LIST
+          for team in $(echo $LIST | tr -d -c " "0-9); do
+            if [[ $team -gt 24 ]]; then
+              echo "Error: Dora dashboards can only contain 24 pipelines each"
+              exit 1
+            fi
+          done
+
   Check_NonProd:
     env:
       DYNATRACE_API_TOKEN: ${{ secrets.NONPROD_DYNATRACE_API_TOKEN}}
