@@ -3,7 +3,7 @@
 # DO NOT USE template2.csv and template3.csv.
 # These are work-in-progress for continuous improvements and may be removed in future
 
-locals { 
+locals {
   secure_pipelines_multiple_sam_stack_names = {
     for f in csvdecode(file("./dashboards/dev-platform/pipelines-list-multi-sam-stack-names.csv")) : "${f.team}" => f...
   }
