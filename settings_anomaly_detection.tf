@@ -145,10 +145,10 @@ resource "dynatrace_service_anomalies_v2" "service_detection_anomalies" {
     enabled        = true
     detection_mode = "auto"
     auto_detection {
-      absolute_increase = 0
+      absolute_increase = 40
       relative_increase = 50
       over_alerting_protection {
-        minutes_abnormal_state = 1
+        minutes_abnormal_state = 5
         requests_per_minute    = 10
       }
     }
@@ -164,11 +164,11 @@ resource "dynatrace_service_anomalies_v2" "service_detection_anomalies" {
     detection_mode = "auto"
     auto_detection {
       over_alerting_protection {
-        minutes_abnormal_state = 1
+        minutes_abnormal_state = 5
         requests_per_minute    = 10
       }
       response_time_all {
-        degradation_milliseconds = 100
+        degradation_milliseconds = 2000
         degradation_percent      = 50
       }
       response_time_slowest {
@@ -194,7 +194,7 @@ resource "dynatrace_database_anomalies_v2" "database_anomalies" {
       absolute_increase = 0
       relative_increase = 50
       over_alerting_protection {
-        minutes_abnormal_state = 1
+        minutes_abnormal_state = 5
         requests_per_minute    = 10
       }
     }
@@ -210,7 +210,7 @@ resource "dynatrace_database_anomalies_v2" "database_anomalies" {
     detection_mode = "auto"
     auto_detection {
       over_alerting_protection {
-        minutes_abnormal_state = 1
+        minutes_abnormal_state = 5
         requests_per_minute    = 10
       }
       response_time_all {
