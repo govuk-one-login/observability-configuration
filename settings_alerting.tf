@@ -29,7 +29,7 @@ resource "dynatrace_alerting" "di-alerting-profile" {
     }
     rule {
       include_mode     = "NONE"
-      delay_in_minutes = 0
+      delay_in_minutes = 30
       severity_level   = "RESOURCE_CONTENTION"
     }
   }
