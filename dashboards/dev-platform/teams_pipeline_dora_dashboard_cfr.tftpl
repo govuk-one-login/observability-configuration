@@ -1,0 +1,518 @@
+{
+  "metadata": {
+    "configurationVersions": [
+      7
+    ],
+    "clusterVersion": "1.298.38.20240821-140021"
+  },
+  "dashboardMetadata": {
+    "name": "DORA - ${team} Change Failure Rate",
+    "shared": true,
+    "owner": "${owner}",
+    "tags": [
+      "Secure Pipelines",
+      "DORA"
+    ],
+    "hasConsistentColors": false
+  },
+  "tiles": [
+    {
+      "name": "Aggregated Monthly Change Failure Rate",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 266,
+        "left": 38,
+        "width": 760,
+        "height": 304
+      },
+      "tileFilter": {
+        "timeframe": "-180d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "(((devplatform.sam-pipelines.deployment:filter(and(or(%{ for i, ssn in sam_stack_name_build }eq(sam-stack-name,\"${sam_stack_name_build[i]}\")%{ if i == length(sam_stack_name_build)-1 }%{ else },%{ endif }%{ endfor }),eq(stage,deploy),eq(environment,build))):splitBy():count)\n-\n(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),or(%{ for i, ssn in sam_stack_name_build }eq(sam-stack-name,\"${sam_stack_name_production[i]}\")%{ if i == length(sam_stack_name_build)-1 }%{ else },%{ endif }%{ endfor }),eq(environment,production))):splitBy():count))\n/\n(devplatform.sam-pipelines.deployment:filter(and(or(%{ for i, ssn in sam_stack_name_build }eq(sam-stack-name,\"${sam_stack_name_build[i]}\")%{ if i == length(sam_stack_name_build)-1 }%{ else },%{ endif }%{ endfor }),eq(stage,deploy),eq(environment,build))):splitBy():count))*100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_COLUMN",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1M"
+      },
+      "metricExpressions": [
+        "resolution=1M&((((devplatform.sam-pipelines.deployment:filter(and(or(eq(sam-stack-name,backend-api),eq(sam-stack-name,frontend)),eq(stage,deploy),eq(environment,build))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),or(eq(sam-stack-name,backend-api),eq(sam-stack-name,frontend)),eq(environment,production))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(or(eq(sam-stack-name,backend-api),eq(sam-stack-name,frontend)),eq(stage,deploy),eq(environment,build))):splitBy():count))*100):limit(100):names"
+      ]
+    },%{ for i, ssn in sam_stack_name_build }
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": "${722 + 114 * i}",
+        "left": 38,
+        "width": 228,
+        "height": 114
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## ${application_name[i]}"
+    },
+    {
+      "name": "production",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": "${722 + 114 * i}",
+        "left": 836,
+        "width": 190,
+        "height": 114
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "build",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "(((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,\"${sam_stack_name_production[i]}\"),eq(stage,deploy),eq(environment,production))):splitBy():count)\n-\n(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,\"${sam_stack_name_production[i]}\"),eq(environment,production))):splitBy():count))\n/\n(devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"${sam_stack_name_production[i]}\"),eq(stage,deploy),eq(environment,production))):splitBy():count))*100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "%",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,production))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,backend-api),eq(environment,production))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,production))):splitBy():count))*100):limit(100):names",
+        "resolution=null&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,production))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,backend-api),eq(environment,production))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,production))):splitBy():count))*100)"
+      ]
+    },
+    {
+      "name": "staging",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": "${722 + 114 * i}",
+        "left": 456,
+        "width": 190,
+        "height": 114
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "build",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "(((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,\"${sam_stack_name_staging[i]}\"),eq(stage,deploy),eq(environment,staging))):splitBy():count)\n-\n(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,\"${sam_stack_name_staging[i]}\"),eq(environment,staging))):splitBy():count))\n/\n(devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"${sam_stack_name_staging[i]}\"),eq(stage,deploy),eq(environment,staging))):splitBy():count))*100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "%",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,staging))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,backend-api),eq(environment,staging))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,staging))):splitBy():count))*100):limit(100):names",
+        "resolution=null&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,staging))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,backend-api),eq(environment,staging))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,staging))):splitBy():count))*100)"
+      ]
+    },
+    {
+      "name": "integration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": "${722 + 114 * i}",
+        "left": 646,
+        "width": 190,
+        "height": 114
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "build",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "(((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,\"${sam_stack_name_integration[i]}\"),eq(stage,deploy),eq(environment,integration))):splitBy():count)\n-\n(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,\"${sam_stack_name_integration[i]}\"),eq(environment,integration))):splitBy():count))\n/\n(devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"${sam_stack_name_integration[i]}\"),eq(stage,deploy),eq(environment,integration))):splitBy():count))*100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "%",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,integration))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,backend-api),eq(environment,integration))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,integration))):splitBy():count))*100):limit(100):names",
+        "resolution=null&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,integration))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,backend-api),eq(environment,integration))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,integration))):splitBy():count))*100)"
+      ]
+    },
+    {
+      "name": "build",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": "${722 + 114 * i}",
+        "left": 266,
+        "width": 190,
+        "height": 114
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "build",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "(((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,\"${sam_stack_name_build[i]}\"),eq(stage,deploy),eq(environment,build))):splitBy():count)\n-\n(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,\"${sam_stack_name_build[i]}\"),eq(environment,build))):splitBy():count))\n/\n(devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"${sam_stack_name_build[i]}\"),eq(stage,deploy),eq(environment,build))):splitBy():count))*100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "%",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,build))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,backend-api),eq(environment,build))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,build))):splitBy():count))*100):limit(100):names",
+        "resolution=null&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,build))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,backend-api),eq(environment,build))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,build))):splitBy():count))*100)"
+      ]
+    },%{ endfor}
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 38,
+        "width": 912,
+        "height": 228
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## How to use this dashboard\n\nThis dashboard is suitable for historical analysis. Inflight releases skew real-time data i.e. false positives on the Change Failure Rate.\n\n### Prerequisites\n\nData accuracy depends on the following components: \n\n\n1. Secure Pipelines - version v.2.46.6 or newer.\n2. govuk-one-login/devplatform-upload-action - version v3.8.1 or newer. \n3. govuk-one-login/devplatform-upload-action-ecr - version 1.2.4 or newer.\n"
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 608,
+        "left": 38,
+        "width": 988,
+        "height": 76
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## Change Failure Rate across environments.\n\nThis metric measures the % of secure pipelines executions that end in failure. This is a failure in ANY of the stages/steps of the overall pipeline. "
+    }
+  ]
+}
