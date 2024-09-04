@@ -303,6 +303,7 @@ resource "dynatrace_slo_v2" "sign_in_sign_up_service" {
 
 # Real User Monitoring (RUM) Apdex SLOs
 resource "dynatrace_slo_v2" "address_cri_apdex" {
+  count              = local.is_production ? 1 : 0
   name               = "Address CRI Apdex Rating"
   enabled            = true
   custom_description = "Apdex rating for the Address CRI frontend over the last month"
@@ -320,6 +321,7 @@ resource "dynatrace_slo_v2" "address_cri_apdex" {
 }
 
 resource "dynatrace_slo_v2" "authentication_apdex" {
+  count              = local.is_production ? 1 : 0
   name               = "Authentication Apdex Rating"
   enabled            = true
   custom_description = "Apdex rating for the Authentication frontend over the last month"
@@ -337,6 +339,7 @@ resource "dynatrace_slo_v2" "authentication_apdex" {
 }
 
 resource "dynatrace_slo_v2" "cic_cri_apdex" {
+  count              = local.is_production ? 1 : 0
   name               = "Claimed Identity Collector CRI Apdex Rating"
   enabled            = true
   custom_description = "Apdex rating for the Claimed Identity Collector CRI frontend over the last month"
@@ -354,6 +357,7 @@ resource "dynatrace_slo_v2" "cic_cri_apdex" {
 }
 
 resource "dynatrace_slo_v2" "document_app_cri_apdex" {
+  count              = local.is_production ? 1 : 0
   name               = "Document App CRI Apdex Rating"
   enabled            = true
   custom_description = "Apdex rating for the Document App CRI frontend over the last month"
@@ -371,6 +375,7 @@ resource "dynatrace_slo_v2" "document_app_cri_apdex" {
 }
 
 resource "dynatrace_slo_v2" "driving_license_cri_apdex" {
+  count              = local.is_production ? 1 : 0
   name               = "Driving License CRI Apdex Rating"
   enabled            = true
   custom_description = "Apdex rating for the Driving License CRI frontend over the last month"
@@ -388,6 +393,7 @@ resource "dynatrace_slo_v2" "driving_license_cri_apdex" {
 }
 
 resource "dynatrace_slo_v2" "experian_kbv_cri_apdex" {
+  count              = local.is_production ? 1 : 0
   name               = "Experian KBV CRI Apdex Rating"
   enabled            = true
   custom_description = "Apdex rating for the Experian KBV CRI frontend over the last month"
@@ -405,6 +411,7 @@ resource "dynatrace_slo_v2" "experian_kbv_cri_apdex" {
 }
 
 resource "dynatrace_slo_v2" "face_to_face_cri_apdex" {
+  count              = local.is_production ? 1 : 0
   name               = "Face to Face CRI Apdex Rating"
   enabled            = true
   custom_description = "Apdex rating for the Face to Face CRI frontend over the last month"
@@ -422,6 +429,7 @@ resource "dynatrace_slo_v2" "face_to_face_cri_apdex" {
 }
 
 resource "dynatrace_slo_v2" "fraud_cri_apdex" {
+  count              = local.is_production ? 1 : 0
   name               = "Fraud CRI Apdex Rating"
   enabled            = true
   custom_description = "Apdex rating for the Fraud CRI frontend over the last month"
@@ -439,6 +447,7 @@ resource "dynatrace_slo_v2" "fraud_cri_apdex" {
 }
 
 resource "dynatrace_slo_v2" "home_apdex" {
+  count              = local.is_production ? 1 : 0
   name               = "Home Apdex Rating"
   enabled            = true
   custom_description = "Apdex rating for the Home frontend over the last month"
@@ -456,6 +465,7 @@ resource "dynatrace_slo_v2" "home_apdex" {
 }
 
 resource "dynatrace_slo_v2" "ipv_core_apdex" {
+  count              = local.is_production ? 1 : 0
   name               = "IPV Core Apdex Rating"
   enabled            = true
   custom_description = "Apdex rating for the IPV Core frontend over the last month"
@@ -473,6 +483,7 @@ resource "dynatrace_slo_v2" "ipv_core_apdex" {
 }
 
 resource "dynatrace_slo_v2" "passport_cri_apdex" {
+  count              = local.is_production ? 1 : 0
   name               = "Passport CRI Apdex Rating"
   enabled            = true
   custom_description = "Apdex rating for the Passport CRI frontend over the last month"
@@ -490,6 +501,7 @@ resource "dynatrace_slo_v2" "passport_cri_apdex" {
 }
 
 resource "dynatrace_slo_v2" "bav_cri_apdex" {
+  count              = local.is_production ? 1 : 0
   name               = "Bank Account Verification CRI Apdex Rating"
   enabled            = true
   custom_description = "Apdex rating for the Bank Account Verification CRI frontend over the last month"
@@ -507,6 +519,7 @@ resource "dynatrace_slo_v2" "bav_cri_apdex" {
 }
 
 resource "dynatrace_slo_v2" "hmrc_kbv_cri_apdex" {
+  count              = local.is_production ? 1 : 0
   name               = "HMRC KBV CRI Apdex Rating"
   enabled            = true
   custom_description = "Apdex rating for the HMRC KBV CRI frontend over the last month"
@@ -524,6 +537,7 @@ resource "dynatrace_slo_v2" "hmrc_kbv_cri_apdex" {
 }
 
 resource "dynatrace_slo_v2" "hmrc_nino_check_cri_apdex" {
+  count              = local.is_production ? 1 : 0
   name               = "HMRC NINO Check CRI Apdex Rating"
   enabled            = true
   custom_description = "Apdex rating for the HMRC NINO Check CRI frontend over the last month"
