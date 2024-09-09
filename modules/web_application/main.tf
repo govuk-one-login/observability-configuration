@@ -20,6 +20,8 @@ resource "dynatrace_web_application" "web_application" {
   monitoring_settings {
     cache_control_header_optimizations = true
     injection_mode                     = "JAVASCRIPT_TAG"
+    fetch_requests                     = true
+    xml_http_request                   = true
     advanced_javascript_tag_settings {
       max_action_name_length = 100
       max_errors_to_capture  = 10
