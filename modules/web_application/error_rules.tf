@@ -9,7 +9,7 @@ resource "dynatrace_application_error_rules" "web_application" {
       consider_blocked_requests   = false
       consider_for_ai             = false
       consider_unknown_error_code = false
-      error_codes                 = 404
+      error_codes                 = "404"
       impact_apdex                = false
       filter_by_url               = true
       filter                      = "ENDS_WITH"
@@ -20,7 +20,7 @@ resource "dynatrace_application_error_rules" "web_application" {
       consider_blocked_requests   = false
       consider_for_ai             = true
       consider_unknown_error_code = false
-      error_codes                 = 404
+      error_codes                 = "404"
       impact_apdex                = false
       filter_by_url               = true
       filter                      = "ENDS_WITH"
@@ -31,7 +31,7 @@ resource "dynatrace_application_error_rules" "web_application" {
       consider_blocked_requests   = false
       consider_for_ai             = true
       consider_unknown_error_code = false
-      error_codes                 = 404
+      error_codes                 = "404"
       impact_apdex                = false
       filter_by_url               = true
       filter                      = "ENDS_WITH"
@@ -42,7 +42,7 @@ resource "dynatrace_application_error_rules" "web_application" {
       consider_blocked_requests   = false
       consider_for_ai             = false
       consider_unknown_error_code = false
-      error_codes                 = 400-499
+      error_codes                 = "400-499"
       impact_apdex                = false
       filter_by_url               = false
     }
@@ -51,7 +51,7 @@ resource "dynatrace_application_error_rules" "web_application" {
       consider_blocked_requests   = false
       consider_for_ai             = true
       consider_unknown_error_code = false
-      error_codes                 = 500-599
+      error_codes                 = "500-599"
       impact_apdex                = true
       filter_by_url               = false
     }
@@ -60,7 +60,7 @@ resource "dynatrace_application_error_rules" "web_application" {
       consider_blocked_requests   = false
       consider_for_ai             = false
       consider_unknown_error_code = false
-      error_codes                 = 970-979
+      error_codes                 = "970-979"
       impact_apdex                = true
       filter_by_url               = false
     }
