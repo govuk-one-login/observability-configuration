@@ -6,16 +6,16 @@ resource "dynatrace_web_application" "web_application" {
   real_user_monitoring_enabled         = var.enabled
   xhr_action_key_performance_metric    = "VISUALLY_COMPLETE"
   custom_action_apdex_settings {
-    frustrating_fallback_threshold = 12000
-    frustrating_threshold          = 12000
-    tolerated_fallback_threshold   = 3000
-    tolerated_threshold            = 3000
+    frustrating_fallback_threshold = 15000
+    frustrating_threshold          = 15000
+    tolerated_fallback_threshold   = 8000
+    tolerated_threshold            = 8000
   }
   load_action_apdex_settings {
-    frustrating_fallback_threshold = 12000
-    frustrating_threshold          = 12000
-    tolerated_fallback_threshold   = 3000
-    tolerated_threshold            = 3000
+    frustrating_fallback_threshold = 15000
+    frustrating_threshold          = 15000
+    tolerated_fallback_threshold   = 8000
+    tolerated_threshold            = 8000
   }
   monitoring_settings {
     cache_control_header_optimizations = true
