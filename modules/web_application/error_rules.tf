@@ -61,7 +61,7 @@ resource "dynatrace_application_error_rules" "web_application" {
       consider_for_ai             = false
       consider_unknown_error_code = false
       error_codes                 = "970-979"
-      impact_apdex                = true
+      impact_apdex                = false
       filter_by_url               = false
     }
     rule {
@@ -77,7 +77,7 @@ resource "dynatrace_application_error_rules" "web_application" {
       consider_blocked_requests   = true
       consider_for_ai             = true
       consider_unknown_error_code = false
-      impact_apdex                = true
+      impact_apdex                = false
       filter_by_url               = false
     }
   }
