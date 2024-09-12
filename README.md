@@ -11,7 +11,8 @@ Key features of Dynatrace will be managed here.
 pip install pre-commit
 pre-commit install -tpre-commit -tprepare-commit-msg -tcommit-msg
 ```
-Note: Dont use "brew' on mac, this can fail to compile some modules.
+
+Note: Don't use `homebrew` on Mac, this can fail to compile some modules.
 
 ## Setup
 
