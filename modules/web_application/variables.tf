@@ -15,6 +15,5 @@ variable "opt_in_enabled" {
 }
 
 variable "manual_injection" {
-  type    = bool
-  default = false
+  type = bool
 }
