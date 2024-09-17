@@ -92,7 +92,7 @@ module "web_application_staging_subdomains" {
   name             = "${each.value["name"]} Staging"
   enabled          = true
   opt_in_enabled   = true
-  manual_injection = "${each.value["manual_injection"]}"
+  manual_injection = each.value["manual_injection"]
 }
 
 module "web_application_integration" {
@@ -114,7 +114,7 @@ module "web_application_integration_subdomains" {
   name             = "${each.value["name"]} Integration"
   enabled          = true
   opt_in_enabled   = true
-  manual_injection = "${each.value["manual_injection"]}"
+  manual_injection = each.value["manual_injection"]
 }
 
 module "web_application_production" {
@@ -136,5 +136,5 @@ module "web_application_production_subdomains" {
   name             = "${each.value["name"]} Production"
   enabled          = true
   opt_in_enabled   = true
-  manual_injection = "${each.value["manual_injection"]}"
+  manual_injection = each.value["manual_injection"]
 }
