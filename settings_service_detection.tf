@@ -63,7 +63,7 @@ module "zendesk" {
   url    = "zendesk.com"
 }
 
-# ReadID Token Production only
+# ReadID Token
 resource "dynatrace_service_external_web_request" "readid_token" {
   name    = "ReadID Token"
   enabled = true
@@ -97,7 +97,7 @@ resource "dynatrace_service_external_web_request" "readid_token" {
   }
 }
 
-# ReadID Sessions Production only
+# ReadID Sessions
 resource "dynatrace_service_external_web_request" "readid_sessions" {
   name    = "ReadID sessions"
   enabled = true
@@ -131,7 +131,7 @@ resource "dynatrace_service_external_web_request" "readid_sessions" {
   }
 }
 
-# HMRC NINo Production only
+# HMRC NINo
 resource "dynatrace_service_external_web_request" "hmrc_nino" {
   name    = "HMRC NINo"
   enabled = true
@@ -144,7 +144,7 @@ resource "dynatrace_service_external_web_request" "hmrc_nino" {
     condition {
       attribute              = "Url"
       compare_operation_type = "StringContains"
-      text_values            = ["individuals/authentication"]
+      text_values            = ["authenticator/api/match"]
     }
   }
   id_contributors {
@@ -165,7 +165,7 @@ resource "dynatrace_service_external_web_request" "hmrc_nino" {
   }
 }
 
-# OTG Production only
+# OTG
 resource "dynatrace_service_external_web_request" "otg" {
   name    = "OTG"
   enabled = true
@@ -179,6 +179,40 @@ resource "dynatrace_service_external_web_request" "otg" {
       attribute              = "Url"
       compare_operation_type = "StringContains"
       text_values            = ["oauth/token"]
+    }
+  }
+  id_contributors {
+    port_for_service_id = false
+    application_id {
+      enable_id_contributor = false
+    }
+    context_root {
+      enable_id_contributor = false
+    }
+    public_domain_name {
+      enable_id_contributor = true
+      service_id_contributor {
+        contribution_type   = "OriginalValue"
+        copy_from_host_name = true
+      }
+    }
+  }
+}
+
+# HMRC KBV
+resource "dynatrace_service_external_web_request" "hmrc_kbv" {
+  name    = "HMRC KBV"
+  enabled = true
+  conditions {
+    condition {
+      attribute              = "HostName"
+      compare_operation_type = "StringEndsWith"
+      text_values            = ["api.service.hmrc.gov.uk"]
+    }
+    condition {
+      attribute              = "Url"
+      compare_operation_type = "StringContains"
+      text_values            = ["identity-verification-questions"]
     }
   }
   id_contributors {
