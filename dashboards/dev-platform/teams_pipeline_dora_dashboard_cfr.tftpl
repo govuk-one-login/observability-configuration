@@ -37,7 +37,7 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "metricSelector": "(((devplatform.sam-pipelines.deployment:filter(and(or(%{ for i, ssn in sam_stack_name_build }eq(sam-stack-name,\"${sam_stack_name_build[i]}\")%{ if i == length(sam_stack_name_build)-1 }%{ else },%{ endif }%{ endfor }),eq(stage,deploy),eq(environment,build))):splitBy():count)\n-\n(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),or(%{ for i, ssn in sam_stack_name_build }eq(sam-stack-name,\"${sam_stack_name_production[i]}\")%{ if i == length(sam_stack_name_build)-1 }%{ else },%{ endif }%{ endfor }),eq(environment,production))):splitBy():count))\n/\n(devplatform.sam-pipelines.deployment:filter(and(or(%{ for i, ssn in sam_stack_name_build }eq(sam-stack-name,\"${sam_stack_name_build[i]}\")%{ if i == length(sam_stack_name_build)-1 }%{ else },%{ endif }%{ endfor }),eq(stage,deploy),eq(environment,build))):splitBy():count))*100",
+          "metricSelector": "(((devplatform.sam-pipelines.deployment:filter(and(or(%{ for i, ssn in sam_stack_name_build }eq(sam-stack-name,\"${sam_stack_name_build[i]}\")%{ if i == length(sam_stack_name_build)-1 }%{ else },%{ endif }%{ endfor }),eq(stage,deploy),eq(environment,build))):splitBy():count)\n-\n(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"0\"),or(%{ for i, ssn in sam_stack_name_build }eq(sam-stack-name,\"${sam_stack_name_production[i]}\")%{ if i == length(sam_stack_name_build)-1 }%{ else },%{ endif }%{ endfor }),eq(environment,production))):splitBy():count))\n/\n(devplatform.sam-pipelines.deployment:filter(and(or(%{ for i, ssn in sam_stack_name_build }eq(sam-stack-name,\"${sam_stack_name_build[i]}\")%{ if i == length(sam_stack_name_build)-1 }%{ else },%{ endif }%{ endfor }),eq(stage,deploy),eq(environment,build))):splitBy():count))*100",
           "rate": "NONE",
           "enabled": true
         }
@@ -109,7 +109,7 @@
         "resolution": "1M"
       },
       "metricExpressions": [
-        "resolution=1M&((((devplatform.sam-pipelines.deployment:filter(and(or(eq(sam-stack-name,backend-api),eq(sam-stack-name,frontend)),eq(stage,deploy),eq(environment,build))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),or(eq(sam-stack-name,backend-api),eq(sam-stack-name,frontend)),eq(environment,production))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(or(eq(sam-stack-name,backend-api),eq(sam-stack-name,frontend)),eq(stage,deploy),eq(environment,build))):splitBy():count))*100):limit(100):names"
+        "resolution=1M&((((devplatform.sam-pipelines.deployment:filter(and(or(eq(sam-stack-name,backend-api),eq(sam-stack-name,frontend)),eq(stage,deploy),eq(environment,build))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"0\"),or(eq(sam-stack-name,backend-api),eq(sam-stack-name,frontend)),eq(environment,production))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(or(eq(sam-stack-name,backend-api),eq(sam-stack-name,frontend)),eq(stage,deploy),eq(environment,build))):splitBy():count))*100):limit(100):names"
       ]
     },%{ for i, ssn in sam_stack_name_build }
     {
@@ -145,7 +145,7 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "metricSelector": "(((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,\"${sam_stack_name_production[i]}\"),eq(stage,deploy),eq(environment,production))):splitBy():count)\n-\n(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,\"${sam_stack_name_production[i]}\"),eq(environment,production))):splitBy():count))\n/\n(devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"${sam_stack_name_production[i]}\"),eq(stage,deploy),eq(environment,production))):splitBy():count))*100",
+          "metricSelector": "(((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,\"${sam_stack_name_production[i]}\"),eq(stage,deploy),eq(environment,production))):splitBy():count)\n-\n(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"0\"),eq(sam-stack-name,\"${sam_stack_name_production[i]}\"),eq(environment,production))):splitBy():count))\n/\n(devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"${sam_stack_name_production[i]}\"),eq(stage,deploy),eq(environment,production))):splitBy():count))*100",
           "rate": "NONE",
           "enabled": true
         }
@@ -212,8 +212,8 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,production))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,backend-api),eq(environment,production))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,production))):splitBy():count))*100):limit(100):names",
-        "resolution=null&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,production))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,backend-api),eq(environment,production))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,production))):splitBy():count))*100)"
+        "resolution=Inf&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,production))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"0\"),eq(sam-stack-name,backend-api),eq(environment,production))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,production))):splitBy():count))*100):limit(100):names",
+        "resolution=null&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,production))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"0\"),eq(sam-stack-name,backend-api),eq(environment,production))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,production))):splitBy():count))*100)"
       ]
     },
     {
@@ -235,7 +235,7 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "metricSelector": "(((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,\"${sam_stack_name_staging[i]}\"),eq(stage,deploy),eq(environment,staging))):splitBy():count)\n-\n(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,\"${sam_stack_name_staging[i]}\"),eq(environment,staging))):splitBy():count))\n/\n(devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"${sam_stack_name_staging[i]}\"),eq(stage,deploy),eq(environment,staging))):splitBy():count))*100",
+          "metricSelector": "(((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,\"${sam_stack_name_staging[i]}\"),eq(stage,deploy),eq(environment,staging))):splitBy():count)\n-\n(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"0\"),eq(sam-stack-name,\"${sam_stack_name_staging[i]}\"),eq(environment,staging))):splitBy():count))\n/\n(devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"${sam_stack_name_staging[i]}\"),eq(stage,deploy),eq(environment,staging))):splitBy():count))*100",
           "rate": "NONE",
           "enabled": true
         }
@@ -302,8 +302,8 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,staging))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,backend-api),eq(environment,staging))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,staging))):splitBy():count))*100):limit(100):names",
-        "resolution=null&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,staging))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,backend-api),eq(environment,staging))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,staging))):splitBy():count))*100)"
+        "resolution=Inf&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,staging))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"0\"),eq(sam-stack-name,backend-api),eq(environment,staging))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,staging))):splitBy():count))*100):limit(100):names",
+        "resolution=null&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,staging))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"0\"),eq(sam-stack-name,backend-api),eq(environment,staging))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,staging))):splitBy():count))*100)"
       ]
     },
     {
@@ -325,7 +325,7 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "metricSelector": "(((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,\"${sam_stack_name_integration[i]}\"),eq(stage,deploy),eq(environment,integration))):splitBy():count)\n-\n(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,\"${sam_stack_name_integration[i]}\"),eq(environment,integration))):splitBy():count))\n/\n(devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"${sam_stack_name_integration[i]}\"),eq(stage,deploy),eq(environment,integration))):splitBy():count))*100",
+          "metricSelector": "(((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,\"${sam_stack_name_integration[i]}\"),eq(stage,deploy),eq(environment,integration))):splitBy():count)\n-\n(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"0\"),eq(sam-stack-name,\"${sam_stack_name_integration[i]}\"),eq(environment,integration))):splitBy():count))\n/\n(devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"${sam_stack_name_integration[i]}\"),eq(stage,deploy),eq(environment,integration))):splitBy():count))*100",
           "rate": "NONE",
           "enabled": true
         }
@@ -392,8 +392,8 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,integration))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,backend-api),eq(environment,integration))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,integration))):splitBy():count))*100):limit(100):names",
-        "resolution=null&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,integration))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,backend-api),eq(environment,integration))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,integration))):splitBy():count))*100)"
+        "resolution=Inf&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,integration))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"0\"),eq(sam-stack-name,backend-api),eq(environment,integration))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,integration))):splitBy():count))*100):limit(100):names",
+        "resolution=null&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,integration))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"0\"),eq(sam-stack-name,backend-api),eq(environment,integration))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,integration))):splitBy():count))*100)"
       ]
     },
     {
@@ -415,7 +415,7 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "metricSelector": "(((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,\"${sam_stack_name_build[i]}\"),eq(stage,deploy),eq(environment,build))):splitBy():count)\n-\n(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,\"${sam_stack_name_build[i]}\"),eq(environment,build))):splitBy():count))\n/\n(devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"${sam_stack_name_build[i]}\"),eq(stage,deploy),eq(environment,build))):splitBy():count))*100",
+          "metricSelector": "(((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,\"${sam_stack_name_build[i]}\"),eq(stage,deploy),eq(environment,build))):splitBy():count)\n-\n(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"0\"),eq(sam-stack-name,\"${sam_stack_name_build[i]}\"),eq(environment,build))):splitBy():count))\n/\n(devplatform.sam-pipelines.deployment:filter(and(eq(\"sam-stack-name\",\"${sam_stack_name_build[i]}\"),eq(stage,deploy),eq(environment,build))):splitBy():count))*100",
           "rate": "NONE",
           "enabled": true
         }
@@ -482,8 +482,8 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,build))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,backend-api),eq(environment,build))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,build))):splitBy():count))*100):limit(100):names",
-        "resolution=null&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,build))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"1\"),eq(sam-stack-name,backend-api),eq(environment,build))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,build))):splitBy():count))*100)"
+        "resolution=Inf&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,build))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"0\"),eq(sam-stack-name,backend-api),eq(environment,build))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,build))):splitBy():count))*100):limit(100):names",
+        "resolution=null&((((devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,build))):splitBy():count)-(devplatform.sam-pipelines.deployment:filter(and(eq(build-success,\"0\"),eq(sam-stack-name,backend-api),eq(environment,build))):splitBy():count))/(devplatform.sam-pipelines.deployment:filter(and(eq(sam-stack-name,backend-api),eq(stage,deploy),eq(environment,build))):splitBy():count))*100)"
       ]
     },%{ endfor}
     {
