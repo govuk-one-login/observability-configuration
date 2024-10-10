@@ -80,7 +80,7 @@ resource "dynatrace_web_application" "web_application" {
       name            = "Referrer"
       public_metadata = false
       type            = "JAVA_SCRIPT_VARIABLE"
-      unique_id       = 1
+      unique_id       = 10
       use_last_value  = false
     }
     capture {
@@ -88,7 +88,7 @@ resource "dynatrace_web_application" "web_application" {
       name            = "User agent"
       public_metadata = false
       type            = "JAVA_SCRIPT_VARIABLE"
-      unique_id       = 2
+      unique_id       = 11
       use_last_value  = false
     }
     capture {
@@ -96,7 +96,7 @@ resource "dynatrace_web_application" "web_application" {
       name            = "UTM source"
       public_metadata = false
       type            = "QUERY_STRING"
-      unique_id       = 3
+      unique_id       = 12
       use_last_value  = false
     }
     capture {
@@ -104,7 +104,7 @@ resource "dynatrace_web_application" "web_application" {
       name            = "UTM medium"
       public_metadata = false
       type            = "QUERY_STRING"
-      unique_id       = 4
+      unique_id       = 13
       use_last_value  = false
     }
     capture {
@@ -112,7 +112,7 @@ resource "dynatrace_web_application" "web_application" {
       name            = "UTM campaign"
       public_metadata = false
       type            = "QUERY_STRING"
-      unique_id       = 5
+      unique_id       = 14
       use_last_value  = false
     }
     capture {
@@ -120,7 +120,7 @@ resource "dynatrace_web_application" "web_application" {
       name            = "UTM term"
       public_metadata = false
       type            = "QUERY_STRING"
-      unique_id       = 6
+      unique_id       = 15
       use_last_value  = false
     }
     capture {
@@ -128,7 +128,7 @@ resource "dynatrace_web_application" "web_application" {
       name            = "UTM content"
       public_metadata = false
       type            = "QUERY_STRING"
-      unique_id       = 7
+      unique_id       = 16
       use_last_value  = false
     }
   }
@@ -136,11 +136,11 @@ resource "dynatrace_web_application" "web_application" {
     property {
       aggregation                   = "FIRST"
       display_name                  = "Referrer"
-      id                            = 1
+      id                            = 10
       ignore_case                   = false
       key                           = "web_referrer"
       long_string_length            = 0
-      metadata_id                   = 1
+      metadata_id                   = 10
       origin                        = "META_DATA"
       store_as_session_property     = true
       store_as_user_action_property = false
@@ -149,11 +149,11 @@ resource "dynatrace_web_application" "web_application" {
     property {
       aggregation                   = "LAST"
       display_name                  = "User agent"
-      id                            = 2
+      id                            = 11
       ignore_case                   = false
       key                           = "web_useragent"
       long_string_length            = 0
-      metadata_id                   = 2
+      metadata_id                   = 11
       origin                        = "META_DATA"
       store_as_session_property     = true
       store_as_user_action_property = false
@@ -162,11 +162,11 @@ resource "dynatrace_web_application" "web_application" {
     property {
       aggregation                   = "LAST"
       display_name                  = "UTM source"
-      id                            = 3
+      id                            = 12
       ignore_case                   = false
       key                           = "web_utm_source"
       long_string_length            = 0
-      metadata_id                   = 3
+      metadata_id                   = 12
       origin                        = "META_DATA"
       store_as_session_property     = true
       store_as_user_action_property = false
@@ -175,11 +175,11 @@ resource "dynatrace_web_application" "web_application" {
     property {
       aggregation                   = "LAST"
       display_name                  = "UTM medium"
-      id                            = 4
+      id                            = 13
       ignore_case                   = false
       key                           = "web_utm_medium"
       long_string_length            = 0
-      metadata_id                   = 4
+      metadata_id                   = 13
       origin                        = "META_DATA"
       store_as_session_property     = true
       store_as_user_action_property = false
@@ -188,11 +188,11 @@ resource "dynatrace_web_application" "web_application" {
     property {
       aggregation                   = "LAST"
       display_name                  = "UTM campaign"
-      id                            = 5
+      id                            = 14
       ignore_case                   = false
       key                           = "web_utm_campaign"
       long_string_length            = 0
-      metadata_id                   = 5
+      metadata_id                   = 14
       origin                        = "META_DATA"
       store_as_session_property     = true
       store_as_user_action_property = false
@@ -201,11 +201,11 @@ resource "dynatrace_web_application" "web_application" {
     property {
       aggregation                   = "LAST"
       display_name                  = "UTM term"
-      id                            = 6
+      id                            = 15
       ignore_case                   = false
       key                           = "web_utm_term"
       long_string_length            = 0
-      metadata_id                   = 6
+      metadata_id                   = 15
       origin                        = "META_DATA"
       store_as_session_property     = true
       store_as_user_action_property = false
@@ -214,11 +214,11 @@ resource "dynatrace_web_application" "web_application" {
     property {
       aggregation                   = "LAST"
       display_name                  = "UTM content"
-      id                            = 7
+      id                            = 16
       ignore_case                   = false
       key                           = "web_utm_content"
       long_string_length            = 0
-      metadata_id                   = 7
+      metadata_id                   = 16
       origin                        = "META_DATA"
       store_as_session_property     = true
       store_as_user_action_property = false
