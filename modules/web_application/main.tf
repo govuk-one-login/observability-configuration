@@ -136,7 +136,7 @@ resource "dynatrace_web_application" "web_application" {
     property {
       aggregation                   = "FIRST"
       display_name                  = "Referrer"
-      id                            = 1
+      id                            = 10
       ignore_case                   = false
       key                           = "web_referrer"
       long_string_length            = 0
@@ -149,7 +149,7 @@ resource "dynatrace_web_application" "web_application" {
     property {
       aggregation                   = "LAST"
       display_name                  = "User agent"
-      id                            = 2
+      id                            = 11
       ignore_case                   = false
       key                           = "web_useragent"
       long_string_length            = 0
@@ -162,7 +162,7 @@ resource "dynatrace_web_application" "web_application" {
     property {
       aggregation                   = "LAST"
       display_name                  = "UTM source"
-      id                            = 3
+      id                            = 12
       ignore_case                   = false
       key                           = "web_utm_source"
       long_string_length            = 0
@@ -175,7 +175,7 @@ resource "dynatrace_web_application" "web_application" {
     property {
       aggregation                   = "LAST"
       display_name                  = "UTM medium"
-      id                            = 4
+      id                            = 13
       ignore_case                   = false
       key                           = "web_utm_medium"
       long_string_length            = 0
@@ -188,7 +188,7 @@ resource "dynatrace_web_application" "web_application" {
     property {
       aggregation                   = "LAST"
       display_name                  = "UTM campaign"
-      id                            = 5
+      id                            = 14
       ignore_case                   = false
       key                           = "web_utm_campaign"
       long_string_length            = 0
@@ -201,7 +201,7 @@ resource "dynatrace_web_application" "web_application" {
     property {
       aggregation                   = "LAST"
       display_name                  = "UTM term"
-      id                            = 6
+      id                            = 15
       ignore_case                   = false
       key                           = "web_utm_term"
       long_string_length            = 0
@@ -214,7 +214,7 @@ resource "dynatrace_web_application" "web_application" {
     property {
       aggregation                   = "LAST"
       display_name                  = "UTM content"
-      id                            = 7
+      id                            = 16
       ignore_case                   = false
       key                           = "web_utm_content"
       long_string_length            = 0
