@@ -44,6 +44,20 @@ resource "dynatrace_json_dashboard" "Team-DORA-Dashboards" {
   })
 }
 
+resource "dynatrace_json_dashboard" "Team-DORA-CFR-Dashboards" {
+  for_each = local.secure_pipelines_list
+
+  contents = templatefile("./dashboards/dev-platform/teams_pipeline_dora_dashboard_cfr.tftpl", {
+    team                       = each.key
+    owner                      = each.value[0].email
+    application_name           = [for app in each.value : app.application_name]
+    sam_stack_name_build       = [for app in each.value : app.sam_stack_name_build]
+    sam_stack_name_staging     = [for app in each.value : app.sam_stack_name_staging]
+    sam_stack_name_production  = [for app in each.value : app.sam_stack_name_production]
+    sam_stack_name_integration = [for app in each.value : app.sam_stack_name_integration]
+  })
+}
+
 resource "dynatrace_dashboard_sharing" "Team-DORA-Dashboards4" {
   for_each = local.secure_pipelines_multiple_sam_stack_names
 
@@ -67,6 +81,24 @@ resource "dynatrace_dashboard_sharing" "Team-DORA-Dashboards" {
   for_each = local.secure_pipelines_list
 
   dashboard_id = dynatrace_json_dashboard.Team-DORA-Dashboards[each.key].id
+  enabled      = true
+  permissions {
+    permission {
+      level = "VIEW"
+      type  = "ALL"
+    }
+    permission {
+      id    = data.dynatrace_iam_group.all.id
+      level = "VIEW"
+      type  = "GROUP"
+    }
+  }
+
+}
+resource "dynatrace_dashboard_sharing" "Team-DORA-CFR-Dashboards" {
+  for_each = local.secure_pipelines_list
+
+  dashboard_id = dynatrace_json_dashboard.Team-DORA-CFR-Dashboards[each.key].id
   enabled      = true
   permissions {
     permission {
