@@ -22,6 +22,262 @@
   },
   "tiles": [
     {
+      "name": "",
+      "nameSize": "medium",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1976,
+        "left": 0,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Pie",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "100*cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(and(eq(\"environment\", \"production\"),not(eq(\"clientname\",\"di-auth-smoketest-microclient-production\")))):splitBy():sum() \n/ (\n  cloud.aws.authentication.signInNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(and(eq(\"environment\", \"production\"),not(eq(\"clientname\",\"di-auth-smoketest-microclient-production\")))):splitBy():sum()\n+ cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(and(eq(\"environment\", \"production\"),not(eq(\"clientname\",\"di-auth-smoketest-microclient-production\")))):splitBy():sum()\n)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": true
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Sign In Percentage"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "% logins with existing account",
+              "visible": true,
+              "min": "0",
+              "max": "100",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1d",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=1d&(100*cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(and(eq(environment,production),not(eq(clientname,di-auth-smoketest-microclient-production)))):splitBy():sum/(cloud.aws.authentication.signInNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(and(eq(environment,production),not(eq(clientname,di-auth-smoketest-microclient-production)))):splitBy():sum+cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(and(eq(environment,production),not(eq(clientname,di-auth-smoketest-microclient-production)))):splitBy():sum)):limit(100):names"
+      ]
+    },
+    {
+      "name": "",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1976,
+        "left": 456,
+        "width": 494,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "F",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "environment"
+          ],
+          "metricSelector": "cloud.aws.authentication.reauthRequestedByAccountIdEnvironmentLogGroupRegionServiceNameServiceType:filter(and(or(eq(environment,integration),eq(environment,production)))):splitBy(environment):sort(value(auto,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "G",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "environment"
+          ],
+          "metricSelector": "cloud.aws.authentication.reauthSuccessByAccountIdEnvironmentLogGroupRegionServiceNameServiceType:filter(and(or(eq(environment,integration),eq(environment,production)))):splitBy(environment):sort(value(auto,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "H",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "environment",
+            "failurereason"
+          ],
+          "metricSelector": "cloud.aws.authentication.reauthFailedByAccountIdEnvironmentFailureReasonLogGroupRegionServiceNameServiceType:filter(and(or(eq(environment,integration),eq(environment,production)))):splitBy(environment,failurereason):sort(value(auto,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "F:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Requested"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "G:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Success"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "H:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Failed"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "F",
+                "G",
+                "H"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.authentication.reauthRequestedByAccountIdEnvironmentLogGroupRegionServiceNameServiceType:filter(and(or(eq(environment,integration),eq(environment,production)))):splitBy(environment):sort(value(auto,descending)):limit(20)):limit(100):names,(cloud.aws.authentication.reauthSuccessByAccountIdEnvironmentLogGroupRegionServiceNameServiceType:filter(and(or(eq(environment,integration),eq(environment,production)))):splitBy(environment):sort(value(auto,descending)):limit(20)):limit(100):names,(cloud.aws.authentication.reauthFailedByAccountIdEnvironmentFailureReasonLogGroupRegionServiceNameServiceType:filter(and(or(eq(environment,integration),eq(environment,production)))):splitBy(environment,failurereason):sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
       "name": "Account Creations",
       "tileType": "DATA_EXPLORER",
       "configured": true,
@@ -713,6 +969,34 @@
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
       "markdown": "## Front-Channel Logout\nThis shows how many users have logged out using the One Login logout button.\n\nThis shows client ids rather than client names. The Auth team would need to update this to show the client names.\n\n\n## Sign Ins by RP\nThis shows the number of sign ins per relying party. \n\n## Sign Ups by RP\nThis shows the number of signups per RP.\n"
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 1900,
+        "left": 0,
+        "width": 456,
+        "height": 76
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## How many sign ins are existing accounts?\n\nThis is the ratio of sign ins to sign ups, excluding smoke tests."
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 1900,
+        "left": 456,
+        "width": 494,
+        "height": 76
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## How are reauth journeys progressing?\n\nA look at how many have started, succeeded and failed."
     },
     {
       "name": "Sign Ins",
