@@ -32,6 +32,37 @@ resource "dynatrace_calculated_service_metric" "liveserviceshub" {
     top_x_aggregation = "SINGLE_VALUE"
   }
 }
+
+resource "dynatrace_calculated_service_metric" "ipv-core-response-time" {
+  name             = "ipv-core-front-response-time"
+  enabled          = true
+  management_zones = []
+  metric_key       = "calc:service.ipv-core-front-response-time"
+  unit             = "MICRO_SECOND"
+  conditions {
+    condition {
+      attribute = "SERVICE_DISPLAY_NAME"
+      comparison {
+        negate = false
+        service_type {
+          operator = "EQUALS"
+          values   = ["di-ipv-core-front"]
+        }
+      }
+    }
+  }
+  metric_definition {
+    metric = "RESPONSE_TIME"
+  }
+  dimension_definition {
+    name              = "endpoint"
+    dimension         = "{Request:Name}"
+    top_x             = 100
+    top_x_direction   = "DESCENDING"
+    top_x_aggregation = "AVERAGE"
+  }
+}
+
 # Terraform resource does not exist for Request naming
 
 # API detection rules
