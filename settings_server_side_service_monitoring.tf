@@ -46,7 +46,7 @@ resource "dynatrace_calculated_service_metric" "ipv-core-response-time" {
         negate = false
         fast_string {
           operator = "CONTAINS"
-          values   = ["di-ipv-core-front"]
+          value    = "di-ipv-core-front"
         }
       }
     }
