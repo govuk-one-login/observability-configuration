@@ -44,8 +44,8 @@ resource "dynatrace_calculated_service_metric" "ipv-core-response-time" {
       attribute = "SERVICE_DISPLAY_NAME"
       comparison {
         negate = false
-        service_type {
-          operator = "EQUALS"
+        fast_string {
+          operator = "CONTAINS"
           values   = ["di-ipv-core-front"]
         }
       }
