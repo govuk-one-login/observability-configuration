@@ -3,13 +3,16 @@
     "configurationVersions": [
       7
     ],
-    "clusterVersion": "1.293.129.20240615-053240"
+    "clusterVersion": "1.303.42.20241021-231645"
   },
   "dashboardMetadata": {
     "name": "KIWI - BAV - Lambda - Metrics",
     "shared": true,
     "owner": "madan.karuppiah@digital.cabinet-office.gov.uk",
-    "popularity": 1,
+    "tags": [
+      "KIWI"
+    ],
+    "popularity": 2,
     "hasConsistentColors": false
   },
   "tiles": [
@@ -388,565 +391,6 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "BAV-PartialNameMatch-bav-cri-api",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "B",
-          "metric": "builtin:cloud.aws.lambda.errors",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "BAV-PartialNameMatch-bav-cri-api",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "GREEN",
-              "seriesType": "STACKED_AREA",
-              "alias": "Invocations"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "RED",
-              "seriesType": "STACKED_AREA",
-              "alias": "Errors"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A",
-                "B"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE",
-          "showLabels": false
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-PartialNameMatch-bav-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-PartialNameMatch-bav-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
-      "name": "Duration",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 418,
-        "left": 988,
-        "width": 494,
-        "height": 342
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "builtin:cloud.aws.lambda.duration",
-          "spaceAggregation": "AVG",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "BAV-PartialNameMatch-bav-cri-api",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "B",
-          "metric": "builtin:cloud.aws.lambda.duration",
-          "spaceAggregation": "MIN",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "BAV-PartialNameMatch-bav-cri-api",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "C",
-          "metric": "builtin:cloud.aws.lambda.duration",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "BAV-PartialNameMatch-bav-cri-api",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "STACKED_AREA",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "GREEN",
-              "seriesType": "STACKED_AREA",
-              "alias": "Average"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "YELLOW",
-              "seriesType": "STACKED_AREA",
-              "alias": "Minimum"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "C:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "BLUE",
-              "seriesType": "STACKED_AREA",
-              "alias": "Maximum"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A",
-                "B",
-                "C"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE",
-          "showLabels": false
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "LambdaFunction code execution time.",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-PartialNameMatch-bav-cri-api~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-PartialNameMatch-bav-cri-api~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-PartialNameMatch-bav-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
-      "name": "Concurrent Executions",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 418,
-        "left": 494,
-        "width": 494,
-        "height": 342
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "builtin:cloud.aws.lambda.concExecutions",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "BAV-PartialNameMatch-bav-cri-api",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "B",
-          "metric": "builtin:cloud.aws.lambda.throttlers",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "BAV-PartialNameMatch-bav-cri-api",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "GREEN",
-              "seriesType": "LINE",
-              "alias": "Concurrent Executions"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "RED",
-              "seriesType": "LINE",
-              "alias": "Throttles"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A",
-                "B"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE",
-          "showLabels": false
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-PartialNameMatch-bav-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-PartialNameMatch-bav-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
-      "name": "Invocations and Errors",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 798,
-        "left": 0,
-        "width": 494,
-        "height": 342
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "builtin:cloud.aws.lambda.invocations",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
                     "value": "BAV-Person-Info-Key-bav-cri-api",
                     "evaluator": "IN",
                     "matchExactly": true
@@ -1090,7 +534,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 798,
+        "top": 418,
         "left": 988,
         "width": 494,
         "height": 342
@@ -1307,7 +751,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 798,
+        "top": 418,
         "left": 494,
         "width": 494,
         "height": 342
@@ -1478,7 +922,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1178,
+        "top": 798,
         "left": 0,
         "width": 494,
         "height": 342
@@ -1649,7 +1093,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1178,
+        "top": 798,
         "left": 988,
         "width": 494,
         "height": 342
@@ -1866,7 +1310,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1178,
+        "top": 798,
         "left": 494,
         "width": 494,
         "height": 342
@@ -2037,7 +1481,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1558,
+        "top": 1178,
         "left": 0,
         "width": 494,
         "height": 342
@@ -2208,7 +1652,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1558,
+        "top": 1178,
         "left": 988,
         "width": 494,
         "height": 342
@@ -2425,7 +1869,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1558,
+        "top": 1178,
         "left": 494,
         "width": 494,
         "height": 342
@@ -2596,7 +2040,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1938,
+        "top": 1558,
         "left": 0,
         "width": 494,
         "height": 342
@@ -2767,7 +2211,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1938,
+        "top": 1558,
         "left": 988,
         "width": 494,
         "height": 342
@@ -2984,7 +2428,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1938,
+        "top": 1558,
         "left": 494,
         "width": 494,
         "height": 342
@@ -3155,7 +2599,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2318,
+        "top": 1938,
         "left": 0,
         "width": 494,
         "height": 342
@@ -3326,7 +2770,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2318,
+        "top": 1938,
         "left": 988,
         "width": 494,
         "height": 342
@@ -3543,7 +2987,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2318,
+        "top": 1938,
         "left": 494,
         "width": 494,
         "height": 342
@@ -3714,566 +3158,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2698,
-        "left": 0,
-        "width": 494,
-        "height": 342
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "builtin:cloud.aws.lambda.invocations",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "BAV-person-info-bav-cri-api",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "B",
-          "metric": "builtin:cloud.aws.lambda.errors",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "BAV-person-info-bav-cri-api",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "GREEN",
-              "seriesType": "STACKED_AREA",
-              "alias": "Invocations"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "RED",
-              "seriesType": "STACKED_AREA",
-              "alias": "Errors"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A",
-                "B"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE",
-          "showLabels": false
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-person-info-bav-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-person-info-bav-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
-      "name": "Duration",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2698,
-        "left": 988,
-        "width": 494,
-        "height": 342
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "builtin:cloud.aws.lambda.duration",
-          "spaceAggregation": "AVG",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "BAV-person-info-bav-cri-api",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "B",
-          "metric": "builtin:cloud.aws.lambda.duration",
-          "spaceAggregation": "MIN",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "BAV-person-info-bav-cri-api",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "C",
-          "metric": "builtin:cloud.aws.lambda.duration",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "BAV-person-info-bav-cri-api",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "STACKED_AREA",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "GREEN",
-              "seriesType": "STACKED_AREA",
-              "alias": "Average"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "YELLOW",
-              "seriesType": "STACKED_AREA",
-              "alias": "Minimum"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "C:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "BLUE",
-              "seriesType": "STACKED_AREA",
-              "alias": "Maximum"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A",
-                "B",
-                "C"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE",
-          "showLabels": false
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "LambdaFunction code execution time.",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-person-info-bav-cri-api~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-person-info-bav-cri-api~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-person-info-bav-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
-      "name": "Concurrent Executions",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2698,
-        "left": 494,
-        "width": 494,
-        "height": 342
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "builtin:cloud.aws.lambda.concExecutions",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "BAV-person-info-bav-cri-api",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "B",
-          "metric": "builtin:cloud.aws.lambda.throttlers",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "dt.entity.aws_lambda_function",
-                "filterType": "NAME",
-                "filterOperator": "OR",
-                "entityAttribute": "entityName",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "BAV-person-info-bav-cri-api",
-                    "evaluator": "IN",
-                    "matchExactly": true
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "GREEN",
-              "seriesType": "LINE",
-              "alias": "Concurrent Executions"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "RED",
-              "seriesType": "LINE",
-              "alias": "Throttles"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A",
-                "B"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE",
-          "showLabels": false
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-person-info-bav-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-person-info-bav-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
-      "name": "Invocations and Errors",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 3078,
+        "top": 2318,
         "left": 0,
         "width": 494,
         "height": 342
@@ -4444,7 +3329,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 3078,
+        "top": 2318,
         "left": 988,
         "width": 494,
         "height": 342
@@ -4661,7 +3546,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 3078,
+        "top": 2318,
         "left": 494,
         "width": 494,
         "height": 342
@@ -4832,7 +3717,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 3838,
+        "top": 3078,
         "left": 0,
         "width": 494,
         "height": 342
@@ -5003,7 +3888,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 3838,
+        "top": 3078,
         "left": 988,
         "width": 494,
         "height": 342
@@ -5220,7 +4105,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 3838,
+        "top": 3078,
         "left": 494,
         "width": 494,
         "height": 342
@@ -5391,7 +4276,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 3458,
+        "top": 2698,
         "left": 0,
         "width": 494,
         "height": 342
@@ -5562,7 +4447,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 3458,
+        "top": 2698,
         "left": 494,
         "width": 494,
         "height": 342
@@ -5733,7 +4618,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 3458,
+        "top": 2698,
         "left": 988,
         "width": 494,
         "height": 342
@@ -6174,7 +5059,7 @@
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "## Session Function - [Dashboard]()"
+      "markdown": "## Session Function"
     },
     {
       "name": "Markdown",
@@ -6188,7 +5073,7 @@
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "## Partial Name Match Function - [Dashboard]()"
+      "markdown": "## PersonInfoKey Function"
     },
     {
       "name": "Markdown",
@@ -6202,7 +5087,7 @@
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "## Person Info Key Function - [Dashboard]()"
+      "markdown": "## UserInfo Function"
     },
     {
       "name": "Markdown",
@@ -6216,7 +5101,7 @@
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "## UserInfo Function - [Dashboard]()"
+      "markdown": "## PersonInfo Function"
     },
     {
       "name": "Markdown",
@@ -6230,7 +5115,7 @@
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "## PersonInfo Function - [Dashboard]()"
+      "markdown": "## Access Token Function"
     },
     {
       "name": "Markdown",
@@ -6244,7 +5129,7 @@
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "## Access Token Function - [Dashboard]()"
+      "markdown": "## HmrcToken Function"
     },
     {
       "name": "Markdown",
@@ -6258,7 +5143,7 @@
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "## Hmrc Token Function - [Dashboard](https://bhe21058.live.dynatrace.com/ui/entity/SERVICE-CC98F53DFCB64F6B?gtf=-30d%20to%20now&gf=all&sessionId=JcDODSPsM3HVKhUz)"
+      "markdown": "## JsonWebKeys Function"
     },
     {
       "name": "Markdown",
@@ -6272,7 +5157,7 @@
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "## Person Info Function - [Dashboard]()"
+      "markdown": "## Verify Account Function"
     },
     {
       "name": "Markdown",
@@ -6286,7 +5171,7 @@
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "## JsonWebKeys Function - [Dashboard](https://bhe21058.live.dynatrace.com/ui/entity/SERVICE-3178D3D5CBDD5379?gtf=-2h&gf=all&sessionId=brXEADOdgVKbu1od)"
+      "markdown": "## Abort Function"
     },
     {
       "name": "Markdown",
@@ -6300,21 +5185,566 @@
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "## Verify Account  Function - [Dashboard]()"
+      "markdown": "## Partial Name Match Function"
     },
     {
-      "name": "Markdown",
-      "tileType": "MARKDOWN",
+      "name": "Concurrent Executions",
+      "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 3800,
-        "left": 0,
-        "width": 608,
-        "height": 38
+        "top": 3458,
+        "left": 494,
+        "width": 494,
+        "height": 342
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "## Abort Function - [Dashboard]()"
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.concExecutions",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "BAV-PartialNameMatch-bav-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.throttlers",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "BAV-PartialNameMatch-bav-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "Concurrent Executions"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "Throttles"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-PartialNameMatch-bav-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.throttlers:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-PartialNameMatch-bav-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Duration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 3458,
+        "left": 988,
+        "width": 494,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "BAV-PartialNameMatch-bav-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "BAV-PartialNameMatch-bav-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "builtin:cloud.aws.lambda.duration",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "BAV-PartialNameMatch-bav-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Average"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "STACKED_AREA",
+              "alias": "Minimum"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "BLUE",
+              "seriesType": "STACKED_AREA",
+              "alias": "Maximum"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "LambdaFunction code execution time.",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-PartialNameMatch-bav-cri-api~\")\"))))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-PartialNameMatch-bav-cri-api~\")\"))))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-PartialNameMatch-bav-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Invocations and Errors",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 3458,
+        "left": 0,
+        "width": 494,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:cloud.aws.lambda.invocations",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "BAV-PartialNameMatch-bav-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "builtin:cloud.aws.lambda.errors",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.aws_lambda_function",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "BAV-PartialNameMatch-bav-cri-api",
+                    "evaluator": "IN",
+                    "matchExactly": true
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Invocations"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA",
+              "alias": "Errors"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-PartialNameMatch-bav-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-PartialNameMatch-bav-cri-api~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
     }
   ]
 }
