@@ -708,9 +708,9 @@ resource "dynatrace_failure_detection_parameters" "ignore_page_not_found" {
   exception_rules {
     ignore_all_exceptions         = false
     ignore_span_failure_detection = false
-
-    ignored_exceptions {
+    success_forcing_exceptions {
       custom_handled_exception {
+        class_pattern   = "Error"
         message_pattern = "Page not found"
       }
     }
@@ -734,9 +734,9 @@ resource "dynatrace_failure_detection_parameters" "ignore_invalid_csrf_token" {
   exception_rules {
     ignore_all_exceptions         = false
     ignore_span_failure_detection = false
-
-    ignored_exceptions {
+    success_forcing_exceptions {
       custom_handled_exception {
+        class_pattern   = "Error"
         message_pattern = "invalid csrf token"
       }
     }
@@ -760,9 +760,9 @@ resource "dynatrace_failure_detection_parameters" "ignore_missing_prereq_for_thi
   exception_rules {
     ignore_all_exceptions         = false
     ignore_span_failure_detection = false
-
-    ignored_exceptions {
+    success_forcing_exceptions {
       custom_handled_exception {
+        class_pattern   = "Error"
         message_pattern = "Missing prereq for this step"
       }
     }
@@ -786,10 +786,14 @@ resource "dynatrace_failure_detection_parameters" "invalid_session" {
   exception_rules {
     ignore_all_exceptions         = false
     ignore_span_failure_detection = false
-
-    ignored_exceptions {
+    success_forcing_exceptions {
       custom_handled_exception {
+        class_pattern   = "Error"
         message_pattern = "Invalid session and referrer does not have gov.uk domain"
+      }
+      custom_handled_exception {
+        class_pattern   = "Error"
+        message_pattern = "Invalid session and referrer has gov.uk domain"
       }
     }
   }
