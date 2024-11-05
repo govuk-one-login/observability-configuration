@@ -116,7 +116,7 @@
       ]
     },
     {
-      "name": "F2F Lambda Function Invocations",
+      "name": "BAV Lambda Invocations",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
@@ -228,7 +228,7 @@
       ]
     },
     {
-      "name": "F2F Lambda Function Duration",
+      "name": "BAV Lambda Durations",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
@@ -328,137 +328,6 @@
       },
       "metricExpressions": [
         "resolution=Inf&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-Abort-bav-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-PartialNameMatch-bav-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-Person-Info-Key-bav-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-UserInfo-bav-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"JsonWebKeys-bav-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"Access-Token-bav-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-Abort-bav-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-Session-bav-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"HmrcToken-bav-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-person-info-bav-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.equals(~\"BAV-verify-account-bav-cri-api~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)):names"
-      ]
-    },
-    {
-      "name": "Total Backend 5XX Errors",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 912,
-        "left": 0,
-        "width": 380,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "B",
-          "metric": "cloud.aws.apigateway.5xxErrorByAccountIdApiNameRegion",
-          "spaceAggregation": "SUM",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id",
-            "apiname"
-          ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "aws.account.id",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "589782633452",
-                    "evaluator": "EQ"
-                  },
-                  {
-                    "value": "141524324937",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
-                "filter": "apiname",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "bav-cri-api - BAV Credential Issuer Private API",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "TABLE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "B:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "5XXError",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "B",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "B:aws.account.id.name",
-            "B:apiname.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":filter(and(or(eq(apiname,\"bav-cri-api - BAV Credential Issuer Private API\")),or(eq(\"aws.account.id\",\"589782633452\"),eq(\"aws.account.id\",\"141524324937\")))):splitBy(\"aws.account.id\",apiname):sum:sort(value(sum,descending)):limit(20)):names"
       ]
     },
     {
@@ -1876,6 +1745,100 @@
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
       "markdown": "## PROD\n- [APIGW](https://bhe21058.live.dynatrace.com/#dashboard;gtf=-30d%20to%20now;gf=all;id=e64d7aae-f0b1-477e-9a95-a8d8a978f16e)\n- [Cloudfront](https://bhe21058.live.dynatrace.com/#dashboard;gtf=-30d%20to%20now;gf=all;id=12d040b2-3461-4270-83aa-a3e8654fdc04)\n- [ECS](https://bhe21058.live.dynatrace.com/#dashboard;gtf=-30d%20to%20now;gf=all;id=4da27632-b4e2-4abe-bb50-c2c8c1270446)\n- [SQS](https://bhe21058.live.dynatrace.com/#dashboard;gtf=-30d%20to%20now;gf=all;id=8cd69e4a-5911-47bd-87bb-7a8343c54189)"
+    },
+    {
+      "name": "Total Backend 5XX Errors",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 912,
+        "left": 0,
+        "width": 380,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "apiname"
+          ],
+          "metricSelector": "cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":filter(and(or(eq(apiname,\"bav-cri-api - BAV Credential Issuer Private API\")),or(ne(\"aws.account.id\",\"576724867321\")))):splitBy(\"aws.account.id\",apiname):sum:sort(value(sum,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "5XXError",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "B",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "B:aws.account.id.name",
+            "B:apiname.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":filter(and(or(eq(apiname,\"bav-cri-api - BAV Credential Issuer Private API\")),or(ne(\"aws.account.id\",\"576724867321\")))):splitBy(\"aws.account.id\",apiname):sum:sort(value(sum,descending)):limit(20)):names"
+      ]
     }
   ]
 }
