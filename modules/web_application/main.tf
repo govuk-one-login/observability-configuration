@@ -74,157 +74,157 @@ resource "dynatrace_web_application" "web_application" {
       }
     }
   }
-  meta_data_capture_settings {
-    capture {
-      capturing_name  = "document.referrer"
-      name            = "Referrer"
-      public_metadata = false
-      type            = "JAVA_SCRIPT_VARIABLE"
-      unique_id       = 10
-      use_last_value  = false
-    }
-    capture {
-      capturing_name  = "navigator.userAgent"
-      name            = "User agent"
-      public_metadata = false
-      type            = "JAVA_SCRIPT_VARIABLE"
-      unique_id       = 11
-      use_last_value  = false
-    }
-    capture {
-      capturing_name  = "utm_source"
-      name            = "UTM source"
-      public_metadata = false
-      type            = "QUERY_STRING"
-      unique_id       = 12
-      use_last_value  = false
-    }
-    capture {
-      capturing_name  = "utm_medium"
-      name            = "UTM medium"
-      public_metadata = false
-      type            = "QUERY_STRING"
-      unique_id       = 13
-      use_last_value  = false
-    }
-    capture {
-      capturing_name  = "utm_campaign"
-      name            = "UTM campaign"
-      public_metadata = false
-      type            = "QUERY_STRING"
-      unique_id       = 14
-      use_last_value  = false
-    }
-    capture {
-      capturing_name  = "utm_term"
-      name            = "UTM term"
-      public_metadata = false
-      type            = "QUERY_STRING"
-      unique_id       = 15
-      use_last_value  = false
-    }
-    capture {
-      capturing_name  = "utm_content"
-      name            = "UTM content"
-      public_metadata = false
-      type            = "QUERY_STRING"
-      unique_id       = 16
-      use_last_value  = false
-    }
-  }
-  user_action_and_session_properties {
-    property {
-      aggregation                   = "FIRST"
-      display_name                  = "Referrer"
-      id                            = 10
-      ignore_case                   = false
-      key                           = "web_referrer"
-      long_string_length            = 0
-      metadata_id                   = 10
-      origin                        = "META_DATA"
-      store_as_session_property     = true
-      store_as_user_action_property = false
-      type                          = "STRING"
-    }
-    property {
-      aggregation                   = "LAST"
-      display_name                  = "User agent"
-      id                            = 11
-      ignore_case                   = false
-      key                           = "web_useragent"
-      long_string_length            = 0
-      metadata_id                   = 11
-      origin                        = "META_DATA"
-      store_as_session_property     = true
-      store_as_user_action_property = false
-      type                          = "STRING"
-    }
-    property {
-      aggregation                   = "LAST"
-      display_name                  = "UTM source"
-      id                            = 12
-      ignore_case                   = false
-      key                           = "web_utm_source"
-      long_string_length            = 0
-      metadata_id                   = 12
-      origin                        = "META_DATA"
-      store_as_session_property     = true
-      store_as_user_action_property = false
-      type                          = "STRING"
-    }
-    property {
-      aggregation                   = "LAST"
-      display_name                  = "UTM medium"
-      id                            = 13
-      ignore_case                   = false
-      key                           = "web_utm_medium"
-      long_string_length            = 0
-      metadata_id                   = 13
-      origin                        = "META_DATA"
-      store_as_session_property     = true
-      store_as_user_action_property = false
-      type                          = "STRING"
-    }
-    property {
-      aggregation                   = "LAST"
-      display_name                  = "UTM campaign"
-      id                            = 14
-      ignore_case                   = false
-      key                           = "web_utm_campaign"
-      long_string_length            = 0
-      metadata_id                   = 14
-      origin                        = "META_DATA"
-      store_as_session_property     = true
-      store_as_user_action_property = false
-      type                          = "STRING"
-    }
-    property {
-      aggregation                   = "LAST"
-      display_name                  = "UTM term"
-      id                            = 15
-      ignore_case                   = false
-      key                           = "web_utm_term"
-      long_string_length            = 0
-      metadata_id                   = 15
-      origin                        = "META_DATA"
-      store_as_session_property     = true
-      store_as_user_action_property = false
-      type                          = "STRING"
-    }
-    property {
-      aggregation                   = "LAST"
-      display_name                  = "UTM content"
-      id                            = 16
-      ignore_case                   = false
-      key                           = "web_utm_content"
-      long_string_length            = 0
-      metadata_id                   = 16
-      origin                        = "META_DATA"
-      store_as_session_property     = true
-      store_as_user_action_property = false
-      type                          = "STRING"
-    }
-  }
+  # meta_data_capture_settings {
+  #   capture {
+  #     capturing_name  = "document.referrer"
+  #     name            = "Referrer"
+  #     public_metadata = false
+  #     type            = "JAVA_SCRIPT_VARIABLE"
+  #     unique_id       = 10
+  #     use_last_value  = false
+  #   }
+  #   capture {
+  #     capturing_name  = "navigator.userAgent"
+  #     name            = "User agent"
+  #     public_metadata = false
+  #     type            = "JAVA_SCRIPT_VARIABLE"
+  #     unique_id       = 11
+  #     use_last_value  = false
+  #   }
+  #   capture {
+  #     capturing_name  = "utm_source"
+  #     name            = "UTM source"
+  #     public_metadata = false
+  #     type            = "QUERY_STRING"
+  #     unique_id       = 12
+  #     use_last_value  = false
+  #   }
+  #   capture {
+  #     capturing_name  = "utm_medium"
+  #     name            = "UTM medium"
+  #     public_metadata = false
+  #     type            = "QUERY_STRING"
+  #     unique_id       = 13
+  #     use_last_value  = false
+  #   }
+  #   capture {
+  #     capturing_name  = "utm_campaign"
+  #     name            = "UTM campaign"
+  #     public_metadata = false
+  #     type            = "QUERY_STRING"
+  #     unique_id       = 14
+  #     use_last_value  = false
+  #   }
+  #   capture {
+  #     capturing_name  = "utm_term"
+  #     name            = "UTM term"
+  #     public_metadata = false
+  #     type            = "QUERY_STRING"
+  #     unique_id       = 15
+  #     use_last_value  = false
+  #   }
+  #   capture {
+  #     capturing_name  = "utm_content"
+  #     name            = "UTM content"
+  #     public_metadata = false
+  #     type            = "QUERY_STRING"
+  #     unique_id       = 16
+  #     use_last_value  = false
+  #   }
+  # }
+  # user_action_and_session_properties {
+  #   property {
+  #     aggregation                   = "FIRST"
+  #     display_name                  = "Referrer"
+  #     id                            = 10
+  #     ignore_case                   = false
+  #     key                           = "web_referrer"
+  #     long_string_length            = 0
+  #     metadata_id                   = 10
+  #     origin                        = "META_DATA"
+  #     store_as_session_property     = true
+  #     store_as_user_action_property = false
+  #     type                          = "STRING"
+  #   }
+  #   property {
+  #     aggregation                   = "LAST"
+  #     display_name                  = "User agent"
+  #     id                            = 11
+  #     ignore_case                   = false
+  #     key                           = "web_useragent"
+  #     long_string_length            = 0
+  #     metadata_id                   = 11
+  #     origin                        = "META_DATA"
+  #     store_as_session_property     = true
+  #     store_as_user_action_property = false
+  #     type                          = "STRING"
+  #   }
+  #   property {
+  #     aggregation                   = "LAST"
+  #     display_name                  = "UTM source"
+  #     id                            = 12
+  #     ignore_case                   = false
+  #     key                           = "web_utm_source"
+  #     long_string_length            = 0
+  #     metadata_id                   = 12
+  #     origin                        = "META_DATA"
+  #     store_as_session_property     = true
+  #     store_as_user_action_property = false
+  #     type                          = "STRING"
+  #   }
+  #   property {
+  #     aggregation                   = "LAST"
+  #     display_name                  = "UTM medium"
+  #     id                            = 13
+  #     ignore_case                   = false
+  #     key                           = "web_utm_medium"
+  #     long_string_length            = 0
+  #     metadata_id                   = 13
+  #     origin                        = "META_DATA"
+  #     store_as_session_property     = true
+  #     store_as_user_action_property = false
+  #     type                          = "STRING"
+  #   }
+  #   property {
+  #     aggregation                   = "LAST"
+  #     display_name                  = "UTM campaign"
+  #     id                            = 14
+  #     ignore_case                   = false
+  #     key                           = "web_utm_campaign"
+  #     long_string_length            = 0
+  #     metadata_id                   = 14
+  #     origin                        = "META_DATA"
+  #     store_as_session_property     = true
+  #     store_as_user_action_property = false
+  #     type                          = "STRING"
+  #   }
+  #   property {
+  #     aggregation                   = "LAST"
+  #     display_name                  = "UTM term"
+  #     id                            = 15
+  #     ignore_case                   = false
+  #     key                           = "web_utm_term"
+  #     long_string_length            = 0
+  #     metadata_id                   = 15
+  #     origin                        = "META_DATA"
+  #     store_as_session_property     = true
+  #     store_as_user_action_property = false
+  #     type                          = "STRING"
+  #   }
+  #   property {
+  #     aggregation                   = "LAST"
+  #     display_name                  = "UTM content"
+  #     id                            = 16
+  #     ignore_case                   = false
+  #     key                           = "web_utm_content"
+  #     long_string_length            = 0
+  #     metadata_id                   = 16
+  #     origin                        = "META_DATA"
+  #     store_as_session_property     = true
+  #     store_as_user_action_property = false
+  #     type                          = "STRING"
+  #   }
+  # }
   waterfall_settings {
     resource_browser_caching_threshold            = 50
     resources_threshold                           = 100000
