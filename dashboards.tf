@@ -26,6 +26,12 @@ module "service_dashboard" {
   path   = "service-health-overview.json"
 }
 
+module "fms_dashboard" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "fms-monitoring.json"
+}
+
 module "slo_dashboard" {
   count  = local.is_production ? 1 : 0
   source = "./modules/dashboard"
