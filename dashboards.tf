@@ -410,14 +410,14 @@ module "otg_step_function_metrics_dashboard" {
   path   = "orange/orange-otg-step-function.json"
 }
 
-# kbv CRI
-module "kbv_dashboard" {
+# Experian kbv CRI
+module "experian_kbv_dashboard" {
   source = "./modules/dashboard"
-  path   = "orange/kbv-cri.json"
+  path   = "orange/experian-kbv-cri.json"
 }
-module "kbv_lambda_metrics_dashboard" {
+module "experian_kbv_lambda_metrics_dashboard" {
   source = "./modules/dashboard"
-  path   = "orange/kbv-lambda-metrics.json"
+  path   = "orange/experian-kbv-lambda-metrics.json"
 }
 
 # otg CRI
