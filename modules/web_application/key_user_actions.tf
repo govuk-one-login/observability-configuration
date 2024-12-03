@@ -329,3 +329,32 @@ resource "dynatrace_key_user_action" "driving_license_click_continue" {
   name           = "click on continue in /details"
   type           = "Xhr"
 }
+
+# Passport CRI Key User Actions
+resource "dynatrace_key_user_action" "passport_details" {
+  count          = strcontains(var.hostname, "review-pa") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /details"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "passport_search" {
+  count          = strcontains(var.hostname, "review-pa") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /search"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "pyi_attempt_recovery" {
+  count          = strcontains(var.hostname, "review-pa") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /ipv/page/pyi-attempt-recovery"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "passport_click_details" {
+  count          = strcontains(var.hostname, "review-pa") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "click on continue in /details"
+  type           = "Xhr"
+}
