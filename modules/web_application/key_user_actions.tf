@@ -235,3 +235,39 @@ resource "dynatrace_key_user_action" "question_click" {
   name           = "click on continue in /kbv/question"
   type           = "Xhr"
 }
+
+# Face to Face CRI Key User Actions
+resource "dynatrace_key_user_action" "post_office" {
+  count          = strcontains(var.hostname, "review-o") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /prove-identity-post-office"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "post_office_error" {
+  count          = strcontains(var.hostname, "review-o") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /error"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "find_post_office" {
+  count          = strcontains(var.hostname, "review-o") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /find-post-office-prove-identity"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "check_details_post_office" {
+  count          = strcontains(var.hostname, "review-o") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /check-details"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "post_office_click_confirm" {
+  count          = strcontains(var.hostname, "review-o") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "click on confirm and submit in /check-details"
+  type           = "Xhr"
+}
