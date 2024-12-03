@@ -401,3 +401,25 @@ resource "dynatrace_key_user_action" "bav_submit_details" {
   name           = "click on submit details for bank check in /check-details"
   type           = "Xhr"
 }
+
+# HMRC NINO Check CRI Key User Actions
+resource "dynatrace_key_user_action" "check_ni_number" {
+  count          = strcontains(var.hostname, "review-hc") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /check/national-insurance-number"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "could_not_check_ni" {
+  count          = strcontains(var.hostname, "review-hc") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /check/could-not-match-national-insurance"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "click_check_ni_number" {
+  count          = strcontains(var.hostname, "review-hc") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "click on check and continue in /check/national-insurance-number"
+  type           = "Xhr"
+}
