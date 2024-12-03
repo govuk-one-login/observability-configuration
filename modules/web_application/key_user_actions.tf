@@ -165,19 +165,58 @@ resource "dynatrace_key_user_action" "account_not_found" {
 }
 
 # Document App CRI Key User Actions
+resource "dynatrace_key_user_action" "select_device" {
+  count          = strcontains(var.hostname, "review-b") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /dca/oauth2/selectdevice"
+  type           = "Load"
+}
 
-# Experian KBV CRI Key User Actions
+resource "dynatrace_key_user_action" "doc_check" {
+  count          = strcontains(var.hostname, "review-b") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /ipv/page/page-multiple-doc-check"
+  type           = "Load"
+}
 
-# Face to Face CRI Key User Actions
+resource "dynatrace_key_user_action" "download_app" {
+  count          = strcontains(var.hostname, "review-b") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /dca/oauth2/downloadapp"
+  type           = "Load"
+}
 
-# Claimed Identity Collector CRI Key User Actions
+resource "dynatrace_key_user_action" "app" {
+  count          = strcontains(var.hostname, "review-b") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /dca/oauth2/idcheckapp"
+  type           = "Load"
+}
 
-# Driving License CRI Key User Actions
+resource "dynatrace_key_user_action" "handoff" {
+  count          = strcontains(var.hostname, "review-b") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /dca/app/handoff"
+  type           = "Load"
+}
 
-# Passport CRI Key User Actions
+resource "dynatrace_key_user_action" "timeout" {
+  count          = strcontains(var.hostname, "review-b") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /dca/oauth2/timeout"
+  type           = "Load"
+}
 
-# Bank Account Verification CRI Key User Actions
+resource "dynatrace_key_user_action" "link_error" {
+  count          = strcontains(var.hostname, "review-b") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /dca/app/linkerror"
+  type           = "Load"
+}
 
-# HMRC KBV CRI Key User Actions
-
-# HMRC NINO Check CRI Key User Actions
+resource "dynatrace_key_user_action" "handoff_error" {
+  count          = strcontains(var.hostname, "review-b") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /dca/app/handofferror"
+  type           = "Load"
+}
