@@ -220,3 +220,18 @@ resource "dynatrace_key_user_action" "handoff_error" {
   name           = "loading of page /dca/app/handofferror"
   type           = "Load"
 }
+
+# Experian KBV CRI Key User Actions
+resource "dynatrace_key_user_action" "question" {
+  count          = strcontains(var.hostname, "review-k") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /kbv/question"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "question_click" {
+  count          = strcontains(var.hostname, "review-k") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "click on continue in /kbv/question"
+  type           = "Xhr"
+}
