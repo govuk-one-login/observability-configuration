@@ -103,14 +103,14 @@ resource "dynatrace_key_user_action" "click_address" {
   count          = strcontains(var.hostname, "review-a") ? 1 : 0
   application_id = dynatrace_web_application.web_application.id
   name           = "click on continue in /address"
-  type           = "xhr"
+  type           = "Xhr"
 }
 
 resource "dynatrace_key_user_action" "click_confirm" {
   count          = strcontains(var.hostname, "review-a") ? 1 : 0
   application_id = dynatrace_web_application.web_application.id
   name           = "click on i confirm my details are correct in /summary/confirm"
-  type           = "xhr"
+  type           = "Xhr"
 }
 
 # Fraud Key User Actions
@@ -118,14 +118,14 @@ resource "dynatrace_key_user_action" "check" {
   count          = strcontains(var.hostname, "review-f") ? 1 : 0
   application_id = dynatrace_web_application.web_application.id
   name           = "loading of page /check"
-  type           = "load"
+  type           = "Load"
 }
 
 resource "dynatrace_key_user_action" "click_check" {
   count          = strcontains(var.hostname, "review-f") ? 1 : 0
   application_id = dynatrace_web_application.web_application.id
   name           = "click on continue in /check"
-  type           = "xhr"
+  type           = "Xhr"
 }
 
 # Home Key User Actions
@@ -133,35 +133,35 @@ resource "dynatrace_key_user_action" "your_services" {
   count          = strcontains(var.hostname, "home") ? 1 : 0
   application_id = dynatrace_web_application.web_application.id
   name           = "loading of page /your-services"
-  type           = "load"
+  type           = "Load"
 }
 
 resource "dynatrace_key_user_action" "contact_one_login" {
   count          = strcontains(var.hostname, "home") ? 1 : 0
   application_id = dynatrace_web_application.web_application.id
   name           = "loading of page /contact-gov-uk-one-login"
-  type           = "load"
+  type           = "Load"
 }
 
 resource "dynatrace_key_user_action" "security" {
   count          = strcontains(var.hostname, "home") ? 1 : 0
   application_id = dynatrace_web_application.web_application.id
   name           = "loading of page /security"
-  type           = "load"
+  type           = "Load"
 }
 
 resource "dynatrace_key_user_action" "enter_password" {
   count          = strcontains(var.hostname, "home") ? 1 : 0
   application_id = dynatrace_web_application.web_application.id
   name           = "loading of page /enter-password"
-  type           = "load"
+  type           = "Load"
 }
 
 resource "dynatrace_key_user_action" "account_not_found" {
   count          = strcontains(var.hostname, "home") ? 1 : 0
   application_id = dynatrace_web_application.web_application.id
   name           = "loading of page /account-not-found"
-  type           = "load"
+  type           = "Load"
 }
 
 # Document App CRI Key User Actions
