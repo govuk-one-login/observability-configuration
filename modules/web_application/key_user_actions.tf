@@ -271,3 +271,32 @@ resource "dynatrace_key_user_action" "post_office_click_confirm" {
   name           = "click on confirm and submit in /check-details"
   type           = "Xhr"
 }
+
+# Claimed Identity Collector CRI Key User Actions
+resource "dynatrace_key_user_action" "confirm_details_no_photo" {
+  count          = strcontains(var.hostname, "review-c") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /confirm-details-no-photo-id"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "enter_name_no_photo" {
+  count          = strcontains(var.hostname, "review-c") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /enter-name-no-photo-id"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "error_no_photo" {
+  count          = strcontains(var.hostname, "review-c") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /error"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "click_confirm_photo_details" {
+  count          = strcontains(var.hostname, "review-c") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "click on i confirm my details are correct in /confirm-details"
+  type           = "Xhr"
+}
