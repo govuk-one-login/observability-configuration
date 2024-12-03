@@ -358,3 +358,46 @@ resource "dynatrace_key_user_action" "passport_click_details" {
   name           = "click on continue in /details"
   type           = "Xhr"
 }
+
+# Bank Account Verification CRI Key User Actions
+resource "dynatrace_key_user_action" "enter_bank_details" {
+  count          = strcontains(var.hostname, "review-bav") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /continue-enter-bank-account-details"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "bav_check_details" {
+  count          = strcontains(var.hostname, "review-bav") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /check-details"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "bav_click_continue" {
+  count          = strcontains(var.hostname, "review-bav") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "click on continue in /enter-account-details"
+  type           = "Xhr"
+}
+
+resource "dynatrace_key_user_action" "bav_enter_details" {
+  count          = strcontains(var.hostname, "review-bav") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "click on continue in /enter-account-details/edit"
+  type           = "Xhr"
+}
+
+resource "dynatrace_key_user_action" "bav_click_check_details" {
+  count          = strcontains(var.hostname, "review-bav") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "click on check your bank or building society account details and try again in /could-not-match-bank"
+  type           = "Xhr"
+}
+
+resource "dynatrace_key_user_action" "bav_submit_details" {
+  count          = strcontains(var.hostname, "review-bav") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "click on submit details for bank check in /check-details"
+  type           = "Xhr"
+}
