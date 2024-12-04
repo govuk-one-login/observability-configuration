@@ -64,11 +64,6 @@ locals {
       hostname         = "review-pa"
       name             = "Passport CRI"
       manual_injection = false
-    },
-    review-hk = {
-      hostname         = "review-hk"
-      name             = "HMRC KBV CRI"
-      manual_injection = false
     }
   }
 }
