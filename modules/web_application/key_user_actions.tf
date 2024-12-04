@@ -165,19 +165,261 @@ resource "dynatrace_key_user_action" "account_not_found" {
 }
 
 # Document App CRI Key User Actions
+resource "dynatrace_key_user_action" "select_device" {
+  count          = strcontains(var.hostname, "review-b") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /dca/oauth2/selectdevice"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "doc_check" {
+  count          = strcontains(var.hostname, "review-b") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /ipv/page/page-multiple-doc-check"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "download_app" {
+  count          = strcontains(var.hostname, "review-b") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /dca/oauth2/downloadapp"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "app" {
+  count          = strcontains(var.hostname, "review-b") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /dca/oauth2/idcheckapp"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "handoff" {
+  count          = strcontains(var.hostname, "review-b") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /dca/app/handoff"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "timeout" {
+  count          = strcontains(var.hostname, "review-b") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /dca/oauth2/timeout"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "link_error" {
+  count          = strcontains(var.hostname, "review-b") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /dca/app/linkerror"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "handoff_error" {
+  count          = strcontains(var.hostname, "review-b") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /dca/app/handofferror"
+  type           = "Load"
+}
 
 # Experian KBV CRI Key User Actions
+resource "dynatrace_key_user_action" "question" {
+  count          = strcontains(var.hostname, "review-k") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /kbv/question"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "question_click" {
+  count          = strcontains(var.hostname, "review-k") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "click on continue in /kbv/question"
+  type           = "Xhr"
+}
 
 # Face to Face CRI Key User Actions
+resource "dynatrace_key_user_action" "post_office" {
+  count          = strcontains(var.hostname, "review-o") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /prove-identity-post-office"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "post_office_error" {
+  count          = strcontains(var.hostname, "review-o") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /error"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "find_post_office" {
+  count          = strcontains(var.hostname, "review-o") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /find-post-office-prove-identity"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "check_details_post_office" {
+  count          = strcontains(var.hostname, "review-o") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /check-details"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "post_office_click_confirm" {
+  count          = strcontains(var.hostname, "review-o") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "click on confirm and submit in /check-details"
+  type           = "Xhr"
+}
 
 # Claimed Identity Collector CRI Key User Actions
+resource "dynatrace_key_user_action" "confirm_details_no_photo" {
+  count          = strcontains(var.hostname, "review-c") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /confirm-details-no-photo-id"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "enter_name_no_photo" {
+  count          = strcontains(var.hostname, "review-c") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /enter-name-no-photo-id"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "error_no_photo" {
+  count          = strcontains(var.hostname, "review-c") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /error"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "click_confirm_photo_details" {
+  count          = strcontains(var.hostname, "review-c") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "click on i confirm my details are correct in /confirm-details"
+  type           = "Xhr"
+}
 
 # Driving License CRI Key User Actions
+resource "dynatrace_key_user_action" "license_issuer" {
+  count          = strcontains(var.hostname, "review-d") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /licence-issuer"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "driving_license_details" {
+  count          = strcontains(var.hostname, "review-d") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /details"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "give_dvla_consent" {
+  count          = strcontains(var.hostname, "review-d") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "click on give dvla your consent to check your driving licence details in /details"
+  type           = "Xhr"
+}
+
+resource "dynatrace_key_user_action" "driving_license_click_continue" {
+  count          = strcontains(var.hostname, "review-d") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "click on continue in /details"
+  type           = "Xhr"
+}
 
 # Passport CRI Key User Actions
+resource "dynatrace_key_user_action" "passport_details" {
+  count          = strcontains(var.hostname, "review-pa") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /details"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "passport_search" {
+  count          = strcontains(var.hostname, "review-pa") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /search"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "pyi_attempt_recovery" {
+  count          = strcontains(var.hostname, "review-pa") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /ipv/page/pyi-attempt-recovery"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "passport_click_details" {
+  count          = strcontains(var.hostname, "review-pa") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "click on continue in /details"
+  type           = "Xhr"
+}
 
 # Bank Account Verification CRI Key User Actions
+resource "dynatrace_key_user_action" "enter_bank_details" {
+  count          = strcontains(var.hostname, "review-bav") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /continue-enter-bank-account-details"
+  type           = "Load"
+}
 
-# HMRC KBV CRI Key User Actions
+resource "dynatrace_key_user_action" "bav_check_details" {
+  count          = strcontains(var.hostname, "review-bav") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /check-details"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "bav_click_continue" {
+  count          = strcontains(var.hostname, "review-bav") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "click on continue in /enter-account-details"
+  type           = "Xhr"
+}
+
+resource "dynatrace_key_user_action" "bav_enter_details" {
+  count          = strcontains(var.hostname, "review-bav") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "click on continue in /enter-account-details/edit"
+  type           = "Xhr"
+}
+
+resource "dynatrace_key_user_action" "bav_click_check_details" {
+  count          = strcontains(var.hostname, "review-bav") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "click on check your bank or building society account details and try again in /could-not-match-bank"
+  type           = "Xhr"
+}
+
+resource "dynatrace_key_user_action" "bav_submit_details" {
+  count          = strcontains(var.hostname, "review-bav") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "click on submit details for bank check in /check-details"
+  type           = "Xhr"
+}
 
 # HMRC NINO Check CRI Key User Actions
+resource "dynatrace_key_user_action" "check_ni_number" {
+  count          = strcontains(var.hostname, "review-hc") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /check/national-insurance-number"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "could_not_check_ni" {
+  count          = strcontains(var.hostname, "review-hc") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "loading of page /check/could-not-match-national-insurance"
+  type           = "Load"
+}
+
+resource "dynatrace_key_user_action" "click_check_ni_number" {
+  count          = strcontains(var.hostname, "review-hc") ? 1 : 0
+  application_id = dynatrace_web_application.web_application.id
+  name           = "click on check and continue in /check/national-insurance-number"
+  type           = "Xhr"
+}
