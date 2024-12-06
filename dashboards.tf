@@ -211,6 +211,11 @@ module "authentication_new_frontend" {
   path   = "authentication/auth-frontend-sp-migration.json"
 }
 
+module "authentication_new_int_frontend" {
+  count  = local.is_production ? 1 : 0 # Only create in production
+  source = "./modules/dashboard"
+  path   = "authentication/auth-frontend-sp-migration-int.json"
+}
 
 ### Core ###
 
