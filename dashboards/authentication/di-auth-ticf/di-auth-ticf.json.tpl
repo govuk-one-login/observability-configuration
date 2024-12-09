@@ -264,6 +264,17 @@
               "seriesOverrides": []
             },
             {
+              "matcher": "C:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "400"
+              },
+              "seriesOverrides": []
+            },
+            {
               "matcher": "D:",
               "unitTransform": "auto",
               "valueFormat": "auto",
