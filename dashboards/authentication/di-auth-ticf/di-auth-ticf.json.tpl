@@ -270,7 +270,7 @@
               "properties": {
                 "color": "DEFAULT",
                 "seriesType": "LINE",
-                "alias": "403"
+                "alias": "500"
               },
               "seriesOverrides": []
             },
