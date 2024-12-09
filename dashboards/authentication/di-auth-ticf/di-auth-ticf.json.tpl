@@ -3,7 +3,7 @@
   },
   "dashboardMetadata": {
     "name": "Authentication - TICF CRI (${application_environment})",
-    "shared": false,
+    "shared": true,
     "owner": "becka.lelew@digital.cabinet-office.gov.uk",
     "hasConsistentColors": false,
     "tags": [
