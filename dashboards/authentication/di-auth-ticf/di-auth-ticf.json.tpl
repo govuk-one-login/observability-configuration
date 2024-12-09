@@ -3,7 +3,7 @@
   },
   "dashboardMetadata": {
     "name": "Authentication - TICF CRI (${application_environment})",
-    "shared": false,
+    "shared": true,
     "owner": "becka.lelew@digital.cabinet-office.gov.uk",
     "hasConsistentColors": false,
     "tags": [
@@ -264,13 +264,24 @@
               "seriesOverrides": []
             },
             {
+              "matcher": "C:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "400"
+              },
+              "seriesOverrides": []
+            },
+            {
               "matcher": "D:",
               "unitTransform": "auto",
               "valueFormat": "auto",
               "properties": {
                 "color": "DEFAULT",
                 "seriesType": "LINE",
-                "alias": "403"
+                "alias": "500"
               },
               "seriesOverrides": []
             },
