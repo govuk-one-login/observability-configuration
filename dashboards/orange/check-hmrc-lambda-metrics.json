@@ -3,7 +3,7 @@
     "configurationVersions": [
       7
     ],
-    "clusterVersion": "1.290.46.20240425-162131"
+    "clusterVersion": "1.305.80.20241211-154135"
   },
   "dashboardMetadata": {
     "name": "Orange CHECK HMRC CRI Lambda-Metrics",
@@ -12,7 +12,6 @@
     "dashboardFilter": {
       "timeframe": "-30d to now"
     },
-    "popularity": 5,
     "hasConsistentColors": false
   },
   "tiles": [
@@ -4681,11 +4680,11 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "check-hmrc-cri-api-private",
+                    "value": "check-hmrc-cri-api-public",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "check-hmrc-cri-api-public",
+                    "value": "check-hmrc-cri-api-private",
                     "evaluator": "EQ"
                   }
                 ]
@@ -4801,11 +4800,11 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "check-hmrc-cri-api-public",
+                    "value": "check-hmrc-cri-api-private",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "check-hmrc-cri-api-private",
+                    "value": "check-hmrc-cri-api-public",
                     "evaluator": "EQ"
                   }
                 ]
@@ -5061,11 +5060,11 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "check-hmrc-cri-api-private",
+                    "value": "check-hmrc-cri-api-public",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "check-hmrc-cri-api-public",
+                    "value": "check-hmrc-cri-api-private",
                     "evaluator": "EQ"
                   }
                 ]
@@ -5606,18 +5605,6 @@
                 ]
               },
               {
-                "filter": "service",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "di-ipv-cri-check-hmrc-api-Matching",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
                 "filter": "aws.region",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
@@ -5625,6 +5612,18 @@
                 "criteria": [
                   {
                     "value": "eu-west-2",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
+                "filter": "service",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-cri-check-hmrc-api-Matching",
                     "evaluator": "EQ"
                   }
                 ]
@@ -5648,18 +5647,6 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "service",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "di-ipv-cri-check-hmrc-api-Matching",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
                 "filter": "http",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
@@ -5667,6 +5654,18 @@
                 "criteria": [
                   {
                     "value": "MatchingHandler",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
+                "filter": "service",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-cri-check-hmrc-api-Matching",
                     "evaluator": "EQ"
                   }
                 ]
@@ -5823,7 +5822,253 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.di-ipv-cri-check-hmrc-api.responseLatencyByAccountIdHTTPRegionservice:filter(and(or(eq(http,MatchingHandler)),or(eq(service,di-ipv-cri-check-hmrc-api-Matching)),or(eq(\"aws.region\",eu-west-2)))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.di-ipv-cri-check-hmrc-api.responseLatencyByAccountIdHTTPRegionservice:filter(and(or(eq(http,MatchingHandler)),or(eq(service,di-ipv-cri-check-hmrc-api-Matching)))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names,(cloud.aws.di-ipv-cri-check-hmrc-api.responseLatencyByAccountIdHTTPRegionservice:filter(and(or(eq(http,MatchingHandler)),or(eq(service,di-ipv-cri-check-hmrc-api-Matching)))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.di-ipv-cri-check-hmrc-api.responseLatencyByAccountIdHTTPRegionservice:filter(and(or(eq(\"aws.region\",eu-west-2)),or(eq(http,MatchingHandler)),or(eq(service,di-ipv-cri-check-hmrc-api-Matching)))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.di-ipv-cri-check-hmrc-api.responseLatencyByAccountIdHTTPRegionservice:filter(and(or(eq(http,MatchingHandler)),or(eq(service,di-ipv-cri-check-hmrc-api-Matching)))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names,(cloud.aws.di-ipv-cri-check-hmrc-api.responseLatencyByAccountIdHTTPRegionservice:filter(and(or(eq(http,MatchingHandler)),or(eq(service,di-ipv-cri-check-hmrc-api-Matching)))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "LatencyInMs",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1102,
+        "left": 1140,
+        "width": 380,
+        "height": 228
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "cloud.aws.di-ipv-cri-check-hmrc-api.responseLatencyByAccountIdHTTPRegionservice",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "service",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-cri-check-hmrc-api-OTG",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
+                "filter": "http",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "OTGHandler",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "cloud.aws.di-ipv-cri-check-hmrc-api.responseLatencyByAccountIdHTTPRegionservice",
+          "spaceAggregation": "MAX",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "service",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-cri-check-hmrc-api-OTG",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
+                "filter": "http",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "OTGHandler",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "cloud.aws.di-ipv-cri-check-hmrc-api.responseLatencyByAccountIdHTTPRegionservice",
+          "spaceAggregation": "MIN",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "http",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "OTGHandler",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
+                "filter": "service",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "di-ipv-cri-check-hmrc-api-OTG",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "Kilo",
+            "valueFormat": "0",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "LINE",
+              "alias": "Average"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "Kilo",
+            "valueFormat": "none",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "Maximum"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "Kilo",
+            "valueFormat": "0",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "Minimum"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": false
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.di-ipv-cri-check-hmrc-api.responseLatencyByAccountIdHTTPRegionservice:filter(and(or(eq(service,di-ipv-cri-check-hmrc-api-OTG)),or(eq(http,OTGHandler)))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.di-ipv-cri-check-hmrc-api.responseLatencyByAccountIdHTTPRegionservice:filter(and(or(eq(service,di-ipv-cri-check-hmrc-api-OTG)),or(eq(http,OTGHandler)))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names,(cloud.aws.di-ipv-cri-check-hmrc-api.responseLatencyByAccountIdHTTPRegionservice:filter(and(or(eq(service,di-ipv-cri-check-hmrc-api-OTG)),or(eq(http,OTGHandler)))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names"
       ]
     }
   ]
