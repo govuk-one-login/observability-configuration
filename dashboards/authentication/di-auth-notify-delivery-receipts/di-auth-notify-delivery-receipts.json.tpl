@@ -34,7 +34,7 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "metricSelector": "cloud.aws.authentication.emailSentByAccountIdEmailNameEnvironmentLogGroupNotifyStatusRegionServiceNameServiceType:filter(and(or(not(eq(notifystatus,delivered))))):splitBy():sort(value(auto,descending)):sum\n",
+          "metricSelector": "cloud.aws.authentication.emailSentByAccountIdEmailNameEnvironmentLogGroupNotifyStatusRegionServiceNameServiceType:filter(and(not(eq(notifystatus,delivered)),eq(environment,${application_environment}))):splitBy():sort(value(auto,descending)):sum\n",
           "rate": "NONE",
           "enabled": true
         }
@@ -107,7 +107,7 @@
         "resolution": "10m"
       },
       "metricExpressions": [
-        "resolution=10m&(cloud.aws.authentication.emailSentByAccountIdEmailNameEnvironmentLogGroupNotifyStatusRegionServiceNameServiceType:filter(and(or(not(eq(notifystatus,delivered))))):splitBy():sort(value(auto,descending)):sum):limit(100):names"
+        "resolution=10m&(cloud.aws.authentication.emailSentByAccountIdEmailNameEnvironmentLogGroupNotifyStatusRegionServiceNameServiceType:filter(and(or(not(eq(notifystatus,delivered))),eq(environment,${application_environment}))):splitBy():sort(value(auto,descending)):sum):limit(100):names"
       ]
     },
     {
@@ -224,7 +224,7 @@
         "resolution": "1m"
       },
       "metricExpressions": [
-        "resolution=1m&(cloud.aws.authentication.emailSentByAccountIdEmailNameEnvironmentLogGroupNotifyStatusRegionServiceNameServiceType:filter(and(or(eq(notifystatus,delivered)))):splitBy(emailname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+        "resolution=1m&(cloud.aws.authentication.emailSentByAccountIdEmailNameEnvironmentLogGroupNotifyStatusRegionServiceNameServiceType:filter(and(or(eq(notifystatus,delivered)),eq(environment,${application_environment}))):splitBy(emailname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -246,7 +246,7 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(eq(notifystatus,delivered)):splitBy()",
+          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(eq(notifystatus,delivered),eq(environment,${application_environment}))):splitBy()",
           "rate": "NONE",
           "enabled": true
         }
@@ -312,7 +312,7 @@
         "foldAggregation": "SUM"
       },
       "metricExpressions": [
-        "resolution=1h&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(eq(notifystatus,delivered)):splitBy()):limit(100):names:fold(sum)"
+        "resolution=1h&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(eq(notifystatus,delivered),eq(environment,${application_environment}))):splitBy()):limit(100):names:fold(sum)"
       ]
     },
     {
@@ -336,7 +336,7 @@
           "splitBy": [
             "smstype"
           ],
-          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(not(eq(notifystatus,delivered))):splitBy(smstype):sort(value(auto,descending))",
+          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(not(eq(notifystatus,delivered)),eq(environment,${application_environment}))):splitBy(smstype):sort(value(auto,descending))",
           "rate": "NONE",
           "enabled": true
         }
@@ -400,7 +400,7 @@
         "foldAggregation": "SUM"
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(not(eq(notifystatus,delivered))):splitBy(smstype):sort(value(auto,descending))):names:fold(sum)"
+        "resolution=null&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(not(eq(notifystatus,delivered)),eq(environment,${application_environment}))):splitBy(smstype):sort(value(auto,descending))):names:fold(sum)"
       ]
     },
     {
@@ -509,7 +509,7 @@
         "foldAggregation": "SUM"
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(or(eq(notifystatus,delivered)))):splitBy(smstype):sort(value(auto,descending)):limit(20)):names:fold(sum)"
+        "resolution=null&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(eq(notifystatus,delivered),eq(environment,${application_environment})):splitBy(smstype):sort(value(auto,descending)):limit(20)):names:fold(sum)"
       ]
     },
     {
@@ -533,7 +533,7 @@
           "splitBy": [
             "emailname"
           ],
-          "metricSelector": "cloud.aws.authentication.emailSentByAccountIdEmailNameEnvironmentLogGroupNotifyStatusRegionServiceNameServiceType:filter(not(eq(notifystatus,delivered))):splitBy(emailname)",
+          "metricSelector": "cloud.aws.authentication.emailSentByAccountIdEmailNameEnvironmentLogGroupNotifyStatusRegionServiceNameServiceType:filter(and(not(eq(notifystatus,delivered)),eq(environment,${application_environment}))):splitBy(emailname)",
           "rate": "NONE",
           "enabled": true
         }
@@ -594,7 +594,7 @@
         "foldAggregation": "SUM"
       },
       "metricExpressions": [
-        "resolution=1h&(cloud.aws.authentication.emailSentByAccountIdEmailNameEnvironmentLogGroupNotifyStatusRegionServiceNameServiceType:filter(not(eq(notifystatus,delivered))):splitBy(emailname)):names:fold(sum)"
+        "resolution=1h&(cloud.aws.authentication.emailSentByAccountIdEmailNameEnvironmentLogGroupNotifyStatusRegionServiceNameServiceType:filter(and(not(eq(notifystatus,delivered)),eq(environment,${application_environment}))):splitBy(emailname)):names:fold(sum)"
       ]
     },
     {
@@ -618,7 +618,7 @@
           "splitBy": [
             "emailname"
           ],
-          "metricSelector": "cloud.aws.authentication.emailSentByAccountIdEmailNameEnvironmentLogGroupNotifyStatusRegionServiceNameServiceType:filter(eq(notifystatus,delivered)):splitBy(emailname)",
+          "metricSelector": "cloud.aws.authentication.emailSentByAccountIdEmailNameEnvironmentLogGroupNotifyStatusRegionServiceNameServiceType:filter(and(eq(notifystatus,delivered),eq(environment,${application_environment}))):splitBy(emailname)",
           "rate": "NONE",
           "enabled": true
         }
@@ -679,7 +679,7 @@
         "foldAggregation": "SUM"
       },
       "metricExpressions": [
-        "resolution=1h&(cloud.aws.authentication.emailSentByAccountIdEmailNameEnvironmentLogGroupNotifyStatusRegionServiceNameServiceType:filter(eq(notifystatus,delivered)):splitBy(emailname)):names:fold(sum)"
+        "resolution=1h&(cloud.aws.authentication.emailSentByAccountIdEmailNameEnvironmentLogGroupNotifyStatusRegionServiceNameServiceType:filter(and(eq(notifystatus,delivered), eq(environment,${application_environment}))):splitBy(emailname)):names:fold(sum)"
       ]
     },
     {
@@ -701,7 +701,7 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(or(eq(notifystatus,delivered)))):splitBy():sum",
+          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(eq(notifystatus,delivered),eq(environment,${application_environment}))):splitBy():sum",
           "rate": "NONE",
           "enabled": true
         }
@@ -773,7 +773,7 @@
         "resolution": "10m"
       },
       "metricExpressions": [
-        "resolution=10m&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(or(eq(notifystatus,delivered)))):splitBy():sum):limit(100):names"
+        "resolution=10m&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(eq(notifystatus,delivered),eq(environment,${application_environment}))):splitBy():sum):limit(100):names"
       ]
     },
     {
@@ -795,7 +795,7 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(not(eq(notifystatus,\"delivered\"))):splitBy()",
+          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(not(eq(notifystatus,delivered)),eq(environment,${application_environment}))):splitBy()",
           "rate": "NONE",
           "enabled": true
         }
@@ -861,7 +861,7 @@
         "foldAggregation": "SUM"
       },
       "metricExpressions": [
-        "resolution=1h&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(not(eq(notifystatus,delivered))):splitBy()):limit(100):names:fold(sum)"
+        "resolution=1h&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(not(eq(notifystatus,delivered)),eq(environment,${application_environment}))):splitBy()):limit(100):names:fold(sum)"
       ]
     },
     {
@@ -885,7 +885,7 @@
           "splitBy": [
             "notifystatus"
           ],
-          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(not(eq(notifystatus,delivered))):splitBy(\"notifystatus\"):sum",
+          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(not(eq(notifystatus,delivered)),eq(environment,${application_environment}))):splitBy(\"notifystatus\"):sum",
           "rate": "NONE",
           "enabled": true
         }
@@ -957,7 +957,7 @@
         "resolution": "10m"
       },
       "metricExpressions": [
-        "resolution=10m&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(not(eq(notifystatus,delivered))):splitBy(notifystatus):sum):limit(100):names"
+        "resolution=10m&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(not(eq(notifystatus,delivered)),eq(environment,${application_environment}))):splitBy(notifystatus):sum):limit(100):names"
       ]
     },
     {
@@ -981,7 +981,7 @@
           "splitBy": [
             "notifystatus"
           ],
-          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(not(eq(countrycode,\"44\"))):splitBy(notifystatus):sort(value(auto,descending)):limit(20)",
+          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(not(eq(countrycode,\"44\")),eq(environment,${application_environment}))):splitBy(notifystatus):sort(value(auto,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         }
@@ -1045,7 +1045,7 @@
         "foldAggregation": "SUM"
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(not(eq(countrycode,\"44\"))):splitBy(notifystatus):sort(value(auto,descending)):limit(20)):names:fold(sum)"
+        "resolution=null&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(not(eq(countrycode,\"44\")),eq(environment,${application_environment}))):splitBy(notifystatus):sort(value(auto,descending)):limit(20)):names:fold(sum)"
       ]
     },
     {
@@ -1154,7 +1154,7 @@
         "foldAggregation": "SUM"
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(or(eq(countrycode,\"44\")))):splitBy(notifystatus):sort(value(auto,descending)):limit(20)):names:fold(sum)"
+        "resolution=null&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(eq(countrycode,\"44\"),eq(environment,${application_environment}))):splitBy(notifystatus):sort(value(auto,descending)):limit(20)):names:fold(sum)"
       ]
     },
     {
@@ -1178,7 +1178,7 @@
           "splitBy": [
             "notifystatus"
           ],
-          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(not(eq(countrycode,\"44\"))):splitBy(notifystatus):sum",
+          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(not(eq(countrycode,\"44\")),eq(environment,${application_environment}))):splitBy(notifystatus):sum",
           "rate": "NONE",
           "enabled": true
         }
@@ -1266,7 +1266,7 @@
         "resolution": "10m"
       },
       "metricExpressions": [
-        "resolution=10m&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(not(eq(countrycode,\"44\"))):splitBy(notifystatus):sum):limit(100):names"
+        "resolution=10m&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(not(eq(countrycode,\"44\")),eq(environment,${application_environment}))):splitBy(notifystatus):sum):limit(100):names"
       ]
     },
     {
@@ -1290,7 +1290,7 @@
           "splitBy": [
             "notifystatus"
           ],
-          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(or(eq(countrycode,\"44\")))):splitBy(notifystatus):sum",
+          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(eq(countrycode,\"44\"),eq(environment,${application_environment}))):splitBy(notifystatus):sum",
           "rate": "NONE",
           "enabled": true
         }
@@ -1378,7 +1378,7 @@
         "resolution": "10m"
       },
       "metricExpressions": [
-        "resolution=10m&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(or(eq(countrycode,\"44\")))):splitBy(notifystatus):sum):limit(100):names"
+        "resolution=10m&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(eq(countrycode,\"44\"),eq(environment,${application_environment}))):splitBy(notifystatus):sum):limit(100):names"
       ]
     },
     {
@@ -1403,7 +1403,7 @@
             "countrycode",
             "smstype"
           ],
-          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(or(eq(notifystatus,delivered)))):splitBy(countrycode,smstype):sum",
+          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(eq(notifystatus,delivered),eq(environment,${application_environment}))):splitBy(countrycode,smstype):sum",
           "rate": "NONE",
           "enabled": true
         }
@@ -1475,7 +1475,7 @@
         "resolution": "10m"
       },
       "metricExpressions": [
-        "resolution=10m&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(or(eq(notifystatus,delivered)))):splitBy(countrycode,smstype):sum):limit(100):names"
+        "resolution=10m&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(eq(notifystatus,delivered),eq(environment,${application_environment}))):splitBy(countrycode,smstype):sum):limit(100):names"
       ]
     },
     {
@@ -1500,7 +1500,7 @@
             "countrycode",
             "smstype"
           ],
-          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(not(eq(notifystatus,delivered))):splitBy(countrycode,smstype):sum",
+          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(not(eq(notifystatus,delivered)),eq(environment,${application_environment}))):splitBy(countrycode,smstype):sum",
           "rate": "NONE",
           "enabled": true
         }
@@ -1572,7 +1572,7 @@
         "resolution": "10m"
       },
       "metricExpressions": [
-        "resolution=10m&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(not(eq(notifystatus,delivered))):splitBy(countrycode,smstype):sum):limit(100):names"
+        "resolution=10m&(cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsType:filter(and(not(eq(notifystatus,delivered)),eq(environment,${application_environment}))):splitBy(countrycode,smstype):sum):limit(100):names"
       ]
     },
     {
@@ -1596,7 +1596,7 @@
           "splitBy": [
             "Status"
           ],
-          "metricSelector": "cloud.aws.authentication.bulkEmailStatusByAccountIdEnvironmentLogGroupRegionServiceNameServiceTypeStatus:splitBy(\"Status\"):sum",
+          "metricSelector": "cloud.aws.authentication.bulkEmailStatusByAccountIdEnvironmentLogGroupRegionServiceNameServiceTypeStatus:filter(eq(environment,${application_environment})):splitBy(\"Status\"):sum",
           "rate": "NONE",
           "enabled": true
         }
@@ -1657,7 +1657,7 @@
         "foldAggregation": "SUM"
       },
       "metricExpressions": [
-        "resolution=1h&(cloud.aws.authentication.bulkEmailStatusByAccountIdEnvironmentLogGroupRegionServiceNameServiceTypeStatus:splitBy(Status):sum):names:fold(sum)"
+        "resolution=1h&(cloud.aws.authentication.bulkEmailStatusByAccountIdEnvironmentLogGroupRegionServiceNameServiceTypeStatus:filter(eq(environment,${application_environment})):splitBy(Status):sum):names:fold(sum)"
       ]
     }
   ]
