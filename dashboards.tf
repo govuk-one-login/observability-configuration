@@ -199,18 +199,6 @@ module "di_auth_ticf_production_dashboard" {
   application_environment = "production"
 }
 
-module "di_auth_notify_staging_dashboard" {
-  count  = local.is_production ? 0 : 1
-  source = "./dashboards/authentication/di-auth-notify-delivery-receipts"
-
-  application_environment = "staging"
-}
-module "di_auth_notify_integration_dashboard" {
-  count  = local.is_production ? 0 : 1
-  source = "./dashboards/authentication/di-auth-notify-delivery-receipts"
-
-  application_environment = "integration"
-}
 module "di_auth_notify_production_dashboard" {
   count  = local.is_production ? 1 : 0
   source = "./dashboards/authentication/di-auth-notify-delivery-receipts"
