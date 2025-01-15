@@ -20,7 +20,7 @@ resource "dynatrace_dashboard_sharing" "signin-signup" {
   }
 }
 
-module "service_dashboard" {
+module "service_dashboard_tsd" {
   count  = local.is_production ? 1 : 0
   source = "./modules/dashboard"
   path   = "service-health-overview-tsd.json"
