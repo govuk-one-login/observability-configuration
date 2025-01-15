@@ -23,7 +23,7 @@ resource "dynatrace_dashboard_sharing" "signin-signup" {
 module "service_dashboard" {
   count  = local.is_production ? 1 : 0
   source = "./modules/dashboard"
-  path   = "service-health-overview.json"
+  path   = "service-health-overview-tsd.json"
 }
 
 module "fms_dashboard" {
