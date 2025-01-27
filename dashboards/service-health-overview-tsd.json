@@ -3,13 +3,13 @@
     "configurationVersions": [
       7
     ],
-    "clusterVersion": "1.305.88.20250104-012102"
+    "clusterVersion": "1.306.65.20250123-155932"
   },
   "dashboardMetadata": {
     "name": "Service Health Overview-TSD",
     "shared": true,
     "owner": "christopher.dodd@digital.cabinet-office.gov.uk",
-    "popularity": 10,
+    "popularity": 9,
     "tilesNameSize": "medium",
     "hasConsistentColors": false
   },
@@ -191,15 +191,15 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
+                    "value": "production-processing-identity-lambda",
+                    "evaluator": "EQ"
+                  },
+                  {
                     "value": "production-ipv-callback-lambda",
                     "evaluator": "EQ"
                   },
                   {
                     "value": "production-orchestration-redirect-lambda",
-                    "evaluator": "EQ"
-                  },
-                  {
-                    "value": "production-processing-identity-lambda",
                     "evaluator": "EQ"
                   }
                 ]
@@ -291,7 +291,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:filter(and(or(eq(servicename,production-processing-identity-lambda),eq(servicename,production-ipv-callback-lambda),eq(servicename,production-orchestration-redirect-lambda)))):splitBy(servicename):sort(value(auto,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.authentication.aisResponseTimeMsByAccountIdLogGroupRegionServiceNameServiceTypestatusCode:filter(and(or(eq(servicename,production-orchestration-redirect-lambda),eq(servicename,production-processing-identity-lambda),eq(servicename,production-ipv-callback-lambda)))):splitBy(servicename):sort(value(auto,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -689,276 +689,6 @@
       ]
     },
     {
-      "name": "Sign-Ins/min",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 38,
-        "left": 0,
-        "width": 722,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Sign Ins By RP",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType",
-          "spaceAggregation": "SUM",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "B",
-          "metric": "cloud.aws.authentication.authenticationSuccessExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType",
-          "spaceAggregation": "SUM",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "STACKED_COLUMN",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "STACKED_COLUMN",
-              "alias": "Existing"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "STACKED_COLUMN",
-              "alias": "Success"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A",
-                "B"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "1m"
-      },
-      "metricExpressions": [
-        "resolution=1m&(cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy():sum:rate(1m)):limit(100):names,(cloud.aws.authentication.authenticationSuccessExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy():sum:rate(1m)):limit(100):names"
-      ]
-    },
-    {
-      "name": "Sign-Ups/min",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 38,
-        "left": 722,
-        "width": 760,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Sign Ins By RP",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "cloud.aws.authentication.signInNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType",
-          "spaceAggregation": "SUM",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "B",
-          "metric": "cloud.aws.authentication.authenticationSuccessNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType",
-          "spaceAggregation": "SUM",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "STACKED_COLUMN",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "STACKED_COLUMN",
-              "alias": "New"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "STACKED_COLUMN",
-              "alias": "Success"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A",
-                "B"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "A:clientname.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": true
-        }
-      },
-      "queriesSettings": {
-        "resolution": "1m"
-      },
-      "metricExpressions": [
-        "resolution=1m&(cloud.aws.authentication.signInNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy():sum:rate(1m)):limit(100):names,(cloud.aws.authentication.authenticationSuccessNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy():sum:rate(1m)):limit(100):names"
-      ]
-    },
-    {
       "name": "SPoT Monitoring",
       "tileType": "HEADER",
       "configured": true,
@@ -1297,7 +1027,11 @@
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "348043515437",
+                    "value": "513850971016",
+                    "evaluator": "EQ"
+                  },
+                  {
+                    "value": "451773080033",
                     "evaluator": "EQ"
                   },
                   {
@@ -1305,11 +1039,7 @@
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "513850971016",
-                    "evaluator": "EQ"
-                  },
-                  {
-                    "value": "451773080033",
+                    "value": "348043515437",
                     "evaluator": "EQ"
                   }
                 ]
@@ -1349,11 +1079,11 @@
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "513850971016",
+                    "value": "552549398917",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "552549398917",
+                    "value": "513850971016",
                     "evaluator": "EQ"
                   },
                   {
@@ -1451,7 +1181,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"552549398917\"),eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"451773080033\"),eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"658501491317\")))):splitBy(queuename):sort(value(auto,descending)):limit(20)):limit(100):names,(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"552549398917\"),eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"451773080033\"),eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"658501491317\")))):splitBy(queuename):sort(value(auto,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"552549398917\"),eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"451773080033\"),eq(\"aws.account.id\",\"658501491317\")))):splitBy(queuename):sort(value(auto,descending)):limit(20)):limit(100):names,(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"552549398917\"),eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"451773080033\"),eq(\"aws.account.id\",\"658501491317\")))):splitBy(queuename):sort(value(auto,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -4015,15 +3745,11 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "451773080033",
+                    "value": "348043515437",
                     "evaluator": "EQ"
                   },
                   {
                     "value": "552549398917",
-                    "evaluator": "EQ"
-                  },
-                  {
-                    "value": "348043515437",
                     "evaluator": "EQ"
                   },
                   {
@@ -4032,6 +3758,10 @@
                   },
                   {
                     "value": "513850971016",
+                    "evaluator": "EQ"
+                  },
+                  {
+                    "value": "451773080033",
                     "evaluator": "EQ"
                   }
                 ]
@@ -4129,7 +3859,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.dynamodb.consumedReadCapacityUnitsByAccountIdRegionTableName:filter(and(or(eq(\"aws.account.id\",\"552549398917\"),eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"451773080033\"),eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"658501491317\")))):splitBy(tablename):sort(value(auto,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.dynamodb.consumedReadCapacityUnitsByAccountIdRegionTableName:filter(and(or(eq(\"aws.account.id\",\"552549398917\"),eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"451773080033\"),eq(\"aws.account.id\",\"658501491317\")))):splitBy(tablename):sort(value(auto,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -4166,6 +3896,14 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
+                    "value": "552549398917",
+                    "evaluator": "EQ"
+                  },
+                  {
+                    "value": "348043515437",
+                    "evaluator": "EQ"
+                  },
+                  {
                     "value": "451773080033",
                     "evaluator": "EQ"
                   },
@@ -4175,14 +3913,6 @@
                   },
                   {
                     "value": "658501491317",
-                    "evaluator": "EQ"
-                  },
-                  {
-                    "value": "552549398917",
-                    "evaluator": "EQ"
-                  },
-                  {
-                    "value": "348043515437",
                     "evaluator": "EQ"
                   }
                 ]
@@ -4268,7 +3998,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.dynamodb.consumedWriteCapacityUnitsByAccountIdRegionTableName:filter(and(or(eq(\"aws.account.id\",\"552549398917\"),eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"451773080033\"),eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"658501491317\")))):splitBy(tablename):sort(value(auto,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.dynamodb.consumedWriteCapacityUnitsByAccountIdRegionTableName:filter(and(or(eq(\"aws.account.id\",\"552549398917\"),eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"451773080033\"),eq(\"aws.account.id\",\"658501491317\")))):splitBy(tablename):sort(value(auto,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -5915,11 +5645,11 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "address-cri-api-v1-PublicAddressApi",
+                    "value": "address-cri-api-v1-PrivateAddressApi",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "address-cri-api-v1-PrivateAddressApi",
+                    "value": "address-cri-api-v1-PublicAddressApi",
                     "evaluator": "EQ"
                   }
                 ]
@@ -5951,11 +5681,11 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "kbv-cri-private-kbv-cri-api-v1",
+                    "value": "kbv-cri-kbv-cri-api-v1",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "kbv-cri-kbv-cri-api-v1",
+                    "value": "kbv-cri-private-kbv-cri-api-v1",
                     "evaluator": "EQ"
                   }
                 ]
@@ -6104,7 +5834,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(or(eq(apiname,address-cri-api-v1-PublicAddressApi),eq(apiname,address-cri-api-v1-PrivateAddressApi)))):splitBy(resource):sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(or(eq(apiname,address-cri-api-v1-PublicAddressApi),eq(apiname,address-cri-api-v1-PrivateAddressApi)))):splitBy(resource):sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(or(eq(apiname,kbv-cri-private-kbv-cri-api-v1),eq(apiname,kbv-cri-kbv-cri-api-v1)))):splitBy(resource):sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(or(eq(apiname,kbv-cri-private-kbv-cri-api-v1),eq(apiname,kbv-cri-kbv-cri-api-v1)))):splitBy(resource):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(or(eq(apiname,address-cri-api-v1-PrivateAddressApi),eq(apiname,address-cri-api-v1-PublicAddressApi)))):splitBy(resource):sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(or(eq(apiname,address-cri-api-v1-PrivateAddressApi),eq(apiname,address-cri-api-v1-PublicAddressApi)))):splitBy(resource):sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(or(eq(apiname,kbv-cri-private-kbv-cri-api-v1),eq(apiname,kbv-cri-kbv-cri-api-v1)))):splitBy(resource):sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(or(eq(apiname,kbv-cri-private-kbv-cri-api-v1),eq(apiname,kbv-cri-kbv-cri-api-v1)))):splitBy(resource):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -6264,15 +5994,15 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
+                    "value": "513850971016",
+                    "evaluator": "EQ"
+                  },
+                  {
                     "value": "348043515437",
                     "evaluator": "EQ"
                   },
                   {
                     "value": "658501491317",
-                    "evaluator": "EQ"
-                  },
-                  {
-                    "value": "513850971016",
                     "evaluator": "EQ"
                   }
                 ]
@@ -6304,11 +6034,11 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "513850971016",
+                    "value": "348043515437",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "348043515437",
+                    "value": "513850971016",
                     "evaluator": "EQ"
                   },
                   {
@@ -6431,7 +6161,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameRegion\":filter(and(or(eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"658501491317\")))):splitBy(apiname):sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":filter(and(or(eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"658501491317\")))):splitBy(apiname):sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.countByAccountIdApiNameRegion:filter(and(or(eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"658501491317\")))):splitBy(apiname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameRegion\":filter(and(or(eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"658501491317\")))):splitBy(apiname):sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":filter(and(or(eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"658501491317\")))):splitBy(apiname):sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.countByAccountIdApiNameRegion:filter(and(or(eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"658501491317\")))):splitBy(apiname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -8061,18 +7791,6 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "build-success",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "0",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
                 "filter": "environment",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
@@ -8080,6 +7798,18 @@
                 "criteria": [
                   {
                     "value": "production",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
+                "filter": "build-success",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "0",
                     "evaluator": "EQ"
                   }
                 ]
@@ -8268,6 +7998,248 @@
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
       "markdown": "# Using the Production Change Dashboard\n\n\nChanges can sometimes result incidents. This dashboard shows production changes, and are a resource to be able to identify incidents which have potentially been caused by a production change. \n\n## Suggested use is:\n\n\nWhen an issue comes up, for example with di-auth, check the times that the issue occurred against when any changes were deployed, or if there was a failed deployment of di-auth. If so, raise it with the pod, and explain the issue, and explore whether their change was potentially the culprit. If so, they should be able to roll it back. If not, proceed to other forms of troubleshooting."
+    },
+    {
+      "name": "Sign-Ins/min",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 38,
+        "left": 0,
+        "width": 722,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Sign Ins By RP",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy():sum:rate(1m)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.authenticationSuccessExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy():sum:rate(1m)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_COLUMN",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "STACKED_COLUMN",
+              "alias": "Existing"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "STACKED_COLUMN",
+              "alias": "Success"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m"
+      },
+      "metricExpressions": [
+        "resolution=1m&(cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy():sum:rate(1m)):limit(100):names,(cloud.aws.authentication.authenticationSuccessExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy():sum:rate(1m)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Sign-Ups/min",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 38,
+        "left": 722,
+        "width": 760,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Sign Ins By RP",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.signInNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy():sum:rate(1m)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.authenticationSuccessNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy():sum:rate(1m)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_COLUMN",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "STACKED_COLUMN",
+              "alias": "New"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "STACKED_COLUMN",
+              "alias": "Success"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:clientname.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": true
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m"
+      },
+      "metricExpressions": [
+        "resolution=1m&(cloud.aws.authentication.signInNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy():sum:rate(1m)):limit(100):names,(cloud.aws.authentication.authenticationSuccessNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy():sum:rate(1m)):limit(100):names"
+      ]
     }
   ]
 }
