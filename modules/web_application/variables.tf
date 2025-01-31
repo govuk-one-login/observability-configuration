@@ -14,6 +14,6 @@ variable "opt_in_enabled" {
   default = true
 }
 
-# variable "manual_injection" {
-#   type = bool
-# }
+variable "manual_injection" {
+  type = bool
+}
