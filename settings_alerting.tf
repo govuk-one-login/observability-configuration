@@ -34,3 +34,15 @@ resource "dynatrace_alerting" "di-alerting-profile" {
     }
   }
 }
+
+resource "dynatrace_alerting" "quicksight-alerting-profile" {
+  name            = "quicksight-alerting-profile"
+  management_zone = ""
+  rules {
+    rule {
+      include_mode     = "NONE"
+      delay_in_minutes = 0
+      severity_level   = "ERRORS"
+    }
+  }
+}
