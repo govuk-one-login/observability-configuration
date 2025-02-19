@@ -342,14 +342,14 @@ resource "dynatrace_metric_events" "aws_codebuild_memory_utilized_percent" {
   }
 }
 
-resource "dynatrace_metric_events" "aws_codebuild_cpu_utilized_percent" {
-  count                      = local.is_production ? 0 : 1
+resource "dynatrace_metric_events" "aws_quicksight_spice_capacity_percent" {
+  count                      = local.is_production ? 1 : 0
   enabled                    = true
   event_entity_dimension_key = "dt.entity.custom_device"
   summary                    = "QuickSight spice capacity limit exceeded"
   event_template {
     description = "The reported value was {alert_condition} the defined threshold of {threshold}%."
-    davis_merge = true
+    davis_merge = false
     event_type  = "ERROR"
     title       = "QuickSight SPICE Capacity Limit Exceeded 90%"
   }
@@ -360,7 +360,7 @@ resource "dynatrace_metric_events" "aws_codebuild_cpu_utilized_percent" {
     dealerting_samples = 3
     samples            = 3
     threshold          = 50 #50 for testing - needs to be changed to 90 officially
-    violating_samples  = 3
+    violating_samples  = 1
   }
   query_definition {
     type        = "METRIC_SELECTOR"
