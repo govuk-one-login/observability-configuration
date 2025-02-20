@@ -359,7 +359,7 @@ resource "dynatrace_metric_events" "aws_quicksight_spice_capacity_percent" {
     alert_on_no_data   = true
     dealerting_samples = 3
     samples            = 3
-    threshold          = 50 #50 for testing - needs to be changed to 90 officially
+    threshold          = 90
     violating_samples  = 1
   }
   query_definition {

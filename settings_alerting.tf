@@ -37,10 +37,10 @@ resource "dynatrace_alerting" "di-alerting-profile" {
     filter {
       custom {
         description {
-          operator = "CONTAINS"
-          value = "QuickSight"
-          negate = true
-          enabled = true
+          operator       = "CONTAINS"
+          value          = "QuickSight"
+          negate         = true
+          enabled        = true
           case_sensitive = false
         }
       }
@@ -62,10 +62,10 @@ resource "dynatrace_alerting" "quicksight-alerting-profile" {
     filter {
       custom {
         description {
-          operator = "CONTAINS"
-          value = "QuickSight SPICE Capacity Limit Exceeded"
-          negate = false
-          enabled = true
+          operator       = "CONTAINS"
+          value          = "QuickSight SPICE Capacity Limit Exceeded"
+          negate         = false
+          enabled        = true
           case_sensitive = false
         }
       }
