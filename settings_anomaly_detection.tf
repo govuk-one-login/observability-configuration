@@ -363,9 +363,8 @@ resource "dynatrace_metric_events" "aws_quicksight_spice_capacity_percent" {
     violating_samples  = 1
   }
   query_definition {
-    type        = "METRIC_SELECTOR"
-    aggregation = "AVG"
-    metric_key  = "(cloud.aws.quicksight.spiceCapacityConsumedInMBByAccountIdRegion/cloud.aws.quicksight.spiceCapacityLimitInMBByAccountIdRegion)*100"
+    type       = "METRIC_SELECTOR"
+    metric_key = "(cloud.aws.quicksight.spiceCapacityConsumedInMBByAccountIdRegion/cloud.aws.quicksight.spiceCapacityLimitInMBByAccountIdRegion)*100"
     entity_filter {
     }
   }
