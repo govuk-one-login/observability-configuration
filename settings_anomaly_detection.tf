@@ -342,6 +342,35 @@ resource "dynatrace_metric_events" "aws_codebuild_memory_utilized_percent" {
   }
 }
 
+resource "dynatrace_metric_events" "aws_quicksight_spice_capacity_percent" {
+  count                      = local.is_production ? 1 : 0
+  enabled                    = true
+  event_entity_dimension_key = "dt.entity.custom_device"
+  summary                    = "QuickSight spice capacity limit exceeded"
+  event_template {
+    description = "The reported value was {alert_condition} the defined threshold of {threshold}%."
+    davis_merge = false
+    event_type  = "ERROR"
+    title       = "QuickSight SPICE Capacity Limit Exceeded 90%"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    alert_on_no_data   = true
+    dealerting_samples = 3
+    samples            = 3
+    threshold          = 90
+    violating_samples  = 1
+  }
+  query_definition {
+    type        = "METRIC_SELECTOR"
+    aggregation = "AVG"
+    metric_key  = "(cloud.aws.quicksight.spiceCapacityConsumedInMBByAccountIdRegion/cloud.aws.quicksight.spiceCapacityLimitInMBByAccountIdRegion)*100"
+    entity_filter {
+    }
+  }
+}
+
 # Frequent issue detection
 resource "dynatrace_frequent_issues" "frequent_issue_detection" {
   detect_apps  = true
