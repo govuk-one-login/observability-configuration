@@ -25,12 +25,6 @@ variable "teamscloudfront1" {
       awsaccprod = "821078365651"
       awsaccint  = "988112579449"
     }
-    "team-e" = {
-      owneremail = "pawankumar.kushwaha@digital.cabinet-office.gov.uk"
-      teamname   = "Auth - gds-di-production"
-      awsaccprod = "172348255554"
-      awsaccint  = "761723964695"
-    }
     "team-f" = {
       owneremail = "cri-orange-team@digital.cabinet-office.gov.uk"
       teamname   = "Orange - NINo-CRI"
