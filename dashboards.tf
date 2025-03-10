@@ -93,9 +93,9 @@ module "txma-esp-capacity-mgmt" {
   path   = "txma/txma-esp-capacity-mgmt.json"
 }
 
-module "txma-health" {
+module "txma-health-prod" {
   source = "./modules/dashboard"
-  path   = "txma/txma-health.json"
+  path   = "txma/txma-health-prod.json"
 }
 
 module "account-interventions-service" {
