@@ -1,0 +1,3445 @@
+{
+    "metadata": {
+      "configurationVersions": [
+        7
+      ],
+      "clusterVersion": "1.309.57.20250308-013939"
+    },
+    "dashboardMetadata": {
+      "name": "TxMA Production V2",
+      "shared": true,
+      "owner": "zayd.patel@digital.cabinet-office.gov.uk",
+      "popularity": 2,
+      "hasConsistentColors": false
+    },
+    "tiles": [
+      {
+        "name": "Markdown",
+        "tileType": "MARKDOWN",
+        "configured": true,
+        "bounds": {
+          "top": 0,
+          "left": 0,
+          "width": 1064,
+          "height": 418
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "markdown": "# TxMA Global Dashboard Health\n\nThe following dashboards represents an **overview** of the global health of TxMA as a whole. Dashboards unique to Individual TxMA products will be listed below.\n\nAdditional information about the dashboards\n\n- `SQS Age of Oldest Message` \n  - messages older than a minute will be highlighted in yellow\n  - messages older than 10 days will be highlighted in red. Queues in red need to be addressed immediately as messages older than 14 days will be removed. \n- `Lambda Error Rate` \n  - Any error above **1%** will turn the honeycomb red and should be investigated as all errors within TxMA should be handled gracefully\n- Acronyms\n  - `EP` - Event Processing\n  - `QR` - Query Results\n  - `SS` - Shared Signals \n- Apigateway metrics only cover the following AWS accounts\n  - `di-txma-audit-prod`\n  - `di-txma-query-results-prod`\n  - `di-txma-shared-signals`"
+      },
+      {
+        "name": "Lambda Error Rate",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 532,
+          "left": 0,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "builtin:cloud.aws.lambda.errorsRate",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.aws_lambda_function"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.aws_lambda_function",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Owner:di-txma-team-2@digital.cabinet-office.gov.uk",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "HONEYCOMB",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "visible": true
+            },
+            "yAxes": []
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE",
+            "showLabels": false
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "columnId": "LambdaFunction rate of failed invocations to all invocations %",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 1,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "A",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": [
+              "A:dt.entity.aws_lambda_function.name"
+            ]
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=Inf&(builtin:cloud.aws.lambda.errorsRate:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Owner:di-txma-team-2@digital.cabinet-office.gov.uk~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)):names"
+        ]
+      },
+      {
+        "name": "SQS Age of Oldest Message",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1026,
+          "left": 0,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Top list",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "queuename"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "aws.account.id",
+                  "filterType": "DIMENSION",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "552549398917",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "451773080033",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "348043515437",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "513850971016",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "658501491317",
+                      "evaluator": "EQ"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "HONEYCOMB",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "visible": true
+            },
+            "yAxes": []
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 60,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 864000,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=Inf&(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"451773080033\"),eq(\"aws.account.id\",\"658501491317\"),eq(\"aws.account.id\",\"552549398917\")))):splitBy(queuename):sort(value(auto,descending)):limit(20)):names"
+        ]
+      },
+      {
+        "name": "API Gateway Errors",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1444,
+          "left": 0,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "cloud.aws.apigateway.4xxErrorByAccountIdApiNameRegion",
+            "spaceAggregation": "SUM",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "apiname"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "aws.account.id",
+                  "filterType": "DIMENSION",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "513850971016",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "348043515437",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "658501491317",
+                      "evaluator": "EQ"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "B",
+            "metric": "cloud.aws.apigateway.5xxErrorByAccountIdApiNameRegion",
+            "spaceAggregation": "SUM",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "apiname"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "aws.account.id",
+                  "filterType": "DIMENSION",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "658501491317",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "513850971016",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "348043515437",
+                      "evaluator": "EQ"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "B:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A",
+                  "B"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 50,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": false
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameRegion\":filter(and(or(eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"658501491317\")))):splitBy(apiname):sum:sort(value(sum,descending)):limit(20)):limit(100):names,(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":filter(and(or(eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"658501491317\")))):splitBy(apiname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "API Gateway Requests",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1444,
+          "left": 532,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "cloud.aws.apigateway.countByAccountIdApiNameRegion",
+            "spaceAggregation": "SUM",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "apiname"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "aws.account.id",
+                  "filterType": "DIMENSION",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "348043515437",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "658501491317",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "513850971016",
+                      "evaluator": "EQ"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameRegion:filter(and(or(eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"658501491317\")))):splitBy(apiname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "DynamoDB Read Capacity",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 760,
+          "left": 532,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "C",
+            "metric": "cloud.aws.dynamodb.consumedReadCapacityUnitsByAccountIdRegionTableName",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "tablename"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "aws.account.id",
+                  "filterType": "DIMENSION",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "451773080033",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "513850971016",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "348043515437",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "658501491317",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "552549398917",
+                      "evaluator": "EQ"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {
+            "hideLegend": false
+          },
+          "rules": [
+            {
+              "matcher": "C:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A",
+                  "C"
+                ],
+                "defaultAxis": true
+              },
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "RIGHT",
+                "queryIds": [
+                  "B"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 25000,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 35000,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.dynamodb.consumedReadCapacityUnitsByAccountIdRegionTableName:filter(and(or(eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"451773080033\"),eq(\"aws.account.id\",\"658501491317\"),eq(\"aws.account.id\",\"552549398917\")))):splitBy(tablename):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "DynamoDB Write Capacity",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 760,
+          "left": 1064,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "C",
+            "metric": "cloud.aws.dynamodb.consumedWriteCapacityUnitsByAccountIdRegionTableName",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "tablename"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "aws.account.id",
+                  "filterType": "DIMENSION",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "451773080033",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "513850971016",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "348043515437",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "552549398917",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "658501491317",
+                      "evaluator": "EQ"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {
+            "hideLegend": false
+          },
+          "rules": [
+            {
+              "matcher": "C:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "C"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 25000,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 35000,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.dynamodb.consumedWriteCapacityUnitsByAccountIdRegionTableName:filter(and(or(eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"451773080033\"),eq(\"aws.account.id\",\"658501491317\"),eq(\"aws.account.id\",\"552549398917\")))):splitBy(tablename):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Markdown",
+        "tileType": "MARKDOWN",
+        "configured": true,
+        "bounds": {
+          "top": 0,
+          "left": 1064,
+          "width": 532,
+          "height": 418
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "markdown": "# Additional Information\n\n- Supporting TxMA is available in the [team manual](https://team-manual.account.gov.uk/teams/txma-team/)\n- All dashboard where relevant will have thresholds from green, yellow and red. \n- Any metrics breaching the yellow threshold is cause for concern and any in red should be addressed by the TxMA team.\n- The CSLS queues will have events in their queue as its part of tech debt to fix those queues\n- the queues `self-production-EC-SQS*` are filled up with messages as expected.\n- To get in touch with the TxMA team, visit `#di-ask-txma` in Slack"
+      },
+      {
+        "name": "DynamoDB successful Request Latency",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 760,
+          "left": 1596,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "C",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "tablename"
+            ],
+            "metricSelector": "cloud.aws.dynamodb.successfulRequestLatencyByAccountIdOperationRegionTableName:filter(and(or(eq(\"aws.account.id\",\"451773080033\"),eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"658501491317\"),eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"552549398917\")))):splitBy(tablename):sort(value(auto,descending)):limit(20)",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {
+            "hideLegend": false
+          },
+          "rules": [
+            {
+              "matcher": "C:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "C"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 1000,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 10000,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.dynamodb.successfulRequestLatencyByAccountIdOperationRegionTableName:filter(and(or(eq(\"aws.account.id\",\"451773080033\"),eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"658501491317\"),eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"552549398917\")))):splitBy(tablename):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Lambda Runtime",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 418,
+          "left": 1064,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Heatmap",
+        "queries": [
+          {
+            "id": "B",
+            "metric": "builtin:cloud.aws.lambda.duration",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "dt.entity.aws_lambda_function"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "dt.entity.aws_lambda_function",
+                  "filterType": "TAG",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "[AWS]Owner:di-txma-team-2@digital.cabinet-office.gov.uk",
+                      "evaluator": "IN"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "B:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "Execution time"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "B"
+                ],
+                "defaultAxis": true
+              },
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "RIGHT",
+                "queryIds": [
+                  "C",
+                  "D",
+                  "E",
+                  "F"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "DIMENSIONS",
+            "showLabels": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 5,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 15,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": false
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]Owner:di-txma-team-2@digital.cabinet-office.gov.uk~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Markdown",
+        "tileType": "MARKDOWN",
+        "configured": true,
+        "bounds": {
+          "top": 2470,
+          "left": 0,
+          "width": 1596,
+          "height": 76
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "markdown": "# WIP TxMA application specific Dashboards"
+      },
+      {
+        "name": "Markdown",
+        "tileType": "MARKDOWN",
+        "configured": true,
+        "bounds": {
+          "top": 2546,
+          "left": 0,
+          "width": 1596,
+          "height": 114
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "markdown": "## Event Streaming Platform\n\nSpecific Monitoring of the event streaming platform, including event producers and consumers. \n\n- Visit [Confluence](https://govukverify.atlassian.net/wiki/spaces/TMA/pages/4760272898/Custom+Metrics+-+Event+Streaming+Platform) to see an explanation of custom metrics"
+      },
+      {
+        "name": "[WIP] Firehose Incoming Records (Event Processing)",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1786,
+          "left": 532,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "deliverystreamname"
+            ],
+            "metricSelector": "cloud.aws.firehose.incomingRecordsByAccountIdDeliveryStreamNameRegion:filter(and(or(eq(\"aws.account.id\",\"451773080033\")))):splitBy(deliverystreamname):sum:rate(1s):sort(value(sum,descending)):limit(20)",
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "B",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "metricSelector": "cloud.aws.firehose.recordsPerSecondLimitByAccountIdDeliveryStreamNameRegion:setUnit(Count):filter(and(or(eq(\"aws.account.id\",\"451773080033\")))):splitBy(deliverystreamname):sort(value(auto,descending)):limit(20)",
+            "rate": "NONE",
+            "enabled": false
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "B:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "RED",
+                "seriesType": "LINE",
+                "alias": "IncomingRecordsLimit"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 50000,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 80000,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": "5m"
+        },
+        "metricExpressions": [
+          "resolution=5m&(cloud.aws.firehose.incomingRecordsByAccountIdDeliveryStreamNameRegion:filter(and(or(eq(\"aws.account.id\",\"451773080033\")))):splitBy(deliverystreamname):sum:rate(1s):sort(value(sum,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "[WIP] Firehose Incoming Put Requests (Event Processing)",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1786,
+          "left": 1064,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "deliverystreamname"
+            ],
+            "metricSelector": "cloud.aws.firehose.incomingPutRequestsByAccountIdDeliveryStreamNameRegion:setUnit(Count):filter(and(or(eq(\"aws.account.id\",\"451773080033\")))):splitBy(deliverystreamname):sum:rate(1s):sort(value(sum,descending)):limit(20)",
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "B",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "metricSelector": "cloud.aws.firehose.putRequestsPerSecondLimitByAccountIdDeliveryStreamNameRegion:setUnit(Count):filter(and(or(eq(\"aws.account.id\",\"451773080033\")))):splitBy(deliverystreamname):sort(value(auto,descending)):limit(20)",
+            "rate": "NONE",
+            "enabled": false
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "IncomingPutRequests"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "B:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "IncomingPutRequestsLimit"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 500,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 800,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": "5m"
+        },
+        "metricExpressions": [
+          "resolution=5m&(cloud.aws.firehose.incomingPutRequestsByAccountIdDeliveryStreamNameRegion:setUnit(Count):filter(and(or(eq(\"aws.account.id\",\"451773080033\")))):splitBy(deliverystreamname):sum:rate(1s):sort(value(sum,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "S3 Bucket Size",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1444,
+          "left": 1064,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "S3 Bucket Size",
+        "queries": [],
+        "visualConfig": {
+          "type": "HONEYCOMB",
+          "global": {},
+          "rules": [],
+          "axes": {
+            "xAxis": {
+              "visible": true
+            },
+            "yAxes": []
+          },
+          "thresholds": []
+        },
+        "metricExpressions": []
+      },
+      {
+        "name": "Events Ingested Per Producer",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 2660,
+          "left": 0,
+          "width": 1064,
+          "height": 684
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "queuename"
+            ],
+            "metricSelector": "cloud.aws.txma.eventprocessor.logs.eventsReceivedPerProducerByAccountIdRegionqueueNameservice:setUnit(Count):filter(and(or(eq(\"aws.account.id\",\"451773080033\")))):splitBy(queuename):sum:sort(value(sum,ascending)):limit(100)",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "HEATMAP",
+          "global": {
+            "hideLegend": true
+          },
+          "rules": [
+            {
+              "matcher": "A:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "EventsPerProducer"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "visible": true
+            },
+            "yAxes": []
+          },
+          "heatmapSettings": {
+            "yAxis": "DIMENSIONS",
+            "showLabels": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "columnId": "",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "A",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": [
+              "A:queuename.name"
+            ]
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": "",
+          "foldTransformation": "TOTAL",
+          "foldAggregation": "SUM"
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.txma.eventprocessor.logs.eventsReceivedPerProducerByAccountIdRegionqueueNameservice:setUnit(Count):filter(and(or(eq(\"aws.account.id\",\"451773080033\")))):splitBy(queuename):sum:sort(value(sum,ascending)):limit(100)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Lambda Concurrent Executions",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 418,
+          "left": 532,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Heatmap",
+        "queries": [
+          {
+            "id": "B",
+            "metric": "cloud.aws.lambda.concurrentExecutionsByAccountIdFunctionNameRegionResource",
+            "spaceAggregation": "MAX",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "functionname"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "aws.account.id",
+                  "filterType": "DIMENSION",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "348043515437",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "552549398917",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "451773080033",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "658501491317",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "513850971016",
+                      "evaluator": "EQ"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {
+            "hideLegend": false
+          },
+          "rules": [
+            {
+              "matcher": "B:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "ConcurrentExecutionsPerLambda"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "B"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "DIMENSIONS",
+            "showLabels": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 250,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 500,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": false
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.lambda.concurrentExecutionsByAccountIdFunctionNameRegionResource:filter(and(or(eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"451773080033\"),eq(\"aws.account.id\",\"552549398917\"),eq(\"aws.account.id\",\"658501491317\")))):splitBy(functionname):max:sort(value(max,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "[WIP] Firehose Incoming Bytes (Event Processing)",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1786,
+          "left": 0,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "deliverystreamname"
+            ],
+            "metricSelector": "cloud.aws.firehose.incomingBytesByAccountIdDeliveryStreamNameRegion:filter(and(or(eq(\"aws.account.id\",\"451773080033\")))):splitBy(deliverystreamname):sum:rate(1s):sort(value(sum,descending)):limit(20)",
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "B",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "metricSelector": "cloud.aws.firehose.bytesPerSecondLimitByAccountIdDeliveryStreamNameRegion:setUnit(Byte):filter(and(or(eq(\"aws.account.id\",\"451773080033\")))):splitBy(deliverystreamname):min:sort(value(min,descending)):limit(20)",
+            "rate": "NONE",
+            "enabled": false
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "IncomingBytes"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "B:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "RED",
+                "seriesType": "LINE",
+                "alias": "IncomingBytesLimit"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "columnId": "IncomingBytes",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 500000,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 800000,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "A",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": [
+              "A:deliverystreamname.name"
+            ]
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": "1m"
+        },
+        "metricExpressions": [
+          "resolution=1m&(cloud.aws.firehose.incomingBytesByAccountIdDeliveryStreamNameRegion:filter(and(or(eq(\"aws.account.id\",\"451773080033\")))):splitBy(deliverystreamname):sum:rate(1s):sort(value(sum,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Firehose Incoming Records (Audit)",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 2128,
+          "left": 0,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "deliverystreamname"
+            ],
+            "metricSelector": "cloud.aws.firehose.incomingRecordsByAccountIdDeliveryStreamNameRegion:filter(and(or(eq(\"aws.account.id\",\"348043515437\")))):splitBy(deliverystreamname):sum:rate(1s):sort(value(sum,descending)):limit(20)",
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "B",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "metricSelector": "cloud.aws.firehose.recordsPerSecondLimitByAccountIdDeliveryStreamNameRegion:setUnit(Count):filter(and(or(eq(\"aws.account.id\",\"348043515437\")))):splitBy(deliverystreamname):sort(value(auto,descending)):limit(20)",
+            "rate": "NONE",
+            "enabled": false
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "B:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A",
+                  "B"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.firehose.incomingRecordsByAccountIdDeliveryStreamNameRegion:filter(and(or(eq(\"aws.account.id\",\"348043515437\")))):splitBy(deliverystreamname):sum:rate(1s):sort(value(sum,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Firehose DeliveryToS3.DataFreshness (Audit)",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 2128,
+          "left": 1064,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "cloud.aws.firehose.deliveryToS3DataFreshnessByAccountIdDeliveryStreamNameRegion",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "deliverystreamname"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "aws.account.id",
+                  "filterType": "DIMENSION",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "348043515437",
+                      "evaluator": "EQ"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.firehose.deliveryToS3DataFreshnessByAccountIdDeliveryStreamNameRegion:filter(and(or(eq(\"aws.account.id\",\"348043515437\")))):splitBy(deliverystreamname):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Firehose DeliveryToS3.Records (Audit)",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 2128,
+          "left": 532,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "deliverystreamname"
+            ],
+            "metricSelector": "cloud.aws.firehose.deliveryToS3RecordsByAccountIdDeliveryStreamNameRegion:filter(eq(\"aws.account.id\",\"348043515437\")):splitBy(deliverystreamname):sort(value(auto,descending)):limit(20)",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": "5m"
+        },
+        "metricExpressions": [
+          "resolution=5m&(cloud.aws.firehose.deliveryToS3RecordsByAccountIdDeliveryStreamNameRegion:filter(eq(\"aws.account.id\",\"348043515437\")):splitBy(deliverystreamname):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "SQS Number of Events in a queue",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1102,
+          "left": 532,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Top list",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion",
+            "spaceAggregation": "SUM",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "queuename"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "aws.account.id",
+                  "filterType": "DIMENSION",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "451773080033",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "658501491317",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "348043515437",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "513850971016",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "552549398917",
+                      "evaluator": "EQ"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 10,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "TOP_LIST",
+          "global": {
+            "hideLegend": true
+          },
+          "rules": [
+            {
+              "matcher": "A:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "visible": true
+            },
+            "yAxes": []
+          },
+          "heatmapSettings": {
+            "yAxis": "DIMENSIONS",
+            "showLabels": true
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "columnId": "ApproximateNumberOfMessagesVisible",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 1,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 50,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "A",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "isThresholdBackgroundAppliedToCell": true,
+            "hiddenColumns": [
+              "A:queuename.name"
+            ]
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": "",
+          "foldTransformation": "LAST_VALUE"
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"451773080033\"),eq(\"aws.account.id\",\"552549398917\"),eq(\"aws.account.id\",\"658501491317\")))):splitBy(queuename):sum:sort(value(sum,descending)):limit(10)):limit(100):names:last"
+        ]
+      },
+      {
+        "name": "SQS Number of Events in a queue",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1102,
+          "left": 1064,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Top list",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion",
+            "spaceAggregation": "SUM",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "queuename"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "aws.account.id",
+                  "filterType": "DIMENSION",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "451773080033",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "552549398917",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "348043515437",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "513850971016",
+                      "evaluator": "EQ"
+                    },
+                    {
+                      "value": "658501491317",
+                      "evaluator": "EQ"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 10,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {
+            "hideLegend": true
+          },
+          "rules": [
+            {
+              "matcher": "A:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "DIMENSIONS",
+            "showLabels": true
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "columnId": "ApproximateNumberOfMessagesVisible",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 1,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 50,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "A",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "isThresholdBackgroundAppliedToCell": true,
+            "hiddenColumns": [
+              "A:queuename.name"
+            ]
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": "",
+          "foldTransformation": "LAST_VALUE"
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"348043515437\"),eq(\"aws.account.id\",\"513850971016\"),eq(\"aws.account.id\",\"451773080033\"),eq(\"aws.account.id\",\"552549398917\"),eq(\"aws.account.id\",\"658501491317\")))):splitBy(queuename):sum:sort(value(sum,descending)):limit(10)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Self Serve Event Delivery Latency P99",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 3344,
+          "left": 0,
+          "width": 1064,
+          "height": 380
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "consumername"
+            ],
+            "metricSelector": "cloud.aws.selfserve.evenT_LATENCYByAccountIdRegionconsumerNameservice:setUnit(MilliSecond):filter(and(or(eq(\"aws.account.id\",\"451773080033\")))):splitBy(consumername):percentile(90.0):sort(value(percentile(99.0),descending)):limit(20)",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "HEATMAP",
+          "global": {
+            "hideLegend": true
+          },
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "STACKED_COLUMN"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "visible": true
+            },
+            "yAxes": []
+          },
+          "heatmapSettings": {
+            "yAxis": "DIMENSIONS",
+            "showLabels": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "columnId": "",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 200,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 500,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "A",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": [
+              "A:consumername.name"
+            ]
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.selfserve.evenT_LATENCYByAccountIdRegionconsumerNameservice:setUnit(MilliSecond):filter(and(or(eq(\"aws.account.id\",\"451773080033\")))):splitBy(consumername):percentile(90.0):sort(value(percentile(99.0),descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Markdown",
+        "tileType": "MARKDOWN",
+        "configured": true,
+        "bounds": {
+          "top": 874,
+          "left": 0,
+          "width": 532,
+          "height": 152
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "markdown": "### `SQS Age of Oldest Message` \n  - messages older than a minute will be highlighted in yellow\n  - messages older than 10 days will be highlighted in red. Queues in red need to be addressed immediately as messages older than 14 days will be removed. "
+      },
+      {
+        "name": "Markdown",
+        "tileType": "MARKDOWN",
+        "configured": true,
+        "bounds": {
+          "top": 418,
+          "left": 0,
+          "width": 532,
+          "height": 114
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "markdown": "### `Lambda Error Rate` \nAny error above **1%** will turn the honeycomb red and should be investigated as all errors within TxMA should be handled gracefully"
+      },
+      {
+        "name": "Image",
+        "tileType": "IMAGE",
+        "configured": true,
+        "bounds": {
+          "top": 4408,
+          "left": 0,
+          "width": 608,
+          "height": 570
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "image": "data:image/webp;base64,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"
+      },
+      {
+        "name": "Queue Depths Per Producer",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 3724,
+          "left": 38,
+          "width": 1064,
+          "height": 684
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "queuename"
+            ],
+            "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:setUnit(Count):filter(or(eq(queuename,\"production-oidc-txma-audit-queue\"), eq(queuename,\"production-account-mgmt-txma-audit-queue\"), eq(queuename,\"production-auth-external-api-txma-audit-queue\"), eq(queuename,\"txma-data-analysis-production-audit-data-request-events-queue\"), eq(queuename,\"txma-qr-infra-production-audit-data-request-events-queue\"), eq(queuename,\"cic-cri-api-TxMASQSQueue-EsrY58bqzoRQ\"), eq(queuename,\"f2f-cri-api-TxMASQSQueue-dUHIGJZSvY5b\"), eq(queuename,\"ipvreturn-api-TxMASQSQueue-BxRz0Nm7qph3\"), eq(queuename,\"bav-cri-api-TxMASQSQueue-boXh5r69P1Q2\"), eq(queuename,\"id-reuse-storage-main-TxMAQueue\"), eq(queuename,\"di-ipv-spot-app-SpotAuditQueue-ExF2VJY3jXNg\"), eq(queuename,\"audit-sqs-production-AuditEventQueue-kuZllz1JGgSJ\"), eq(queuename,\"txma-infrastructure-AuditEventQueue-lDKHIDCOxTas\"), eq(queuename,\"txma-infrastructure-AuditEventQueue-QcA98LIdlK3O\"), eq(queuename,\"txma-infrastructure-AuditEventQueue-PLaz4Z8o9IQT\"), eq(queuename,\"backend-api-TxMASQSQueue-1PwnLsimEX36\"), eq(queuename,\"backend-api-audit-event-queue\"), eq(queuename,\"backend-api-audit-event-queue\"), eq(queuename,\"txma-infrastructure-AuditEventQueue-1d6Q4qRO7Btv\"), eq(queuename,\"txma-infrastructure-AuditEventQueue-Exez9i5i3bqx\"), eq(queuename,\"txma-infrastructure-AuditEventQueue-KLP1BXjUk1vz\"), eq(queuename,\"audit-sqs-production-AuditEventQueue-4BqIMNoRyaku\"), eq(queuename,\"contra-indicators-prod-AuditEventQueue-RHty3hJopTKF\"), eq(queuename,\"inbound-ssf-NewStandardQueue-1SUYppOA1RQ1\"), eq(queuename,\"fa-TxmaIntegrationQueue-VTWI4jvIXtHP\"), eq(queuename,\"production-audit\"), eq(queuename,\"account-mgmt-backend-AuditOutputQueue-w41i5eUwUxwG\"), eq(queuename,\"ais-main-TxMAEgressQueue\"), eq(queuename,\"self-service-frontend-AuditEventQueue\"), eq(queuename,\"orchestration-production-txma-AuditEventQueue\"), eq(queuename,\"ticf-cri-deploy-AuditEventQueue\"), eq(queuename,\"experian-email-check-AuditEventQueue\"))):splitBy(queuename):sum:sort(value(sum,ascending)):limit(100)\n",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "HEATMAP",
+          "global": {
+            "hideLegend": true
+          },
+          "rules": [
+            {
+              "matcher": "A:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "EventsPerProducer"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "visible": true
+            },
+            "yAxes": []
+          },
+          "heatmapSettings": {
+            "yAxis": "DIMENSIONS",
+            "showLabels": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "columnId": "",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "A",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": [
+              "A:queuename.name"
+            ]
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": "",
+          "foldTransformation": "TOTAL",
+          "foldAggregation": "SUM"
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:setUnit(Count):filter(or(eq(queuename,production-oidc-txma-audit-queue),eq(queuename,production-account-mgmt-txma-audit-queue),eq(queuename,production-auth-external-api-txma-audit-queue),eq(queuename,txma-data-analysis-production-audit-data-request-events-queue),eq(queuename,txma-qr-infra-production-audit-data-request-events-queue),eq(queuename,cic-cri-api-TxMASQSQueue-EsrY58bqzoRQ),eq(queuename,f2f-cri-api-TxMASQSQueue-dUHIGJZSvY5b),eq(queuename,ipvreturn-api-TxMASQSQueue-BxRz0Nm7qph3),eq(queuename,bav-cri-api-TxMASQSQueue-boXh5r69P1Q2),eq(queuename,id-reuse-storage-main-TxMAQueue),eq(queuename,di-ipv-spot-app-SpotAuditQueue-ExF2VJY3jXNg),eq(queuename,audit-sqs-production-AuditEventQueue-kuZllz1JGgSJ),eq(queuename,txma-infrastructure-AuditEventQueue-lDKHIDCOxTas),eq(queuename,txma-infrastructure-AuditEventQueue-QcA98LIdlK3O),eq(queuename,txma-infrastructure-AuditEventQueue-PLaz4Z8o9IQT),eq(queuename,backend-api-TxMASQSQueue-1PwnLsimEX36),eq(queuename,backend-api-audit-event-queue),eq(queuename,backend-api-audit-event-queue),eq(queuename,txma-infrastructure-AuditEventQueue-1d6Q4qRO7Btv),eq(queuename,txma-infrastructure-AuditEventQueue-Exez9i5i3bqx),eq(queuename,txma-infrastructure-AuditEventQueue-KLP1BXjUk1vz),eq(queuename,audit-sqs-production-AuditEventQueue-4BqIMNoRyaku),eq(queuename,contra-indicators-prod-AuditEventQueue-RHty3hJopTKF),eq(queuename,inbound-ssf-NewStandardQueue-1SUYppOA1RQ1),eq(queuename,fa-TxmaIntegrationQueue-VTWI4jvIXtHP),eq(queuename,production-audit),eq(queuename,account-mgmt-backend-AuditOutputQueue-w41i5eUwUxwG),eq(queuename,ais-main-TxMAEgressQueue),eq(queuename,self-service-frontend-AuditEventQueue),eq(queuename,orchestration-production-txma-AuditEventQueue),eq(queuename,ticf-cri-deploy-AuditEventQueue),eq(queuename,experian-email-check-AuditEventQueue))):splitBy(queuename):sum:sort(value(sum,ascending)):limit(100)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Firehose Splunk Data Freshness",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 3002,
+          "left": 1064,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "cloud.aws.firehose.deliveryToSplunkDataFreshnessByAccountIdDeliveryStreamNameRegion",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "deliverystreamname"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "nestedFilters": [],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 120,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 180,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.firehose.deliveryToSplunkDataFreshnessByAccountIdDeliveryStreamNameRegion:splitBy(deliverystreamname):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Firehose Splunk Throttling Count",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 3344,
+          "left": 1368,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "deliverystreamname"
+            ],
+            "metricSelector": "cloud.aws.firehose.throttledRecordsByAccountIdDeliveryStreamNameRegion:setUnit(Count):filter(and(or(eq(\"aws.account.id\",\"451773080033\")))):splitBy(deliverystreamname):sort(value(auto,descending)):limit(20)",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 1,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 10,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.firehose.throttledRecordsByAccountIdDeliveryStreamNameRegion:setUnit(Count):filter(and(or(eq(\"aws.account.id\",\"451773080033\")))):splitBy(deliverystreamname):sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Markdown",
+        "tileType": "MARKDOWN",
+        "configured": true,
+        "bounds": {
+          "top": 2660,
+          "left": 1064,
+          "width": 532,
+          "height": 266
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "markdown": "## Event Ingest\n\nThis chart shows events per producer in time period shown.\n\nWe may also need:\n* Account global concurrent execution with thresholds for aws quota\n* producer queue\n  * age of oldest message\n  * number of events in the queue\n* total number of events ingested\n* events ingested per producer queue\n* total events ingested per second"
+      },
+      {
+        "name": "Markdown",
+        "tileType": "MARKDOWN",
+        "configured": true,
+        "bounds": {
+          "top": 3724,
+          "left": 1102,
+          "width": 304,
+          "height": 152
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "markdown": "## Queue Depths Per Producer\n\nThere may be a bug here but the idea is to highlight if there are any components publishing events to TxMA that are not being handled. We also need a chart showing oldest message on queue.\n\nAnything older than 14 days will be deleted."
+      },
+      {
+        "name": "Markdown",
+        "tileType": "MARKDOWN",
+        "configured": true,
+        "bounds": {
+          "top": 4408,
+          "left": 646,
+          "width": 456,
+          "height": 266
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "markdown": "## Event enrichment\n\nWe would like to show:\n\n* DynamoDB quota\n* Account global concurrent execution with thresholds for \n  * aws quota\n  * source queue\n  * age of oldest message\n  * number of events in the queue\n  * retry count"
+      },
+      {
+        "name": "Markdown",
+        "tileType": "MARKDOWN",
+        "configured": true,
+        "bounds": {
+          "top": 4674,
+          "left": 646,
+          "width": 456,
+          "height": 152
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "markdown": "## SNS\n\nWe would like a tile showing\n\n* Number of messages published per second with thresholds for aws quota"
+      },
+      {
+        "name": "Markdown",
+        "tileType": "MARKDOWN",
+        "configured": true,
+        "bounds": {
+          "top": 4826,
+          "left": 646,
+          "width": 456,
+          "height": 190
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "markdown": "## Firehose Splunk Fraud Team\n\nWe would like a tile showing\n\n* Data freshness with thresholds for stale data\n* usage against quota\n* DeliveryToSplunk.Success\n  * not useful in terms of capacity managemnet"
+      },
+      {
+        "name": "Markdown",
+        "tileType": "MARKDOWN",
+        "configured": true,
+        "bounds": {
+          "top": 4826,
+          "left": 1102,
+          "width": 456,
+          "height": 190
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "markdown": "## Firehose Splunk Perf Team\n\nWe would like a tile showing\n\n* Data freshness with thresholds for stale data\n* usage against quota\n* DeliveryToSplunk.Success\n  * not useful in terms of capacity managemnet"
+      },
+      {
+        "name": "Markdown",
+        "tileType": "MARKDOWN",
+        "configured": true,
+        "bounds": {
+          "top": 4636,
+          "left": 1102,
+          "width": 456,
+          "height": 190
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "markdown": "## Self Serve\n\nWe would like a tile showing\n\n* event latency\n* self serve producer queue \n* age of oldest message\n* number of events in the queue"
+      },
+      {
+        "name": "Markdown",
+        "tileType": "MARKDOWN",
+        "configured": true,
+        "bounds": {
+          "top": 3002,
+          "left": 1596,
+          "width": 304,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "markdown": "## Firehose Splunk Data Freshness\n\n* How quickly TxMA is delivering events to a particular Splunk index\n* Excessive time means Fraud or Performance team don't have current data\n* TxMA expects it to take between 1-2 mins due to batching"
+      },
+      {
+        "name": "Markdown",
+        "tileType": "MARKDOWN",
+        "configured": true,
+        "bounds": {
+          "top": 3344,
+          "left": 1900,
+          "width": 304,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "markdown": "## Firehose Splunk Throttling Count\n\nThe number of times firehose has throttled the rate at which data is being sent to Fraud\n\nThis is 0 most of the time. The line at 1 is the threshold."
+      },
+      {
+        "name": "Markdown",
+        "tileType": "MARKDOWN",
+        "configured": true,
+        "bounds": {
+          "top": 3344,
+          "left": 1064,
+          "width": 304,
+          "height": 380
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "markdown": "## Self Serve Delivery Latency\n\nThe time it takes from an event coming into data platform to leaving the data platform\nFrom the timestamp on the event to landing in the consumers output queue before consumers consume at their leisure\n\n\nIf someone has a time requirement, this would be the metric we refer to\n\nIs a key contributer to the SLA that we do have which is 10 seconds to deliver a shared signal\n\nOne day AIS might ask for a 200ms SLA"
+      },
+      {
+        "name": "Shared Signal Event Latency P99",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 0,
+          "left": 1596,
+          "width": 950,
+          "height": 760
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "clientid"
+            ],
+            "metricSelector": "cloud.aws.sharedsignals.evenT_LATENCYByAccountIdRegionclientIdservice:filter(and(or(eq(\"aws.account.id\",\"658501491317\")))):splitBy(clientid):percentile(99.0):sort(value(percentile(99.0),descending)):limit(20)",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "value": 5000,
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 10000,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.sharedsignals.evenT_LATENCYByAccountIdRegionclientIdservice:filter(and(or(eq(\"aws.account.id\",\"658501491317\")))):splitBy(clientid):percentile(99.0):sort(value(percentile(99.0),descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Shared Signal Event Delivered Count",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 0,
+          "left": 2546,
+          "width": 950,
+          "height": 760
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "B",
+            "metric": "cloud.aws.sharedsignals.evenT_LATENCYByAccountIdRegionclientIdservice",
+            "spaceAggregation": "COUNT",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "clientid"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "aws.account.id",
+                  "filterType": "DIMENSION",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "658501491317",
+                      "evaluator": "EQ"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {
+            "hideLegend": false
+          },
+          "rules": [
+            {
+              "matcher": "B:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "B"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "DIMENSIONS",
+            "showLabels": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": false
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": "1m"
+        },
+        "metricExpressions": [
+          "resolution=1m&(cloud.aws.sharedsignals.evenT_LATENCYByAccountIdRegionclientIdservice:filter(and(or(eq(\"aws.account.id\",\"658501491317\")))):splitBy(clientid):count:sort(value(avg,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Number of events ingested",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1102,
+          "left": 1596,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "cloud.aws.sns.numberOfMessagesPublishedByAccountIdRegionTopicName",
+            "spaceAggregation": "SUM",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "topicname"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "topicname",
+                  "filterType": "DIMENSION",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "event-processing-events-proccessed-topic",
+                      "evaluator": "EQ"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "SECOND",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": "1m",
+          "foldTransformation": "TOTAL",
+          "foldAggregation": "SUM"
+        },
+        "metricExpressions": [
+          "resolution=1m&(cloud.aws.sns.numberOfMessagesPublishedByAccountIdRegionTopicName:filter(and(or(eq(topicname,event-processing-events-proccessed-topic)))):splitBy(topicname):sum:rate(1s):setUnit(PerSecond):sort(value(sum,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Number of events ingested per unit of time",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 836,
+          "left": 2128,
+          "width": 532,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "A",
+            "metric": "cloud.aws.sns.numberOfMessagesPublishedByAccountIdRegionTopicName",
+            "spaceAggregation": "SUM",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "topicname"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "topicname",
+                  "filterType": "DIMENSION",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "event-processing-events-proccessed-topic",
+                      "evaluator": "EQ"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "SECOND",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "A"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "singleValueSettings": {
+            "showTrend": true,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": "1m",
+          "foldTransformation": "TOTAL",
+          "foldAggregation": "SUM"
+        },
+        "metricExpressions": [
+          "resolution=1m&(cloud.aws.sns.numberOfMessagesPublishedByAccountIdRegionTopicName:filter(and(or(eq(topicname,event-processing-events-proccessed-topic)))):splitBy(topicname):sum:rate(1s):setUnit(PerSecond):sort(value(sum,descending)):limit(20)):limit(100):names"
+        ]
+      }
+    ]
+  }
