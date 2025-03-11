@@ -88,9 +88,9 @@ resource "dynatrace_dashboard_sharing" "dns" {
   }
 }
 
-module "txma-esp-capacity-mgmt" {
+module "txma-esp-capacity-mgmt-production" {
   source = "./modules/dashboard"
-  path   = "txma/txma-esp-capacity-mgmt.json"
+  path   = "txma/txma-esp-capacity-mgmt-production.json"
 }
 
 module "txma-app-health-production" {
