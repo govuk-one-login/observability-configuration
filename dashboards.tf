@@ -88,29 +88,14 @@ resource "dynatrace_dashboard_sharing" "dns" {
   }
 }
 
-module "txma-shared-signals-integration" {
+module "txma-esp-capacity-mgmt-production" {
   source = "./modules/dashboard"
-  path   = "txma/txma-shared-signals-integration.json"
+  path   = "txma/txma-esp-capacity-mgmt-production.json"
 }
 
-module "txma-shared-signals-production" {
+module "txma-app-health-production" {
   source = "./modules/dashboard"
-  path   = "txma/txma-shared-signals-production.json"
-}
-
-module "txma-integration" {
-  source = "./modules/dashboard"
-  path   = "txma/txma-integration.json"
-}
-
-module "txma-production" {
-  source = "./modules/dashboard"
-  path   = "txma/txma-production.json"
-}
-
-module "txma-deployment-production" {
-  source = "./modules/dashboard"
-  path   = "txma/txma-deployment-production.json"
+  path   = "txma/txma-app-health-production.json"
 }
 
 module "account-interventions-service" {
