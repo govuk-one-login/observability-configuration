@@ -227,7 +227,7 @@
       "bounds": {
         "top": 0,
         "left": 646,
-        "width": 342,
+        "width": 570,
         "height": 228
       },
       "tileFilter": {
@@ -325,7 +325,7 @@
       "bounds": {
         "top": 228,
         "left": 646,
-        "width": 342,
+        "width": 570,
         "height": 266
       },
       "tileFilter": {},
@@ -686,7 +686,7 @@
       "bounds": {
         "top": 760,
         "left": 646,
-        "width": 646,
+        "width": 570,
         "height": 342
       },
       "tileFilter": {},
@@ -780,6 +780,92 @@
       },
       "metricExpressions": [
         "resolution=null&(cloud.aws.spot.verificationMethodsWrittenByAccountIdRegionService:splitBy():max):limit(100):names"
+      ]
+    },
+    {
+      "name": "Current Key Rotation Step",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 494,
+        "left": 646,
+        "width": 570,
+        "height": 266
+      },
+      "tileFilter": {
+        "timeframe": "-365d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Top list",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": ["step"],
+          "metricSelector": "cloud.aws.spot.keyRotationStateByAccountIdRegionstep\n:lastReal()\n:splitBy(\"step\")\n:sort(value(auto,descending))\n:limit(1)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TOP_LIST",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "none",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.spot.keyRotationStateByAccountIdRegionstep:lastReal:splitBy(step):sort(value(auto,descending)):limit(1)):limit(100):names:fold(auto)"
       ]
     }
   ]
