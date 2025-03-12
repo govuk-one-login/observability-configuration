@@ -232,11 +232,14 @@ module "spot_lambda_metrics_dashboard" {
   source = "./modules/dashboard"
   path   = "spot/lambda-metrics.json"
 }
+module "spot_key_rotations_dashboard" {
+  source = "./modules/dashboard"
+  path   = "spot/key-rotation-dashboard.json"
+}
 module "spot_cimit_apigateway_metrics_dashboard" {
   source = "./modules/dashboard"
   path   = "spot/cimit-api-gateway.json"
 }
-
 
 ### Kiwi ###
 
