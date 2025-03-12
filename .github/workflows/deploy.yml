@@ -15,6 +15,9 @@ env:
   TF_VAR_serverless_cost: ${{ secrets.serverless_cost }}
   TF_VAR_synthetic_actions_cost: ${{ secrets.synthetic_actions_cost }}
   TF_VAR_synthetic_requests_cost: ${{ secrets.synthetic_requests_cost }}
+  DYNATRACE_DEBUG: "true"
+  DYNATRACE_LOG_HTTP: "terraform-provider-dynatrace.http.log"
+  DYNATRACE_HTTP_RESPONSE: "true"
 
 jobs:
   DeployNonProd:
@@ -66,6 +69,9 @@ jobs:
 
       - name: Terraform apply
         run: terraform apply -var environment=nonproduction -auto-approve -refresh=false
+
+      - name: export logs
+        run: cat terraform-provider-dynatrace.http.log
   DeployProd:
     env:
       DYNATRACE_API_TOKEN: ${{ secrets.PROD_DYNATRACE_API_TOKEN }}
@@ -115,3 +121,6 @@ jobs:
 
       - name: Terraform apply
         run: terraform apply -var environment=production -auto-approve -refresh=false
+
+      - name: export logs
+        run: cat terraform-provider-dynatrace.http.log
