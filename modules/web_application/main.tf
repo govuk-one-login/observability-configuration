@@ -1,7 +1,7 @@
 resource "dynatrace_web_application" "web_application" {
   name                                 = var.name
   type                                 = "AUTO_INJECTED"
-  cost_control_user_session_percentage = 100
+  cost_control_user_session_percentage = var.user_session_percentage
   load_action_key_performance_metric   = "VISUALLY_COMPLETE"
   real_user_monitoring_enabled         = var.enabled
   xhr_action_key_performance_metric    = "ACTION_DURATION"
