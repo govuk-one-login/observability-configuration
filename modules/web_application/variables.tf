@@ -17,3 +17,7 @@ variable "opt_in_enabled" {
 variable "manual_injection" {
   type = bool
 }
+
+variable "user_session_percentage" {
+  type = number
+}
