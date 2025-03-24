@@ -3,80 +3,93 @@ locals {
     signin = {
       hostname                = "signin"
       name                    = "Authentication"
-      manual_injection        = false
       user_session_percentage = 50
+      injection_rule          = "AUTOMATIC_INJECTION"
+      injection_operator      = "ALL_PAGES"
     },
     home = {
       hostname                = "home"
       name                    = "Home"
-      manual_injection        = true
       user_session_percentage = 50
+      injection_rule          = "DO_NOT_INJECT"
+      injection_operator      = "ALL_PAGES"
     },
     identity = {
       hostname                = "identity"
       name                    = "IPV Core"
-      manual_injection        = true
       user_session_percentage = 50
+      injection_rule          = "DO_NOT_INJECT"
+      injection_operator      = "ALL_PAGES"
     },
     review-a = {
       hostname                = "review-a"
       name                    = "Address CRI"
-      manual_injection        = false
       user_session_percentage = 50
+      injection_rule          = "AUTOMATIC_INJECTION"
+      injection_operator      = "ALL_PAGES"
     },
     review-b = {
       hostname                = "review-b"
       name                    = "Document App CRI"
-      manual_injection        = false
       user_session_percentage = 50
+      injection_rule          = "AUTOMATIC_INJECTION"
+      injection_operator      = "ALL_PAGES"
     },
     review-bav = {
       hostname                = "review-bav"
       name                    = "Bank Account Verification CRI"
-      manual_injection        = false
       user_session_percentage = 50
+      injection_rule          = "AUTOMATIC_INJECTION"
+      injection_operator      = "ALL_PAGES"
     },
     review-c = {
       hostname                = "review-c"
       name                    = "Claimed Identity Collector CRI"
-      manual_injection        = false
       user_session_percentage = 50
+      injection_rule          = "AUTOMATIC_INJECTION"
+      injection_operator      = "ALL_PAGES"
     },
     review-d = {
       hostname                = "review-d"
       name                    = "Driving License CRI"
-      manual_injection        = false
       user_session_percentage = 50
+      injection_rule          = "AUTOMATIC_INJECTION"
+      injection_operator      = "ALL_PAGES"
     },
     review-f = {
       hostname                = "review-f"
       name                    = "Fraud CRI"
-      manual_injection        = false
       user_session_percentage = 50
+      injection_rule          = "AUTOMATIC_INJECTION"
+      injection_operator      = "ALL_PAGES"
     },
     review-hc = {
       hostname                = "review-hc"
       name                    = "HMRC NINO Check CRI"
-      manual_injection        = false
       user_session_percentage = 50
+      injection_rule          = "AUTOMATIC_INJECTION"
+      injection_operator      = "ALL_PAGES"
     },
     review-k = {
       hostname                = "review-k"
       name                    = "Experian KBV CRI"
-      manual_injection        = false
       user_session_percentage = 50
+      injection_rule          = "AUTOMATIC_INJECTION"
+      injection_operator      = "ALL_PAGES"
     },
     review-o = {
       hostname                = "review-o"
       name                    = "Face to Face CRI"
-      manual_injection        = false
       user_session_percentage = 50
+      injection_rule          = "AUTOMATIC_INJECTION"
+      injection_operator      = "ALL_PAGES"
     },
     review-pa = {
       hostname                = "review-pa"
       name                    = "Passport CRI"
-      manual_injection        = false
       user_session_percentage = 50
+      injection_rule          = "AUTOMATIC_INJECTION"
+      injection_operator      = "ALL_PAGES"
     }
   }
 }
@@ -89,8 +102,9 @@ module "web_application_staging" {
   name                    = "Staging"
   enabled                 = true
   opt_in_enabled          = true
-  manual_injection        = false
   user_session_percentage = 50
+  injection_rule          = "AUTOMATIC_INJECTION"
+  injection_operator      = "ALL_PAGES"
 }
 
 module "web_application_staging_subdomains" {
@@ -101,8 +115,9 @@ module "web_application_staging_subdomains" {
   name                    = "${each.value["name"]} Staging"
   enabled                 = true
   opt_in_enabled          = true
-  manual_injection        = each.value["manual_injection"]
   user_session_percentage = each.value["user_session_percentage"]
+  injection_rule          = each.value["injection_rule"]
+  injection_operator      = each.value["injection_operator"]
 }
 
 module "web_application_integration" {
@@ -113,8 +128,9 @@ module "web_application_integration" {
   name                    = "Integration"
   enabled                 = true
   opt_in_enabled          = true
-  manual_injection        = false
   user_session_percentage = 50
+  injection_rule          = "AUTOMATIC_INJECTION"
+  injection_operator      = "ALL_PAGES"
 }
 
 module "web_application_integration_subdomains" {
@@ -125,8 +141,9 @@ module "web_application_integration_subdomains" {
   name                    = "${each.value["name"]} Integration"
   enabled                 = true
   opt_in_enabled          = true
-  manual_injection        = each.value["manual_injection"]
   user_session_percentage = each.value["user_session_percentage"]
+  injection_rule          = each.value["injection_rule"]
+  injection_operator      = each.value["injection_operator"]
 }
 
 module "web_application_production" {
@@ -137,8 +154,9 @@ module "web_application_production" {
   name                    = "Production"
   enabled                 = true
   opt_in_enabled          = true
-  manual_injection        = false
   user_session_percentage = 50
+  injection_rule          = "AUTOMATIC_INJECTION"
+  injection_operator      = "ALL_PAGES"
 }
 
 module "web_application_production_subdomains" {
@@ -149,6 +167,7 @@ module "web_application_production_subdomains" {
   name                    = "${each.value["name"]} Production"
   enabled                 = true
   opt_in_enabled          = true
-  manual_injection        = each.value["manual_injection"]
   user_session_percentage = each.value["user_session_percentage"]
+  injection_rule          = each.value["injection_rule"]
+  injection_operator      = each.value["injection_operator"]
 }
