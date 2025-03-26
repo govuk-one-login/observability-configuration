@@ -691,8 +691,8 @@ resource "dynatrace_attributes_preferences" "attributes_preferences" {
 }
 
 # Failure detection parameters
-resource "dynatrace_failure_detection_parameters" "ignore_page_not_found" {
-  name = "ignore-page-not-found"
+resource "dynatrace_failure_detection_parameters" "failure_detection_parameter" {
+  name = "combined-failure-detection-parameters"
 
   broken_links {
     http_404_not_found_failures = false
@@ -713,86 +713,20 @@ resource "dynatrace_failure_detection_parameters" "ignore_page_not_found" {
         class_pattern   = "Error"
         message_pattern = "Page not found"
       }
-    }
-  }
-}
-
-resource "dynatrace_failure_detection_parameters" "ignore_invalid_csrf_token" {
-  name = "ignore-invalid-csrf-token"
-
-  broken_links {
-    http_404_not_found_failures = false
-  }
-
-  http_response_codes {
-    client_side_errors                        = "400-599"
-    server_side_errors                        = "500-599"
-    fail_on_missing_response_code_client_side = false
-    fail_on_missing_response_code_server_side = false
-  }
-
-  exception_rules {
-    ignore_all_exceptions         = false
-    ignore_span_failure_detection = false
-    success_forcing_exceptions {
       custom_handled_exception {
-        class_pattern   = "Error"
+        class_pattern = "Error"
         message_pattern = "invalid csrf token"
       }
-    }
-  }
-}
-
-resource "dynatrace_failure_detection_parameters" "ignore_missing_prereq_for_this_step" {
-  name = "ignore-missing-prereq-for-this-step"
-
-  broken_links {
-    http_404_not_found_failures = false
-  }
-
-  http_response_codes {
-    client_side_errors                        = "400-599"
-    server_side_errors                        = "500-599"
-    fail_on_missing_response_code_client_side = false
-    fail_on_missing_response_code_server_side = false
-  }
-
-  exception_rules {
-    ignore_all_exceptions         = false
-    ignore_span_failure_detection = false
-    success_forcing_exceptions {
       custom_handled_exception {
-        class_pattern   = "Error"
+        class_pattern = "Error"
         message_pattern = "Missing prereq for this step"
       }
-    }
-  }
-}
-
-resource "dynatrace_failure_detection_parameters" "invalid_session" {
-  name = "invalid-session"
-
-  broken_links {
-    http_404_not_found_failures = false
-  }
-
-  http_response_codes {
-    client_side_errors                        = "400-599"
-    server_side_errors                        = "500-599"
-    fail_on_missing_response_code_client_side = false
-    fail_on_missing_response_code_server_side = false
-  }
-
-  exception_rules {
-    ignore_all_exceptions         = false
-    ignore_span_failure_detection = false
-    success_forcing_exceptions {
       custom_handled_exception {
-        class_pattern   = "Error"
+        class_pattern = "Error"
         message_pattern = "Invalid session and referrer does not have gov.uk domain"
       }
       custom_handled_exception {
-        class_pattern   = "Error"
+        class_pattern = "Error"
         message_pattern = "Invalid session and referrer has gov.uk domain"
       }
     }
@@ -800,67 +734,10 @@ resource "dynatrace_failure_detection_parameters" "invalid_session" {
 }
 
 # Failure detection rules
-resource "dynatrace_failure_detection_rules" "ignore_page_not_found" {
-  name         = "ignore-page-not-found"
+resource "dynatrace_failure_detection_rules" "failure_detection_rule" {
+  name         = "combined-failure-detection-rule"
   enabled      = true
-  parameter_id = dynatrace_failure_detection_parameters.ignore_page_not_found.id
-
-  conditions {
-    condition {
-      attribute = "SERVICE_TYPE"
-      predicate {
-        predicate_type = "SERVICE_TYPE_EQUALS"
-        service_type = [
-          "WebRequest",
-          "WebService"
-        ]
-      }
-    }
-  }
-}
-
-resource "dynatrace_failure_detection_rules" "ignore_invalid_csrf_token" {
-  name         = "ignore-invalid-csrf-token"
-  enabled      = true
-  parameter_id = dynatrace_failure_detection_parameters.ignore_invalid_csrf_token.id
-
-  conditions {
-    condition {
-      attribute = "SERVICE_TYPE"
-      predicate {
-        predicate_type = "SERVICE_TYPE_EQUALS"
-        service_type = [
-          "WebRequest",
-          "WebService"
-        ]
-      }
-    }
-  }
-}
-
-resource "dynatrace_failure_detection_rules" "ignore_missing_prereq_for_this_step" {
-  name         = "ignore-missing-prereq-for-this-step"
-  enabled      = true
-  parameter_id = dynatrace_failure_detection_parameters.ignore_missing_prereq_for_this_step.id
-
-  conditions {
-    condition {
-      attribute = "SERVICE_TYPE"
-      predicate {
-        predicate_type = "SERVICE_TYPE_EQUALS"
-        service_type = [
-          "WebRequest",
-          "WebService"
-        ]
-      }
-    }
-  }
-}
-
-resource "dynatrace_failure_detection_rules" "invalid_session" {
-  name         = "invalid-session"
-  enabled      = true
-  parameter_id = dynatrace_failure_detection_parameters.invalid_session.id
+  parameter_id = dynatrace_failure_detection_parameters.failure_detection_parameter.id
 
   conditions {
     condition {
