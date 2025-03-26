@@ -714,19 +714,19 @@ resource "dynatrace_failure_detection_parameters" "failure_detection_parameter" 
         message_pattern = "Page not found"
       }
       custom_handled_exception {
-        class_pattern = "Error"
+        class_pattern   = "Error"
         message_pattern = "invalid csrf token"
       }
       custom_handled_exception {
-        class_pattern = "Error"
+        class_pattern   = "Error"
         message_pattern = "Missing prereq for this step"
       }
       custom_handled_exception {
-        class_pattern = "Error"
+        class_pattern   = "Error"
         message_pattern = "Invalid session and referrer does not have gov.uk domain"
       }
       custom_handled_exception {
-        class_pattern = "Error"
+        class_pattern   = "Error"
         message_pattern = "Invalid session and referrer has gov.uk domain"
       }
     }
