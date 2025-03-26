@@ -692,7 +692,7 @@ resource "dynatrace_attributes_preferences" "attributes_preferences" {
 
 # Failure detection parameters
 resource "dynatrace_failure_detection_parameters" "failure_detection_parameter" {
-  name = "combined-failure-detection-parameters"
+  name = "global-error-suppression-parameters"
 
   broken_links {
     http_404_not_found_failures = false
@@ -735,7 +735,7 @@ resource "dynatrace_failure_detection_parameters" "failure_detection_parameter" 
 
 # Failure detection rules
 resource "dynatrace_failure_detection_rules" "failure_detection_rule" {
-  name         = "combined-failure-detection-rule"
+  name         = "global-error-suppression-rule"
   enabled      = true
   parameter_id = dynatrace_failure_detection_parameters.failure_detection_parameter.id
 
