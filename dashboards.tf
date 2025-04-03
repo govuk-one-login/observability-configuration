@@ -240,6 +240,14 @@ module "spot_cimit_apigateway_metrics_dashboard" {
   source = "./modules/dashboard"
   path   = "spot/cimit-api-gateway.json"
 }
+module "spot_performance_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "spot/spot-performance-metrics.json"
+}
+module "cimit_performance_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "spot/cimit-performance-metrics.json"
+}
 
 ### Kiwi ###
 
