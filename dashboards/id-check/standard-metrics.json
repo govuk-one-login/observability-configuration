@@ -3,7 +3,7 @@
     "configurationVersions": [
       7
     ],
-    "clusterVersion": "1.294.56.20240626-133120"
+    "clusterVersion": "1.311.51.20250403-172833"
   },  
   "dashboardMetadata": {
     "name": "id-check standard-metrics production-account",
@@ -3979,125 +3979,6 @@
       ]
     },
     {
-      "name": "Average Task Count - ECS",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 4028,
-        "left": 798,
-        "width": 760,
-        "height": 380
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Frontend ECS Service",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "cloud.aws.ecs.containerinsights.taskCountByAccountIdClusterNameRegion",
-          "spaceAggregation": "AVG",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "aws.account.id",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "671922655609",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Task Count"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.ecs.containerinsights.taskCountByAccountIdClusterNameRegion:filter(and(or(eq(\"aws.account.id\",\"671922655609\")))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
       "name": "Frontend ECS Service",
       "tileType": "DATA_EXPLORER",
       "configured": true,
@@ -4653,6 +4534,172 @@
       },
       "metricExpressions": [
         "resolution=Inf&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]aws\\:cloudformation\\:stack-id:arn\\:aws\\:cloudformation\\:eu-west-2\\:671922655609\\:stack/backend-api/326d0850-090b-11ed-bf5f-06f7b67b933c~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)):names,(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),tag(~\"[AWS]aws\\:cloudformation\\:stack-id:arn\\:aws\\:cloudformation\\:eu-west-2\\:671922655609\\:stack/backend-api/326d0850-090b-11ed-bf5f-06f7b67b933c~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)):names"
+      ]
+    },
+    {
+      "name": "Task Count by Service",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 4028,
+        "left": 798,
+        "width": 760,
+        "height": 380
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Frontend ECS Service",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "servicename"
+          ],
+          "metricSelector": "cloud.aws.ecs.containerinsights.desiredTaskCountByAccountIdClusterNameRegionServiceName:filter(eq(\"aws.account.id\",\"671922655609\")):splitBy(servicename):max",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "servicename"
+          ],
+          "metricSelector": "cloud.aws.ecs.containerinsights.runningTaskCountByAccountIdClusterNameRegionServiceName:filter(eq(\"aws.account.id\",\"671922655609\")):splitBy(servicename):max",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "servicename"
+          ],
+          "metricSelector": "cloud.aws.ecs.containerinsights.pendingTaskCountByAccountIdClusterNameRegionServiceName:filter(eq(\"aws.account.id\",\"671922655609\")):splitBy(servicename):max",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "E",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "targetgroup"
+          ],
+          "metricSelector": "cloud.aws.applicationelb.unHealthyHostCountByAccountIdLoadBalancerRegionTargetGroup:filter(eq(\"aws.account.id\",\"671922655609\")):splitBy(targetgroup):max",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Task Count"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "E:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "B",
+                "C",
+                "E",
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.ecs.containerinsights.desiredTaskCountByAccountIdClusterNameRegionServiceName:filter(eq(\"aws.account.id\",\"671922655609\")):splitBy(servicename):max):limit(100):names,(cloud.aws.ecs.containerinsights.runningTaskCountByAccountIdClusterNameRegionServiceName:filter(eq(\"aws.account.id\",\"671922655609\")):splitBy(servicename):max):limit(100):names,(cloud.aws.ecs.containerinsights.pendingTaskCountByAccountIdClusterNameRegionServiceName:filter(eq(\"aws.account.id\",\"671922655609\")):splitBy(servicename):max):limit(100):names,(cloud.aws.applicationelb.unHealthyHostCountByAccountIdLoadBalancerRegionTargetGroup:filter(eq(\"aws.account.id\",\"671922655609\")):splitBy(targetgroup):max):limit(100):names"
       ]
     }
   ]
