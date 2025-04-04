@@ -606,16 +606,19 @@ module "pipelines_dora_dashboard" {
 ### ID Check ###
 
 module "standard_metrics_dashboard" {
+  count  = local.is_production ? 1 : 0 # Only create in production
   source = "./modules/dashboard"
   path   = "id-check/standard-metrics.json"
 }
 
 module "deployment_metrics_dashboard" {
+  count  = local.is_production ? 1 : 0 # Only create in production
   source = "./modules/dashboard"
   path   = "id-check/deployment-metrics.json"
 }
 
 module "service_quotas_dashboard" {
+  count  = local.is_production ? 1 : 0 # Only create in production
   source = "./modules/dashboard"
   path   = "id-check/service-quotas.json"
 }
