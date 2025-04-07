@@ -33,4 +33,19 @@ resource "dynatrace_alerting" "di-alerting-profile" {
       severity_level   = "RESOURCE_CONTENTION"
     }
   }
+
+  filters {
+    filter {
+      custom {
+        title {
+          operator = "CONTAINS"
+          value = "TEAM"
+          case_sensitive = true
+          enabled = true
+          negate = true
+        }
+      }
+    }
+  }
+
 }
