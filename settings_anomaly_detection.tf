@@ -342,6 +342,212 @@ resource "dynatrace_metric_events" "aws_codebuild_memory_utilized_percent" {
   }
 }
 
+######################
+# TEAM Metric Events #
+######################
+
+# Amplify
+resource "dynatrace_metric_events" "team_amplify_5xx_errors" {
+  count                      = local.is_production ? 0 : 1
+  enabled                    = true
+  summary                    = "TEAM Amplify 5xx Errors Alert"
+  event_template {
+    description = "The {metricname} value was {alert_condition} normal behavior."
+    davis_merge = true
+    event_type  = "ERROR"
+    title       = "TEAM Amplify 5xx Errors Alert"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    threshold          = 0
+    alert_on_no_data   = false
+    violating_samples  = 1
+    samples            = 3
+    dealerting_samples = 3
+  }
+  query_definition {
+    type        = "METRIC_SELECTOR"
+    metric_selector = "cloud.aws.amplifyhosting.5xxErrorsByAccountIdRegion:filter(and(or(eq(\"aws.account.id\",\"708169909512\")))):sort(value(auto,descending)):limit(20)"
+  }
+}
+
+resource "dynatrace_metric_events" "team_amplify_high_latency" {
+  count                      = local.is_production ? 0 : 1
+  enabled                    = true
+  summary                    = "TEAM Amplify High Latency Alert"
+  event_template {
+    description = "The {metricname} value was {alert_condition} normal behavior."
+    davis_merge = true
+    event_type  = "SLOWDOWN"
+    title       = "TEAM Amplify High Latency Alert"
+  }
+  model_properties {
+    type               = "AUTO_ADAPTIVE_THRESHOLD"
+    alert_condition    = "ABOVE"
+    alert_on_no_data   = false
+    violating_samples  = 1
+    samples            = 3
+    dealerting_samples = 3
+    signal_fluctuation = 1
+  }
+  query_definition {
+    type        = "METRIC_SELECTOR"
+    metric_selector = "cloud.aws.amplifyhosting.latencyByAccountIdRegion:filter(and(or(eq(\"aws.account.id\",\"708169909512\")))):sort(value(auto,descending)):limit(20)"
+  }
+}
+
+# Appsync
+resource "dynatrace_metric_events" "team_appsync_connect_client_error" {
+  count                      = local.is_production ? 0 : 1
+  enabled                    = true
+  summary                    = "TEAM Appsync Connect Client Error Alert"
+  event_template {
+    description = "The {metricname} value was {alert_condition} normal behavior."
+    davis_merge = true
+    event_type  = "ERROR"
+    title       = "TEAM Appsync Connect Client Error Alert"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    threshold          = 0
+    alert_on_no_data   = false
+    violating_samples  = 1
+    samples            = 3
+    dealerting_samples = 3
+  }
+  query_definition {
+    type        = "METRIC_SELECTOR"
+    metric_selector = "cloud.aws.appsync.connectClientErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",\"708169909512\"))))"
+  }
+}
+
+resource "dynatrace_metric_events" "team_appsync_connect_server_error" {
+  count                      = local.is_production ? 0 : 1
+  enabled                    = true
+  summary                    = "TEAM Appsync Connect Server Error Alert"
+  event_template {
+    description = "The {metricname} value was {alert_condition} normal behavior."
+    davis_merge = true
+    event_type  = "ERROR"
+    title       = "TEAM Appsync Connect Client Server Alert"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    threshold          = 0
+    alert_on_no_data   = false
+    violating_samples  = 1
+    samples            = 3
+    dealerting_samples = 3
+  }
+  query_definition {
+    type        = "METRIC_SELECTOR"
+    metric_selector = "cloud.aws.appsync.connectServerErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",\"708169909512\"))))"
+  }
+}
+
+resource "dynatrace_metric_events" "team_appsync_disconnect_client_error" {
+  count                      = local.is_production ? 0 : 1
+  enabled                    = true
+  summary                    = "TEAM Appsync Disconnect Client Error Alert"
+  event_template {
+    description = "The {metricname} value was {alert_condition} normal behavior."
+    davis_merge = true
+    event_type  = "ERROR"
+    title       = "TEAM Appsync Disconnect Client Error Alert"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    threshold          = 0
+    alert_on_no_data   = false
+    violating_samples  = 1
+    samples            = 3
+    dealerting_samples = 3
+  }
+  query_definition {
+    type        = "METRIC_SELECTOR"
+    metric_selector = "cloud.aws.appsync.disconnectClientErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",\"708169909512\"))))"
+  }
+}
+
+resource "dynatrace_metric_events" "team_appsync_disconnect_server_error" {
+  count                      = local.is_production ? 0 : 1
+  enabled                    = true
+  summary                    = "TEAM Appsync Disconnect Server Error Alert"
+  event_template {
+    description = "The {metricname} value was {alert_condition} normal behavior."
+    davis_merge = true
+    event_type  = "ERROR"
+    title       = "TEAM Appsync Disconnect Client Server Alert"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    threshold          = 0
+    alert_on_no_data   = false
+    violating_samples  = 1
+    samples            = 3
+    dealerting_samples = 3
+  }
+  query_definition {
+    type        = "METRIC_SELECTOR"
+    metric_selector = "cloud.aws.appsync.disconnectServerErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq("aws.account.id","708169909512"))))"
+  }
+}
+
+resource "dynatrace_metric_events" "team_appsync_subscribe_client_error" {
+  count                      = local.is_production ? 0 : 1
+  enabled                    = true
+  summary                    = "TEAM Appsync Subscribe Client Error Alert"
+  event_template {
+    description = "The {metricname} value was {alert_condition} normal behavior."
+    davis_merge = true
+    event_type  = "ERROR"
+    title       = "TEAM Appsync Subscribe Client Error Alert"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    threshold          = 0
+    alert_on_no_data   = false
+    violating_samples  = 1
+    samples            = 3
+    dealerting_samples = 3
+  }
+  query_definition {
+    type        = "METRIC_SELECTOR"
+    metric_selector = "cloud.aws.appsync.subscribeClientErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",\"708169909512\"))))"
+  }
+}
+
+resource "dynatrace_metric_events" "team_appsync_subscribe_server_error" {
+  count                      = local.is_production ? 0 : 1
+  enabled                    = true
+  summary                    = "TEAM Appsync Subscribe Server Error Alert"
+  event_template {
+    description = "The {metricname} value was {alert_condition} normal behavior."
+    davis_merge = true
+    event_type  = "ERROR"
+    title       = "TEAM Appsync Subscribe Server Error Alert"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    threshold          = 0
+    alert_on_no_data   = false
+    violating_samples  = 1
+    samples            = 3
+    dealerting_samples = 3
+  }
+  query_definition {
+    type        = "METRIC_SELECTOR"
+    metric_selector = "cloud.aws.appsync.subscribeServerErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",\"708169909512\"))))"
+  }
+}
+
 # Frequent issue detection
 resource "dynatrace_frequent_issues" "frequent_issue_detection" {
   detect_apps  = true
