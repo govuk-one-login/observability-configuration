@@ -1,0 +1,1137 @@
+{
+  "metadata": {
+    "configurationVersions": [
+      7
+    ],
+    "clusterVersion": "1.311.48.20250402-142519"
+  },
+  "dashboardMetadata": {
+    "name": "cimit-performance-metrics",
+    "shared": true,
+    "owner": "chris.clayson@digital.cabinet-office.gov.uk",
+    "popularity": 1,
+    "hasConsistentColors": false
+  },
+  "tiles": [
+    {
+      "name": "Function Duration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 836,
+        "width": 912,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "dt.entity.aws_lambda_function"
+          ],
+          "metricSelector": "builtin:cloud.aws.lambda.duration\n:filter(in(\"dt.entity.aws_lambda_function\", entitySelector(\"type(~\"AWS_LAMBDA_FUNCTION~\"),entityName.in(~\"postMitigations-production~\", ~\"getContraIndicatorCredential-production~\", ~\"putContraIndicator-production~\")\")))\n:splitBy(\"dt.entity.aws_lambda_function\"):avg",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.duration:filter(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(~\"AWS_LAMBDA_FUNCTION~\"),entityName.in(~\"postMitigations-production~\", ~\"getContraIndicatorCredential-production~\", ~\"putContraIndicator-production~\")\"))):splitBy(\"dt.entity.aws_lambda_function\"):avg):limit(100):names"
+      ]
+    },
+    {
+      "name": "Max requests per second (API Gateway)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 0,
+        "width": 418,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameRegionStage\n:filter(and(eq(\"apiname\",\"CIMIT Private API Gateway\"),eq(\"aws.region\",\"eu-west-2\"), eq(\"aws.account.id\",\"442136572379\")))\n:splitBy()\n:sum\n:rate(1s)\n:setUnit(PerSecond)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 1500,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 2000,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1h",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "MAX"
+      },
+      "metricExpressions": [
+        "resolution=1h&(cloud.aws.apigateway.countByAccountIdApiNameRegionStage:filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():sum:rate(1s):setUnit(PerSecond)):limit(100):names:fold(max)",
+        "resolution=1h&(cloud.aws.apigateway.countByAccountIdApiNameRegionStage:filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():sum:rate(1s):setUnit(PerSecond))"
+      ]
+    },
+    {
+      "name": "Max requests per minute (API Gateway)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 418,
+        "width": 418,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameRegionStage\n:filter(and(eq(\"apiname\",\"CIMIT Private API Gateway\"),eq(\"aws.region\",\"eu-west-2\"), eq(\"aws.account.id\",\"442136572379\")))\n:splitBy()\n:sum\n:rate(1m)\n:setUnit(PerMinute)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 1500,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 2000,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1h",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "MAX"
+      },
+      "metricExpressions": [
+        "resolution=1h&(cloud.aws.apigateway.countByAccountIdApiNameRegionStage:filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():sum:rate(1m):setUnit(PerMinute)):limit(100):names:fold(max)",
+        "resolution=1h&(cloud.aws.apigateway.countByAccountIdApiNameRegionStage:filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():sum:rate(1m):setUnit(PerMinute))"
+      ]
+    },
+    {
+      "name": "Avg requests per second (API Gateway)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 342,
+        "left": 0,
+        "width": 418,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameRegionStage\n:filter(and(eq(\"apiname\",\"CIMIT Private API Gateway\"),eq(\"aws.region\",\"eu-west-2\"), eq(\"aws.account.id\",\"442136572379\")))\n:splitBy()\n:sum\n:rate(1s)\n:setUnit(PerSecond)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 1500,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 2000,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "AVG"
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameRegionStage:filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():sum:rate(1s):setUnit(PerSecond)):limit(100):names:fold(avg)",
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameRegionStage:filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():sum:rate(1s):setUnit(PerSecond))"
+      ]
+    },
+    {
+      "name": "Avg requests per minute (API Gateway)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 342,
+        "left": 418,
+        "width": 418,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameRegionStage\n:filter(and(eq(\"apiname\",\"CIMIT Private API Gateway\"),eq(\"aws.region\",\"eu-west-2\"), eq(\"aws.account.id\",\"442136572379\")))\n:splitBy()\n:sum\n:rate(1m)\n:setUnit(PerMinute)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 1500,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 2000,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "AVG"
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameRegionStage:filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():sum:rate(1m):setUnit(PerMinute)):limit(100):names:fold(avg)",
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameRegionStage:filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():sum:rate(1m):setUnit(PerMinute))"
+      ]
+    },
+    {
+      "name": "Invocations",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 684,
+        "left": 0,
+        "width": 950,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameRegionStage\n:filter(and(eq(\"apiname\",\"CIMIT Private API Gateway\"),eq(\"aws.region\",\"eu-west-2\"), eq(\"aws.account.id\",\"442136572379\")))\n:splitBy()\n:sum",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "API Calls"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameRegionStage:filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():sum):limit(100):names"
+      ]
+    },
+    {
+      "name": "Reliability",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 988,
+        "left": 0,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Reliability",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "(1 - (\n  cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":filter(and(eq(\"apiname\",\"CIMIT Private API Gateway\"),eq(\"aws.region\",\"eu-west-2\"), eq(\"aws.account.id\",\"442136572379\")))\n:splitBy():fold(sum):default(0):setUnit(Count)\n/ \ncloud.aws.apigateway.countByAccountIdApiNameRegion:filter(and(eq(\"apiname\",\"CIMIT Private API Gateway\"),eq(\"aws.region\",\"eu-west-2\"), eq(\"aws.account.id\",\"442136572379\")))\n\n:splitBy():fold(sum):setUnit(Count)\n) )* 100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "none",
+            "valueFormat": "0,000",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 99.99,
+                "color": "#7dc540"
+              },
+              {
+                "value": 99.95,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 0,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&((1 - (cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():fold(sum):default(0):setUnit(Count)/cloud.aws.apigateway.countByAccountIdApiNameRegion:filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():fold(sum):setUnit(Count)))*100):limit(100):names:fold(value)",
+        "resolution=null&((1 - (cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():fold(sum):default(0):setUnit(Count)/cloud.aws.apigateway.countByAccountIdApiNameRegion:filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():fold(sum):setUnit(Count)))*100)"
+      ]
+    },
+    {
+      "name": "Total invocations",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 988,
+        "left": 304,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Total invocations",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage\n:filter(and(eq(\"apiname\",\"CIMIT Private API Gateway\"),eq(\"aws.region\",\"eu-west-2\"), eq(\"aws.account.id\",\"442136572379\")))\n:splitBy():sum",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "none",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():sum):limit(100):names:fold(sum)",
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():sum)"
+      ]
+    },
+    {
+      "name": "Total error",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 988,
+        "left": 608,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Total invocations",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\"\n:filter(and(eq(\"apiname\",\"CIMIT Private API Gateway\"),eq(\"aws.region\",\"eu-west-2\"), eq(\"aws.account.id\",\"442136572379\")))\n:splitBy():sum",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "none",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "value": 0,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 1,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():sum):limit(100):names:fold(sum)",
+        "resolution=null&(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameRegion\":filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():sum)"
+      ]
+    },
+    {
+      "name": "P95 Response",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 342,
+        "left": 836,
+        "width": 304,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameRegion\n:filter(and(eq(\"apiname\",\"CIMIT Private API Gateway\"),eq(\"aws.region\",\"eu-west-2\"), eq(\"aws.account.id\",\"442136572379\")))\n:splitBy()\n:fold(percentile(95.0))\n:sort(value(percentile(95.0),descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "Second",
+            "valueFormat": "0,000",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.latencyByAccountIdApiNameRegion:filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():fold(percentile(95.0)):sort(value(percentile(95.0),descending))):limit(100):names:fold(auto)",
+        "resolution=null&(cloud.aws.apigateway.latencyByAccountIdApiNameRegion:filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():fold(percentile(95.0)):sort(value(percentile(95.0),descending)))"
+      ]
+    },
+    {
+      "name": "P99 Response",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 342,
+        "left": 1140,
+        "width": 304,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameRegion\n:filter(and(eq(\"apiname\",\"CIMIT Private API Gateway\"),eq(\"aws.region\",\"eu-west-2\"), eq(\"aws.account.id\",\"442136572379\")))\n:splitBy()\n:fold(percentile(99.0))\n:sort(value(percentile(99.0),descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "Second",
+            "valueFormat": "0,000",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.latencyByAccountIdApiNameRegion:filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():fold(percentile(99.0)):sort(value(percentile(99.0),descending))):limit(100):names:last",
+        "resolution=null&(cloud.aws.apigateway.latencyByAccountIdApiNameRegion:filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():fold(percentile(99.0)):sort(value(percentile(99.0),descending)))"
+      ]
+    },
+    {
+      "name": "Average Response",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 342,
+        "left": 1444,
+        "width": 304,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameRegion\n:filter(and(eq(\"apiname\",\"CIMIT Private API Gateway\"),eq(\"aws.region\",\"eu-west-2\"), eq(\"aws.account.id\",\"442136572379\")))\n:splitBy()\n:fold(avg)\n:sort(value(avg,descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "0,000",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.latencyByAccountIdApiNameRegion:filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():fold(avg):sort(value(avg,descending))):limit(100):names:fold(auto)",
+        "resolution=null&(cloud.aws.apigateway.latencyByAccountIdApiNameRegion:filter(and(eq(apiname,\"CIMIT Private API Gateway\"),eq(\"aws.region\",eu-west-2),eq(\"aws.account.id\",\"442136572379\"))):splitBy():fold(avg):sort(value(avg,descending)))"
+      ]
+    }
+  ]
+}
