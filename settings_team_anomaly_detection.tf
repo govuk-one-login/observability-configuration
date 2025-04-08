@@ -430,3 +430,54 @@ resource "dynatrace_metric_events" "team_lambda_throttles" {
     metric_selector = "cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion:filter(and(eq(\"aws.account.id\", \"708169909512\"), contains(\"functionname\", \"-main\"))):splitBy(\"functionname\"):sort(value(auto,descending)):limit(20)"
   }
 }
+
+# Step Functions
+resource "dynatrace_metric_events" "team_step_functions_execution_aborted" {
+  count                      = local.is_production ? 0 : 1
+  enabled                    = true
+  summary                    = "TEAM Step Functions Execution Aborted Alert"
+  event_template {
+    description = "The {metricname} value was {alert_condition} normal behavior."
+    davis_merge = true
+    event_type  = "ERROR"
+    title       = "TEAM Step Functions Execution Aborted Alert"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    threshold          = 0
+    alert_on_no_data   = false
+    violating_samples  = 1
+    samples            = 3
+    dealerting_samples = 3
+  }   
+  query_definition {
+    type        = "METRIC_SELECTOR"
+    metric_selector = "cloud.aws.states.executionsAbortedByAccountIdRegionStateMachineArn:filter(and(or(eq(\"aws.account.id\",\"708169909512\")))):splitBy(statemachinearn):sum:sort(value(sum,descending)):limit(20)"
+  }
+}
+
+resource "dynatrace_metric_events" "team_step_functions_execution_failed" {
+  count                      = local.is_production ? 0 : 1
+  enabled                    = true
+  summary                    = "TEAM Step Functions Execution Failed Alert"
+  event_template {
+    description = "The {metricname} value was {alert_condition} normal behavior."
+    davis_merge = true
+    event_type  = "ERROR"
+    title       = "TEAM Step Functions Execution Failed Alert"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    threshold          = 0
+    alert_on_no_data   = false
+    violating_samples  = 1
+    samples            = 3
+    dealerting_samples = 3
+  }   
+  query_definition {
+    type        = "METRIC_SELECTOR"
+    metric_selector = "cloud.aws.states.executionsFailedByAccountIdRegionStateMachineArn:filter(and(or(eq(\"aws.account.id\",\"708169909512\")))):splitBy(statemachinearn):sum:sort(value(sum,descending)):limit(20)"
+  }
+}
