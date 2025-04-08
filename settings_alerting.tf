@@ -38,11 +38,11 @@ resource "dynatrace_alerting" "di-alerting-profile" {
     filter {
       custom {
         title {
-          operator = "CONTAINS"
-          value = "TEAM"
+          operator       = "CONTAINS"
+          value          = "TEAM"
           case_sensitive = true
-          enabled = true
-          negate = true
+          enabled        = true
+          negate         = true
         }
       }
     }
@@ -90,10 +90,10 @@ resource "dynatrace_alerting" "di-team-alerting" {
     filter {
       custom {
         title {
-          operator = "CONTAINS"
-          value = "TEAM"
+          operator       = "CONTAINS"
+          value          = "TEAM"
           case_sensitive = true
-          enabled = true
+          enabled        = true
         }
       }
     }
