@@ -380,6 +380,31 @@ resource "dynatrace_metric_events" "team_dynamodb_write_throttles" {
   }
 }
 
+resource "dynatrace_metric_events" "team_dynamodb_server_error" {
+  count   = local.is_production ? 0 : 1
+  enabled = true
+  summary = "TEAM DynamoDB Server Error Alert"
+  event_template {
+    description = "The {metricname} value was {alert_condition} normal behavior."
+    davis_merge = true
+    event_type  = "SLOWDOWN"
+    title       = "TEAM DynamoDB Server Error Alert"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    threshold          = 0
+    alert_on_no_data   = false
+    violating_samples  = 1
+    samples            = 3
+    dealerting_samples = 3
+  }
+  query_definition {
+    type            = "METRIC_SELECTOR"
+    metric_selector = "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:filter(and(or(eq(\"aws.account.id\", \"708169909512\"))),contains(\"tablename\",\"-main\")):splitBy(aws.region):sort(value(auto,descending)):limit(20)"
+  }
+}
+
 # Lambda
 resource "dynatrace_metric_events" "team_lambda_error" {
   count   = local.is_production ? 0 : 1
@@ -519,7 +544,7 @@ resource "dynatrace_metric_events" "team_policy_lambda_throttles" {
   event_template {
     description = "The {metricname} value was {alert_condition} normal behavior."
     davis_merge = true
-    event_type  = "ERROR"
+    event_type  = "SLOWDOWN"
     title       = "TEAM Policy Publishing Function Lambda Throttle Alert"
   }
   model_properties {
@@ -621,7 +646,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_approvers_throttles" {
   event_template {
     description = "The {metricname} value was {alert_condition} normal behavior."
     davis_merge = true
-    event_type  = "ERROR"
+    event_type  = "SLOWDOWN"
     title       = "TEAM Policy Publishing Function Approvers Table User Throttle Alert"
   }
   model_properties {
@@ -646,7 +671,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_eligibility_throttles" 
   event_template {
     description = "The {metricname} value was {alert_condition} normal behavior."
     davis_merge = true
-    event_type  = "ERROR"
+    event_type  = "SLOWDOWN"
     title       = "TEAM Policy Publishing Function Eligibility Table Throttle Alert"
   }
   model_properties {
