@@ -60,7 +60,7 @@ resource "dynatrace_web_application" "web_application" {
     }
     javascript_injection_rules {
       rule {
-        rule         = var.injection_rule 
+        rule         = var.injection_rule
         url_operator = var.injection_operator
         enabled      = true
       }
