@@ -724,6 +724,57 @@ resource "dynatrace_metric_events" "team_dynamodb_write_throttles" {
   }
 }
 
+# Lambda
+resource "dynatrace_metric_events" "team_lambda_error" {
+  count                      = local.is_production ? 0 : 1
+  enabled                    = true
+  summary                    = "TEAM Lambda Error Alert"
+  event_template {
+    description = "The {metricname} value was {alert_condition} normal behavior."
+    davis_merge = true
+    event_type  = "ERROR"
+    title       = "TEAM Lambda Error Alert"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    threshold          = 0
+    alert_on_no_data   = false
+    violating_samples  = 1
+    samples            = 3
+    dealerting_samples = 3
+  }   
+  query_definition {
+    type        = "METRIC_SELECTOR"
+    metric_selector = "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(eq(\"aws.account.id\", \"708169909512\"), contains(\"functionname\", \"-main\"))):splitBy(\"functionname\"):sort(value(auto,descending)):limit(20)"
+  }
+}
+
+resource "dynatrace_metric_events" "team_lambda_throttles" {
+  count                      = local.is_production ? 0 : 1
+  enabled                    = true
+  summary                    = "TEAM Lambda Throttle Alert"
+  event_template {
+    description = "The {metricname} value was {alert_condition} normal behavior."
+    davis_merge = true
+    event_type  = "ERROR"
+    title       = "TEAM Lambda Throttle Alert"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    threshold          = 0
+    alert_on_no_data   = false
+    violating_samples  = 1
+    samples            = 3
+    dealerting_samples = 3
+  }   
+  query_definition {
+    type        = "METRIC_SELECTOR"
+    metric_selector = "cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion:filter(and(eq(\"aws.account.id\", \"708169909512\"), contains(\"functionname\", \"-main\"))):splitBy(\"functionname\"):sort(value(auto,descending)):limit(20)"
+  }
+}
+
 # Frequent issue detection
 resource "dynatrace_frequent_issues" "frequent_issue_detection" {
   detect_apps  = true
