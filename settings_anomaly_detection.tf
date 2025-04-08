@@ -548,6 +548,56 @@ resource "dynatrace_metric_events" "team_appsync_subscribe_server_error" {
   }
 }
 
+resource "dynatrace_metric_events" "team_appsync_unsubscribe_client_error" {
+  count                      = local.is_production ? 0 : 1
+  enabled                    = true
+  summary                    = "TEAM Appsync Unsubscribe Client Error Alert"
+  event_template {
+    description = "The {metricname} value was {alert_condition} normal behavior."
+    davis_merge = true
+    event_type  = "ERROR"
+    title       = "TEAM Appsync Unsubscribe Client Error Alert"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    threshold          = 0
+    alert_on_no_data   = false
+    violating_samples  = 1
+    samples            = 3
+    dealerting_samples = 3
+  }
+  query_definition {
+    type        = "METRIC_SELECTOR"
+    metric_selector = "cloud.aws.appsync.unsubscribeClientErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",\"708169909512\"))))"
+  }
+}
+
+resource "dynatrace_metric_events" "team_appsync_unsubscribe_server_error" {
+  count                      = local.is_production ? 0 : 1
+  enabled                    = true
+  summary                    = "TEAM Appsync Unsubscribe Sever Error Alert"
+  event_template {
+    description = "The {metricname} value was {alert_condition} normal behavior."
+    davis_merge = true
+    event_type  = "ERROR"
+    title       = "TEAM Appsync Unsubscribe Sever Error Alert"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    threshold          = 0
+    alert_on_no_data   = false
+    violating_samples  = 1
+    samples            = 3
+    dealerting_samples = 3
+  }
+  query_definition {
+    type        = "METRIC_SELECTOR"
+    metric_selector = "cloud.aws.appsync.unsubscribeServerErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",\"708169909512\"))))"
+  }
+}
+
 # Frequent issue detection
 resource "dynatrace_frequent_issues" "frequent_issue_detection" {
   detect_apps  = true
