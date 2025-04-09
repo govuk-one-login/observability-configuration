@@ -341,13 +341,13 @@ resource "dynatrace_metric_events" "team_dynamodb_write_capacity_consumption" {
     title       = "TEAM DynamoDB Write Capacity Consumption Alert"
   }
   model_properties {
-    type               = "STATIC_THRESHOLD"
+    type               = "AUTO_ADAPTIVE_THRESHOLD"
     alert_condition    = "ABOVE"
-    threshold          = 0
     alert_on_no_data   = false
     violating_samples  = 1
     samples            = 3
     dealerting_samples = 3
+    signal_fluctuation = 1
   }
   query_definition {
     type            = "METRIC_SELECTOR"
