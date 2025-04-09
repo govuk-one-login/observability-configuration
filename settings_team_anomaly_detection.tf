@@ -457,6 +457,31 @@ resource "dynatrace_metric_events" "team_lambda_throttles" {
 }
 
 # Step Functions
+resource "dynatrace_metric_events" "team_step_functions_execution_duration" {
+  count   = local.is_production ? 0 : 1
+  enabled = true
+  summary = "TEAM Step Functions Execution Duration Alert"
+  event_template {
+    description = "The {metricname} value was {alert_condition} normal behavior."
+    davis_merge = true
+    event_type  = "ERROR"
+    title       = "TEAM Step Functions Execution Duration Alert"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    threshold          = 8
+    alert_on_no_data   = false
+    violating_samples  = 1
+    samples            = 3
+    dealerting_samples = 3
+  }
+  query_definition {
+    type            = "METRIC_SELECTOR"
+    metric_selector = "cloud.aws.states.executionTimeByAccountIdRegionStateMachineArn:sort(value(auto,descending)):filter(and(or(eq(\"aws.account.id\",\"708169909512\")))):splitBy(statemachinearn)"
+  }
+}
+
 resource "dynatrace_metric_events" "team_step_functions_execution_aborted" {
   count   = local.is_production ? 0 : 1
   enabled = true
