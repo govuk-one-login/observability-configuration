@@ -24,7 +24,7 @@ resource "dynatrace_metric_events" "team_amplify_5xx_errors" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.amplifyhosting.5xxErrorsByAccountIdRegion:filter(and(or(eq(\"aws.account.id\",\"708169909512\")))):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.amplifyhosting.5xxErrorsByAccountIdRegion:filter(and(or(eq(\"aws.account.id\",${var.team_account_id})))):sort(value(auto,descending)):limit(20)"
   }
 }
 
@@ -49,7 +49,7 @@ resource "dynatrace_metric_events" "team_amplify_high_latency" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.amplifyhosting.latencyByAccountIdRegion:filter(and(or(eq(\"aws.account.id\",\"708169909512\")))):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.amplifyhosting.latencyByAccountIdRegion:filter(and(or(eq(\"aws.account.id\",${var.team_account_id})))):sort(value(auto,descending)):limit(20)"
   }
 }
 
@@ -75,7 +75,7 @@ resource "dynatrace_metric_events" "team_appsync_connect_client_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.appsync.connectClientErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",\"708169909512\"))))"
+    metric_selector = "cloud.aws.appsync.connectClientErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",${var.team_account_id}))))"
   }
 }
 
@@ -100,7 +100,7 @@ resource "dynatrace_metric_events" "team_appsync_connect_server_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.appsync.connectServerErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",\"708169909512\"))))"
+    metric_selector = "cloud.aws.appsync.connectServerErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",${var.team_account_id}))))"
   }
 }
 
@@ -125,7 +125,7 @@ resource "dynatrace_metric_events" "team_appsync_disconnect_client_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.appsync.disconnectClientErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",\"708169909512\"))))"
+    metric_selector = "cloud.aws.appsync.disconnectClientErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",${var.team_account_id}))))"
   }
 }
 
@@ -150,7 +150,7 @@ resource "dynatrace_metric_events" "team_appsync_disconnect_server_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.appsync.disconnectServerErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",\"708169909512\"))))"
+    metric_selector = "cloud.aws.appsync.disconnectServerErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",${var.team_account_id}))))"
   }
 }
 
@@ -175,7 +175,7 @@ resource "dynatrace_metric_events" "team_appsync_subscribe_client_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.appsync.subscribeClientErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",\"708169909512\"))))"
+    metric_selector = "cloud.aws.appsync.subscribeClientErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",${var.team_account_id}))))"
   }
 }
 
@@ -200,7 +200,7 @@ resource "dynatrace_metric_events" "team_appsync_subscribe_server_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.appsync.subscribeServerErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",\"708169909512\"))))"
+    metric_selector = "cloud.aws.appsync.subscribeServerErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",${var.team_account_id}))))"
   }
 }
 
@@ -225,7 +225,7 @@ resource "dynatrace_metric_events" "team_appsync_unsubscribe_client_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.appsync.unsubscribeClientErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",\"708169909512\"))))"
+    metric_selector = "cloud.aws.appsync.unsubscribeClientErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",${var.team_account_id}))))"
   }
 }
 
@@ -250,7 +250,7 @@ resource "dynatrace_metric_events" "team_appsync_unsubscribe_server_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.appsync.unsubscribeServerErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",\"708169909512\"))))"
+    metric_selector = "cloud.aws.appsync.unsubscribeServerErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",${var.team_account_id}))))"
   }
 }
 
@@ -276,7 +276,7 @@ resource "dynatrace_metric_events" "team_dynamodb_read_capacity_consumption" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.consumedReadCapacityUnitsByAccountIdRegionTableName:filter(and(contains(\"tablename\",\"-main\")), eq(\"aws.account.id\",\"708169909512\")):splitBy(tablename):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.consumedReadCapacityUnitsByAccountIdRegionTableName:filter(and(contains(\"tablename\",\"-main\")), eq(\"aws.account.id\",${var.team_account_id})):splitBy(tablename):sort(value(auto,descending)):limit(20)"
   }
 }
 
@@ -301,7 +301,7 @@ resource "dynatrace_metric_events" "team_dynamodb_read_throttles" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.readThrottleEventsByAccountIdRegionTableName:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\", \"708169909512\"))):splitBy(\"tablename\"):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.readThrottleEventsByAccountIdRegionTableName:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\", ${var.team_account_id}))):splitBy(\"tablename\"):sort(value(auto,descending)):limit(20)"
   }
 }
 
@@ -326,7 +326,7 @@ resource "dynatrace_metric_events" "team_dynamodb_user_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.userErrorsByAccountIdRegion:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\", \"708169909512\"))):splitBy(\"tablename\"):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.userErrorsByAccountIdRegion:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\", ${var.team_account_id}))):splitBy(\"tablename\"):sort(value(auto,descending)):limit(20)"
   }
 }
 
@@ -351,7 +351,7 @@ resource "dynatrace_metric_events" "team_dynamodb_write_capacity_consumption" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.consumedWriteCapacityUnitsByAccountIdRegionTableName:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\", \"708169909512\"))):splitBy(\"tablename\"):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.consumedWriteCapacityUnitsByAccountIdRegionTableName:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\", ${var.team_account_id}))):splitBy(\"tablename\"):sort(value(auto,descending)):limit(20)"
   }
 }
 
@@ -376,7 +376,7 @@ resource "dynatrace_metric_events" "team_dynamodb_write_throttles" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.writeThrottleEventsByAccountIdRegionTableName:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\", \"708169909512\"))):splitBy(\"tablename\"):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.writeThrottleEventsByAccountIdRegionTableName:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\", ${var.team_account_id}))):splitBy(\"tablename\"):sort(value(auto,descending)):limit(20)"
   }
 }
 
@@ -401,7 +401,7 @@ resource "dynatrace_metric_events" "team_dynamodb_server_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:filter(and(or(eq(\"aws.account.id\", \"708169909512\"))),contains(\"tablename\",\"-main\")):splitBy(aws.region):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:filter(and(or(eq(\"aws.account.id\", ${var.team_account_id}))),contains(\"tablename\",\"-main\")):splitBy(aws.region):sort(value(auto,descending)):limit(20)"
   }
 }
 
@@ -427,7 +427,7 @@ resource "dynatrace_metric_events" "team_lambda_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(eq(\"aws.account.id\", \"708169909512\"), contains(\"functionname\", \"-main\"))):splitBy(\"functionname\"):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(eq(\"aws.account.id\", ${var.team_account_id}), contains(\"functionname\", \"-main\"))):splitBy(\"functionname\"):sort(value(auto,descending)):limit(20)"
   }
 }
 
@@ -452,7 +452,7 @@ resource "dynatrace_metric_events" "team_lambda_throttles" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion:filter(and(eq(\"aws.account.id\", \"708169909512\"), contains(\"functionname\", \"-main\"))):splitBy(\"functionname\"):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion:filter(and(eq(\"aws.account.id\", ${var.team_account_id}), contains(\"functionname\", \"-main\"))):splitBy(\"functionname\"):sort(value(auto,descending)):limit(20)"
   }
 }
 
@@ -478,7 +478,7 @@ resource "dynatrace_metric_events" "team_step_functions_execution_duration" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.states.executionTimeByAccountIdRegionStateMachineArn:sort(value(auto,descending)):filter(and(or(eq(\"aws.account.id\",\"708169909512\")))):splitBy(statemachinearn)"
+    metric_selector = "cloud.aws.states.executionTimeByAccountIdRegionStateMachineArn:sort(value(auto,descending)):filter(and(or(eq(\"aws.account.id\", ${var.team_account_id})))):splitBy(statemachinearn)"
   }
 }
 
@@ -503,7 +503,7 @@ resource "dynatrace_metric_events" "team_step_functions_execution_aborted" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.states.executionsAbortedByAccountIdRegionStateMachineArn:filter(and(or(eq(\"aws.account.id\",\"708169909512\")))):splitBy(statemachinearn):sum:sort(value(sum,descending)):limit(20)"
+    metric_selector = "cloud.aws.states.executionsAbortedByAccountIdRegionStateMachineArn:filter(and(or(eq(\"aws.account.id\",${var.team_account_id})))):splitBy(statemachinearn):sum:sort(value(sum,descending)):limit(20)"
   }
 }
 
@@ -528,7 +528,7 @@ resource "dynatrace_metric_events" "team_step_functions_execution_failed" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.states.executionsFailedByAccountIdRegionStateMachineArn:filter(and(or(eq(\"aws.account.id\",\"708169909512\")))):splitBy(statemachinearn):sum:sort(value(sum,descending)):limit(20)"
+    metric_selector = "cloud.aws.states.executionsFailedByAccountIdRegionStateMachineArn:filter(and(or(eq(\"aws.account.id\",${var.team_account_id})))):splitBy(statemachinearn):sum:sort(value(sum,descending)):limit(20)"
   }
 }
 
@@ -609,7 +609,7 @@ resource "dynatrace_metric_events" "team_policy_dlq_messages" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(and(eq(\"aws.account.id\",\"708169909512\"),eq(\"queuename\",\"TEAMPolicyPublishingFunctionDLQ\")))"
+    metric_selector = "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(and(eq(\"aws.account.id\",${var.team_account_id}),eq(\"queuename\",\"TEAMPolicyPublishingFunctionDLQ\")))"
   }
 }
 
@@ -635,7 +635,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_approvers_server_error"
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:filter(and(eq(\"aws.account.id\",\"708169909512\"),prefix(\"tablename\",\"Approvers\"))):splitBy(\"aws.account.id\",tablename):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:filter(and(eq(\"aws.account.id\",${var.team_account_id}),prefix(\"tablename\",\"Approvers\"))):splitBy(\"aws.account.id\",tablename):sort(value(auto,descending)):limit(20)"
   }
 }
 
@@ -660,7 +660,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_eligibility_server_erro
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:filter(and(eq(\"aws.account.id\",\"708169909512\"),prefix(\"tablename\",\"Eligibility\"))):splitBy(\"aws.account.id\",tablename):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:filter(and(eq(\"aws.account.id\",${var.team_account_id}),prefix(\"tablename\",\"Eligibility\"))):splitBy(\"aws.account.id\",tablename):sort(value(auto,descending)):limit(20)"
   }
 }
 
@@ -685,7 +685,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_approvers_throttles" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.throttledRequestsByAccountIdOperationRegionTableName:filter(and(eq(\"aws.account.id\",\"708169909512\"),prefix(\"tablename\",\"Approvers\"))):splitBy(\"aws.account.id\",tablename):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.throttledRequestsByAccountIdOperationRegionTableName:filter(and(eq(\"aws.account.id\",${var.team_account_id}),prefix(\"tablename\",\"Approvers\"))):splitBy(\"aws.account.id\",tablename):sort(value(auto,descending)):limit(20)"
   }
 }
 
@@ -710,6 +710,6 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_eligibility_throttles" 
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.throttledRequestsByAccountIdOperationRegionTableName:filter(and(eq(\"aws.account.id\",\"708169909512\"),prefix(\"tablename\",\"Eligibility\"))):splitBy(\"aws.account.id\",tablename):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.throttledRequestsByAccountIdOperationRegionTableName:filter(and(eq(\"aws.account.id\",${var.team_account_id}),prefix(\"tablename\",\"Eligibility\"))):splitBy(\"aws.account.id\",tablename):sort(value(auto,descending)):limit(20)"
   }
 }
