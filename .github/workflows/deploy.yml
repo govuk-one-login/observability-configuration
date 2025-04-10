@@ -68,10 +68,8 @@ jobs:
         run: terraform validate -no-color
 
       - name: Terraform apply
-        run: terraform apply \
-          -var="environment=nonproduction" \
-          -var="team_account_id=${{ secrets.NON_PROD_TEAM_ACCOUNT_ID }}" \
-          -auto-approve -refresh=false
+        run: |
+          terraform apply -var="environment=nonproduction" -var="team_account_id=${{ secrets.NON_PROD_TEAM_ACCOUNT_ID }}" -auto-approve -refresh=false
 
       - name: export logs
         run: cat terraform-provider-dynatrace.http.log
@@ -123,10 +121,8 @@ jobs:
         run: terraform validate -no-color
 
       - name: Terraform apply
-        run: terraform apply \
-          -var="environment=production" \
-          -var="team_account_id=${{ secrets.PROD_TEAM_ACCOUNT_ID }}" \
-          -auto-approve -refresh=false
+        run: |
+          terraform apply -var="environment=production" -var="team_account_id=${{ secrets.PROD_TEAM_ACCOUNT_ID }}" -auto-approve -refresh=false
 
       - name: export logs
         run: cat terraform-provider-dynatrace.http.log
