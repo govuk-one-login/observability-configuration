@@ -45,7 +45,7 @@ module "ls_lambda_errors" {
 }
 
 resource "dynatrace_json_dashboard" "team-idc-app" {
-  contents = file("${path.module}/dashboards/team-idc-app.json")
+  contents = templatefile("${path.module}/dashboards/team-idc-app.tftpl", { team_account_id = var.team_account_id })
 }
 
 resource "dynatrace_dashboard_sharing" "team-idc-app" {

@@ -138,7 +138,9 @@ jobs:
         run: terraform validate -no-color
 
       - name: Terraform plan
-        run: terraform plan -var environment=nonproduction
+        run: |
+          terraform plan -var="environment=nonproduction" -var="team_account_id=${{ secrets.NON_PROD_TEAM_ACCOUNT_ID }}"
+
       - name: export logs
         run: cat terraform-provider-dynatrace.http.log
   Check_Prod:
@@ -192,7 +194,8 @@ jobs:
         run: terraform validate -no-color
 
       - name: Terraform plan
-        run: terraform plan -var environment=production
+        run: |
+          terraform plan -var="environment=production" -var="team_account_id=${{ secrets.PROD_TEAM_ACCOUNT_ID }}"
 
       - name: export logs
         run: cat terraform-provider-dynatrace.http.log

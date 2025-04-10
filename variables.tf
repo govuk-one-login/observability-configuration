@@ -20,3 +20,7 @@ variable "synthetic_actions_cost" {
 variable "synthetic_requests_cost" {
   type = number
 }
+
+variable "team_account_id" {
+  type = string
+}
