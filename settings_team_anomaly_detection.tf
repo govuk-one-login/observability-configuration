@@ -4,7 +4,7 @@
 
 # Amplify
 resource "dynatrace_metric_events" "team_amplify_5xx_errors" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Amplify 5xx Errors Alert"
   event_template {
@@ -29,7 +29,7 @@ resource "dynatrace_metric_events" "team_amplify_5xx_errors" {
 }
 
 resource "dynatrace_metric_events" "team_amplify_high_latency" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Amplify High Latency Alert"
   event_template {
@@ -55,7 +55,7 @@ resource "dynatrace_metric_events" "team_amplify_high_latency" {
 
 # Appsync
 resource "dynatrace_metric_events" "team_appsync_connect_client_error" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Appsync Connect Client Error Alert"
   event_template {
@@ -80,7 +80,7 @@ resource "dynatrace_metric_events" "team_appsync_connect_client_error" {
 }
 
 resource "dynatrace_metric_events" "team_appsync_connect_server_error" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Appsync Connect Server Error Alert"
   event_template {
@@ -105,7 +105,7 @@ resource "dynatrace_metric_events" "team_appsync_connect_server_error" {
 }
 
 resource "dynatrace_metric_events" "team_appsync_disconnect_client_error" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Appsync Disconnect Client Error Alert"
   event_template {
@@ -130,7 +130,7 @@ resource "dynatrace_metric_events" "team_appsync_disconnect_client_error" {
 }
 
 resource "dynatrace_metric_events" "team_appsync_disconnect_server_error" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Appsync Disconnect Server Error Alert"
   event_template {
@@ -155,7 +155,7 @@ resource "dynatrace_metric_events" "team_appsync_disconnect_server_error" {
 }
 
 resource "dynatrace_metric_events" "team_appsync_subscribe_client_error" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Appsync Subscribe Client Error Alert"
   event_template {
@@ -180,7 +180,7 @@ resource "dynatrace_metric_events" "team_appsync_subscribe_client_error" {
 }
 
 resource "dynatrace_metric_events" "team_appsync_subscribe_server_error" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Appsync Subscribe Server Error Alert"
   event_template {
@@ -205,7 +205,7 @@ resource "dynatrace_metric_events" "team_appsync_subscribe_server_error" {
 }
 
 resource "dynatrace_metric_events" "team_appsync_unsubscribe_client_error" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Appsync Unsubscribe Client Error Alert"
   event_template {
@@ -230,7 +230,7 @@ resource "dynatrace_metric_events" "team_appsync_unsubscribe_client_error" {
 }
 
 resource "dynatrace_metric_events" "team_appsync_unsubscribe_server_error" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Appsync Unsubscribe Sever Error Alert"
   event_template {
@@ -256,7 +256,7 @@ resource "dynatrace_metric_events" "team_appsync_unsubscribe_server_error" {
 
 # DynamoDB
 resource "dynatrace_metric_events" "team_dynamodb_read_capacity_consumption" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM DynamoDB Read Capacity Consumption Alert"
   event_template {
@@ -281,7 +281,7 @@ resource "dynatrace_metric_events" "team_dynamodb_read_capacity_consumption" {
 }
 
 resource "dynatrace_metric_events" "team_dynamodb_read_throttles" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM DynamoDB Read Throttle Alert"
   event_template {
@@ -306,7 +306,7 @@ resource "dynatrace_metric_events" "team_dynamodb_read_throttles" {
 }
 
 resource "dynatrace_metric_events" "team_dynamodb_user_error" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM DynamoDB User Error Alert"
   event_template {
@@ -331,7 +331,7 @@ resource "dynatrace_metric_events" "team_dynamodb_user_error" {
 }
 
 resource "dynatrace_metric_events" "team_dynamodb_write_capacity_consumption" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM DynamoDB Write Capacity Consumption Alert"
   event_template {
@@ -356,7 +356,7 @@ resource "dynatrace_metric_events" "team_dynamodb_write_capacity_consumption" {
 }
 
 resource "dynatrace_metric_events" "team_dynamodb_write_throttles" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM DynamoDB Write Throttle Alert"
   event_template {
@@ -381,7 +381,7 @@ resource "dynatrace_metric_events" "team_dynamodb_write_throttles" {
 }
 
 resource "dynatrace_metric_events" "team_dynamodb_server_error" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM DynamoDB Server Error Alert"
   event_template {
@@ -407,7 +407,7 @@ resource "dynatrace_metric_events" "team_dynamodb_server_error" {
 
 # Lambda
 resource "dynatrace_metric_events" "team_lambda_error" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Lambda Error Alert"
   event_template {
@@ -432,7 +432,7 @@ resource "dynatrace_metric_events" "team_lambda_error" {
 }
 
 resource "dynatrace_metric_events" "team_lambda_throttles" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Lambda Throttle Alert"
   event_template {
@@ -458,7 +458,7 @@ resource "dynatrace_metric_events" "team_lambda_throttles" {
 
 # Step Functions
 resource "dynatrace_metric_events" "team_step_functions_execution_duration" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Step Functions Execution Duration Alert"
   event_template {
@@ -483,7 +483,7 @@ resource "dynatrace_metric_events" "team_step_functions_execution_duration" {
 }
 
 resource "dynatrace_metric_events" "team_step_functions_execution_aborted" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Step Functions Execution Aborted Alert"
   event_template {
@@ -508,7 +508,7 @@ resource "dynatrace_metric_events" "team_step_functions_execution_aborted" {
 }
 
 resource "dynatrace_metric_events" "team_step_functions_execution_failed" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Step Functions Execution Failed Alert"
   event_template {
@@ -538,7 +538,7 @@ resource "dynatrace_metric_events" "team_step_functions_execution_failed" {
 
 # Lambda
 resource "dynatrace_metric_events" "team_policy_lambda_error" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Policy Publishing Function Lambda Error Alert"
   event_template {
@@ -563,7 +563,7 @@ resource "dynatrace_metric_events" "team_policy_lambda_error" {
 }
 
 resource "dynatrace_metric_events" "team_policy_lambda_throttles" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Policy Publishing Function Lambda Throttle Alert"
   event_template {
@@ -589,7 +589,7 @@ resource "dynatrace_metric_events" "team_policy_lambda_throttles" {
 
 # Dead Letter Queue
 resource "dynatrace_metric_events" "team_policy_dlq_messages" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Policy Publishing Function DLQ Message Alert"
   event_template {
@@ -615,7 +615,7 @@ resource "dynatrace_metric_events" "team_policy_dlq_messages" {
 
 # DynamoDB
 resource "dynatrace_metric_events" "team_policy_dynamodb_approvers_server_error" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Policy Publishing Function Approvers Table Server Error Alert"
   event_template {
@@ -640,7 +640,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_approvers_server_error"
 }
 
 resource "dynatrace_metric_events" "team_policy_dynamodb_eligibility_server_error" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Policy Publishing Function Eligibility Table Server Error Alert"
   event_template {
@@ -665,7 +665,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_eligibility_server_erro
 }
 
 resource "dynatrace_metric_events" "team_policy_dynamodb_approvers_throttles" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Policy Publishing Function Approvers Table User Throttle Alert"
   event_template {
@@ -690,7 +690,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_approvers_throttles" {
 }
 
 resource "dynatrace_metric_events" "team_policy_dynamodb_eligibility_throttles" {
-  count   = local.is_production ? 0 : 1
+  count   = local.is_production ? 1 : 0
   enabled = true
   summary = "TEAM Policy Publishing Function Eligibility Table Throttle Alert"
   event_template {
