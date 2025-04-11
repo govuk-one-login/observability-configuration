@@ -59,7 +59,7 @@ resource "dynatrace_metric_events" "team_appsync_connect_client_error" {
   enabled = true
   summary = "TEAM Appsync Connect Client Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} {threshold}. Appsync details: {dims}"
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Appsync Connect Client Error Alert"
@@ -84,7 +84,7 @@ resource "dynatrace_metric_events" "team_appsync_connect_server_error" {
   enabled = true
   summary = "TEAM Appsync Connect Server Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} {threshold}. Appsync details: {dims}"
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Appsync Connect Client Server Alert"
@@ -109,7 +109,7 @@ resource "dynatrace_metric_events" "team_appsync_disconnect_client_error" {
   enabled = true
   summary = "TEAM Appsync Disconnect Client Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} {threshold}. Appsync details: {dims}"
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Appsync Disconnect Client Error Alert"
@@ -134,7 +134,7 @@ resource "dynatrace_metric_events" "team_appsync_disconnect_server_error" {
   enabled = true
   summary = "TEAM Appsync Disconnect Server Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} {threshold}. Appsync details: {dims}"
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Appsync Disconnect Client Server Alert"
@@ -159,7 +159,7 @@ resource "dynatrace_metric_events" "team_appsync_subscribe_client_error" {
   enabled = true
   summary = "TEAM Appsync Subscribe Client Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} {threshold}. Appsync details: {dims}"
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Appsync Subscribe Client Error Alert"
@@ -184,7 +184,7 @@ resource "dynatrace_metric_events" "team_appsync_subscribe_server_error" {
   enabled = true
   summary = "TEAM Appsync Subscribe Server Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} {threshold}. Appsync details: {dims}"
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Appsync Subscribe Server Error Alert"
@@ -209,7 +209,7 @@ resource "dynatrace_metric_events" "team_appsync_unsubscribe_client_error" {
   enabled = true
   summary = "TEAM Appsync Unsubscribe Client Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} {threshold}. Appsync details: {dims}"
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Appsync Unsubscribe Client Error Alert"
@@ -234,7 +234,7 @@ resource "dynatrace_metric_events" "team_appsync_unsubscribe_server_error" {
   enabled = true
   summary = "TEAM Appsync Unsubscribe Sever Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} {threshold}. Appsync details: {dims}"
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Appsync Unsubscribe Sever Error Alert"
