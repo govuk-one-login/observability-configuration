@@ -462,19 +462,19 @@ resource "dynatrace_metric_events" "team_step_functions_execution_duration" {
   enabled = true
   summary = "TEAM Step Functions Execution Duration Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} {threshold}.\nStep function details: {dims}.\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = "The {metricname} value was {alert_condition} normal behavior.\nStep function details: {dims}.\nIf assistance is needed, please reach out to #di-aws-control-tower."
     davis_merge = true
-    event_type  = "ERROR"
+    event_type  = "SLOWDOWN"
     title       = "TEAM Step Functions Execution Duration Alert"
   }
   model_properties {
-    type               = "STATIC_THRESHOLD"
+    type               = "AUTO_ADAPTIVE_THRESHOLD"
     alert_condition    = "ABOVE"
-    threshold          = 8
     alert_on_no_data   = false
     violating_samples  = 1
     samples            = 3
     dealerting_samples = 3
+    signal_fluctuation = 1
   }
   query_definition {
     type            = "METRIC_SELECTOR"
