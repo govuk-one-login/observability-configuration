@@ -631,7 +631,7 @@ resource "dynatrace_metric_events" "team_policy_lambda_error" {
     Dead-letter queue details: {dims}.
 
     If assistance is needed, please reach out to #di-aws-control-tower or follow
-     the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync
+    the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync
     EOT
 
     davis_merge = true
@@ -697,7 +697,7 @@ resource "dynatrace_metric_events" "team_policy_dlq_messages" {
     Dead-letter queue details: {dims}.
 
     If assistance is needed, please reach out to #di-aws-control-tower or follow
-     the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync
+    the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync
     EOT
 
     davis_merge = true
