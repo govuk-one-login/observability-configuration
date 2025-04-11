@@ -8,7 +8,14 @@ resource "dynatrace_metric_events" "team_amplify_5xx_errors" {
   enabled = true
   summary = "TEAM Amplify 5xx Errors Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} {threshold}.\n\nAmplify details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} {threshold}.
+
+    Amplify details: {dims}.
+
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Amplify 5xx Errors Alert"
@@ -33,7 +40,14 @@ resource "dynatrace_metric_events" "team_amplify_high_latency" {
   enabled = true
   summary = "TEAM Amplify High Latency Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior.\n\nAmplify details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} normal behavior.
+
+    Amplify details: {dims}.
+    
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "SLOWDOWN"
     title       = "TEAM Amplify High Latency Alert"
@@ -59,7 +73,14 @@ resource "dynatrace_metric_events" "team_appsync_connect_client_error" {
   enabled = true
   summary = "TEAM Appsync Connect Client Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} {threshold}.\n\nAppsync details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} {threshold}.
+
+    Appsync details: {dims}.
+
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Appsync Connect Client Error Alert"
@@ -84,7 +105,14 @@ resource "dynatrace_metric_events" "team_appsync_connect_server_error" {
   enabled = true
   summary = "TEAM Appsync Connect Server Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} {threshold}.\n\nAppsync details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} {threshold}.
+
+    Appsync details: {dims}.
+
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Appsync Connect Client Server Alert"
@@ -109,7 +137,14 @@ resource "dynatrace_metric_events" "team_appsync_disconnect_client_error" {
   enabled = true
   summary = "TEAM Appsync Disconnect Client Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} {threshold}.\n\nAppsync details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} {threshold}.
+
+    Appsync details: {dims}.
+
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Appsync Disconnect Client Error Alert"
@@ -134,7 +169,14 @@ resource "dynatrace_metric_events" "team_appsync_disconnect_server_error" {
   enabled = true
   summary = "TEAM Appsync Disconnect Server Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} {threshold}.\n\nAppsync details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} {threshold}.
+    
+    Appsync details: {dims}.
+    
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Appsync Disconnect Client Server Alert"
@@ -159,7 +201,14 @@ resource "dynatrace_metric_events" "team_appsync_subscribe_client_error" {
   enabled = true
   summary = "TEAM Appsync Subscribe Client Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} {threshold}.\n\nAppsync details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} {threshold}.
+
+    Appsync details: {dims}.
+    
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Appsync Subscribe Client Error Alert"
@@ -184,7 +233,14 @@ resource "dynatrace_metric_events" "team_appsync_subscribe_server_error" {
   enabled = true
   summary = "TEAM Appsync Subscribe Server Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} {threshold}.\n\nAppsync details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} {threshold}.
+
+    Appsync details: {dims}.
+
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Appsync Subscribe Server Error Alert"
@@ -209,7 +265,14 @@ resource "dynatrace_metric_events" "team_appsync_unsubscribe_client_error" {
   enabled = true
   summary = "TEAM Appsync Unsubscribe Client Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} {threshold}.\n\nAppsync details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} {threshold}.
+
+    Appsync details: {dims}.
+
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Appsync Unsubscribe Client Error Alert"
@@ -234,7 +297,14 @@ resource "dynatrace_metric_events" "team_appsync_unsubscribe_server_error" {
   enabled = true
   summary = "TEAM Appsync Unsubscribe Sever Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} {threshold}.\n\nAppsync details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} {threshold}.
+    
+    Appsync details: {dims}.
+    
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Appsync Unsubscribe Sever Error Alert"
@@ -260,7 +330,14 @@ resource "dynatrace_metric_events" "team_dynamodb_read_throttles" {
   enabled = true
   summary = "TEAM DynamoDB Read Throttle Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior.\n\nDynamoDB details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} normal behavior.
+    
+    DynamoDB details: {dims}.
+    
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "SLOWDOWN"
     title       = "TEAM DynamoDB Read Throttle Alert"
@@ -285,7 +362,14 @@ resource "dynatrace_metric_events" "team_dynamodb_user_error" {
   enabled = true
   summary = "TEAM DynamoDB User Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} {threshold}.\n\nDynamoDB details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} {threshold}.
+
+    DynamoDB details: {dims}.
+    
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM DynamoDB User Error Alert"
@@ -310,7 +394,14 @@ resource "dynatrace_metric_events" "team_dynamodb_write_throttles" {
   enabled = true
   summary = "TEAM DynamoDB Write Throttle Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior.\n\nDynamoDB details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} normal behavior.
+    
+    DynamoDB details: {dims}.
+    
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "SLOWDOWN"
     title       = "TEAM DynamoDB Write Throttle Alert"
@@ -335,7 +426,14 @@ resource "dynatrace_metric_events" "team_dynamodb_server_error" {
   enabled = true
   summary = "TEAM DynamoDB Server Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} {threshold}.\n\nDynamoDB details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} {threshold}.
+    
+    DynamoDB details: {dims}.
+    
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "SLOWDOWN"
     title       = "TEAM DynamoDB Server Error Alert"
@@ -361,7 +459,14 @@ resource "dynatrace_metric_events" "team_lambda_error" {
   enabled = true
   summary = "TEAM Lambda Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} {threshold}.\n\nLambda function details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} {threshold}.
+    
+    Lambda function details: {dims}.
+    
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Lambda Error Alert"
@@ -386,7 +491,14 @@ resource "dynatrace_metric_events" "team_lambda_throttles" {
   enabled = true
   summary = "TEAM Lambda Throttle Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} {threshold}.\n\nLambda function details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} {threshold}.
+    
+    Lambda function details: {dims}.
+    
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Lambda Throttle Alert"
@@ -412,7 +524,14 @@ resource "dynatrace_metric_events" "team_step_functions_execution_duration" {
   enabled = true
   summary = "TEAM Step Functions Execution Duration Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior.\n\nStep function details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} normal behavior.
+
+    Step function details: {dims}.
+
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "SLOWDOWN"
     title       = "TEAM Step Functions Execution Duration Alert"
@@ -437,7 +556,14 @@ resource "dynatrace_metric_events" "team_step_functions_execution_aborted" {
   enabled = true
   summary = "TEAM Step Functions Execution Aborted Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} {threshold}.\n\nStep function details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} {threshold}.
+    
+    Step function details: {dims}.
+    
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Step Functions Execution Aborted Alert"
@@ -462,7 +588,14 @@ resource "dynatrace_metric_events" "team_step_functions_execution_failed" {
   enabled = true
   summary = "TEAM Step Functions Execution Failed Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} {threshold}.\n\nStep function details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} {threshold}.
+
+    Step function details: {dims}.
+
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Step Functions Execution Failed Alert"
@@ -498,7 +631,7 @@ resource "dynatrace_metric_events" "team_policy_lambda_error" {
     Dead-letter queue details: {dims}.
 
     If assistance is needed, please reach out to #di-aws-control-tower or follow
-     the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync"
+     the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync
     EOT
 
     davis_merge = true
@@ -525,7 +658,14 @@ resource "dynatrace_metric_events" "team_policy_lambda_throttles" {
   enabled = true
   summary = "TEAM Policy Publishing Function Lambda Throttle Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} {threshold}.\n\nLambda function details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} {threshold}.
+    
+    Lambda function details: {dims}.
+    
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "SLOWDOWN"
     title       = "TEAM Policy Publishing Function Lambda Throttle Alert"
@@ -557,7 +697,7 @@ resource "dynatrace_metric_events" "team_policy_dlq_messages" {
     Dead-letter queue details: {dims}.
 
     If assistance is needed, please reach out to #di-aws-control-tower or follow
-     the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync"
+     the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync
     EOT
 
     davis_merge = true
@@ -585,7 +725,14 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_approvers_server_error"
   enabled = true
   summary = "TEAM Policy Publishing Function Approvers Table Server Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} {threshold}.\n\nDynamoDB details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} {threshold}.
+
+    DynamoDB details: {dims}.
+    
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Policy Publishing Function Approvers Table Server Error Alert"
@@ -610,7 +757,14 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_eligibility_server_erro
   enabled = true
   summary = "TEAM Policy Publishing Function Eligibility Table Server Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} {threshold}.\n\nDynamoDB details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} {threshold}.
+    
+    DynamoDB details: {dims}.
+    
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Policy Publishing Function Eligibility Table Server Error Alert"
@@ -635,7 +789,14 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_approvers_throttles" {
   enabled = true
   summary = "TEAM Policy Publishing Function Approvers Table User Throttle Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} {threshold}.\n\nDynamoDB details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} {threshold}.
+    
+    DynamoDB details: {dims}.
+    
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "SLOWDOWN"
     title       = "TEAM Policy Publishing Function Approvers Table User Throttle Alert"
@@ -660,7 +821,14 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_eligibility_throttles" 
   enabled = true
   summary = "TEAM Policy Publishing Function Eligibility Table Throttle Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} {threshold}.\n\nDynamoDB details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
+    description = <<-EOT
+    The {metricname} value was {alert_condition} {threshold}.
+    
+    DynamoDB details: {dims}.
+    
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
     davis_merge = true
     event_type  = "SLOWDOWN"
     title       = "TEAM Policy Publishing Function Eligibility Table Throttle Alert"
