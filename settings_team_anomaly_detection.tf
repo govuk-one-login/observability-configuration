@@ -255,31 +255,6 @@ resource "dynatrace_metric_events" "team_appsync_unsubscribe_server_error" {
 }
 
 # DynamoDB
-resource "dynatrace_metric_events" "team_dynamodb_read_capacity_consumption" {
-  count   = local.is_production ? 1 : 0
-  enabled = true
-  summary = "TEAM DynamoDB Read Capacity Consumption Alert"
-  event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior.\n\nDynamoDB details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
-    davis_merge = true
-    event_type  = "RESOURCE"
-    title       = "TEAM DynamoDB Read Capacity Consumption Alert"
-  }
-  model_properties {
-    type               = "AUTO_ADAPTIVE_THRESHOLD"
-    alert_condition    = "ABOVE"
-    alert_on_no_data   = false
-    violating_samples  = 1
-    samples            = 3
-    dealerting_samples = 3
-    signal_fluctuation = 1
-  }
-  query_definition {
-    type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.consumedReadCapacityUnitsByAccountIdRegionTableName:filter(and(contains(\"tablename\",\"-main\")), eq(\"aws.account.id\",${var.team_account_id})):splitBy(tablename):sort(value(auto,descending)):limit(20)"
-  }
-}
-
 resource "dynatrace_metric_events" "team_dynamodb_read_throttles" {
   count   = local.is_production ? 1 : 0
   enabled = true
@@ -327,31 +302,6 @@ resource "dynatrace_metric_events" "team_dynamodb_user_error" {
   query_definition {
     type            = "METRIC_SELECTOR"
     metric_selector = "cloud.aws.dynamodb.userErrorsByAccountIdRegion:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\", ${var.team_account_id}))):splitBy(\"tablename\"):sort(value(auto,descending)):limit(20)"
-  }
-}
-
-resource "dynatrace_metric_events" "team_dynamodb_write_capacity_consumption" {
-  count   = local.is_production ? 1 : 0
-  enabled = true
-  summary = "TEAM DynamoDB Write Capacity Consumption Alert"
-  event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior.\n\nDynamoDB details: {dims}.\n\nIf assistance is needed, please reach out to #di-aws-control-tower."
-    davis_merge = true
-    event_type  = "RESOURCE"
-    title       = "TEAM DynamoDB Write Capacity Consumption Alert"
-  }
-  model_properties {
-    type               = "AUTO_ADAPTIVE_THRESHOLD"
-    alert_condition    = "ABOVE"
-    alert_on_no_data   = false
-    violating_samples  = 1
-    samples            = 3
-    dealerting_samples = 3
-    signal_fluctuation = 1
-  }
-  query_definition {
-    type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.consumedWriteCapacityUnitsByAccountIdRegionTableName:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\", ${var.team_account_id}))):splitBy(\"tablename\"):sort(value(auto,descending)):limit(20)"
   }
 }
 
