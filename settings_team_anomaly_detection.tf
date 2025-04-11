@@ -260,7 +260,7 @@ resource "dynatrace_metric_events" "team_dynamodb_read_capacity_consumption" {
   enabled = true
   summary = "TEAM DynamoDB Read Capacity Consumption Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} normal behavior. DynamoDB details: {dims}"
     davis_merge = true
     event_type  = "RESOURCE"
     title       = "TEAM DynamoDB Read Capacity Consumption Alert"
@@ -285,7 +285,7 @@ resource "dynatrace_metric_events" "team_dynamodb_read_throttles" {
   enabled = true
   summary = "TEAM DynamoDB Read Throttle Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} normal behavior. DynamoDB details: {dims}"
     davis_merge = true
     event_type  = "SLOWDOWN"
     title       = "TEAM DynamoDB Read Throttle Alert"
@@ -310,7 +310,7 @@ resource "dynatrace_metric_events" "team_dynamodb_user_error" {
   enabled = true
   summary = "TEAM DynamoDB User Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} {threshold}. DynamoDB details: {dims}"
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM DynamoDB User Error Alert"
@@ -335,7 +335,7 @@ resource "dynatrace_metric_events" "team_dynamodb_write_capacity_consumption" {
   enabled = true
   summary = "TEAM DynamoDB Write Capacity Consumption Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} normal behavior. DynamoDB details: {dims}"
     davis_merge = true
     event_type  = "RESOURCE"
     title       = "TEAM DynamoDB Write Capacity Consumption Alert"
@@ -360,7 +360,7 @@ resource "dynatrace_metric_events" "team_dynamodb_write_throttles" {
   enabled = true
   summary = "TEAM DynamoDB Write Throttle Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} normal behavior. DynamoDB details: {dims}"
     davis_merge = true
     event_type  = "SLOWDOWN"
     title       = "TEAM DynamoDB Write Throttle Alert"
@@ -385,7 +385,7 @@ resource "dynatrace_metric_events" "team_dynamodb_server_error" {
   enabled = true
   summary = "TEAM DynamoDB Server Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} {threshold}. DynamoDB details: {dims}"
     davis_merge = true
     event_type  = "SLOWDOWN"
     title       = "TEAM DynamoDB Server Error Alert"
@@ -619,7 +619,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_approvers_server_error"
   enabled = true
   summary = "TEAM Policy Publishing Function Approvers Table Server Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} {threshold}. DynamoDB details: {dims}"
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Policy Publishing Function Approvers Table Server Error Alert"
@@ -644,7 +644,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_eligibility_server_erro
   enabled = true
   summary = "TEAM Policy Publishing Function Eligibility Table Server Error Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} {threshold}. DynamoDB details: {dims}"
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Policy Publishing Function Eligibility Table Server Error Alert"
@@ -669,7 +669,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_approvers_throttles" {
   enabled = true
   summary = "TEAM Policy Publishing Function Approvers Table User Throttle Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} {threshold}. DynamoDB details: {dims}"
     davis_merge = true
     event_type  = "SLOWDOWN"
     title       = "TEAM Policy Publishing Function Approvers Table User Throttle Alert"
@@ -694,7 +694,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_eligibility_throttles" 
   enabled = true
   summary = "TEAM Policy Publishing Function Eligibility Table Throttle Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} {threshold}. DynamoDB details: {dims}"
     davis_merge = true
     event_type  = "SLOWDOWN"
     title       = "TEAM Policy Publishing Function Eligibility Table Throttle Alert"
