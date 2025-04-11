@@ -8,7 +8,7 @@ resource "dynatrace_metric_events" "team_amplify_5xx_errors" {
   enabled = true
   summary = "TEAM Amplify 5xx Errors Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} {threshold}. Amplify details: {dims}"
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Amplify 5xx Errors Alert"
@@ -33,7 +33,7 @@ resource "dynatrace_metric_events" "team_amplify_high_latency" {
   enabled = true
   summary = "TEAM Amplify High Latency Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} normal behavior. Amplify details: {dims}"
     davis_merge = true
     event_type  = "SLOWDOWN"
     title       = "TEAM Amplify High Latency Alert"
