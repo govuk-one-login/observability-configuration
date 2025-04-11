@@ -593,7 +593,7 @@ resource "dynatrace_metric_events" "team_policy_dlq_messages" {
   enabled = true
   summary = "TEAM Policy Publishing Function DLQ Message Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} {threshold}. Dead-letter queue details: {dims}"
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Policy Publishing Function DLQ Message Alert"
