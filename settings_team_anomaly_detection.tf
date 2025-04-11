@@ -462,7 +462,7 @@ resource "dynatrace_metric_events" "team_step_functions_execution_duration" {
   enabled = true
   summary = "TEAM Step Functions Execution Duration Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} {threshold}. Step function details: {dims}"
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Step Functions Execution Duration Alert"
@@ -487,7 +487,7 @@ resource "dynatrace_metric_events" "team_step_functions_execution_aborted" {
   enabled = true
   summary = "TEAM Step Functions Execution Aborted Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} {threshold}. Step function details: {dims}"
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Step Functions Execution Aborted Alert"
@@ -512,7 +512,7 @@ resource "dynatrace_metric_events" "team_step_functions_execution_failed" {
   enabled = true
   summary = "TEAM Step Functions Execution Failed Alert"
   event_template {
-    description = "The {metricname} value was {alert_condition} normal behavior."
+    description = "The {metricname} value was {alert_condition} {threshold}. Step function details: {dims}"
     davis_merge = true
     event_type  = "ERROR"
     title       = "TEAM Step Functions Execution Failed Alert"
