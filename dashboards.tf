@@ -99,6 +99,11 @@ module "txma-app-health-production" {
   path   = "txma/txma-app-health-production.json"
 }
 
+module "txma-esp-nfrs-production" {
+  source = "./modules/dashboard"
+  path   = "txma/txma-esp-nfrs-production.json"
+}
+
 module "account-interventions-service" {
   source = "./modules/dashboard"
   path   = "account-interventions-service/account_interventions_service_dashboard.json"
