@@ -3,15 +3,16 @@
     "configurationVersions": [
       7
     ],
-    "clusterVersion": "1.291.99.20240515-061005"
+    "clusterVersion": "1.313.32.20250422-131151"
   },
   "dashboardMetadata": {
-    "name": "Core-Services",
+    "name": "IPV Core: Services Overview",
     "shared": true,
     "owner": "ipv-core@digital.cabinet-office.gov.uk",
     "dashboardFilter": {
       "timeframe": "-30d to now"
     },
+    "popularity": 1,
     "hasConsistentColors": false
   },
   "tiles": [
@@ -97,6 +98,18 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
+                "filter": "clustername",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "core-front-production-CoreFrontCluster-cFhFYE2YrkHX",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
                 "filter": "aws.account.id",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
@@ -116,18 +129,6 @@
                 "criteria": [
                   {
                     "value": "eu-west-2",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
-                "filter": "clustername",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "core-front-production-CoreFrontCluster-cFhFYE2YrkHX",
                     "evaluator": "EQ"
                   }
                 ]
@@ -210,7 +211,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(cloud.aws.ecs.containerinsights.cpuUtilizedByAccountIdClusterNameRegionServiceName:filter(and(or(eq(\"aws.account.id\",\"075701497069\")),or(eq(clustername,core-front-production-CoreFrontCluster-cFhFYE2YrkHX)),or(eq(servicename,core-front-production-CoreFrontService-TLhElTaONhIn)),or(eq(\"aws.region\",eu-west-2)))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+        "resolution=Inf&(cloud.aws.ecs.containerinsights.cpuUtilizedByAccountIdClusterNameRegionServiceName:filter(and(or(eq(clustername,core-front-production-CoreFrontCluster-cFhFYE2YrkHX)),or(eq(\"aws.region\",eu-west-2)),or(eq(\"aws.account.id\",\"075701497069\")),or(eq(servicename,core-front-production-CoreFrontService-TLhElTaONhIn)))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -802,99 +803,12 @@
       ]
     },
     {
-      "name": "Core Account Delete DLQ",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2128,
-        "left": 304,
-        "width": 304,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Single value",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion:filter(and(or(eq(queuename,\"DeleteAccountLambdaDLQ\")),or(eq(\"aws.region\",eu-west-2)))):splitBy():sort(value(auto,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion:filter(and(or(eq(queuename,DeleteAccountLambdaDLQ)),or(eq(\"aws.region\",eu-west-2)))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names",
-        "resolution=null&(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion:filter(and(or(eq(queuename,DeleteAccountLambdaDLQ)),or(eq(\"aws.region\",eu-west-2)))):splitBy():sort(value(auto,descending)):limit(20))"
-      ]
-    },
-    {
       "name": "WAF - Requests (Allowed)",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
         "top": 2128,
-        "left": 1406,
+        "left": 1064,
         "width": 380,
         "height": 304
       },
@@ -985,7 +899,7 @@
       "configured": true,
       "bounds": {
         "top": 2128,
-        "left": 1786,
+        "left": 1444,
         "width": 380,
         "height": 304
       },
@@ -1076,7 +990,7 @@
       "configured": true,
       "bounds": {
         "top": 2128,
-        "left": 1026,
+        "left": 684,
         "width": 380,
         "height": 304
       },
@@ -1170,7 +1084,7 @@
       "configured": true,
       "bounds": {
         "top": 2128,
-        "left": 646,
+        "left": 304,
         "width": 380,
         "height": 304
       },
