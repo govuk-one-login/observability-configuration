@@ -1,0 +1,810 @@
+{
+    "version": 17,
+    "variables": [
+      {
+        "key": "APIGateway",
+        "visible": true,
+        "type": "csv",
+        "version": 1,
+        "editable": true,
+        "input": "Core Front,Core Back Internal,Core Back External",
+        "multiple": false,
+        "defaultValue": "Core Front"
+      },
+      {
+        "key": "Environment",
+        "visible": true,
+        "type": "csv",
+        "version": 1,
+        "editable": true,
+        "input": "build,staging,production",
+        "multiple": false,
+        "defaultValue": "build"
+      }
+    ],
+    "tiles": {
+      "3": {
+        "title": "# Request",
+        "description": "The total number of requests made to core-front (in eu-west-2)",
+        "type": "data",
+        "query": "timeseries count = sum(\ncloud.aws.apigateway.countByAccountIdApiNameRegion,\nfilter: \n    (\n      (apiname == \"ipv-core-front-build-rest\" AND $APIGateway == \"Core Front\" AND $Environment == \"build\")\n      OR (apiname == \"IPV Core Private API Gateway build\" AND $APIGateway == \"Core Back Internal\" AND $Environment == \"build\")\n      OR (apiname == \"IPV Core External API Gateway build\" AND $APIGateway == \"Core Back External\" AND $Environment == \"build\")\n    )\n    OR\n    (\n      (apiname == \"ipv-core-front-staging-rest\" AND $APIGateway == \"Core Front\" AND $Environment == \"staging\")\n      OR (apiname == \"IPV Core Private API Gateway staging\" AND $APIGateway == \"Core Back Internal\" AND $Environment == \"staging\")\n      OR (apiname == \"IPV Core External API Gateway staging\" AND $APIGateway == \"Core Back External\" AND $Environment == \"staging\")\n    )\n    AND aws.region == \"eu-west-2\"\n)",
+        "visualization": "lineChart",
+        "visualizationSettings": {
+          "thresholds": [
+            {
+              "id": "0",
+              "title": "",
+              "field": "countByAccountIdApiNameRegion",
+              "rules": [
+                {
+                  "id": "0",
+                  "label": "",
+                  "comparator": "≥",
+                  "color": "#7dc540"
+                },
+                {
+                  "id": "1",
+                  "label": "",
+                  "comparator": "≥",
+                  "color": "#f5d30f"
+                },
+                {
+                  "id": "2",
+                  "label": "",
+                  "comparator": "≥",
+                  "color": "#dc172a"
+                }
+              ],
+              "isEnabled": true
+            }
+          ],
+          "chartSettings": {
+            "xAxisScaling": "analyzedTimeframe",
+            "seriesOverrides": [],
+            "gapPolicy": "gap",
+            "legend": {
+              "hidden": true
+            },
+            "leftYAxisSettings": {
+              "isLabelVisible": true,
+              "label": ""
+            },
+            "hiddenLegendFields": [
+              "interval"
+            ],
+            "circleChartSettings": {
+              "groupingThresholdType": "relative",
+              "groupingThresholdValue": 0,
+              "valueType": "relative"
+            },
+            "truncationMode": "middle",
+            "categoricalBarChartSettings": {
+              "categoryAxisLabel": "interval",
+              "valueAxisLabel": "interval",
+              "tooltipVariant": "single"
+            },
+            "xAxisLabel": "timeframe",
+            "xAxisIsLabelVisible": false,
+            "valueRepresentation": "absolute",
+            "fieldMapping": {
+              "timestamp": "timeframe",
+              "leftAxisValues": [
+                "count"
+              ]
+            }
+          },
+          "singleValue": {
+            "showLabel": true,
+            "label": "",
+            "prefixIcon": "",
+            "autoscale": true,
+            "alignment": "center",
+            "colorThresholdTarget": "value"
+          },
+          "table": {
+            "rowDensity": "condensed",
+            "enableSparklines": false,
+            "hiddenColumns": [],
+            "linewrapEnabled": false,
+            "lineWrapIds": [],
+            "monospacedFontEnabled": false,
+            "monospacedFontColumns": [],
+            "columnWidths": {
+  
+            },
+            "columnTypeOverrides": [
+              {
+                "fields": [
+                  "count"
+                ],
+                "value": "sparkline",
+                "id": 1743595555020
+              }
+            ]
+          },
+          "honeycomb": {
+            "shape": "hexagon",
+            "legend": {
+              "hidden": false,
+              "position": "auto",
+              "ratio": "auto"
+            },
+            "dataMappings": {
+  
+            },
+            "displayedFields": [],
+            "truncationMode": "middle",
+            "colorMode": "color-palette",
+            "colorPalette": "categorical"
+          },
+          "histogram": {
+            "legend": "auto",
+            "yAxis": {
+              "label": "Frequency",
+              "scale": "linear"
+            },
+            "colorPalette": "categorical",
+            "dataMappings": [
+              {
+                "valueAxis": "interval",
+                "rangeAxis": ""
+              }
+            ],
+            "variant": "single",
+            "truncationMode": "middle",
+            "displayedFields": []
+          },
+          "valueBoundaries": {
+            "min": "auto",
+            "max": "auto"
+          },
+          "autoSelectVisualization": false,
+          "unitsOverrides": [
+            {
+              "identifier": "countByAccountIdApiNameRegion",
+              "unitCategory": "unspecified",
+              "baseUnit": "count",
+              "decimals": 0,
+              "suffix": "",
+              "delimiter": false,
+              "added": 0,
+              "id": "countByAccountIdApiNameRegion"
+            }
+          ],
+          "legend": {
+            "showLegend": false,
+            "position": "auto",
+            "ratio": 10
+          }
+        },
+        "querySettings": {
+          "maxResultRecords": 1000,
+          "defaultScanLimitGbytes": 500,
+          "maxResultMegaBytes": 1,
+          "defaultSamplingRatio": 10,
+          "enableSampling": false
+        },
+        "davis": {
+          "enabled": false,
+          "davisVisualization": {
+            "isAvailable": true
+          }
+        },
+        "timeframe": {
+          "tileTimeframe": {
+            "from": "-24h",
+            "to": "now()"
+          },
+          "tileTimeframeEnabled": false
+        }
+      },
+      "8": {
+        "title": "Avg Latency",
+        "description": "Average latency (in eu-west-2)",
+        "type": "data",
+        "query": "timeseries {\n  total = avg(\n    cloud.aws.apigateway.latencyByAccountIdApiNameRegionStage,\n    filter: \n    (\n      (apiname == \"ipv-core-front-build-rest\" AND $APIGateway == \"Core Front\" AND $Environment == \"build\")\n      OR (apiname == \"IPV Core Private API Gateway build\" AND $APIGateway == \"Core Back Internal\" AND $Environment == \"build\")\n      OR (apiname == \"IPV Core External API Gateway build\" AND $APIGateway == \"Core Back External\" AND $Environment == \"build\")\n    )\n    OR\n    (\n      (apiname == \"ipv-core-front-staging-rest\" AND $APIGateway == \"Core Front\" AND $Environment == \"staging\")\n      OR (apiname == \"IPV Core Private API Gateway staging\" AND $APIGateway == \"Core Back Internal\" AND $Environment == \"staging\")\n      OR (apiname == \"IPV Core External API Gateway staging\" AND $APIGateway == \"Core Back External\" AND $Environment == \"staging\")\n    )\n    AND aws.region == \"eu-west-2\"\n  ),\n  backend = avg(\n    cloud.aws.apigateway.integrationLatencyByAccountIdApiNameRegionStage,\n    filter: \n    (\n      (apiname == \"ipv-core-front-build-rest\" AND $APIGateway == \"Core Front\" AND $Environment == \"build\")\n      OR (apiname == \"IPV Core Private API Gateway build\" AND $APIGateway == \"Core Back Internal\" AND $Environment == \"build\")\n      OR (apiname == \"IPV Core External API Gateway build\" AND $APIGateway == \"Core Back External\" AND $Environment == \"build\")\n    )\n    OR\n    (\n      (apiname == \"ipv-core-front-staging-rest\" AND $APIGateway == \"Core Front\" AND $Environment == \"staging\")\n      OR (apiname == \"IPV Core Private API Gateway staging\" AND $APIGateway == \"Core Back Internal\" AND $Environment == \"staging\")\n      OR (apiname == \"IPV Core External API Gateway staging\" AND $APIGateway == \"Core Back External\" AND $Environment == \"staging\")\n    )\n    AND aws.region == \"eu-west-2\"\n    )\n}\n",
+        "visualization": "lineChart",
+        "visualizationSettings": {
+          "thresholds": [
+            {
+              "id": "0",
+              "title": "",
+              "field": "countByAccountIdApiNameRegion",
+              "rules": [
+                {
+                  "id": "0",
+                  "label": "",
+                  "comparator": "≥",
+                  "color": "#7dc540"
+                },
+                {
+                  "id": "1",
+                  "label": "",
+                  "comparator": "≥",
+                  "color": "#f5d30f"
+                },
+                {
+                  "id": "2",
+                  "label": "",
+                  "comparator": "≥",
+                  "color": "#dc172a"
+                }
+              ],
+              "isEnabled": true
+            }
+          ],
+          "chartSettings": {
+            "xAxisScaling": "analyzedTimeframe",
+            "seriesOverrides": [
+              {
+                "seriesId": [
+                  "total"
+                ],
+                "override": {
+                  "color": {
+                    "Default": "var(--dt-colors-charts-categorical-color-11-default, #627cfe)"
+                  }
+                }
+              },
+              {
+                "seriesId": [
+                  "backend"
+                ],
+                "override": {
+                  "color": {
+                    "Default": "var(--dt-colors-charts-categorical-color-12-default, #cd3741)"
+                  }
+                }
+              }
+            ],
+            "gapPolicy": "gap",
+            "legend": {
+              "hidden": true
+            },
+            "leftYAxisSettings": {
+              "isLabelVisible": true,
+              "label": ""
+            },
+            "hiddenLegendFields": [
+              "interval"
+            ],
+            "circleChartSettings": {
+              "groupingThresholdType": "relative",
+              "groupingThresholdValue": 0,
+              "valueType": "relative"
+            },
+            "truncationMode": "end",
+            "categoricalBarChartSettings": {
+              "categoryAxisLabel": "interval",
+              "valueAxisLabel": "interval",
+              "tooltipVariant": "single"
+            },
+            "xAxisLabel": "timeframe",
+            "xAxisIsLabelVisible": false,
+            "valueRepresentation": "absolute",
+            "fieldMapping": {
+              "timestamp": "timeframe",
+              "leftAxisValues": [
+                "total",
+                "backend"
+              ]
+            },
+            "bandChartSettings": {
+              "lower": "total",
+              "upper": "backend"
+            },
+            "tooltip": {
+              "variant": "single",
+              "seriesDisplayMode": "single-line"
+            }
+          },
+          "singleValue": {
+            "showLabel": true,
+            "label": "",
+            "prefixIcon": "",
+            "autoscale": true,
+            "alignment": "center",
+            "colorThresholdTarget": "value"
+          },
+          "table": {
+            "rowDensity": "condensed",
+            "enableSparklines": false,
+            "hiddenColumns": [],
+            "linewrapEnabled": false,
+            "lineWrapIds": [],
+            "monospacedFontEnabled": false,
+            "monospacedFontColumns": [],
+            "columnWidths": {
+  
+            },
+            "columnTypeOverrides": [
+              {
+                "fields": [
+                  "total",
+                  "backend"
+                ],
+                "value": "sparkline",
+                "id": 1743595379770
+              }
+            ]
+          },
+          "honeycomb": {
+            "shape": "hexagon",
+            "legend": {
+              "hidden": false,
+              "position": "auto",
+              "ratio": "auto"
+            },
+            "dataMappings": {
+  
+            },
+            "displayedFields": [],
+            "truncationMode": "middle",
+            "colorMode": "color-palette",
+            "colorPalette": "categorical"
+          },
+          "histogram": {
+            "legend": "auto",
+            "yAxis": {
+              "label": "Frequency",
+              "scale": "linear"
+            },
+            "colorPalette": "categorical",
+            "dataMappings": [
+              {
+                "valueAxis": "interval",
+                "rangeAxis": ""
+              }
+            ],
+            "variant": "single",
+            "truncationMode": "middle",
+            "displayedFields": []
+          },
+          "valueBoundaries": {
+            "min": "auto",
+            "max": "auto"
+          },
+          "autoSelectVisualization": false,
+          "unitsOverrides": [
+            {
+              "identifier": "countByAccountIdApiNameRegion",
+              "unitCategory": "unspecified",
+              "baseUnit": "count",
+              "decimals": 0,
+              "suffix": "",
+              "delimiter": false,
+              "added": 0,
+              "id": "countByAccountIdApiNameRegion"
+            }
+          ],
+          "legend": {
+            "showLegend": false,
+            "position": "auto",
+            "ratio": 19
+          }
+        },
+        "querySettings": {
+          "maxResultRecords": 1000,
+          "defaultScanLimitGbytes": 500,
+          "maxResultMegaBytes": 1,
+          "defaultSamplingRatio": 10,
+          "enableSampling": false
+        },
+        "davis": {
+          "enabled": false,
+          "davisVisualization": {
+            "isAvailable": true
+          }
+        },
+        "timeframe": {
+          "tileTimeframe": {
+            "from": "-24h",
+            "to": "now()"
+          },
+          "tileTimeframeEnabled": false
+        },
+        "segments": {
+          "tileSegments": [],
+          "tileSegmentsEnabled": false
+        }
+      },
+      "9": {
+        "title": "# 5xx",
+        "description": "Total number of 5xx responses from core-front (in eu-west-2)",
+        "type": "data",
+        "query": "timeseries {\n  `5xxErrorByAccountIdApiNameRegion` = sum(\n    cloud.aws.apigateway.5xxErrorByAccountIdApiNameRegion,\n    filter: \n    (\n      (apiname == \"ipv-core-front-build-rest\" AND $APIGateway == \"Core Front\" AND $Environment == \"build\")\n      OR (apiname == \"IPV Core Private API Gateway build\" AND $APIGateway == \"Core Back Internal\" AND $Environment == \"build\")\n      OR (apiname == \"IPV Core External API Gateway build\" AND $APIGateway == \"Core Back External\" AND $Environment == \"build\")\n    )\n    OR\n    (\n      (apiname == \"ipv-core-front-staging-rest\" AND $APIGateway == \"Core Front\" AND $Environment == \"staging\")\n      OR (apiname == \"IPV Core Private API Gateway staging\" AND $APIGateway == \"Core Back Internal\" AND $Environment == \"staging\")\n      OR (apiname == \"IPV Core External API Gateway staging\" AND $APIGateway == \"Core Back External\" AND $Environment == \"staging\")\n    )\n    AND aws.region == \"eu-west-2\"\n    )\n}",
+        "visualization": "barChart",
+        "visualizationSettings": {
+          "thresholds": [
+            {
+              "id": "0",
+              "title": "",
+              "field": "countByAccountIdApiNameRegion",
+              "rules": [
+                {
+                  "id": "0",
+                  "label": "",
+                  "comparator": "≥",
+                  "color": "#7dc540"
+                },
+                {
+                  "id": "1",
+                  "label": "",
+                  "comparator": "≥",
+                  "color": "#f5d30f"
+                },
+                {
+                  "id": "2",
+                  "label": "",
+                  "comparator": "≥",
+                  "color": "#dc172a"
+                }
+              ],
+              "isEnabled": true
+            }
+          ],
+          "chartSettings": {
+            "xAxisScaling": "analyzedTimeframe",
+            "seriesOverrides": [
+              {
+                "seriesId": [
+                  "5xxErrorByAccountIdApiNameRegion"
+                ],
+                "override": {
+                  "color": {
+                    "Default": "var(--dt-colors-charts-categorical-themed-fireplace-color-01-default, #ae132d)"
+                  }
+                }
+              }
+            ],
+            "gapPolicy": "gap",
+            "legend": {
+              "hidden": true
+            },
+            "leftYAxisSettings": {
+              "isLabelVisible": true,
+              "label": ""
+            },
+            "hiddenLegendFields": [
+              "interval"
+            ],
+            "circleChartSettings": {
+              "groupingThresholdType": "relative",
+              "groupingThresholdValue": 0,
+              "valueType": "relative"
+            },
+            "truncationMode": "middle",
+            "categoricalBarChartSettings": {
+              "categoryAxisLabel": "interval",
+              "valueAxisLabel": "interval",
+              "tooltipVariant": "single"
+            },
+            "xAxisLabel": "timeframe",
+            "xAxisIsLabelVisible": false,
+            "valueRepresentation": "absolute",
+            "fieldMapping": {
+              "timestamp": "timeframe",
+              "leftAxisValues": [
+                "5xxErrorByAccountIdApiNameRegion"
+              ]
+            },
+            "colorPalette": "categorical"
+          },
+          "singleValue": {
+            "showLabel": true,
+            "label": "",
+            "prefixIcon": "",
+            "autoscale": true,
+            "alignment": "center",
+            "colorThresholdTarget": "value"
+          },
+          "table": {
+            "rowDensity": "condensed",
+            "enableSparklines": false,
+            "hiddenColumns": [],
+            "linewrapEnabled": false,
+            "lineWrapIds": [],
+            "monospacedFontEnabled": false,
+            "monospacedFontColumns": [],
+            "columnWidths": {
+  
+            },
+            "columnTypeOverrides": [
+              {
+                "fields": [
+                  "5xxErrorByAccountIdApiNameRegion"
+                ],
+                "value": "sparkline",
+                "id": 1743174841771
+              }
+            ]
+          },
+          "honeycomb": {
+            "shape": "hexagon",
+            "legend": {
+              "hidden": false,
+              "position": "auto",
+              "ratio": "auto"
+            },
+            "dataMappings": {
+  
+            },
+            "displayedFields": [],
+            "truncationMode": "middle",
+            "colorMode": "color-palette",
+            "colorPalette": "categorical"
+          },
+          "histogram": {
+            "legend": "auto",
+            "yAxis": {
+              "label": "Frequency",
+              "scale": "linear"
+            },
+            "colorPalette": "categorical",
+            "dataMappings": [
+              {
+                "valueAxis": "interval",
+                "rangeAxis": ""
+              }
+            ],
+            "variant": "single",
+            "truncationMode": "middle",
+            "displayedFields": []
+          },
+          "valueBoundaries": {
+            "min": "auto",
+            "max": "auto"
+          },
+          "unitsOverrides": [
+            {
+              "identifier": "countByAccountIdApiNameRegion",
+              "unitCategory": "unspecified",
+              "baseUnit": "count",
+              "decimals": 0,
+              "suffix": "",
+              "delimiter": false,
+              "added": 0,
+              "id": "countByAccountIdApiNameRegion"
+            }
+          ]
+        },
+        "querySettings": {
+          "maxResultRecords": 1000,
+          "defaultScanLimitGbytes": 500,
+          "maxResultMegaBytes": 1,
+          "defaultSamplingRatio": 10,
+          "enableSampling": false
+        },
+        "davis": {
+          "enabled": false,
+          "davisVisualization": {
+            "isAvailable": true
+          }
+        },
+        "timeframe": {
+          "tileTimeframe": {
+            "from": "-24h",
+            "to": "now()"
+          },
+          "tileTimeframeEnabled": false
+        }
+      },
+      "16": {
+        "title": "# 4xx",
+        "description": "Total number of 4xx responses from core-front (in eu-west-2)",
+        "type": "data",
+        "query": "timeseries {\n  `4xxErrorByAccountIdApiNameRegionStage` = sum(\n    cloud.aws.apigateway.4xxErrorByAccountIdApiNameRegionStage,\n    filter: \n    (\n      (apiname == \"ipv-core-front-build-rest\" AND $APIGateway == \"Core Front\" AND $Environment == \"build\")\n      OR (apiname == \"IPV Core Private API Gateway build\" AND $APIGateway == \"Core Back Internal\" AND $Environment == \"build\")\n      OR (apiname == \"IPV Core External API Gateway build\" AND $APIGateway == \"Core Back External\" AND $Environment == \"build\")\n    )\n    OR\n    (\n      (apiname == \"ipv-core-front-staging-rest\" AND $APIGateway == \"Core Front\" AND $Environment == \"staging\")\n      OR (apiname == \"IPV Core Private API Gateway staging\" AND $APIGateway == \"Core Back Internal\" AND $Environment == \"staging\")\n      OR (apiname == \"IPV Core External API Gateway staging\" AND $APIGateway == \"Core Back External\" AND $Environment == \"staging\")\n    )\n    AND aws.region == \"eu-west-2\"\n  )\n}",
+        "visualization": "barChart",
+        "visualizationSettings": {
+          "thresholds": [
+            {
+              "id": "0",
+              "title": "",
+              "field": "countByAccountIdApiNameRegion",
+              "rules": [
+                {
+                  "id": "0",
+                  "label": "",
+                  "comparator": "≥",
+                  "color": "#7dc540"
+                },
+                {
+                  "id": "1",
+                  "label": "",
+                  "comparator": "≥",
+                  "color": "#f5d30f"
+                },
+                {
+                  "id": "2",
+                  "label": "",
+                  "comparator": "≥",
+                  "color": "#dc172a"
+                }
+              ],
+              "isEnabled": true
+            }
+          ],
+          "chartSettings": {
+            "xAxisScaling": "analyzedTimeframe",
+            "seriesOverrides": [
+              {
+                "seriesId": [
+                  "4xxErrorByAccountIdApiNameRegionStage"
+                ],
+                "override": {
+                  "color": {
+                    "Default": "var(--dt-colors-charts-categorical-color-14-default, #d56b1a)"
+                  }
+                }
+              }
+            ],
+            "gapPolicy": "gap",
+            "legend": {
+              "hidden": true
+            },
+            "leftYAxisSettings": {
+              "isLabelVisible": true,
+              "label": ""
+            },
+            "hiddenLegendFields": [
+              "interval"
+            ],
+            "circleChartSettings": {
+              "groupingThresholdType": "relative",
+              "groupingThresholdValue": 0,
+              "valueType": "relative"
+            },
+            "truncationMode": "middle",
+            "categoricalBarChartSettings": {
+              "categoryAxisLabel": "interval",
+              "valueAxisLabel": "interval",
+              "tooltipVariant": "single"
+            },
+            "xAxisLabel": "timeframe",
+            "xAxisIsLabelVisible": false,
+            "valueRepresentation": "absolute",
+            "fieldMapping": {
+              "timestamp": "timeframe",
+              "leftAxisValues": [
+                "4xxErrorByAccountIdApiNameRegionStage"
+              ]
+            }
+          },
+          "singleValue": {
+            "showLabel": true,
+            "label": "",
+            "prefixIcon": "",
+            "autoscale": true,
+            "alignment": "center",
+            "colorThresholdTarget": "value"
+          },
+          "table": {
+            "rowDensity": "condensed",
+            "enableSparklines": false,
+            "hiddenColumns": [],
+            "linewrapEnabled": false,
+            "lineWrapIds": [],
+            "monospacedFontEnabled": false,
+            "monospacedFontColumns": [],
+            "columnWidths": {
+  
+            },
+            "columnTypeOverrides": [
+              {
+                "fields": [
+                  "4xxErrorByAccountIdApiNameRegionStage"
+                ],
+                "value": "sparkline",
+                "id": 1743174841771
+              }
+            ]
+          },
+          "honeycomb": {
+            "shape": "hexagon",
+            "legend": {
+              "hidden": false,
+              "position": "auto",
+              "ratio": "auto"
+            },
+            "dataMappings": {
+  
+            },
+            "displayedFields": [],
+            "truncationMode": "middle",
+            "colorMode": "color-palette",
+            "colorPalette": "categorical"
+          },
+          "histogram": {
+            "legend": "auto",
+            "yAxis": {
+              "label": "Frequency",
+              "scale": "linear"
+            },
+            "colorPalette": "categorical",
+            "dataMappings": [
+              {
+                "valueAxis": "interval",
+                "rangeAxis": ""
+              }
+            ],
+            "variant": "single",
+            "truncationMode": "middle",
+            "displayedFields": []
+          },
+          "valueBoundaries": {
+            "min": "auto",
+            "max": "auto"
+          },
+          "unitsOverrides": [
+            {
+              "identifier": "countByAccountIdApiNameRegion",
+              "unitCategory": "unspecified",
+              "baseUnit": "count",
+              "decimals": 0,
+              "suffix": "",
+              "delimiter": false,
+              "added": 0,
+              "id": "countByAccountIdApiNameRegion"
+            }
+          ]
+        },
+        "querySettings": {
+          "maxResultRecords": 1000,
+          "defaultScanLimitGbytes": 500,
+          "maxResultMegaBytes": 1,
+          "defaultSamplingRatio": 10,
+          "enableSampling": false
+        },
+        "davis": {
+          "enabled": false,
+          "davisVisualization": {
+            "isAvailable": true
+          }
+        },
+        "timeframe": {
+          "tileTimeframe": {
+            "from": "-24h",
+            "to": "now()"
+          },
+          "tileTimeframeEnabled": false
+        }
+      }
+    },
+    "layouts": {
+      "3": {
+        "x": 0,
+        "y": 0,
+        "w": 40,
+        "h": 3
+      },
+      "8": {
+        "x": 0,
+        "y": 9,
+        "w": 40,
+        "h": 3
+      },
+      "9": {
+        "x": 0,
+        "y": 6,
+        "w": 40,
+        "h": 3
+      },
+      "16": {
+        "x": 0,
+        "y": 3,
+        "w": 40,
+        "h": 3
+      }
+    },
+    "importedWithCode": false,
+    "settings": {
+      "gridLayout": {
+        "mode": "responsive",
+        "columnsCount": 40
+      },
+      "defaultSegments": {
+        "value": [],
+        "enabled": false
+      }
+    }
+  }
