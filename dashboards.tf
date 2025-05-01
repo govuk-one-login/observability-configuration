@@ -637,6 +637,12 @@ module "service_quotas_dashboard" {
   path   = "id-check/service-quotas.json"
 }
 
+module "api_gateway_summary" {
+  count  = local.is_production ? 1 : 0 # Only create in production
+  source = "./modules/dashboard"
+  path   = "id-check/api-gateway-summary.json"
+}
+
 ### STS ###
 
 module "sts_standard_metrics_prod" {
