@@ -643,6 +643,12 @@ module "api_gateway_summary" {
   path   = "id-check/api-gateway-summary.json"
 }
 
+module "lambda_summary" {
+  count  = local.is_production ? 1 : 0 # Only create in production
+  source = "./modules/dashboard"
+  path   = "id-check/lambda-summary.json"
+}
+
 ### STS ###
 
 module "sts_standard_metrics_prod" {
