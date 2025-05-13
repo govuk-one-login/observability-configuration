@@ -637,16 +637,22 @@ module "service_quotas_dashboard" {
   path   = "id-check/service-quotas.json"
 }
 
-module "api_gateway_summary" {
+module "dcmaw_backend_api_gateway" {
   count  = local.is_production ? 1 : 0 # Only create in production
   source = "./modules/dashboard"
-  path   = "id-check/api-gateway-summary.json"
+  path   = "id-check/dcmaw-backend-api-gateway.json"
 }
 
-module "lambda_summary" {
+module "dcmaw_backend_lambda" {
   count  = local.is_production ? 1 : 0 # Only create in production
   source = "./modules/dashboard"
-  path   = "id-check/lambda-summary.json"
+  path   = "id-check/dcmaw-backend-lambda.json"
+}
+
+module "dcmaw_frontend_api_gateway" {
+  count  = local.is_production ? 1 : 0 # Only create in production
+  source = "./modules/dashboard"
+  path   = "id-check/dcmaw-frontend-api-gateway.json"
 }
 
 ### STS ###

@@ -3,12 +3,13 @@
       "configurationVersions": [
         7
       ],
-      "clusterVersion": "1.313.40.20250430-103002"
-    },    
+      "clusterVersion": "1.314.32.20250509-131355"
+    },   
     "dashboardMetadata": {
-      "name": "id-check backend-api-gateway-summary",
+      "name": "MOBILE - DCMAW BE - API Gateway",
       "shared": true,
       "owner": "matthew.barber@digital.cabinet-office.gov.uk",
+      "popularity": 1,
       "hasConsistentColors": false
     },
     "tiles": [
@@ -818,15 +819,15 @@
                   "nestedFilters": [],
                   "criteria": [
                     {
+                      "value": "/biometricToken/v2",
+                      "evaluator": "EQ"
+                    },
+                    {
                       "value": "/userinfo/v2",
                       "evaluator": "EQ"
                     },
                     {
                       "value": "/verifyAuthorizeRequest",
-                      "evaluator": "EQ"
-                    },
-                    {
-                      "value": "/biometricToken/v2",
                       "evaluator": "EQ"
                     }
                   ]
@@ -874,11 +875,11 @@
                       "evaluator": "EQ"
                     },
                     {
-                      "value": "/userinfo/v2",
+                      "value": "/verifyAuthorizeRequest",
                       "evaluator": "EQ"
                     },
                     {
-                      "value": "/verifyAuthorizeRequest",
+                      "value": "/userinfo/v2",
                       "evaluator": "EQ"
                     }
                   ]
@@ -904,6 +905,18 @@
               "filterOperator": "AND",
               "nestedFilters": [
                 {
+                  "filter": "apiname",
+                  "filterType": "DIMENSION",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "id-check-cri-backend-api",
+                      "evaluator": "EQ"
+                    }
+                  ]
+                },
+                {
                   "filter": "resource",
                   "filterType": "DIMENSION",
                   "filterOperator": "OR",
@@ -919,18 +932,6 @@
                     },
                     {
                       "value": "/userinfo/v2",
-                      "evaluator": "EQ"
-                    }
-                  ]
-                },
-                {
-                  "filter": "apiname",
-                  "filterType": "DIMENSION",
-                  "filterOperator": "OR",
-                  "nestedFilters": [],
-                  "criteria": [
-                    {
-                      "value": "id-check-cri-backend-api",
                       "evaluator": "EQ"
                     }
                   ]
@@ -2461,185 +2462,6 @@
         },
         "metricExpressions": [
           "resolution=Inf&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(eq(apiname,id-check-cri-backend-api)):splitBy(resource):sum:sort(value(avg,descending)):limit(20)):names"
-        ]
-      },
-      {
-        "name": "3: Request Count Backend API Per Endpoint - PERF006",
-        "tileType": "DATA_EXPLORER",
-        "configured": true,
-        "bounds": {
-          "top": 228,
-          "left": 38,
-          "width": 760,
-          "height": 342
-        },
-        "tileFilter": {},
-        "isAutoRefreshDisabled": false,
-        "customName": "Table",
-        "queries": [
-          {
-            "id": "F",
-            "spaceAggregation": "AUTO",
-            "timeAggregation": "DEFAULT",
-            "splitBy": [
-              "resource"
-            ],
-            "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(eq(\"apiname\",\"id-check-cri-backend-api\")):splitBy(\"resource\"):sum:sort(value(avg,descending)):limit(20)",
-            "rate": "NONE",
-            "enabled": true
-          }
-        ],
-        "visualConfig": {
-          "type": "GRAPH_CHART",
-          "global": {},
-          "rules": [
-            {
-              "matcher": "F:",
-              "properties": {
-                "color": "DEFAULT",
-                "seriesType": "LINE"
-              },
-              "seriesOverrides": []
-            }
-          ],
-          "axes": {
-            "xAxis": {
-              "displayName": "",
-              "visible": true
-            },
-            "yAxes": [
-              {
-                "displayName": "",
-                "visible": true,
-                "min": "AUTO",
-                "max": "AUTO",
-                "position": "LEFT",
-                "queryIds": [
-                  "F"
-                ],
-                "defaultAxis": true
-              }
-            ]
-          },
-          "heatmapSettings": {
-            "yAxis": "VALUE"
-          },
-          "thresholds": [
-            {
-              "axisTarget": "LEFT",
-              "columnId": "Count",
-              "rules": [
-                {
-                  "color": "#7dc540"
-                },
-                {
-                  "color": "#f5d30f"
-                },
-                {
-                  "color": "#dc172a"
-                }
-              ],
-              "queryId": "F",
-              "visible": true
-            },
-            {
-              "axisTarget": "LEFT",
-              "rules": [
-                {
-                  "value": 0,
-                  "color": "#7dc540"
-                },
-                {
-                  "color": "#f5d30f"
-                },
-                {
-                  "value": 1001,
-                  "color": "#dc172a"
-                }
-              ],
-              "queryId": "",
-              "visible": true
-            },
-            {
-              "axisTarget": "LEFT",
-              "rules": [
-                {
-                  "value": 0,
-                  "color": "#7dc540"
-                },
-                {
-                  "color": "#f5d30f"
-                },
-                {
-                  "value": 1001,
-                  "color": "#dc172a"
-                }
-              ],
-              "queryId": "",
-              "visible": true
-            },
-            {
-              "axisTarget": "LEFT",
-              "rules": [
-                {
-                  "value": 0,
-                  "color": "#7dc540"
-                },
-                {
-                  "color": "#f5d30f"
-                },
-                {
-                  "value": 1001,
-                  "color": "#dc172a"
-                }
-              ],
-              "queryId": "",
-              "visible": true
-            },
-            {
-              "axisTarget": "LEFT",
-              "rules": [
-                {
-                  "value": 0,
-                  "color": "#7dc540"
-                },
-                {
-                  "color": "#f5d30f"
-                },
-                {
-                  "value": 1001,
-                  "color": "#dc172a"
-                }
-              ],
-              "queryId": "",
-              "visible": true
-            }
-          ],
-          "tableSettings": {
-            "isThresholdBackgroundAppliedToCell": true,
-            "hiddenColumns": [
-              "A:resource.name",
-              "B:resource.name",
-              "C:resource.name",
-              "D:resource.name",
-              "E:resource.name",
-              "F:resource.name"
-            ]
-          },
-          "graphChartSettings": {
-            "connectNulls": true
-          },
-          "honeycombSettings": {
-            "showHive": true,
-            "showLegend": true,
-            "showLabels": false
-          }
-        },
-        "queriesSettings": {
-          "resolution": ""
-        },
-        "metricExpressions": [
-          "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(eq(apiname,id-check-cri-backend-api)):splitBy(resource):sum:sort(value(avg,descending)):limit(20)):limit(100):names"
         ]
       },
       {
@@ -5647,6 +5469,185 @@
         },
         "metricExpressions": [
           "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(\"aws.account.id\",\"709132032242\"),eq(\"aws.account.id\",\"074090241447\"),eq(\"aws.account.id\",\"153011173686\"),eq(\"aws.account.id\",\"110965769736\"),eq(\"aws.account.id\",\"671922655609\"))):filter(eq(apiname,id-check-cri-backend-api)):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"709132032242\")),dimension(\"2-build\",eq(\"aws.account.id\",\"074090241447\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"153011173686\")),dimension(\"4-int\",eq(\"aws.account.id\",\"110965769736\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"671922655609\")),otherwise(UNKNOWN)):timeshift(1w):sum:splitBy(env,apiname,resource):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(\"aws.account.id\",\"709132032242\"),eq(\"aws.account.id\",\"074090241447\"),eq(\"aws.account.id\",\"153011173686\"),eq(\"aws.account.id\",\"110965769736\"),eq(\"aws.account.id\",\"671922655609\"))):filter(eq(apiname,id-check-cri-backend-api)):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"709132032242\")),dimension(\"2-build\",eq(\"aws.account.id\",\"074090241447\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"153011173686\")),dimension(\"4-int\",eq(\"aws.account.id\",\"110965769736\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"671922655609\")),otherwise(UNKNOWN)):timeshift(0w):sum:splitBy(env,apiname,resource):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(\"aws.account.id\",\"709132032242\"),eq(\"aws.account.id\",\"074090241447\"),eq(\"aws.account.id\",\"153011173686\"),eq(\"aws.account.id\",\"110965769736\"),eq(\"aws.account.id\",\"671922655609\"))):filter(eq(apiname,id-check-cri-backend-api)):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"709132032242\")),dimension(\"2-build\",eq(\"aws.account.id\",\"074090241447\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"153011173686\")),dimension(\"4-int\",eq(\"aws.account.id\",\"110965769736\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"671922655609\")),otherwise(UNKNOWN)):timeshift(-1w):sum:splitBy(env,apiname,resource):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(\"aws.account.id\",\"709132032242\"),eq(\"aws.account.id\",\"074090241447\"),eq(\"aws.account.id\",\"153011173686\"),eq(\"aws.account.id\",\"110965769736\"),eq(\"aws.account.id\",\"671922655609\"))):filter(eq(apiname,id-check-cri-backend-api)):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"709132032242\")),dimension(\"2-build\",eq(\"aws.account.id\",\"074090241447\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"153011173686\")),dimension(\"4-int\",eq(\"aws.account.id\",\"110965769736\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"671922655609\")),otherwise(UNKNOWN)):timeshift(-2w):sum:splitBy(env,apiname,resource):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(\"aws.account.id\",\"709132032242\"),eq(\"aws.account.id\",\"074090241447\"),eq(\"aws.account.id\",\"153011173686\"),eq(\"aws.account.id\",\"110965769736\"),eq(\"aws.account.id\",\"671922655609\"))):filter(eq(apiname,id-check-cri-backend-api)):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"709132032242\")),dimension(\"2-build\",eq(\"aws.account.id\",\"074090241447\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"153011173686\")),dimension(\"4-int\",eq(\"aws.account.id\",\"110965769736\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"671922655609\")),otherwise(UNKNOWN)):timeshift(-3w):sum:splitBy(env,apiname,resource):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(\"aws.account.id\",\"709132032242\"),eq(\"aws.account.id\",\"074090241447\"),eq(\"aws.account.id\",\"153011173686\"),eq(\"aws.account.id\",\"110965769736\"),eq(\"aws.account.id\",\"671922655609\"))):filter(eq(apiname,id-check-cri-backend-api)):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"709132032242\")),dimension(\"2-build\",eq(\"aws.account.id\",\"074090241447\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"153011173686\")),dimension(\"4-int\",eq(\"aws.account.id\",\"110965769736\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"671922655609\")),otherwise(UNKNOWN)):timeshift(-4w):sum:splitBy(env,apiname,resource):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(\"aws.account.id\",\"709132032242\"),eq(\"aws.account.id\",\"074090241447\"),eq(\"aws.account.id\",\"153011173686\"),eq(\"aws.account.id\",\"110965769736\"),eq(\"aws.account.id\",\"671922655609\"))):filter(eq(apiname,id-check-cri-backend-api)):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"709132032242\")),dimension(\"2-build\",eq(\"aws.account.id\",\"074090241447\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"153011173686\")),dimension(\"4-int\",eq(\"aws.account.id\",\"110965769736\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"671922655609\")),otherwise(UNKNOWN)):timeshift(-5w):sum:splitBy(env,apiname,resource):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum)"
+        ]
+      },
+      {
+        "name": "3: Request Count Backend API Per Endpoint - PERF006",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 228,
+          "left": 38,
+          "width": 760,
+          "height": 342
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Table",
+        "queries": [
+          {
+            "id": "F",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "resource"
+            ],
+            "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(eq(\"apiname\",\"id-check-cri-backend-api\"),and(ne(\"resource\",\"/isSessionFinished/{sessionId}\"))):splitBy(\"resource\"):sum:sort(value(avg,descending)):limit(20)",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "F:",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "F"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "columnId": "Count",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "F",
+              "visible": true
+            },
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 1001,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            },
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 1001,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            },
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 1001,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            },
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "value": 0,
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "value": 1001,
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "isThresholdBackgroundAppliedToCell": true,
+            "hiddenColumns": [
+              "A:resource.name",
+              "B:resource.name",
+              "C:resource.name",
+              "D:resource.name",
+              "E:resource.name",
+              "F:resource.name"
+            ]
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(eq(apiname,id-check-cri-backend-api),and(ne(resource,\"/isSessionFinished/{sessionId}\"))):splitBy(resource):sum:sort(value(avg,descending)):limit(20)):limit(100):names"
         ]
       }
     ]
