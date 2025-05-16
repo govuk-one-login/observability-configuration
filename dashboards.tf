@@ -655,6 +655,21 @@ module "dcmaw_frontend_api_gateway" {
   path   = "id-check/dcmaw-frontend-api-gateway.json"
 }
 
+### MOBILE PLATFORM ###
+
+module "mobile-platform" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "mobile-platform/mobile-platform.json"
+}
+
+module "sts" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "mobile-platform/sts.json"
+}
+
+
 ### STS ###
 
 module "sts_standard_metrics_prod" {
