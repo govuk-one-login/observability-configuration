@@ -14,261 +14,6 @@
     },
     "tiles": [
       {
-        "name": "VCs Issued By Document Type",
-        "tileType": "DATA_EXPLORER",
-        "configured": true,
-        "bounds": {
-          "top": 0,
-          "left": 608,
-          "width": 456,
-          "height": 304
-        },
-        "tileFilter": {},
-        "isAutoRefreshDisabled": false,
-        "customName": "VCs Issued By Document Type",
-        "queries": [
-          {
-            "id": "A",
-            "metric": "cloud.aws.jh-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion",
-            "spaceAggregation": "SUM",
-            "timeAggregation": "DEFAULT",
-            "splitBy": [
-              "documenttype"
-            ],
-            "sortBy": "DESC",
-            "sortByDimension": "",
-            "filterBy": {
-              "nestedFilters": [],
-              "criteria": []
-            },
-            "limit": 20,
-            "rate": "NONE",
-            "enabled": false
-          },
-          {
-            "id": "B",
-            "metric": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion",
-            "spaceAggregation": "SUM",
-            "timeAggregation": "DEFAULT",
-            "splitBy": [
-              "documenttype"
-            ],
-            "sortBy": "DESC",
-            "sortByDimension": "",
-            "filterBy": {
-              "nestedFilters": [],
-              "criteria": []
-            },
-            "limit": 20,
-            "rate": "NONE",
-            "enabled": true
-          }
-        ],
-        "visualConfig": {
-          "type": "PIE_CHART",
-          "global": {},
-          "rules": [
-            {
-              "matcher": "A:",
-              "unitTransform": "auto",
-              "valueFormat": "auto",
-              "properties": {
-                "color": "DEFAULT",
-                "seriesType": "LINE"
-              },
-              "seriesOverrides": [
-                {
-                  "name": "Passport",
-                  "color": "#14a8f5"
-                },
-                {
-                  "name": "BiometricResidencePermit",
-                  "color": "#fd8232"
-                },
-                {
-                  "name": "BiometricResidenceCard",
-                  "color": "#dc172a"
-                },
-                {
-                  "name": "DriversLicence",
-                  "color": "#c396e0"
-                }
-              ]
-            },
-            {
-              "matcher": "B:",
-              "properties": {
-                "color": "DEFAULT"
-              },
-              "seriesOverrides": []
-            }
-          ],
-          "axes": {
-            "xAxis": {
-              "visible": true
-            },
-            "yAxes": []
-          },
-          "heatmapSettings": {
-            "yAxis": "VALUE"
-          },
-          "thresholds": [
-            {
-              "axisTarget": "LEFT",
-              "rules": [
-                {
-                  "color": "#7dc540"
-                },
-                {
-                  "color": "#f5d30f"
-                },
-                {
-                  "color": "#dc172a"
-                }
-              ],
-              "visible": true
-            }
-          ],
-          "tableSettings": {
-            "hiddenColumns": []
-          },
-          "graphChartSettings": {
-            "connectNulls": false
-          },
-          "honeycombSettings": {
-            "showHive": true,
-            "showLegend": true,
-            "showLabels": false
-          }
-        },
-        "queriesSettings": {
-          "resolution": ""
-        },
-        "metricExpressions": [
-          "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy(documenttype):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
-        ]
-      },
-      {
-        "name": "Journey Completion Rate (Journeys Started / VCs Issued)",
-        "tileType": "DATA_EXPLORER",
-        "configured": true,
-        "bounds": {
-          "top": 304,
-          "left": 0,
-          "width": 1064,
-          "height": 304
-        },
-        "tileFilter": {},
-        "isAutoRefreshDisabled": false,
-        "customName": "Data explorer results",
-        "queries": [
-          {
-            "id": "A",
-            "spaceAggregation": "AUTO",
-            "timeAggregation": "DEFAULT",
-            "metricSelector": "cloud.aws.jh-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.jh-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum",
-            "rate": "NONE",
-            "enabled": false
-          },
-          {
-            "id": "B",
-            "spaceAggregation": "AUTO",
-            "timeAggregation": "DEFAULT",
-            "splitBy": [],
-            "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum * 100",
-            "rate": "NONE",
-            "enabled": true
-          }
-        ],
-        "visualConfig": {
-          "type": "STACKED_AREA",
-          "global": {
-            "hideLegend": true
-          },
-          "rules": [
-            {
-              "matcher": "A:",
-              "unitTransform": "auto",
-              "valueFormat": "auto",
-              "properties": {
-                "color": "DEFAULT",
-                "seriesType": "STACKED_AREA"
-              },
-              "seriesOverrides": []
-            },
-            {
-              "matcher": "B:",
-              "unitTransform": "%",
-              "valueFormat": "auto",
-              "properties": {
-                "color": "DEFAULT",
-                "seriesType": "STACKED_AREA",
-                "alias": "Journey completion rate"
-              },
-              "seriesOverrides": []
-            }
-          ],
-          "axes": {
-            "xAxis": {
-              "displayName": "",
-              "visible": true
-            },
-            "yAxes": [
-              {
-                "displayName": "",
-                "visible": true,
-                "min": "AUTO",
-                "max": "AUTO",
-                "position": "LEFT",
-                "queryIds": [
-                  "B"
-                ],
-                "defaultAxis": true
-              }
-            ]
-          },
-          "heatmapSettings": {
-            "yAxis": "VALUE"
-          },
-          "thresholds": [
-            {
-              "axisTarget": "LEFT",
-              "columnId": "cloud.aws.jh-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.jh-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum",
-              "rules": [
-                {
-                  "color": "#7dc540"
-                },
-                {
-                  "color": "#f5d30f"
-                },
-                {
-                  "color": "#dc172a"
-                }
-              ],
-              "queryId": "A",
-              "visible": true
-            }
-          ],
-          "tableSettings": {
-            "hiddenColumns": []
-          },
-          "graphChartSettings": {
-            "connectNulls": true
-          },
-          "honeycombSettings": {
-            "showHive": true,
-            "showLegend": true,
-            "showLabels": false
-          }
-        },
-        "queriesSettings": {
-          "resolution": ""
-        },
-        "metricExpressions": [
-          "resolution=null&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum*100):limit(100):names"
-        ]
-      },
-      {
         "name": "Weekly VCs Issued",
         "tileType": "DATA_EXPLORER",
         "configured": true,
@@ -864,260 +609,6 @@
         ]
       },
       {
-        "name": "Journeys Started",
-        "tileType": "DATA_EXPLORER",
-        "configured": true,
-        "bounds": {
-          "top": 0,
-          "left": 0,
-          "width": 304,
-          "height": 304
-        },
-        "tileFilter": {},
-        "isAutoRefreshDisabled": false,
-        "customName": "Data explorer results",
-        "queries": [
-          {
-            "id": "A",
-            "metric": "cloud.aws.jh-async-backend.logmessages.journeysStartedByAccountIdRegion",
-            "spaceAggregation": "SUM",
-            "timeAggregation": "DEFAULT",
-            "splitBy": [
-              "aws.account.id"
-            ],
-            "sortBy": "DESC",
-            "sortByDimension": "",
-            "filterBy": {
-              "nestedFilters": [],
-              "criteria": []
-            },
-            "limit": 20,
-            "rate": "NONE",
-            "enabled": false
-          },
-          {
-            "id": "B",
-            "metric": "cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion",
-            "spaceAggregation": "SUM",
-            "timeAggregation": "DEFAULT",
-            "splitBy": [
-              "aws.account.id"
-            ],
-            "sortBy": "DESC",
-            "sortByDimension": "",
-            "filterBy": {
-              "nestedFilters": [],
-              "criteria": []
-            },
-            "limit": 20,
-            "rate": "NONE",
-            "enabled": true
-          }
-        ],
-        "visualConfig": {
-          "type": "SINGLE_VALUE",
-          "global": {},
-          "rules": [
-            {
-              "matcher": "A:",
-              "unitTransform": "auto",
-              "valueFormat": "auto",
-              "properties": {
-                "color": "DEFAULT",
-                "seriesType": "LINE"
-              },
-              "seriesOverrides": []
-            },
-            {
-              "matcher": "B:",
-              "unitTransform": "auto",
-              "valueFormat": "auto",
-              "properties": {
-                "color": "DEFAULT",
-                "seriesType": "LINE",
-                "alias": "Number of journeys started"
-              },
-              "seriesOverrides": []
-            }
-          ],
-          "axes": {
-            "xAxis": {
-              "visible": true
-            },
-            "yAxes": []
-          },
-          "heatmapSettings": {
-            "yAxis": "VALUE"
-          },
-          "singleValueSettings": {
-            "showTrend": false,
-            "showSparkLine": true,
-            "linkTileColorToThreshold": true
-          },
-          "thresholds": [
-            {
-              "axisTarget": "LEFT",
-              "rules": [
-                {
-                  "color": "#7dc540"
-                },
-                {
-                  "color": "#f5d30f"
-                },
-                {
-                  "color": "#dc172a"
-                }
-              ],
-              "visible": true
-            }
-          ],
-          "tableSettings": {
-            "hiddenColumns": []
-          },
-          "graphChartSettings": {
-            "connectNulls": false
-          },
-          "honeycombSettings": {
-            "showHive": true,
-            "showLegend": true,
-            "showLabels": false
-          }
-        },
-        "queriesSettings": {
-          "resolution": ""
-        },
-        "metricExpressions": [
-          "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names",
-          "resolution=null&(cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum:sort(value(sum,descending)):limit(20))"
-        ]
-      },
-      {
-        "name": "VCs Issued",
-        "tileType": "DATA_EXPLORER",
-        "configured": true,
-        "bounds": {
-          "top": 0,
-          "left": 304,
-          "width": 304,
-          "height": 304
-        },
-        "tileFilter": {
-          "timeframe": "-30d to now"
-        },
-        "isAutoRefreshDisabled": false,
-        "customName": "Data explorer results",
-        "queries": [
-          {
-            "id": "A",
-            "metric": "cloud.aws.jh-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion",
-            "spaceAggregation": "SUM",
-            "timeAggregation": "DEFAULT",
-            "splitBy": [],
-            "sortBy": "DESC",
-            "sortByDimension": "",
-            "filterBy": {
-              "nestedFilters": [],
-              "criteria": []
-            },
-            "limit": 20,
-            "rate": "NONE",
-            "enabled": false
-          },
-          {
-            "id": "B",
-            "metric": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion",
-            "spaceAggregation": "SUM",
-            "timeAggregation": "DEFAULT",
-            "splitBy": [],
-            "sortBy": "DESC",
-            "sortByDimension": "",
-            "filterBy": {
-              "nestedFilters": [],
-              "criteria": []
-            },
-            "limit": 20,
-            "rate": "NONE",
-            "enabled": true
-          }
-        ],
-        "visualConfig": {
-          "type": "SINGLE_VALUE",
-          "global": {},
-          "rules": [
-            {
-              "matcher": "A:",
-              "unitTransform": "auto",
-              "valueFormat": "auto",
-              "properties": {
-                "color": "DEFAULT",
-                "seriesType": "LINE"
-              },
-              "seriesOverrides": []
-            },
-            {
-              "matcher": "B:",
-              "unitTransform": "auto",
-              "valueFormat": "auto",
-              "properties": {
-                "color": "DEFAULT",
-                "seriesType": "LINE",
-                "alias": "Number of credentials issued"
-              },
-              "seriesOverrides": []
-            }
-          ],
-          "axes": {
-            "xAxis": {
-              "visible": true
-            },
-            "yAxes": []
-          },
-          "heatmapSettings": {
-            "yAxis": "VALUE"
-          },
-          "singleValueSettings": {
-            "showTrend": false,
-            "showSparkLine": true,
-            "linkTileColorToThreshold": true
-          },
-          "thresholds": [
-            {
-              "axisTarget": "LEFT",
-              "rules": [
-                {
-                  "color": "#7dc540"
-                },
-                {
-                  "color": "#f5d30f"
-                },
-                {
-                  "color": "#dc172a"
-                }
-              ],
-              "visible": true
-            }
-          ],
-          "tableSettings": {
-            "hiddenColumns": []
-          },
-          "graphChartSettings": {
-            "connectNulls": false
-          },
-          "honeycombSettings": {
-            "showHive": true,
-            "showLegend": true,
-            "showLabels": false
-          }
-        },
-        "queriesSettings": {
-          "resolution": ""
-        },
-        "metricExpressions": [
-          "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names",
-          "resolution=null&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum:sort(value(sum,descending)):limit(20))"
-        ]
-      },
-      {
         "name": "Aborted Journeys",
         "tileType": "DATA_EXPLORER",
         "configured": true,
@@ -1215,7 +706,7 @@
         "bounds": {
           "top": 608,
           "left": 304,
-          "width": 494,
+          "width": 760,
           "height": 304
         },
         "tileFilter": {},
@@ -1308,6 +799,398 @@
         },
         "metricExpressions": [
           "resolution=null&((cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(and(or(eq(messagecode,MOBILE_ASYNC_ABORT_SESSION_COMPLETED)))):splitBy():sum:sort(value(sum,descending))/cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum:sort(value(sum,descending)))*100):limit(100):names"
+        ]
+      },
+      {
+        "name": "Journeys Started",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 0,
+          "left": 0,
+          "width": 304,
+          "height": 304
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "B",
+            "metric": "cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion",
+            "spaceAggregation": "SUM",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "aws.account.id"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "nestedFilters": [],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "SINGLE_VALUE",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "B:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "Number of journeys started"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "visible": true
+            },
+            "yAxes": []
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "singleValueSettings": {
+            "showTrend": false,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names",
+          "resolution=null&(cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum:sort(value(sum,descending)):limit(20))"
+        ]
+      },
+      {
+        "name": "VCs Issued",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 0,
+          "left": 304,
+          "width": 304,
+          "height": 304
+        },
+        "tileFilter": {
+          "timeframe": "-30d to now"
+        },
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "B",
+            "metric": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion",
+            "spaceAggregation": "SUM",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "nestedFilters": [],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "SINGLE_VALUE",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "B:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "Number of credentials issued"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "visible": true
+            },
+            "yAxes": []
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "singleValueSettings": {
+            "showTrend": false,
+            "showSparkLine": true,
+            "linkTileColorToThreshold": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names",
+          "resolution=null&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum:sort(value(sum,descending)):limit(20))"
+        ]
+      },
+      {
+        "name": "VCs Issued By Document Type",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 0,
+          "left": 608,
+          "width": 456,
+          "height": 304
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "VCs Issued By Document Type",
+        "queries": [
+          {
+            "id": "B",
+            "metric": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion",
+            "spaceAggregation": "SUM",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "documenttype"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "nestedFilters": [],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "PIE_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "B:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "visible": true
+            },
+            "yAxes": []
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy(documenttype):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Journey Completion Rate (Journeys Started / VCs Issued)",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 304,
+          "left": 0,
+          "width": 1064,
+          "height": 304
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "B",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [],
+            "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum * 100",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "STACKED_AREA",
+          "global": {
+            "hideLegend": true
+          },
+          "rules": [
+            {
+              "matcher": "B:",
+              "unitTransform": "%",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "STACKED_AREA",
+                "alias": "Journey completion rate"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": [
+                  "B"
+                ],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "columnId": "cloud.aws.jh-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.jh-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "queryId": "A",
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum*100):limit(100):names"
         ]
       }
     ]
