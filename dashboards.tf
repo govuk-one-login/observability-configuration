@@ -661,6 +661,21 @@ module "async_backend_completion_rate" {
   path   = "id-check/async-backend-completion-rate.json"
 }
 
+### MOBILE PLATFORM ###
+
+module "mobile-platform" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "mobile-platform/mobile-platform.json"
+}
+
+module "sts" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "mobile-platform/sts.json"
+}
+
+
 ### STS ###
 
 module "sts_standard_metrics_prod" {
