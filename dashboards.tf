@@ -655,6 +655,12 @@ module "dcmaw_frontend_api_gateway" {
   path   = "id-check/dcmaw-frontend-api-gateway.json"
 }
 
+module "async_backend_completion_rate" {
+  count  = local.is_production ? 1 : 0 # Only create in production
+  source = "./modules/dashboard"
+  path   = "id-check/async_backend_completion_rate.json"
+}
+
 ### STS ###
 
 module "sts_standard_metrics_prod" {
