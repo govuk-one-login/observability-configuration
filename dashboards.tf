@@ -209,12 +209,22 @@ module "authentication_services" {
 
 module "core_lambda_metrics_dashboard" {
   source = "./modules/dashboard"
-  path   = "core/lambda.json"
+  path   = "core/lambda-metrics.json"
 }
 
-module "core_services_dashboard" {
+module "core_services_overview_dashboard" {
   source = "./modules/dashboard"
-  path   = "core/services.json"
+  path   = "core/services-overview.json"
+}
+
+module "core_nfrs_dashboard" {
+  source = "./modules/dashboard"
+  path   = "core/nfrs.json"
+}
+
+module "core_pipelines_overview_dashboard" {
+  source = "./modules/dashboard"
+  path   = "core/pipelines-overview.json"
 }
 
 module "core_apigw_metrics_dashboard" {
