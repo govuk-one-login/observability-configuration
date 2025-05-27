@@ -670,6 +670,12 @@ module "async_backend_completion_rate" {
   source = "./modules/dashboard"
   path   = "id-check/async-backend-completion-rate.json"
 }
+  
+module "async_backend_api_gateway" {
+  count  = local.is_production ? 1 : 0 # Only create in production
+  source = "./modules/dashboard"
+  path   = "id-check/async-backend-api-gateway.json"
+}
 
 module "async_backend_lambda" {
   count  = local.is_production ? 1 : 0 # Only create in production
