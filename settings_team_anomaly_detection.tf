@@ -134,7 +134,7 @@ resource "dynatrace_metric_events" "team_appsync_connect_server_error" {
 
 resource "dynatrace_metric_events" "team_appsync_disconnect_client_error" {
   count   = local.is_production ? 1 : 0
-  enabled = true
+  enabled = false
   summary = "TEAM Appsync Disconnect Client Error Alert"
   event_template {
     description = <<-EOT
