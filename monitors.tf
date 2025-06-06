@@ -13,13 +13,13 @@ module "oidc-jwks-monitor" {
   domain_name = each.value
 }
 
-module "signin-browser-monitor" {
-  source = "./modules/monitors/sign-in"
+# module "signin-browser-monitor" {
+#   source = "./modules/monitors/sign-in"
 
-  domain_name              = var.environment == "production" ? "home.account.gov.uk" : "home.integration.account.gov.uk"
-  environment              = var.environment == "production" ? "production" : "integration"
-  use_basic_authentication = var.environment != "production"
-}
+#   domain_name              = var.environment == "production" ? "home.account.gov.uk" : "home.integration.account.gov.uk"
+#   environment              = var.environment == "production" ? "production" : "integration"
+#   use_basic_authentication = var.environment != "production"
+# }
 
 module "webchat-browser-monitor" {
   source = "./modules/monitors/webchat"
