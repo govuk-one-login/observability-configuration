@@ -4875,11 +4875,343 @@
                 }
             }
         },
-        "53": {
+        "57": {
+            "type": "markdown",
+            "content": "## Cognito Metrics"
+        },
+        "58": {
+            "title": "Throttle Count",
+            "description": "Throttle Count",
+            "type": "code",
+            "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\nimport { TimeframeSelector } from '@dynatrace/strato-components-preview/forms';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\n\n  if ($EnvironmentName == \"Integration\");\n  if ($EnvironmentName == \"Production\");\n  if ($SelectedAWSAccount == \"abc\");\n\n  query = `timeseries throttleCount = sum(cloud.aws.logs.throttleCountByAccountIdClassRegionResourceServiceType, default: 0), filter: aws.account.id == \"${$SelectedAWSAccount}\"`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to  } });\n\n  return response.result;\n}",
+            "visualization": "lineChart",
+            "visualizationSettings": {
+                "thresholds": [
+                    {
+                        "id": 1,
+                        "field": "",
+                        "title": "",
+                        "isEnabled": true,
+                        "rules": [
+                            {
+                                "id": 0,
+                                "color": {
+                                    "Default": "var(--dt-colors-charts-status-ideal-default, #2f6863)"
+                                },
+                                "comparator": "≥",
+                                "label": ""
+                            },
+                            {
+                                "id": 1,
+                                "color": {
+                                    "Default": "var(--dt-colors-charts-status-warning-default, #eca440)"
+                                },
+                                "comparator": "≥",
+                                "label": ""
+                            },
+                            {
+                                "id": 2,
+                                "color": {
+                                    "Default": "var(--dt-colors-charts-status-critical-default, #c4233b)"
+                                },
+                                "comparator": "≥",
+                                "label": ""
+                            }
+                        ]
+                    }
+                ],
+                "chartSettings": {
+                    "xAxisScaling": "analyzedTimeframe",
+                    "gapPolicy": "gap",
+                    "circleChartSettings": {
+                        "groupingThresholdType": "relative",
+                        "groupingThresholdValue": 0,
+                        "valueType": "relative"
+                    },
+                    "categoryOverrides": {},
+                    "curve": "linear",
+                    "pointsDisplay": "auto",
+                    "categoricalBarChartSettings": {
+                        "layout": "horizontal",
+                        "categoryAxisTickLayout": "horizontal",
+                        "scale": "absolute",
+                        "groupMode": "stacked",
+                        "colorPaletteMode": "multi-color",
+                        "categoryAxisLabel": "functionname",
+                        "valueAxisLabel": "interval",
+                        "tooltipVariant": "single"
+                    },
+                    "colorPalette": "categorical",
+                    "valueRepresentation": "absolute",
+                    "truncationMode": "middle",
+                    "fieldMapping": {
+                        "timestamp": "timeframe",
+                        "leftAxisValues": [
+                            "throttleCount"
+                        ]
+                    },
+                    "xAxisLabel": "timeframe",
+                    "xAxisIsLabelVisible": false,
+                    "hiddenLegendFields": [
+                        "interval"
+                    ],
+                    "leftYAxisSettings": {}
+                },
+                "singleValue": {
+                    "showLabel": true,
+                    "label": "element",
+                    "prefixIcon": "",
+                    "recordField": "element",
+                    "autoscale": true,
+                    "alignment": "center",
+                    "trend": {
+                        "trendType": "auto",
+                        "isVisible": true
+                    },
+                    "colorThresholdTarget": "value"
+                },
+                "table": {
+                    "rowDensity": "condensed",
+                    "enableSparklines": false,
+                    "hiddenColumns": [],
+                    "linewrapEnabled": false,
+                    "lineWrapIds": [],
+                    "monospacedFontEnabled": false,
+                    "monospacedFontColumns": [],
+                    "columnWidths": {},
+                    "columnTypeOverrides": [
+                        {
+                            "fields": [
+                                "throttleCount"
+                            ],
+                            "value": "sparkline",
+                            "id": 1741611189201
+                        }
+                    ]
+                },
+                "honeycomb": {
+                    "shape": "hexagon",
+                    "legend": {
+                        "hidden": false,
+                        "position": "auto",
+                        "ratio": "auto"
+                    },
+                    "dataMappings": {
+                        "value": "functionname"
+                    },
+                    "displayedFields": [
+                        "functionname"
+                    ],
+                    "truncationMode": "middle",
+                    "colorMode": "color-palette",
+                    "colorPalette": "categorical"
+                },
+                "histogram": {
+                    "legend": "auto",
+                    "yAxis": {
+                        "label": "Frequency",
+                        "scale": "linear"
+                    },
+                    "colorPalette": "categorical",
+                    "dataMappings": [
+                        {
+                            "valueAxis": "interval",
+                            "rangeAxis": ""
+                        }
+                    ],
+                    "variant": "single",
+                    "truncationMode": "middle",
+                    "displayedFields": [
+                        "functionname"
+                    ]
+                },
+                "valueBoundaries": {
+                    "min": "auto",
+                    "max": "auto"
+                },
+                "label": {
+                    "showLabel": false,
+                    "label": "interval"
+                },
+                "icon": {
+                    "showIcon": false,
+                    "icon": ""
+                },
+                "autoSelectVisualization": false,
+                "dataMapping": {
+                    "value": "interval"
+                }
+            }
+        },
+        "59": {
+            "title": "Call Count",
+            "description": "Call Count",
+            "type": "code",
+            "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\nimport { TimeframeSelector } from '@dynatrace/strato-components-preview/forms';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\n\n  if ($EnvironmentName == \"Integration\");\n  if ($EnvironmentName == \"Production\");\n  if ($SelectedAWSAccount == \"abc\");\n\n  query = `timeseries throttleCount = sum(cloud.aws.usage.callCountByAccountIdClassRegionResourceServiceType, default: 0), filter: aws.account.id == \"${$SelectedAWSAccount}\"`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to  } });\n\n  return response.result;\n}",
+            "visualization": "lineChart",
+            "visualizationSettings": {
+                "thresholds": [
+                    {
+                        "id": 1,
+                        "field": "",
+                        "title": "",
+                        "isEnabled": true,
+                        "rules": [
+                            {
+                                "id": 0,
+                                "color": {
+                                    "Default": "var(--dt-colors-charts-status-ideal-default, #2f6863)"
+                                },
+                                "comparator": "≥",
+                                "label": ""
+                            },
+                            {
+                                "id": 1,
+                                "color": {
+                                    "Default": "var(--dt-colors-charts-status-warning-default, #eca440)"
+                                },
+                                "comparator": "≥",
+                                "label": ""
+                            },
+                            {
+                                "id": 2,
+                                "color": {
+                                    "Default": "var(--dt-colors-charts-status-critical-default, #c4233b)"
+                                },
+                                "comparator": "≥",
+                                "label": ""
+                            }
+                        ]
+                    }
+                ],
+                "chartSettings": {
+                    "xAxisScaling": "analyzedTimeframe",
+                    "gapPolicy": "gap",
+                    "circleChartSettings": {
+                        "groupingThresholdType": "relative",
+                        "groupingThresholdValue": 0,
+                        "valueType": "relative"
+                    },
+                    "categoryOverrides": {},
+                    "curve": "linear",
+                    "pointsDisplay": "auto",
+                    "categoricalBarChartSettings": {
+                        "layout": "horizontal",
+                        "categoryAxisTickLayout": "horizontal",
+                        "scale": "absolute",
+                        "groupMode": "stacked",
+                        "colorPaletteMode": "multi-color",
+                        "categoryAxisLabel": "functionname",
+                        "valueAxisLabel": "interval",
+                        "tooltipVariant": "single"
+                    },
+                    "colorPalette": "categorical",
+                    "valueRepresentation": "absolute",
+                    "truncationMode": "middle",
+                    "fieldMapping": {
+                        "timestamp": "timeframe",
+                        "leftAxisValues": [
+                            "throttleCount"
+                        ]
+                    },
+                    "xAxisLabel": "timeframe",
+                    "xAxisIsLabelVisible": false,
+                    "hiddenLegendFields": [
+                        "interval"
+                    ],
+                    "leftYAxisSettings": {}
+                },
+                "singleValue": {
+                    "showLabel": true,
+                    "label": "element",
+                    "prefixIcon": "",
+                    "recordField": "element",
+                    "autoscale": true,
+                    "alignment": "center",
+                    "trend": {
+                        "trendType": "auto",
+                        "isVisible": true
+                    },
+                    "colorThresholdTarget": "value"
+                },
+                "table": {
+                    "rowDensity": "condensed",
+                    "enableSparklines": false,
+                    "hiddenColumns": [],
+                    "linewrapEnabled": false,
+                    "lineWrapIds": [],
+                    "monospacedFontEnabled": false,
+                    "monospacedFontColumns": [],
+                    "columnWidths": {},
+                    "columnTypeOverrides": [
+                        {
+                            "fields": [
+                                "throttleCount"
+                            ],
+                            "value": "sparkline",
+                            "id": 1741611189201
+                        }
+                    ]
+                },
+                "honeycomb": {
+                    "shape": "hexagon",
+                    "legend": {
+                        "hidden": false,
+                        "position": "auto",
+                        "ratio": "auto"
+                    },
+                    "dataMappings": {
+                        "value": "functionname"
+                    },
+                    "displayedFields": [
+                        "functionname"
+                    ],
+                    "truncationMode": "middle",
+                    "colorMode": "color-palette",
+                    "colorPalette": "categorical"
+                },
+                "histogram": {
+                    "legend": "auto",
+                    "yAxis": {
+                        "label": "Frequency",
+                        "scale": "linear"
+                    },
+                    "colorPalette": "categorical",
+                    "dataMappings": [
+                        {
+                            "valueAxis": "interval",
+                            "rangeAxis": ""
+                        }
+                    ],
+                    "variant": "single",
+                    "truncationMode": "middle",
+                    "displayedFields": [
+                        "functionname"
+                    ]
+                },
+                "valueBoundaries": {
+                    "min": "auto",
+                    "max": "auto"
+                },
+                "label": {
+                    "showLabel": false,
+                    "label": "interval"
+                },
+                "icon": {
+                    "showIcon": false,
+                    "icon": ""
+                },
+                "autoSelectVisualization": false,
+                "dataMapping": {
+                    "value": "interval"
+                }
+            }
+        },
+        "62": {
             "title": "Token refresh successes",
-            "description": "Provides the total number of successful requests to refresh ",
+            "description": "Token refresh successes",
             "type": "data",
-            "query": "timeseries tokenRefreshSuccessesByAccountIdRegionUserPoolUserPoolClient=count(cloud.aws.cognito.tokenRefreshSuccessesByAccountIdRegionUserPoolUserPoolClient),\nby:{aws.region,userpoolclient,aws.account.id,`dt.entity.cloud:aws:account`,userpool,`dt.entity.cloud:aws:region`},\nfilter: { aws.account.id == $SelectedAWSAccount }",
+            "query": "timeseries tokenRefreshSuccessesByAccountIdRegionUserPoolUserPoolClient=count(cloud.aws.cognito.tokenRefreshSuccessesByAccountIdRegionUserPoolUserPoolClient),by:{aws.region,userpoolclient,aws.account.id,`dt.entity.cloud:aws:account`,userpool,`dt.entity.cloud:aws:region`}",
             "visualization": "lineChart",
             "visualizationSettings": {
                 "thresholds": [],
@@ -4945,7 +5277,7 @@
                                 "tokenRefreshSuccessesByAccountIdRegionUserPoolUserPoolClient"
                             ],
                             "value": "sparkline",
-                            "id": 1749034713104
+                            "id": 1749463136306
                         }
                     ]
                 },
@@ -5006,11 +5338,11 @@
                 }
             }
         },
-        "54": {
+        "63": {
             "title": "Federation successes",
-            "description": "Provides the total number of successful identity federation requests",
+            "description": "Federation successes",
             "type": "data",
-            "query": "timeseries federationSuccessesByAccountIdIdentityProviderRegionUserPoolUserPoolClient=count(cloud.aws.cognito.federationSuccessesByAccountIdIdentityProviderRegionUserPoolUserPoolClient),\nby:{aws.region,userpoolclient,aws.account.id,identityprovider,`dt.entity.cloud:aws:account`,userpool,`dt.entity.cloud:aws:region`},\nfilter: { aws.account.id == $SelectedAWSAccount }",
+            "query": "timeseries federationSuccessesByAccountIdIdentityProviderRegionUserPoolUserPoolClient=count(cloud.aws.cognito.federationSuccessesByAccountIdIdentityProviderRegionUserPoolUserPoolClient),by:{aws.region,userpoolclient,aws.account.id,identityprovider,`dt.entity.cloud:aws:account`,userpool,`dt.entity.cloud:aws:region`}",
             "visualization": "lineChart",
             "visualizationSettings": {
                 "thresholds": [],
@@ -5076,7 +5408,7 @@
                                 "federationSuccessesByAccountIdIdentityProviderRegionUserPoolUserPoolClient"
                             ],
                             "value": "sparkline",
-                            "id": 1749034713301
+                            "id": 1749463136420
                         }
                     ]
                 },
@@ -5136,338 +5468,6 @@
                     "to": "now()"
                 }
             }
-        },
-        "57": {
-            "type": "markdown",
-            "content": "## Cognito Metrics"
-        },
-        "58": {
-            "title": "Throttle Count",
-            "type": "code",
-            "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\nimport { TimeframeSelector } from '@dynatrace/strato-components-preview/forms';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\n  if ($Lambda == \"All\") {\n    $Lambda = \"ticf-cri\";\n  }\n\n  if ($EnvironmentName == \"Integration\");\n  if ($EnvironmentName == \"Production\");\n  if ($SelectedAWSAccount == \"abc\");\n\n  query = `timeseries throttleCount = sum(cloud.aws.logs.throttleCountByAccountIdClassRegionResourceServiceType, default: 0), filter: aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${$Lambda}\"), by: { functionname }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to  } });\n\n  return response.result;\n}",
-            "visualization": "lineChart",
-            "visualizationSettings": {
-                "thresholds": [
-                    {
-                        "id": 1,
-                        "field": "",
-                        "title": "",
-                        "isEnabled": true,
-                        "rules": [
-                            {
-                                "id": 0,
-                                "color": {
-                                    "Default": "var(--dt-colors-charts-status-ideal-default, #2f6863)"
-                                },
-                                "comparator": "≥",
-                                "label": ""
-                            },
-                            {
-                                "id": 1,
-                                "color": {
-                                    "Default": "var(--dt-colors-charts-status-warning-default, #eca440)"
-                                },
-                                "comparator": "≥",
-                                "label": ""
-                            },
-                            {
-                                "id": 2,
-                                "color": {
-                                    "Default": "var(--dt-colors-charts-status-critical-default, #c4233b)"
-                                },
-                                "comparator": "≥",
-                                "label": ""
-                            }
-                        ]
-                    }
-                ],
-                "chartSettings": {
-                    "xAxisScaling": "analyzedTimeframe",
-                    "gapPolicy": "gap",
-                    "circleChartSettings": {
-                        "groupingThresholdType": "relative",
-                        "groupingThresholdValue": 0,
-                        "valueType": "relative"
-                    },
-                    "categoryOverrides": {},
-                    "curve": "linear",
-                    "pointsDisplay": "auto",
-                    "categoricalBarChartSettings": {
-                        "layout": "horizontal",
-                        "categoryAxisTickLayout": "horizontal",
-                        "scale": "absolute",
-                        "groupMode": "stacked",
-                        "colorPaletteMode": "multi-color",
-                        "categoryAxisLabel": "functionname",
-                        "valueAxisLabel": "interval",
-                        "tooltipVariant": "single"
-                    },
-                    "colorPalette": "categorical",
-                    "valueRepresentation": "absolute",
-                    "truncationMode": "middle",
-                    "fieldMapping": {
-                        "timestamp": "timeframe",
-                        "leftAxisValues": [
-                            "throttleCount"
-                        ]
-                    },
-                    "xAxisLabel": "timeframe",
-                    "xAxisIsLabelVisible": false,
-                    "hiddenLegendFields": [
-                        "interval"
-                    ],
-                    "leftYAxisSettings": {}
-                },
-                "singleValue": {
-                    "showLabel": true,
-                    "label": "element",
-                    "prefixIcon": "",
-                    "recordField": "element",
-                    "autoscale": true,
-                    "alignment": "center",
-                    "trend": {
-                        "trendType": "auto",
-                        "isVisible": true
-                    },
-                    "colorThresholdTarget": "value"
-                },
-                "table": {
-                    "rowDensity": "condensed",
-                    "enableSparklines": false,
-                    "hiddenColumns": [],
-                    "linewrapEnabled": false,
-                    "lineWrapIds": [],
-                    "monospacedFontEnabled": false,
-                    "monospacedFontColumns": [],
-                    "columnWidths": {},
-                    "columnTypeOverrides": [
-                        {
-                            "fields": [
-                                "throttleCount"
-                            ],
-                            "value": "sparkline",
-                            "id": 1741611189201
-                        }
-                    ]
-                },
-                "honeycomb": {
-                    "shape": "hexagon",
-                    "legend": {
-                        "hidden": false,
-                        "position": "auto",
-                        "ratio": "auto"
-                    },
-                    "dataMappings": {
-                        "value": "functionname"
-                    },
-                    "displayedFields": [
-                        "functionname"
-                    ],
-                    "truncationMode": "middle",
-                    "colorMode": "color-palette",
-                    "colorPalette": "categorical"
-                },
-                "histogram": {
-                    "legend": "auto",
-                    "yAxis": {
-                        "label": "Frequency",
-                        "scale": "linear"
-                    },
-                    "colorPalette": "categorical",
-                    "dataMappings": [
-                        {
-                            "valueAxis": "interval",
-                            "rangeAxis": ""
-                        }
-                    ],
-                    "variant": "single",
-                    "truncationMode": "middle",
-                    "displayedFields": [
-                        "functionname"
-                    ]
-                },
-                "valueBoundaries": {
-                    "min": "auto",
-                    "max": "auto"
-                },
-                "label": {
-                    "showLabel": false,
-                    "label": "interval"
-                },
-                "icon": {
-                    "showIcon": false,
-                    "icon": ""
-                },
-                "autoSelectVisualization": false,
-                "dataMapping": {
-                    "value": "interval"
-                }
-            },
-            "description": "Throttle Count"
-        },
-        "59": {
-            "title": "Call Count",
-            "type": "code",
-            "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\nimport { TimeframeSelector } from '@dynatrace/strato-components-preview/forms';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\n  if ($Lambda == \"All\") {\n    $Lambda = \"ticf-cri\";\n  }\n\n  if ($EnvironmentName == \"Integration\");\n  if ($EnvironmentName == \"Production\");\n  if ($SelectedAWSAccount == \"abc\");\n\n  query = `timeseries throttleCount = sum(cloud.aws.usage.callCountByAccountIdClassRegionResourceServiceType, default: 0), filter: aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${$Lambda}\"), by: { functionname }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to  } });\n\n  return response.result;\n}",
-            "visualization": "lineChart",
-            "visualizationSettings": {
-                "thresholds": [
-                    {
-                        "id": 1,
-                        "field": "",
-                        "title": "",
-                        "isEnabled": true,
-                        "rules": [
-                            {
-                                "id": 0,
-                                "color": {
-                                    "Default": "var(--dt-colors-charts-status-ideal-default, #2f6863)"
-                                },
-                                "comparator": "≥",
-                                "label": ""
-                            },
-                            {
-                                "id": 1,
-                                "color": {
-                                    "Default": "var(--dt-colors-charts-status-warning-default, #eca440)"
-                                },
-                                "comparator": "≥",
-                                "label": ""
-                            },
-                            {
-                                "id": 2,
-                                "color": {
-                                    "Default": "var(--dt-colors-charts-status-critical-default, #c4233b)"
-                                },
-                                "comparator": "≥",
-                                "label": ""
-                            }
-                        ]
-                    }
-                ],
-                "chartSettings": {
-                    "xAxisScaling": "analyzedTimeframe",
-                    "gapPolicy": "gap",
-                    "circleChartSettings": {
-                        "groupingThresholdType": "relative",
-                        "groupingThresholdValue": 0,
-                        "valueType": "relative"
-                    },
-                    "categoryOverrides": {},
-                    "curve": "linear",
-                    "pointsDisplay": "auto",
-                    "categoricalBarChartSettings": {
-                        "layout": "horizontal",
-                        "categoryAxisTickLayout": "horizontal",
-                        "scale": "absolute",
-                        "groupMode": "stacked",
-                        "colorPaletteMode": "multi-color",
-                        "categoryAxisLabel": "functionname",
-                        "valueAxisLabel": "interval",
-                        "tooltipVariant": "single"
-                    },
-                    "colorPalette": "categorical",
-                    "valueRepresentation": "absolute",
-                    "truncationMode": "middle",
-                    "fieldMapping": {
-                        "timestamp": "timeframe",
-                        "leftAxisValues": [
-                            "throttleCount"
-                        ]
-                    },
-                    "xAxisLabel": "timeframe",
-                    "xAxisIsLabelVisible": false,
-                    "hiddenLegendFields": [
-                        "interval"
-                    ],
-                    "leftYAxisSettings": {}
-                },
-                "singleValue": {
-                    "showLabel": true,
-                    "label": "element",
-                    "prefixIcon": "",
-                    "recordField": "element",
-                    "autoscale": true,
-                    "alignment": "center",
-                    "trend": {
-                        "trendType": "auto",
-                        "isVisible": true
-                    },
-                    "colorThresholdTarget": "value"
-                },
-                "table": {
-                    "rowDensity": "condensed",
-                    "enableSparklines": false,
-                    "hiddenColumns": [],
-                    "linewrapEnabled": false,
-                    "lineWrapIds": [],
-                    "monospacedFontEnabled": false,
-                    "monospacedFontColumns": [],
-                    "columnWidths": {},
-                    "columnTypeOverrides": [
-                        {
-                            "fields": [
-                                "throttleCount"
-                            ],
-                            "value": "sparkline",
-                            "id": 1741611189201
-                        }
-                    ]
-                },
-                "honeycomb": {
-                    "shape": "hexagon",
-                    "legend": {
-                        "hidden": false,
-                        "position": "auto",
-                        "ratio": "auto"
-                    },
-                    "dataMappings": {
-                        "value": "functionname"
-                    },
-                    "displayedFields": [
-                        "functionname"
-                    ],
-                    "truncationMode": "middle",
-                    "colorMode": "color-palette",
-                    "colorPalette": "categorical"
-                },
-                "histogram": {
-                    "legend": "auto",
-                    "yAxis": {
-                        "label": "Frequency",
-                        "scale": "linear"
-                    },
-                    "colorPalette": "categorical",
-                    "dataMappings": [
-                        {
-                            "valueAxis": "interval",
-                            "rangeAxis": ""
-                        }
-                    ],
-                    "variant": "single",
-                    "truncationMode": "middle",
-                    "displayedFields": [
-                        "functionname"
-                    ]
-                },
-                "valueBoundaries": {
-                    "min": "auto",
-                    "max": "auto"
-                },
-                "label": {
-                    "showLabel": false,
-                    "label": "interval"
-                },
-                "icon": {
-                    "showIcon": false,
-                    "icon": ""
-                },
-                "autoSelectVisualization": false,
-                "dataMapping": {
-                    "value": "interval"
-                }
-            },
-            "description": "Call Count"
         }
     },
     "layouts": {
@@ -5669,18 +5669,6 @@
             "w": 17,
             "h": 6
         },
-        "53": {
-            "x": 0,
-            "y": 133,
-            "w": 19,
-            "h": 7
-        },
-        "54": {
-            "x": 19,
-            "y": 133,
-            "w": 17,
-            "h": 7
-        },
         "57": {
             "x": 0,
             "y": 126,
@@ -5698,6 +5686,18 @@
             "y": 140,
             "w": 17,
             "h": 6
+        },
+        "62": {
+            "x": 0,
+            "y": 133,
+            "w": 19,
+            "h": 7
+        },
+        "63": {
+            "x": 19,
+            "y": 133,
+            "w": 17,
+            "h": 7
         }
     },
     "importedWithCode": true,
