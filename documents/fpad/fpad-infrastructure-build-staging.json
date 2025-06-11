@@ -4770,8 +4770,8 @@
                 }
             },
             "segments": {
-                "tileSegmentsEnabled": false,
-                "tileSegments": []
+                "tileSegments": [],
+                "tileSegmentsEnabled": false
             }
         },
         "52": {
@@ -5445,6 +5445,931 @@
                     "to": "now()"
                 }
             }
+        },
+        "64": {
+            "type": "markdown",
+            "content": "## Dynamo DB & SQS Metrics - (Incomplete)"
+        },
+        "65": {
+            "type": "data",
+            "title": "Request Latency",
+            "query": "timeseries successfulRequestLatencyByAccountIdOperationRegionTableName = min(cloud.aws.dynamodb.successfulRequestLatencyByAccountIdOperationRegionTableName), by: { tablename }, filter: { aws.account.id == \"710842649290\" AND contains(tablename, \"ticf-cri\") }\n| fieldsAdd successfulRequestLatencyByAccountIdOperationRegionTableName = arrayMin(successfulRequestLatencyByAccountIdOperationRegionTableName)\n| join [ timeseries successfulRequestLatencyByAccountIdOperationRegionTableName = avg(cloud.aws.dynamodb.successfulRequestLatencyByAccountIdOperationRegionTableName), by: { tablename }, filter: { aws.account.id == \"710842649290\" AND contains(tablename, \"ticf-cri\") }\n       | fieldsAdd successfulRequestLatencyByAccountIdOperationRegionTableName = arrayAvg(successfulRequestLatencyByAccountIdOperationRegionTableName)\n       | fieldsRename successfulRequestLatencyByAccountIdOperationRegionTableName.0 = successfulRequestLatencyByAccountIdOperationRegionTableName ], on: { tablename }, fields: { successfulRequestLatencyByAccountIdOperationRegionTableName.0, tablename, timeframe, interval }, kind: outer\n| join [ timeseries successfulRequestLatencyByAccountIdOperationRegionTableName = max(cloud.aws.dynamodb.successfulRequestLatencyByAccountIdOperationRegionTableName), by: { tablename }, filter: { aws.account.id == \"710842649290\" AND contains(tablename, \"ticf-cri\") }\n       | fieldsAdd successfulRequestLatencyByAccountIdOperationRegionTableName = arrayMax(successfulRequestLatencyByAccountIdOperationRegionTableName)\n       | fieldsRename successfulRequestLatencyByAccountIdOperationRegionTableName.1 = successfulRequestLatencyByAccountIdOperationRegionTableName ], on: { tablename }, fields: { successfulRequestLatencyByAccountIdOperationRegionTableName.1, tablename, timeframe, interval }, kind: outer",
+            "davis": {
+                "enabled": false,
+                "davisVisualization": {
+                    "isAvailable": true
+                }
+            },
+            "visualizationSettings": {
+                "thresholds": [
+                    {
+                        "id": "0",
+                        "title": "",
+                        "field": "successfulRequestLatencyByAccountIdOperationRegionTableName",
+                        "rules": [
+                            {
+                                "id": "0",
+                                "label": "",
+                                "comparator": "≥",
+                                "color": "#7dc540"
+                            },
+                            {
+                                "id": "1",
+                                "label": "",
+                                "comparator": "≥",
+                                "color": "#f5d30f"
+                            },
+                            {
+                                "id": "2",
+                                "label": "",
+                                "comparator": "≥",
+                                "color": "#dc172a"
+                            }
+                        ],
+                        "isEnabled": true
+                    }
+                ],
+                "chartSettings": {
+                    "xAxisScaling": "analyzedTimeframe",
+                    "gapPolicy": "gap",
+                    "circleChartSettings": {
+                        "groupingThresholdType": "relative",
+                        "groupingThresholdValue": 0,
+                        "valueType": "relative"
+                    },
+                    "categoryOverrides": {},
+                    "curve": "linear",
+                    "pointsDisplay": "auto",
+                    "categoricalBarChartSettings": {
+                        "layout": "horizontal",
+                        "categoryAxisTickLayout": "horizontal",
+                        "scale": "absolute",
+                        "groupMode": "stacked",
+                        "colorPaletteMode": "multi-color",
+                        "categoryAxis": [
+                            "tablename"
+                        ],
+                        "categoryAxisLabel": "tablename",
+                        "valueAxis": [
+                            "successfulRequestLatencyByAccountIdOperationRegionTableName",
+                            "successfulRequestLatencyByAccountIdOperationRegionTableName.0",
+                            "successfulRequestLatencyByAccountIdOperationRegionTableName.1"
+                        ],
+                        "valueAxisLabel": "successfulRequestLatencyByAccountIdOperationRegionTableName,successfulRequestLatencyByAccountIdOperationRegionTableName.0,successfulRequestLatencyByAccountIdOperationRegionTableName.1",
+                        "tooltipVariant": "single"
+                    },
+                    "colorPalette": "categorical",
+                    "valueRepresentation": "absolute",
+                    "truncationMode": "middle",
+                    "xAxisLabel": "timeframe",
+                    "xAxisIsLabelVisible": false,
+                    "hiddenLegendFields": [
+                        "successfulRequestLatencyByAccountIdOperationRegionTableName",
+                        "successfulRequestLatencyByAccountIdOperationRegionTableName.0",
+                        "successfulRequestLatencyByAccountIdOperationRegionTableName.1",
+                        "interval"
+                    ],
+                    "fieldMapping": {
+                        "timestamp": "timeframe",
+                        "leftAxisValues": [
+                            "successfulRequestLatencyByAccountIdOperationRegionTableName"
+                        ]
+                    },
+                    "leftYAxisSettings": {
+                        "isLabelVisible": true,
+                        "label": "SuccessfulRequestLatency"
+                    }
+                },
+                "singleValue": {
+                    "showLabel": true,
+                    "label": "successfulRequestLatencyByAccountIdOperationRegionTableName",
+                    "prefixIcon": "",
+                    "recordField": "successfulRequestLatencyByAccountIdOperationRegionTableName",
+                    "autoscale": true,
+                    "alignment": "center",
+                    "trend": {
+                        "trendType": "auto",
+                        "isVisible": true
+                    },
+                    "colorThresholdTarget": "value"
+                },
+                "table": {
+                    "hiddenColumns": [
+                        [
+                            "timeframe"
+                        ],
+                        [
+                            "interval"
+                        ]
+                    ],
+                    "colorThresholdTarget": "value",
+                    "columnTypeOverrides": [],
+                    "columnWidths": {
+                        "[\"successfulRequestLatencyByAccountIdOperationRegionTableName\"]": 186.81253051757812,
+                        "[\"successfulRequestLatencyByAccountIdOperationRegionTableName.0\"]": 113.41842651367188,
+                        "[\"successfulRequestLatencyByAccountIdOperationRegionTableName.1\"]": 81.41842651367188
+                    }
+                },
+                "honeycomb": {
+                    "shape": "hexagon",
+                    "legend": {
+                        "hidden": false,
+                        "position": "auto",
+                        "ratio": "auto"
+                    },
+                    "dataMappings": {
+                        "value": "successfulRequestLatencyByAccountIdOperationRegionTableName"
+                    },
+                    "displayedFields": [
+                        "tablename"
+                    ],
+                    "truncationMode": "middle",
+                    "colorMode": "color-palette",
+                    "colorPalette": "blue"
+                },
+                "histogram": {
+                    "legend": "auto",
+                    "yAxis": {
+                        "label": "Frequency",
+                        "scale": "linear"
+                    },
+                    "colorPalette": "categorical",
+                    "dataMappings": [
+                        {
+                            "valueAxis": "successfulRequestLatencyByAccountIdOperationRegionTableName",
+                            "rangeAxis": ""
+                        },
+                        {
+                            "valueAxis": "successfulRequestLatencyByAccountIdOperationRegionTableName.0",
+                            "rangeAxis": ""
+                        },
+                        {
+                            "valueAxis": "successfulRequestLatencyByAccountIdOperationRegionTableName.1",
+                            "rangeAxis": ""
+                        },
+                        {
+                            "valueAxis": "interval",
+                            "rangeAxis": ""
+                        }
+                    ],
+                    "variant": "single",
+                    "truncationMode": "middle",
+                    "displayedFields": [
+                        "tablename"
+                    ]
+                },
+                "label": {
+                    "showLabel": false,
+                    "label": "successfulRequestLatencyByAccountIdOperationRegionTableName"
+                },
+                "icon": {
+                    "showIcon": false,
+                    "icon": ""
+                },
+                "valueBoundaries": {
+                    "min": "auto",
+                    "max": "auto"
+                },
+                "unitsOverrides": [],
+                "dataMapping": {
+                    "value": "successfulRequestLatencyByAccountIdOperationRegionTableName"
+                },
+                "autoSelectVisualization": false
+            },
+            "visualization": "table",
+            "timeframe": {
+                "tileTimeframeEnabled": true,
+                "tileTimeframe": {
+                    "from": "now()-365d",
+                    "to": "now()"
+                }
+            }
+        },
+        "66": {
+            "type": "data",
+            "title": "SQS Oldest Message & Number sent",
+            "query": "/*\nWarning:\n - DQL does not support total value mode, the resulting value may diverge from the result from classic metrics.\n*/\ntimeseries { approximateAgeOfOldestMessageByAccountIdQueueNameRegion = sum(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion), numberOfMessagesSentByAccountIdQueueNameRegion = sum(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion) }, by: { queuename }, filter: { (aws.account.id == \"260731919125\") AND (contains(queuename, \"shared-signals\")) }, union: true\n| fieldsAdd approximateAgeOfOldestMessageByAccountIdQueueNameRegion = arraySum(approximateAgeOfOldestMessageByAccountIdQueueNameRegion)\n| sort approximateAgeOfOldestMessageByAccountIdQueueNameRegion desc\n| fieldsAdd numberOfMessagesSentByAccountIdQueueNameRegion = arraySum(numberOfMessagesSentByAccountIdQueueNameRegion)",
+            "davis": {
+                "enabled": false,
+                "davisVisualization": {
+                    "isAvailable": true
+                }
+            },
+            "visualizationSettings": {
+                "thresholds": [
+                    {
+                        "id": "0",
+                        "title": "",
+                        "field": "approximateAgeOfOldestMessageByAccountIdQueueNameRegion",
+                        "rules": [
+                            {
+                                "id": "0",
+                                "label": "",
+                                "comparator": "≥",
+                                "color": "#7dc540"
+                            },
+                            {
+                                "id": "1",
+                                "label": "",
+                                "comparator": "≥",
+                                "color": "#f5d30f"
+                            },
+                            {
+                                "id": "2",
+                                "label": "",
+                                "comparator": "≥",
+                                "color": "#dc172a"
+                            }
+                        ],
+                        "isEnabled": true
+                    }
+                ],
+                "chartSettings": {
+                    "gapPolicy": "gap",
+                    "circleChartSettings": {
+                        "groupingThresholdType": "relative",
+                        "groupingThresholdValue": 0,
+                        "valueType": "relative"
+                    },
+                    "categoryOverrides": {},
+                    "curve": "linear",
+                    "pointsDisplay": "auto",
+                    "categoricalBarChartSettings": {
+                        "layout": "horizontal",
+                        "categoryAxisTickLayout": "horizontal",
+                        "scale": "absolute",
+                        "groupMode": "stacked",
+                        "colorPaletteMode": "multi-color"
+                    },
+                    "colorPalette": "categorical",
+                    "valueRepresentation": "absolute",
+                    "truncationMode": "middle"
+                },
+                "singleValue": {
+                    "showLabel": true,
+                    "prefixIcon": "",
+                    "autoscale": true,
+                    "alignment": "center",
+                    "trend": {
+                        "trendType": "auto",
+                        "isVisible": true
+                    },
+                    "colorThresholdTarget": "value"
+                },
+                "table": {
+                    "hiddenColumns": [
+                        [
+                            "A:queuename.name"
+                        ],
+                        [
+                            "B:queuename.name"
+                        ],
+                        [
+                            "timeframe"
+                        ],
+                        [
+                            "interval"
+                        ]
+                    ],
+                    "colorThresholdTarget": "value",
+                    "columnTypeOverrides": []
+                },
+                "honeycomb": {
+                    "shape": "hexagon",
+                    "legend": {
+                        "hidden": false,
+                        "position": "auto",
+                        "ratio": "auto"
+                    },
+                    "dataMappings": {},
+                    "displayedFields": [],
+                    "truncationMode": "middle",
+                    "colorMode": "color-palette",
+                    "colorPalette": "categorical"
+                },
+                "histogram": {
+                    "legend": "auto",
+                    "yAxis": {
+                        "label": "Frequency",
+                        "scale": "linear"
+                    },
+                    "colorPalette": "categorical",
+                    "dataMappings": [],
+                    "variant": "single",
+                    "truncationMode": "middle",
+                    "displayedFields": []
+                },
+                "label": {
+                    "showLabel": false
+                },
+                "icon": {
+                    "showIcon": false,
+                    "icon": ""
+                },
+                "valueBoundaries": {
+                    "min": "auto",
+                    "max": "auto"
+                },
+                "unitsOverrides": [
+                    {
+                        "identifier": "approximateAgeOfOldestMessageByAccountIdQueueNameRegion",
+                        "unitCategory": "time",
+                        "baseUnit": "second",
+                        "displayUnit": "",
+                        "decimals": 0,
+                        "suffix": "",
+                        "delimiter": false,
+                        "added": 0,
+                        "id": "approximateAgeOfOldestMessageByAccountIdQueueNameRegion"
+                    },
+                    {
+                        "identifier": "numberOfMessagesSentByAccountIdQueueNameRegion",
+                        "unitCategory": "unspecified",
+                        "baseUnit": "count",
+                        "displayUnit": "",
+                        "decimals": 0,
+                        "suffix": "",
+                        "delimiter": false,
+                        "added": 1,
+                        "id": "numberOfMessagesSentByAccountIdQueueNameRegion"
+                    }
+                ],
+                "dataMapping": {},
+                "autoSelectVisualization": false
+            },
+            "visualization": "table",
+            "timeframe": {
+                "tileTimeframeEnabled": true,
+                "tileTimeframe": {
+                    "from": "now()-365d",
+                    "to": "now()"
+                }
+            }
+        },
+        "67": {
+            "type": "markdown",
+            "content": "## Queues"
+        },
+        "68": {
+            "type": "data",
+            "title": "Messages Sent",
+            "query": "timeseries { max(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion), value.A = avg(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion, scalar: true) }, by: { queuename, aws.account.id }, filter: { ( matchesValue(queuename, \"*ssf-main*\") OR matchesValue(queuename, \"*inbound-ssf*\") OR matchesValue(queuename, \"*ticf-cri*\") ) AND matchesValue(`aws.account.id`, \"861348360548\") }",
+            "davis": {
+                "enabled": false,
+                "davisVisualization": {
+                    "isAvailable": true
+                }
+            },
+            "visualizationSettings": {
+                "thresholds": [],
+                "chartSettings": {
+                    "gapPolicy": "gap",
+                    "circleChartSettings": {
+                        "groupingThresholdType": "relative",
+                        "groupingThresholdValue": 0,
+                        "valueType": "relative"
+                    },
+                    "categoryOverrides": {},
+                    "curve": "linear",
+                    "pointsDisplay": "auto",
+                    "categoricalBarChartSettings": {
+                        "layout": "horizontal",
+                        "categoryAxisTickLayout": "horizontal",
+                        "scale": "absolute",
+                        "groupMode": "stacked",
+                        "colorPaletteMode": "multi-color",
+                        "valueAxisScale": "linear"
+                    },
+                    "colorPalette": "categorical",
+                    "valueRepresentation": "absolute",
+                    "truncationMode": "middle",
+                    "xAxisScaling": "analyzedTimeframe",
+                    "xAxisLabel": "timeframe",
+                    "xAxisIsLabelVisible": false,
+                    "hiddenLegendFields": [
+                        "interval",
+                        "value.A"
+                    ],
+                    "fieldMapping": {
+                        "timestamp": "timeframe",
+                        "leftAxisValues": [
+                            "max(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion)"
+                        ]
+                    },
+                    "leftYAxisSettings": {
+                        "isLabelVisible": true,
+                        "label": "Approximate Number Of Messages Sent"
+                    }
+                },
+                "singleValue": {
+                    "showLabel": true,
+                    "label": "",
+                    "prefixIcon": "AnalyticsIcon",
+                    "isIconVisible": false,
+                    "autoscale": true,
+                    "alignment": "center",
+                    "colorThresholdTarget": "value"
+                },
+                "table": {
+                    "rowDensity": "condensed",
+                    "enableSparklines": false,
+                    "hiddenColumns": [],
+                    "linewrapEnabled": false,
+                    "lineWrapIds": [],
+                    "monospacedFontEnabled": false,
+                    "monospacedFontColumns": [],
+                    "columnWidths": {},
+                    "columnTypeOverrides": [
+                        {
+                            "fields": [
+                                "max(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion)"
+                            ],
+                            "value": "sparkline",
+                            "id": 1745418015984
+                        }
+                    ]
+                },
+                "honeycomb": {
+                    "shape": "hexagon",
+                    "legend": {
+                        "hidden": false,
+                        "position": "auto",
+                        "ratio": "auto"
+                    },
+                    "dataMappings": {},
+                    "displayedFields": [],
+                    "truncationMode": "middle",
+                    "colorMode": "color-palette",
+                    "colorPalette": "categorical"
+                },
+                "histogram": {
+                    "legend": {
+                        "position": "auto"
+                    },
+                    "yAxis": {
+                        "label": "Frequency",
+                        "isLabelVisible": true,
+                        "scale": "linear"
+                    },
+                    "colorPalette": "categorical",
+                    "dataMappings": [],
+                    "variant": "single",
+                    "truncationMode": "middle"
+                },
+                "valueBoundaries": {
+                    "min": "auto",
+                    "max": "auto"
+                },
+                "autoSelectVisualization": false
+            },
+            "queryConfig": {
+                "version": "13.7.1",
+                "subQueries": [
+                    {
+                        "id": "A",
+                        "isEnabled": true,
+                        "datatype": "metrics",
+                        "metric": {
+                            "key": "cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion",
+                            "aggregation": "max"
+                        },
+                        "by": [
+                            "queuename",
+                            "aws.account.id"
+                        ],
+                        "filter": "(queuename = *ssf-main*OR queuename = *inbound-ssf* OR queuename = *ticf-cri*) AND `aws.account.id` = $SelectedAWSAccount"
+                    }
+                ]
+            },
+            "subType": "dql-builder-metrics",
+            "visualization": "areaChart",
+            "timeframe": {
+                "tileTimeframeEnabled": true,
+                "tileTimeframe": {
+                    "from": "now()-365d",
+                    "to": "now()"
+                }
+            }
+        },
+        "69": {
+            "type": "data",
+            "title": "Messages Received",
+            "query": "timeseries { max(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion), value.A = avg(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion, scalar: true) }, by: { queuename }, filter: { ( matchesValue(queuename, \"*ssf-main*\") OR matchesValue(queuename, \"*inbound-ssf*\") OR matchesValue(queuename, \"*ticf-cri*\") ) AND matchesValue(`aws.account.id`, \"861348360548\") }",
+            "davis": {
+                "enabled": false,
+                "davisVisualization": {
+                    "isAvailable": true
+                }
+            },
+            "visualizationSettings": {
+                "thresholds": [],
+                "chartSettings": {
+                    "gapPolicy": "gap",
+                    "circleChartSettings": {
+                        "groupingThresholdType": "relative",
+                        "groupingThresholdValue": 0,
+                        "valueType": "relative"
+                    },
+                    "categoryOverrides": {},
+                    "curve": "linear",
+                    "pointsDisplay": "auto",
+                    "categoricalBarChartSettings": {
+                        "layout": "horizontal",
+                        "categoryAxisTickLayout": "horizontal",
+                        "scale": "absolute",
+                        "groupMode": "stacked",
+                        "colorPaletteMode": "multi-color",
+                        "valueAxisScale": "linear"
+                    },
+                    "colorPalette": "categorical",
+                    "valueRepresentation": "absolute",
+                    "truncationMode": "middle",
+                    "xAxisScaling": "analyzedTimeframe",
+                    "xAxisLabel": "timeframe",
+                    "xAxisIsLabelVisible": false,
+                    "hiddenLegendFields": [
+                        "interval",
+                        "value.A"
+                    ],
+                    "fieldMapping": {
+                        "timestamp": "timeframe",
+                        "leftAxisValues": [
+                            "max(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion)"
+                        ]
+                    },
+                    "leftYAxisSettings": {
+                        "isLabelVisible": true,
+                        "label": "Approximate Number Of Messages Received"
+                    }
+                },
+                "singleValue": {
+                    "showLabel": true,
+                    "label": "",
+                    "prefixIcon": "AnalyticsIcon",
+                    "isIconVisible": false,
+                    "autoscale": true,
+                    "alignment": "center",
+                    "colorThresholdTarget": "value"
+                },
+                "table": {
+                    "rowDensity": "condensed",
+                    "enableSparklines": false,
+                    "hiddenColumns": [],
+                    "linewrapEnabled": false,
+                    "lineWrapIds": [],
+                    "monospacedFontEnabled": false,
+                    "monospacedFontColumns": [],
+                    "columnWidths": {},
+                    "columnTypeOverrides": [
+                        {
+                            "fields": [
+                                "max(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion)"
+                            ],
+                            "value": "sparkline",
+                            "id": 1745402202884
+                        }
+                    ]
+                },
+                "honeycomb": {
+                    "shape": "hexagon",
+                    "legend": {
+                        "hidden": false,
+                        "position": "auto",
+                        "ratio": "auto"
+                    },
+                    "dataMappings": {},
+                    "displayedFields": [],
+                    "truncationMode": "middle",
+                    "colorMode": "color-palette",
+                    "colorPalette": "categorical"
+                },
+                "histogram": {
+                    "legend": {
+                        "position": "auto"
+                    },
+                    "yAxis": {
+                        "label": "Frequency",
+                        "isLabelVisible": true,
+                        "scale": "linear"
+                    },
+                    "colorPalette": "categorical",
+                    "dataMappings": [],
+                    "variant": "single",
+                    "truncationMode": "middle"
+                },
+                "valueBoundaries": {
+                    "min": "auto",
+                    "max": "auto"
+                },
+                "autoSelectVisualization": false
+            },
+            "queryConfig": {
+                "version": "13.7.1",
+                "subQueries": [
+                    {
+                        "id": "A",
+                        "isEnabled": true,
+                        "datatype": "metrics",
+                        "metric": {
+                            "key": "cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion",
+                            "aggregation": "max"
+                        },
+                        "by": [
+                            "queuename"
+                        ],
+                        "filter": "(queuename = *ssf-main* OR queuename = *inbound-ssf* OR queuename = *ticf-cri*) AND `aws.account.id` = $SelectedAWSAccount"
+                    }
+                ]
+            },
+            "subType": "dql-builder-metrics",
+            "visualization": "areaChart",
+            "timeframe": {
+                "tileTimeframeEnabled": true,
+                "tileTimeframe": {
+                    "from": "now()-365d",
+                    "to": "now()"
+                }
+            }
+        },
+        "70": {
+            "type": "data",
+            "title": "Messages Visible",
+            "query": "timeseries { max(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion), value.A = avg(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion, scalar: true) }, by: { queuename }, filter: { ( matchesValue(queuename, \"*ssf-main*\") OR matchesValue(queuename, \"*inbound-ssf*\") OR matchesValue(queuename, \"*ticf-cri*\") ) AND matchesValue(`aws.account.id`, \"861348360548\") }",
+            "davis": {
+                "enabled": false,
+                "davisVisualization": {
+                    "isAvailable": true
+                }
+            },
+            "visualizationSettings": {
+                "thresholds": [],
+                "chartSettings": {
+                    "gapPolicy": "gap",
+                    "circleChartSettings": {
+                        "groupingThresholdType": "relative",
+                        "groupingThresholdValue": 0,
+                        "valueType": "relative"
+                    },
+                    "categoryOverrides": {},
+                    "curve": "linear",
+                    "pointsDisplay": "auto",
+                    "categoricalBarChartSettings": {
+                        "layout": "horizontal",
+                        "categoryAxisTickLayout": "horizontal",
+                        "scale": "absolute",
+                        "groupMode": "stacked",
+                        "colorPaletteMode": "multi-color",
+                        "valueAxisScale": "linear"
+                    },
+                    "colorPalette": "categorical",
+                    "valueRepresentation": "absolute",
+                    "truncationMode": "middle",
+                    "xAxisScaling": "analyzedTimeframe",
+                    "xAxisLabel": "timeframe",
+                    "xAxisIsLabelVisible": false,
+                    "hiddenLegendFields": [
+                        "interval",
+                        "value.A"
+                    ],
+                    "fieldMapping": {
+                        "timestamp": "timeframe",
+                        "leftAxisValues": [
+                            "max(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion)"
+                        ]
+                    },
+                    "leftYAxisSettings": {
+                        "isLabelVisible": true,
+                        "label": "Approximate Number Of Messages Visible"
+                    }
+                },
+                "singleValue": {
+                    "showLabel": true,
+                    "label": "",
+                    "prefixIcon": "AnalyticsIcon",
+                    "isIconVisible": false,
+                    "autoscale": true,
+                    "alignment": "center",
+                    "colorThresholdTarget": "value"
+                },
+                "table": {
+                    "rowDensity": "condensed",
+                    "enableSparklines": false,
+                    "hiddenColumns": [],
+                    "linewrapEnabled": false,
+                    "lineWrapIds": [],
+                    "monospacedFontEnabled": false,
+                    "monospacedFontColumns": [],
+                    "columnWidths": {},
+                    "columnTypeOverrides": [
+                        {
+                            "fields": [
+                                "max(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion)"
+                            ],
+                            "value": "sparkline",
+                            "id": 1744727473380
+                        }
+                    ]
+                },
+                "honeycomb": {
+                    "shape": "hexagon",
+                    "legend": {
+                        "hidden": false,
+                        "position": "auto",
+                        "ratio": "auto"
+                    },
+                    "dataMappings": {},
+                    "displayedFields": [],
+                    "truncationMode": "middle",
+                    "colorMode": "color-palette",
+                    "colorPalette": "categorical"
+                },
+                "histogram": {
+                    "legend": {
+                        "position": "auto"
+                    },
+                    "yAxis": {
+                        "label": "Frequency",
+                        "isLabelVisible": true,
+                        "scale": "linear"
+                    },
+                    "colorPalette": "categorical",
+                    "dataMappings": [],
+                    "variant": "single",
+                    "truncationMode": "middle"
+                },
+                "valueBoundaries": {
+                    "min": "auto",
+                    "max": "auto"
+                },
+                "autoSelectVisualization": false
+            },
+            "queryConfig": {
+                "version": "13.7.1",
+                "subQueries": [
+                    {
+                        "id": "A",
+                        "isEnabled": true,
+                        "datatype": "metrics",
+                        "metric": {
+                            "key": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion",
+                            "aggregation": "max"
+                        },
+                        "by": [
+                            "queuename"
+                        ],
+                        "filter": "(queuename = *ssf-main* OR queuename = *inbound-ssf* OR queuename = *ticf-cri*) AND `aws.account.id` = $SelectedAWSAccount"
+                    }
+                ]
+            },
+            "subType": "dql-builder-metrics",
+            "visualization": "areaChart",
+            "timeframe": {
+                "tileTimeframeEnabled": true,
+                "tileTimeframe": {
+                    "from": "now()-365d",
+                    "to": "now()"
+                }
+            }
+        },
+        "71": {
+            "type": "data",
+            "title": "Messages Not Visible",
+            "query": "timeseries { avg(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion), value.A = avg(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion, scalar: true) }, by: { queuename }, filter: { ( matchesValue(queuename, \"*ssf-main*\") OR matchesValue(queuename, \"*inbound-ssf*\") OR matchesValue(queuename, \"*ticf-cri*\") ) AND matchesValue(`aws.account.id`, \"861348360548\") }",
+            "davis": {
+                "enabled": false,
+                "davisVisualization": {
+                    "isAvailable": true
+                }
+            },
+            "visualizationSettings": {
+                "thresholds": [],
+                "chartSettings": {
+                    "gapPolicy": "gap",
+                    "circleChartSettings": {
+                        "groupingThresholdType": "relative",
+                        "groupingThresholdValue": 0,
+                        "valueType": "relative"
+                    },
+                    "categoryOverrides": {},
+                    "curve": "linear",
+                    "pointsDisplay": "auto",
+                    "categoricalBarChartSettings": {
+                        "layout": "horizontal",
+                        "categoryAxisTickLayout": "horizontal",
+                        "scale": "absolute",
+                        "groupMode": "stacked",
+                        "colorPaletteMode": "multi-color",
+                        "valueAxisScale": "linear"
+                    },
+                    "colorPalette": "categorical",
+                    "valueRepresentation": "absolute",
+                    "truncationMode": "middle",
+                    "xAxisScaling": "analyzedTimeframe",
+                    "xAxisLabel": "timeframe",
+                    "xAxisIsLabelVisible": false,
+                    "hiddenLegendFields": [
+                        "interval",
+                        "value.A"
+                    ],
+                    "fieldMapping": {
+                        "timestamp": "timeframe",
+                        "leftAxisValues": [
+                            "avg(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion)"
+                        ]
+                    },
+                    "leftYAxisSettings": {
+                        "isLabelVisible": true,
+                        "label": "Approximate Number Of Messages Not Visible"
+                    }
+                },
+                "singleValue": {
+                    "showLabel": true,
+                    "label": "",
+                    "prefixIcon": "AnalyticsIcon",
+                    "isIconVisible": false,
+                    "autoscale": true,
+                    "alignment": "center",
+                    "colorThresholdTarget": "value"
+                },
+                "table": {
+                    "rowDensity": "condensed",
+                    "enableSparklines": false,
+                    "hiddenColumns": [],
+                    "linewrapEnabled": false,
+                    "lineWrapIds": [],
+                    "monospacedFontEnabled": false,
+                    "monospacedFontColumns": [],
+                    "columnWidths": {},
+                    "columnTypeOverrides": [
+                        {
+                            "fields": [
+                                "avg(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion)"
+                            ],
+                            "value": "sparkline",
+                            "id": 1744724339778
+                        }
+                    ]
+                },
+                "honeycomb": {
+                    "shape": "hexagon",
+                    "legend": {
+                        "hidden": false,
+                        "position": "auto",
+                        "ratio": "auto"
+                    },
+                    "dataMappings": {},
+                    "displayedFields": [],
+                    "truncationMode": "middle",
+                    "colorMode": "color-palette",
+                    "colorPalette": "categorical"
+                },
+                "histogram": {
+                    "legend": {
+                        "position": "auto"
+                    },
+                    "yAxis": {
+                        "label": "Frequency",
+                        "isLabelVisible": true,
+                        "scale": "linear"
+                    },
+                    "colorPalette": "categorical",
+                    "dataMappings": [],
+                    "variant": "single",
+                    "truncationMode": "middle"
+                },
+                "valueBoundaries": {
+                    "min": "auto",
+                    "max": "auto"
+                },
+                "autoSelectVisualization": false
+            },
+            "queryConfig": {
+                "version": "13.7.1",
+                "subQueries": [
+                    {
+                        "id": "A",
+                        "isEnabled": true,
+                        "datatype": "metrics",
+                        "metric": {
+                            "key": "cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion",
+                            "aggregation": "avg"
+                        },
+                        "by": [
+                            "queuename"
+                        ],
+                        "filter": "(queuename = *ssf-main* OR queuename = *inbound-ssf* OR queuename = *ticf-cri*) AND `aws.account.id` = $SelectedAWSAccount"
+                    }
+                ]
+            },
+            "subType": "dql-builder-metrics",
+            "visualization": "areaChart",
+            "timeframe": {
+                "tileTimeframeEnabled": true,
+                "tileTimeframe": {
+                    "from": "now()-365d",
+                    "to": "now()"
+                }
+            }
         }
     },
     "layouts": {
@@ -5636,45 +6561,93 @@
         },
         "51": {
             "x": 0,
-            "y": 127,
+            "y": 153,
             "w": 19,
             "h": 6
         },
         "52": {
             "x": 19,
-            "y": 127,
+            "y": 153,
             "w": 17,
             "h": 6
         },
         "57": {
             "x": 0,
-            "y": 126,
+            "y": 152,
             "w": 36,
             "h": 1
         },
         "58": {
             "x": 0,
-            "y": 140,
+            "y": 166,
             "w": 19,
             "h": 6
         },
         "59": {
             "x": 19,
-            "y": 140,
+            "y": 166,
             "w": 17,
             "h": 6
         },
         "62": {
             "x": 0,
-            "y": 133,
+            "y": 159,
             "w": 19,
             "h": 7
         },
         "63": {
             "x": 19,
-            "y": 133,
+            "y": 159,
             "w": 17,
             "h": 7
+        },
+        "64": {
+            "x": 0,
+            "y": 126,
+            "w": 36,
+            "h": 1
+        },
+        "65": {
+            "x": 0,
+            "y": 127,
+            "w": 18,
+            "h": 6
+        },
+        "66": {
+            "x": 18,
+            "y": 127,
+            "w": 18,
+            "h": 6
+        },
+        "67": {
+            "x": 0,
+            "y": 133,
+            "w": 36,
+            "h": 1
+        },
+        "68": {
+            "x": 0,
+            "y": 134,
+            "w": 18,
+            "h": 9
+        },
+        "69": {
+            "x": 18,
+            "y": 134,
+            "w": 18,
+            "h": 9
+        },
+        "70": {
+            "x": 0,
+            "y": 143,
+            "w": 18,
+            "h": 9
+        },
+        "71": {
+            "x": 18,
+            "y": 143,
+            "w": 18,
+            "h": 9
         }
     },
     "importedWithCode": true,
