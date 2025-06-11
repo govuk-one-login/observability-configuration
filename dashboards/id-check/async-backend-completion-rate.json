@@ -3,7 +3,7 @@
     "configurationVersions": [
       7
     ],
-    "clusterVersion": "1.315.35.20250520-203142"
+    "clusterVersion": "1.316.29.20250607-232210"
   },
   "dashboardMetadata": {
     "name": "MOBILE - ID CHECK ASYNC BE - Journey Completion",
@@ -17,7 +17,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1558,
+        "top": 1862,
         "left": 0,
         "width": 304,
         "height": 304
@@ -108,7 +108,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1558,
+        "top": 1862,
         "left": 304,
         "width": 760,
         "height": 304
@@ -315,9 +315,7 @@
         "width": 304,
         "height": 304
       },
-      "tileFilter": {
-        "timeframe": "-30d to now"
-      },
+      "tileFilter": {},
       "isAutoRefreshDisabled": false,
       "customName": "Data explorer results",
       "queries": [
@@ -500,7 +498,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1976,
+        "top": 2280,
         "left": 0,
         "width": 1064,
         "height": 190
@@ -794,7 +792,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2166,
+        "top": 2470,
         "left": 0,
         "width": 1064,
         "height": 266
@@ -1326,18 +1324,6 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "queuename",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "mob-async-backend-ipv-core-outbound",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
                 "filter": "aws.region",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
@@ -1345,6 +1331,18 @@
                 "criteria": [
                   {
                     "value": "eu-west-2",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
+                "filter": "queuename",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "mob-async-backend-ipv-core-outbound",
                     "evaluator": "EQ"
                   }
                 ]
@@ -1417,7 +1415,7 @@
         "foldTransformation": "LAST_VALUE"
       },
       "metricExpressions": [
-        "resolution=5m&(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.region\",eu-west-2)),or(eq(queuename,mob-async-backend-ipv-core-outbound)))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names:last"
+        "resolution=5m&(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion:filter(and(or(eq(queuename,mob-async-backend-ipv-core-outbound)),or(eq(\"aws.region\",eu-west-2)))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names:last"
       ]
     },
     {
@@ -1539,7 +1537,7 @@
         "foldAggregation": "SUM"
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.region\",eu-west-2)),or(eq(queuename,mob-async-backend-ipv-core-outbound)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names:fold(sum)"
+        "resolution=null&(cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(and(or(eq(queuename,mob-async-backend-ipv-core-outbound)),or(eq(\"aws.region\",eu-west-2)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names:fold(sum)"
       ]
     },
     {
@@ -1547,7 +1545,7 @@
       "tileType": "HEADER",
       "configured": true,
       "bounds": {
-        "top": 1938,
+        "top": 2242,
         "left": 0,
         "width": 266,
         "height": 38
@@ -1560,7 +1558,7 @@
       "tileType": "HEADER",
       "configured": true,
       "bounds": {
-        "top": 1520,
+        "top": 1824,
         "left": 0,
         "width": 266,
         "height": 38
@@ -1743,7 +1741,7 @@
       "tileType": "MARKDOWN",
       "configured": true,
       "bounds": {
-        "top": 1558,
+        "top": 1862,
         "left": 1064,
         "width": 228,
         "height": 152
@@ -1751,6 +1749,233 @@
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
       "markdown": "*Note: Aborted Sessions and Journeys Started are not paired in this data, so it is possible to see percentages above 100 in time periods where more sessions were aborted than new journeys started.*"
+    },
+    {
+      "name": "Messages Visible on DLQ",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1444,
+        "left": 0,
+        "width": 722,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(and(or(eq(queuename,\"mob-async-backend-ipv-core-outbound-dlq\")),or(eq(\"aws.region\",eu-west-2)))):splitBy():max",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {
+          "hideLegend": true
+        },
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "none",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "STACKED_AREA",
+              "alias": "Messages Visible"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "cloud.aws.jh-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.jh-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(and(or(eq(queuename,mob-async-backend-ipv-core-outbound-dlq)),or(eq(\"aws.region\",eu-west-2)))):splitBy():max):limit(100):names"
+      ]
+    },
+    {
+      "name": "Age of Oldest Message on DLQ",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1444,
+        "left": 722,
+        "width": 342,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "In-flight Messages",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion",
+          "spaceAggregation": "MAX",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "queuename",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "mob-async-backend-ipv-core-outbound-dlq",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "Hour",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "5m",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=5m&(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(and(or(eq(queuename,mob-async-backend-ipv-core-outbound-dlq)))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names:last"
+      ]
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 1444,
+        "left": 1064,
+        "width": 228,
+        "height": 190
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "*Messages that repeatedly fail to be processed by IPV Core are sent to the DLQ (Dead Letter Queue). Its SQS queue name is\n`mob-async-backend-ipv-core-outbound-dlq`.*"
     }
   ]
 }
