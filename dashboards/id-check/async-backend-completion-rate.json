@@ -3,7 +3,7 @@
     "configurationVersions": [
       7
     ],
-    "clusterVersion": "1.315.35.20250520-203142"
+    "clusterVersion": "1.316.30.20250610-160105"
   },
   "dashboardMetadata": {
     "name": "MOBILE - ID CHECK ASYNC BE - Journey Completion",
@@ -13,406 +13,13 @@
   },
   "tiles": [
     {
-      "name": "Total Aborted Journeys",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1558,
-        "left": 0,
-        "width": 304,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Single value",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(and(or(eq(messagecode,\"MOBILE_ASYNC_ABORT_SESSION_COMPLETED\")))):splitBy():sum:sort(value(sum,descending))",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Number of aborted journeys"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(and(or(eq(messagecode,MOBILE_ASYNC_ABORT_SESSION_COMPLETED)))):splitBy():sum:sort(value(sum,descending))):limit(100):names",
-        "resolution=null&(cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(and(or(eq(messagecode,MOBILE_ASYNC_ABORT_SESSION_COMPLETED)))):splitBy():sum:sort(value(sum,descending)))"
-      ]
-    },
-    {
-      "name": "Percentage of Aborted Journeys",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1558,
-        "left": 304,
-        "width": 760,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Table",
-      "queries": [
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "(cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(and(or(eq(messagecode,\"MOBILE_ASYNC_ABORT_SESSION_COMPLETED\")))):splitBy():sum:sort(value(sum,descending))/ cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum:sort(value(sum,descending))) * 100",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "STACKED_AREA",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "C:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "STACKED_AREA",
-              "alias": "Percentage of aborts"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "C"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "C",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "A:messagecode.name",
-            "B:aws.account.id.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": true
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&((cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(and(or(eq(messagecode,MOBILE_ASYNC_ABORT_SESSION_COMPLETED)))):splitBy():sum:sort(value(sum,descending))/cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum:sort(value(sum,descending)))*100):limit(100):names"
-      ]
-    },
-    {
-      "name": "Journeys Started",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 114,
-        "left": 0,
-        "width": 304,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "B",
-          "metric": "cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion",
-          "spaceAggregation": "SUM",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Number of journeys started"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names",
-        "resolution=null&(cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum:sort(value(sum,descending)):limit(20))"
-      ]
-    },
-    {
-      "name": "VCs Issued",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 114,
-        "left": 304,
-        "width": 304,
-        "height": 304
-      },
-      "tileFilter": {
-        "timeframe": "-30d to now"
-      },
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "B",
-          "metric": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion",
-          "spaceAggregation": "SUM",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Number of credentials issued"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names",
-        "resolution=null&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum:sort(value(sum,descending)):limit(20))"
-      ]
-    },
-    {
       "name": "VCs Issued By Document Type",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 114,
-        "left": 608,
-        "width": 456,
+        "top": 722,
+        "left": 380,
+        "width": 684,
         "height": 304
       },
       "tileFilter": {},
@@ -500,7 +107,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1976,
+        "top": 2166,
         "left": 0,
         "width": 1064,
         "height": 190
@@ -794,7 +401,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2166,
+        "top": 2356,
         "left": 0,
         "width": 1064,
         "height": 266
@@ -1091,113 +698,11 @@
       ]
     },
     {
-      "name": "Message Processing Rate",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1140,
-        "left": 0,
-        "width": 1064,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(and(or(eq(queuename,mob-async-backend-ipv-core-outbound)),or(eq(\"aws.region\",eu-west-2)))):splitBy():sum",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "STACKED_AREA",
-        "global": {
-          "hideLegend": true
-        },
-        "rules": [
-          {
-            "matcher": "B:",
-            "unitTransform": "none",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "STACKED_AREA",
-              "alias": "Messages Processed"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "B"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "cloud.aws.jh-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.jh-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": true
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(and(or(eq(queuename,mob-async-backend-ipv-core-outbound)),or(eq(\"aws.region\",eu-west-2)))):splitBy():sum):limit(100):names"
-      ]
-    },
-    {
       "name": "Current Unprocessed Messages",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 836,
+        "top": 1140,
         "left": 380,
         "width": 342,
         "height": 304
@@ -1305,7 +810,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 836,
+        "top": 1140,
         "left": 722,
         "width": 342,
         "height": 304
@@ -1417,7 +922,7 @@
         "foldTransformation": "LAST_VALUE"
       },
       "metricExpressions": [
-        "resolution=5m&(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.region\",eu-west-2)),or(eq(queuename,mob-async-backend-ipv-core-outbound)))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names:last"
+        "resolution=5m&(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion:filter(and(or(eq(queuename,mob-async-backend-ipv-core-outbound)),or(eq(\"aws.region\",eu-west-2)))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names:last"
       ]
     },
     {
@@ -1425,7 +930,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 836,
+        "top": 1140,
         "left": 0,
         "width": 380,
         "height": 304
@@ -1446,18 +951,6 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "queuename",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "mob-async-backend-ipv-core-outbound",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
                 "filter": "aws.region",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
@@ -1465,6 +958,18 @@
                 "criteria": [
                   {
                     "value": "eu-west-2",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
+                "filter": "queuename",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "mob-async-backend-ipv-core-outbound",
                     "evaluator": "EQ"
                   }
                 ]
@@ -1539,7 +1044,7 @@
         "foldAggregation": "SUM"
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.region\",eu-west-2)),or(eq(queuename,mob-async-backend-ipv-core-outbound)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names:fold(sum)"
+        "resolution=null&(cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(and(or(eq(queuename,mob-async-backend-ipv-core-outbound)),or(eq(\"aws.region\",eu-west-2)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names:fold(sum)"
       ]
     },
     {
@@ -1547,20 +1052,7 @@
       "tileType": "HEADER",
       "configured": true,
       "bounds": {
-        "top": 1938,
-        "left": 0,
-        "width": 266,
-        "height": 38
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false
-    },
-    {
-      "name": "Journeys Aborted",
-      "tileType": "HEADER",
-      "configured": true,
-      "bounds": {
-        "top": 1520,
+        "top": 2128,
         "left": 0,
         "width": 266,
         "height": 38
@@ -1573,7 +1065,7 @@
       "tileType": "HEADER",
       "configured": true,
       "bounds": {
-        "top": 798,
+        "top": 1102,
         "left": 0,
         "width": 570,
         "height": 38
@@ -1599,7 +1091,7 @@
       "tileType": "MARKDOWN",
       "configured": true,
       "bounds": {
-        "top": 836,
+        "top": 1140,
         "left": 1064,
         "width": 228,
         "height": 190
@@ -1609,13 +1101,41 @@
       "markdown": "*A Credential Result message is written to an SQS queue consumed by IPV Core once ID Check's processing completes. It will contain a verifiable credential if no errors occurred, or an error message otherwise.*"
     },
     {
-      "name": "Journey Completion Rate (VCs Issued / Journeys Started)",
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 114,
+        "left": 1064,
+        "width": 228,
+        "height": 152
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "*Note: VCs Issued and Journeys Started are not paired in this data, so it is possible to see percentages above 100 in time periods where more VCs were issued than new journeys started.*"
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 0,
+        "width": 1064,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "*To see production-only data, use the filter in the top right to select the `di-mobile-id-check-async-prod` management zone.*"
+    },
+    {
+      "name": "Messages Visible on DLQ",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 418,
+        "top": 1748,
         "left": 0,
-        "width": 1064,
+        "width": 722,
         "height": 304
       },
       "tileFilter": {},
@@ -1627,7 +1147,7 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum * 100",
+          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(and(or(eq(queuename,\"mob-async-backend-ipv-core-outbound-dlq\")),or(eq(\"aws.region\",eu-west-2)))):splitBy():max",
           "rate": "NONE",
           "enabled": true
         }
@@ -1640,12 +1160,12 @@
         "rules": [
           {
             "matcher": "B:",
-            "unitTransform": "%",
+            "unitTransform": "none",
             "valueFormat": "auto",
             "properties": {
               "color": "DEFAULT",
               "seriesType": "STACKED_AREA",
-              "alias": "Journey completion rate"
+              "alias": "Messages Visible"
             },
             "seriesOverrides": []
           }
@@ -1707,7 +1227,118 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum*100):limit(100):names"
+        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(and(or(eq(queuename,mob-async-backend-ipv-core-outbound-dlq)),or(eq(\"aws.region\",eu-west-2)))):splitBy():max):limit(100):names"
+      ]
+    },
+    {
+      "name": "Age of Oldest Message on DLQ",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1748,
+        "left": 722,
+        "width": 342,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "In-flight Messages",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion",
+          "spaceAggregation": "MAX",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "queuename",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "mob-async-backend-ipv-core-outbound-dlq",
+                    "evaluator": "EQ"
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "Hour",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "5m",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=5m&(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(and(or(eq(queuename,mob-async-backend-ipv-core-outbound-dlq)))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names:last"
       ]
     },
     {
@@ -1715,42 +1346,636 @@
       "tileType": "MARKDOWN",
       "configured": true,
       "bounds": {
-        "top": 418,
+        "top": 1748,
         "left": 1064,
         "width": 228,
-        "height": 152
+        "height": 190
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "*Note: VCs Issued and Journeys Started are not paired in this data, so it is possible to see percentages above 100 in time periods where more VCs were issued than new journeys started.*"
+      "markdown": "*Messages that repeatedly fail to be processed by IPV Core are sent to the DLQ (Dead Letter Queue). Its SQS queue name is\n`mob-async-backend-ipv-core-outbound-dlq`.*"
     },
     {
-      "name": "Markdown",
-      "tileType": "MARKDOWN",
+      "name": "Journey Completion Rate",
+      "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 0,
+        "top": 114,
+        "left": 684,
+        "width": 380,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum / cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum)*100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "%",
+            "valueFormat": "0,0",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Number of aborted journeys"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum)*100):limit(100):names"
+      ]
+    },
+    {
+      "name": "Journeys Aborted",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 722,
+        "left": 0,
+        "width": 380,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(and(or(eq(messagecode,\"MOBILE_ASYNC_ABORT_SESSION_COMPLETED\")))):splitBy():sum:sort(value(sum,descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Number of aborted journeys"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(and(or(eq(messagecode,MOBILE_ASYNC_ABORT_SESSION_COMPLETED)))):splitBy():sum:sort(value(sum,descending))):limit(100):names"
+      ]
+    },
+    {
+      "name": "Journeys Started",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 114,
+        "left": 0,
+        "width": 342,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "metric": "cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion",
+          "spaceAggregation": "SUM",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Number of journeys started"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "VCs Issued",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 114,
+        "left": 342,
+        "width": 342,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "metric": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion",
+          "spaceAggregation": "SUM",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Number of credentials issued"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Journeys and Outcomes Over Time",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 418,
         "left": 0,
         "width": 1064,
-        "height": 38
+        "height": 304
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "*To see production-only data, use the filter in the top right to select the `di-mobile-id-check-async-prod` management zone.*"
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(and(or(eq(messagecode,\"MOBILE_ASYNC_ABORT_SESSION_COMPLETED\")))):splitBy():sum:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "none",
+            "valueFormat": "none",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "STACKED_AREA",
+              "alias": "Journeys Started"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "none",
+            "valueFormat": "none",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Credentials Issued"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "none",
+            "valueFormat": "none",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA",
+              "alias": "Journeys Aborted"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "B",
+                "C",
+                "D"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "cloud.aws.jh-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.jh-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum:default(0,always)):limit(100):names,(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum:default(0,always)):limit(100):names,(cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(and(or(eq(messagecode,MOBILE_ASYNC_ABORT_SESSION_COMPLETED)))):splitBy():sum:default(0,always)):limit(100):names"
+      ]
     },
     {
-      "name": "Markdown",
-      "tileType": "MARKDOWN",
+      "name": "Message Processing Rate",
+      "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1558,
-        "left": 1064,
-        "width": 228,
-        "height": 152
+        "top": 1444,
+        "left": 0,
+        "width": 1064,
+        "height": 304
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "*Note: Aborted Sessions and Journeys Started are not paired in this data, so it is possible to see percentages above 100 in time periods where more sessions were aborted than new journeys started.*"
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(and(or(eq(queuename,mob-async-backend-ipv-core-outbound)),or(eq(\"aws.region\",eu-west-2)))):splitBy():sum:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {
+          "hideLegend": true
+        },
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "none",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "STACKED_AREA",
+              "alias": "Messages Processed"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "cloud.aws.jh-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.jh-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(and(or(eq(queuename,mob-async-backend-ipv-core-outbound)),or(eq(\"aws.region\",eu-west-2)))):splitBy():sum:default(0,always)):limit(100):names"
+      ]
     }
   ]
 }
