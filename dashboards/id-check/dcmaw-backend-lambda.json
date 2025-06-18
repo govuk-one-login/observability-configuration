@@ -9111,249 +9111,6 @@
       ]
     },
     {
-      "name": "1. Lambda Functions",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 0,
-        "left": 0,
-        "width": 1216,
-        "height": 532
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Table",
-      "queries": [
-        {
-          "id": "H",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "functionname"
-          ],
-          "metricSelector": "cloud.aws.lambda.invocationsByAccountIdFunctionNameRegion:filter(contains(\"functionname\",\"-backend-api\")):splitBy(\"functionname\"):sum:sort(dimension(\"functionname\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "I",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "functionname"
-          ],
-          "metricSelector": "cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion:filter(contains(\"functionname\",\"-backend-api\")):splitBy(\"functionname\"):sum:sort(dimension(\"functionname\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "J",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "functionname"
-          ],
-          "metricSelector": "cloud.aws.lambda.durationByAccountIdFunctionNameRegion:filter(contains(\"functionname\",\"-backend-api\")):splitBy(\"functionname\"):sort(dimension(\"functionname\",ascending)):fold(max)",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "K",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "functionname"
-          ],
-          "metricSelector": "cloud.aws.lambda.durationByAccountIdFunctionNameRegion:filter(contains(\"functionname\",\"-backend-api\")):splitBy(\"functionname\"):sort(dimension(\"functionname\",ascending)):avg",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "L",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "functionname"
-          ],
-          "metricSelector": "cloud.aws.lambda.durationByAccountIdFunctionNameRegion:filter(contains(\"functionname\",\"-backend-api\")):splitBy(\"functionname\"):sort(dimension(\"functionname\",ascending)):fold(min)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "TABLE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "H:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "I:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "J:",
-            "unitTransform": "MilliSecond",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Maximum Duration"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "K:",
-            "unitTransform": "MilliSecond",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Average Duration"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "L:",
-            "unitTransform": "MilliSecond",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Minimum Duration"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "Duration",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "value": 1000,
-                "color": "#f5d30f"
-              },
-              {
-                "value": 2500,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "J",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "columnId": "Duration",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "value": 1000,
-                "color": "#f5d30f"
-              },
-              {
-                "value": 2500,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "K",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "columnId": "Duration",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "value": 1000,
-                "color": "#f5d30f"
-              },
-              {
-                "value": 2500,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "L",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "isThresholdBackgroundAppliedToCell": true,
-          "hiddenColumns": [
-            "A:dt.entity.aws_lambda_function.name",
-            "B:dt.entity.aws_lambda_function.name",
-            "C:dt.entity.aws_lambda_function.name",
-            "D:dt.entity.aws_lambda_function.name",
-            "E:dt.entity.aws_lambda_function.name",
-            "F:dt.entity.aws_lambda_function.name",
-            "G:dt.entity.aws_lambda_function.name",
-            "H:aws.account.id.name",
-            "H:aws.region.name",
-            "H:dt.entity.cloud:aws:account.name",
-            "H:dt.entity.cloud:aws:lambda:function.name",
-            "H:dt.entity.cloud:aws:region.name",
-            "H:functionname.name",
-            "B:functionname.name",
-            "C:functionname.name",
-            "D:functionname.name",
-            "A:functionname.name",
-            "G:functionname.name",
-            "H:dt.entity.aws_lambda_function.name",
-            "I:functionname.name",
-            "J:functionname.name",
-            "K:functionname.name",
-            "L:functionname.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.lambda.invocationsByAccountIdFunctionNameRegion:filter(contains(functionname,\"-backend-api\")):splitBy(functionname):sum:sort(dimension(functionname,ascending))):names:fold(auto),(cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion:filter(contains(functionname,\"-backend-api\")):splitBy(functionname):sum:sort(dimension(functionname,ascending))):names:fold(auto),(cloud.aws.lambda.durationByAccountIdFunctionNameRegion:filter(contains(functionname,\"-backend-api\")):splitBy(functionname):sort(dimension(functionname,ascending)):fold(max)):names:fold(auto),(cloud.aws.lambda.durationByAccountIdFunctionNameRegion:filter(contains(functionname,\"-backend-api\")):splitBy(functionname):sort(dimension(functionname,ascending)):avg):names:fold(auto),(cloud.aws.lambda.durationByAccountIdFunctionNameRegion:filter(contains(functionname,\"-backend-api\")):splitBy(functionname):sort(dimension(functionname,ascending)):fold(min)):names:fold(auto)"
-      ]
-    },
-    {
       "name": "Markdown",
       "tileType": "MARKDOWN",
       "configured": true,
@@ -10456,6 +10213,249 @@
       },
       "metricExpressions": [
         "resolution=null&(cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(eq(functionname,WriteTxmaEvent-backend-api)):sum:splitBy(functionname)):limit(100):names"
+      ]
+    },
+    {
+      "name": "1. Lambda Functions",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 0,
+        "width": 1216,
+        "height": 532
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Table",
+      "queries": [
+        {
+          "id": "H",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "functionname"
+          ],
+          "metricSelector": "cloud.aws.lambda.invocationsByAccountIdFunctionNameRegion:filter(contains(\"functionname\",\"-backend-api\")):splitBy(\"functionname\"):sum:sort(dimension(\"functionname\",ascending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "I",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "functionname"
+          ],
+          "metricSelector": "cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion:filter(contains(\"functionname\",\"-backend-api\")):splitBy(\"functionname\"):sum:sort(dimension(\"functionname\",ascending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "J",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "functionname"
+          ],
+          "metricSelector": "cloud.aws.lambda.durationByAccountIdFunctionNameRegion:filter(contains(\"functionname\",\"-backend-api\")):splitBy(\"functionname\"):sort(dimension(\"functionname\",ascending)):fold(max)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "K",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "functionname"
+          ],
+          "metricSelector": "cloud.aws.lambda.durationByAccountIdFunctionNameRegion:filter(contains(\"functionname\",\"-backend-api\")):splitBy(\"functionname\"):sort(dimension(\"functionname\",ascending)):fold(avg)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "L",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "functionname"
+          ],
+          "metricSelector": "cloud.aws.lambda.durationByAccountIdFunctionNameRegion:filter(contains(\"functionname\",\"-backend-api\")):splitBy(\"functionname\"):sort(dimension(\"functionname\",ascending)):fold(min)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "H:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "I:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "J:",
+            "unitTransform": "MilliSecond",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Maximum Duration"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "K:",
+            "unitTransform": "MilliSecond",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Average Duration"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "L:",
+            "unitTransform": "MilliSecond",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Minimum Duration"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "Duration",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 1000,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 2500,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "J",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "Duration",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 1000,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 2500,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "K",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "Duration",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 1000,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 2500,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "L",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "isThresholdBackgroundAppliedToCell": true,
+          "hiddenColumns": [
+            "A:dt.entity.aws_lambda_function.name",
+            "B:dt.entity.aws_lambda_function.name",
+            "C:dt.entity.aws_lambda_function.name",
+            "D:dt.entity.aws_lambda_function.name",
+            "E:dt.entity.aws_lambda_function.name",
+            "F:dt.entity.aws_lambda_function.name",
+            "G:dt.entity.aws_lambda_function.name",
+            "H:aws.account.id.name",
+            "H:aws.region.name",
+            "H:dt.entity.cloud:aws:account.name",
+            "H:dt.entity.cloud:aws:lambda:function.name",
+            "H:dt.entity.cloud:aws:region.name",
+            "H:functionname.name",
+            "B:functionname.name",
+            "C:functionname.name",
+            "D:functionname.name",
+            "A:functionname.name",
+            "G:functionname.name",
+            "H:dt.entity.aws_lambda_function.name",
+            "I:functionname.name",
+            "J:functionname.name",
+            "K:functionname.name",
+            "L:functionname.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.lambda.invocationsByAccountIdFunctionNameRegion:filter(contains(functionname,\"-backend-api\")):splitBy(functionname):sum:sort(dimension(functionname,ascending))):names:fold(auto),(cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion:filter(contains(functionname,\"-backend-api\")):splitBy(functionname):sum:sort(dimension(functionname,ascending))):names:fold(auto),(cloud.aws.lambda.durationByAccountIdFunctionNameRegion:filter(contains(functionname,\"-backend-api\")):splitBy(functionname):sort(dimension(functionname,ascending)):fold(max)):names:fold(auto),(cloud.aws.lambda.durationByAccountIdFunctionNameRegion:filter(contains(functionname,\"-backend-api\")):splitBy(functionname):sort(dimension(functionname,ascending)):fold(avg)):names:fold(auto),(cloud.aws.lambda.durationByAccountIdFunctionNameRegion:filter(contains(functionname,\"-backend-api\")):splitBy(functionname):sort(dimension(functionname,ascending)):fold(min)):names:fold(auto)"
       ]
     }
   ]
