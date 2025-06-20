@@ -2,116 +2,90 @@
   "version": 18,
   "variables": [
     {
+      "version": 1,
       "key": "Environment",
       "type": "csv",
       "visible": true,
-      "input": "TICF CRI - Integration - 260731919125,TICF CRI - Production - 710842649290,SSF - Integration - 607267698016,SSF - Production - 891240344376",
+      "editable": true,
+      "input": "SSF - Build - 250353618339,SSF - Staging - 861348360548,SSF - Integration - 607267698016,SSF - Production - 891240344376,TICF CRI - Build - 769837561067,TICF CRI - Staging - 640259204840,TICF CRI - Integration - 260731919125,TICF CRI - Production - 710842649290",
       "multiple": false,
-      "defaultValue": "TICF CRI - Integration - 260731919125",
-      "version": 1
+      "defaultValue": "TICF CRI - Production - 710842649290"
     },
     {
+      "version": 1,
       "key": "SelectedAWSAccount",
       "type": "code",
       "visible": false,
       "input": "export default async function () {\n  const AWSAccountID = $Environment.replaceAll(\" \", \"\").split(\"-\")[2]\n  return [AWSAccountID]\n}",
-      "multiple": false,
-      "version": 1
+      "multiple": false
     },
     {
-      "key": "Lambda",
-      "visible": true,
-      "type": "code",
       "version": 1,
-      "editable": true,
-      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\n  if ($EnvironmentName);\n  if ($TeamName);\n\n  if ($TeamName == \"ticf-cri\") {\n    query = `fetch dt.entity.service | filter contains(entity.name, \"${$EnvironmentName}-${$TeamName}\")`;\n  } else {\n    query = `fetch dt.entity.service | filter contains(entity.name, \"${$TeamName}\") | filter contains(entity.name, \"${$EnvironmentName}\") | fieldsRemove id`;\n  }\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  const lambdaNames = response.result.records.map(function(record) {\n    return record['entity.name'];\n  });\n  \n  return [\"All\"].concat(lambdaNames);\n}",
-      "multiple": false,
-      "defaultValue": "All"
-    },
-    {
       "key": "EnvironmentName",
-      "visible": false,
       "type": "code",
-      "version": 1,
+      "visible": false,
       "editable": true,
       "input": "export default async function () {\n  return $Environment.replaceAll(\" \", \"\").split(\"-\")[1].toLowerCase();\n}",
       "multiple": false
     },
     {
-      "key": "LambdaServiceID",
-      "visible": false,
-      "type": "query",
       "version": 1,
-      "editable": true,
+      "key": "LambdaServiceID",
+      "type": "query",
+      "visible": false,
       "input": "fetch dt.entity.service\n| filter entity.name == $Lambda\n| fieldsRemove entity.name",
       "multiple": false
     },
     {
+      "version": 1,
       "key": "TeamName",
       "type": "code",
       "visible": false,
       "input": "export default async function () {\n  if ($Environment);\n    \n  const nameWithSpaces = $Environment.split(\"-\")[0].trim().toLowerCase();\n  return nameWithSpaces.replace(\" \", \"-\");\n}",
+      "multiple": false
+    },
+    {
+      "version": 1,
+      "key": "Lambda",
+      "type": "code",
+      "visible": true,
+      "editable": true,
+      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\n  if ($EnvironmentName);\n  if ($TeamName);\n\n  if ($TeamName == \"ticf-cri\") {\n    query = `fetch dt.entity.service | filter contains(entity.name, \"${$EnvironmentName}-${$TeamName}\")`;\n  } else {\n    query = `fetch dt.entity.service | filter contains(entity.name, \"${$TeamName}\") | filter contains(entity.name, \"${$EnvironmentName}\") | fieldsRemove id`;\n  }\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  const lambdaNames = response.result.records.map(function(record) {\n    return record['entity.name'];\n  });\n  \n  return [\"All\"].concat(lambdaNames);\n}",
       "multiple": false,
-      "version": 1
+      "defaultValue": "All"
     }
   ],
   "tiles": {
     "0": {
       "type": "markdown",
-      "content": "## FPAD Infrastructure Dashboard\n\nThis dashboard displays infrastructure metrics for the FPAD Production & Integration environments. For further information on see [here](https://govukverify.atlassian.net/wiki/spaces/FPAD/pages/3765012906/Technical+solution)."
+      "content": "## Fraud TICF CRI/SSF Dashboard\n\nThis dashboard displays metrics for the TICF CRI or SSF system Staging, Integration and Production environment. For further information on TICF CRI see [here](https://govukverify.atlassian.net/wiki/spaces/FPAD/pages/3765012906/Technical+solution)."
     },
     "1": { "type": "markdown", "content": "## Gateway and WAF Metrics" },
     "2": {
-      "title": "Gateway Request Count",
-      "description": "",
+      "title": "Gateway Request Latency",
       "type": "data",
-      "query": "timeseries { countByAccountIdApiName = sum(cloud.aws.apigateway.countByAccountIdApiNameRegionStage, default: 0)}, \nby: { apiname }, \nfilter: { aws.account.id == $SelectedAWSAccount }, union: true\n| fieldsRename `Count` = countByAccountIdApiName\n| limit 100",
+      "query": "timeseries { avgLatencyByAccountIdApiNameRegion = avg(cloud.aws.apigateway.latencyByAccountIdApiNameRegion, default: 0), \nmaxLatencyByAccountIdApiNameRegion = max(cloud.aws.apigateway.latencyByAccountIdApiNameRegion, default: 0),\nminLatencyByAccountIdApiNameRegion = min(cloud.aws.apigateway.latencyByAccountIdApiNameRegion, default: 0) }, \nby: { apiname }, \nfilter: { aws.account.id == $SelectedAWSAccount }, union: true\n| fieldsRename `Avg Latency` = avgLatencyByAccountIdApiNameRegion\n| fieldsRename `Max Latency` = maxLatencyByAccountIdApiNameRegion\n| fieldsRename `Min Latency` = minLatencyByAccountIdApiNameRegion\n| limit 100",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [
           {
-            "id": 1,
-            "field": "",
-            "title": "Account Limit Threshold",
-            "isEnabled": true,
+            "id": "0",
+            "title": "",
+            "field": "countByAccountIdApiNameRegionStage",
             "rules": [
-              {
-                "id": 0,
-                "color": "#EEA746",
-                "comparator": "≥",
-                "label": "",
-                "value": 5000
-              },
-              {
-                "id": 1,
-                "color": {
-                  "Default": "var(--dt-colors-charts-categorical-color-14-default, #d56b1a)"
-                },
-                "comparator": "≥",
-                "label": "",
-                "value": 8000
-              },
-              {
-                "id": 2,
-                "color": {
-                  "Default": "var(--dt-colors-charts-status-critical-default, #c4233b)"
-                },
-                "comparator": "≥",
-                "label": "",
-                "value": 10000
-              }
-            ]
+              { "id": "0", "label": "", "comparator": "≥", "color": "#7dc540" },
+              { "id": "1", "label": "", "comparator": "≥", "color": "#f5d30f" },
+              { "id": "2", "label": "", "comparator": "≥", "color": "#dc172a" }
+            ],
+            "isEnabled": true
           }
         ],
         "chartSettings": {
           "xAxisScaling": "analyzedTimeframe",
           "seriesOverrides": [],
-          "gapPolicy": "gap",
+          "gapPolicy": "connect",
           "legend": { "hidden": false, "position": "auto" },
-          "leftYAxisSettings": {
-            "isLabelVisible": true,
-            "label": "Request Count"
-          },
+          "leftYAxisSettings": { "isLabelVisible": true, "label": "Latency" },
           "hiddenLegendFields": ["interval"],
           "circleChartSettings": {
             "groupingThresholdType": "relative",
@@ -129,7 +103,7 @@
           "valueRepresentation": "absolute",
           "fieldMapping": {
             "timestamp": "timeframe",
-            "leftAxisValues": ["Count"]
+            "leftAxisValues": ["Avg Latency", "Max Latency", "Min Latency"]
           },
           "pointsDisplay": "auto",
           "rightYAxisSettings": {
@@ -137,7 +111,14 @@
             "label": "Latency",
             "scale": "linear"
           },
-          "tooltip": { "variant": "single", "seriesDisplayMode": "single-line" }
+          "tooltip": {
+            "variant": "single",
+            "seriesDisplayMode": "single-line"
+          },
+          "bandChartSettings": {
+            "lower": "Avg Latency",
+            "upper": "Avg Latency"
+          }
         },
         "singleValue": {
           "showLabel": true,
@@ -147,8 +128,7 @@
           "autoscale": true,
           "alignment": "center",
           "trend": { "trendType": "auto", "isVisible": true },
-          "colorThresholdTarget": "value",
-          "sparklineSettings": { "record": "Min Latency" }
+          "colorThresholdTarget": "value"
         },
         "table": {
           "rowDensity": "condensed",
@@ -160,7 +140,11 @@
           "monospacedFontColumns": [],
           "columnWidths": {},
           "columnTypeOverrides": [
-            { "fields": ["Count"], "value": "sparkline", "id": 1744624072051 }
+            {
+              "fields": ["Avg Latency", "Max Latency", "Min Latency"],
+              "value": "sparkline",
+              "id": 1741626519343
+            }
           ]
         },
         "honeycomb": {
@@ -203,17 +187,17 @@
             "decimals": 2,
             "suffix": "",
             "delimiter": false,
-            "added": 1740654578185
+            "added": 1743762671776
           },
           {
-            "identifier": "p50LatencyByAccountIdApiNameRegion",
+            "identifier": "Min Latency",
             "unitCategory": "time",
             "baseUnit": "millisecond",
             "displayUnit": null,
             "decimals": 2,
             "suffix": "",
             "delimiter": false,
-            "added": 1740656863286
+            "added": 1743762675242
           }
         ],
         "legend": { "ratio": 27 },
@@ -254,7 +238,7 @@
         "chartSettings": {
           "xAxisScaling": "analyzedTimeframe",
           "seriesOverrides": [],
-          "gapPolicy": "gap",
+          "gapPolicy": { "threshold": "1h" },
           "legend": { "hidden": false },
           "leftYAxisSettings": {
             "isLabelVisible": true,
@@ -276,7 +260,6 @@
             "valueAxisLabel": "interval",
             "tooltipVariant": "single"
           },
-          "bandChartSettings": { "lower": "Errors4xx", "upper": "Errors5xx" },
           "xAxisLabel": "timeframe",
           "xAxisIsLabelVisible": false,
           "valueRepresentation": "absolute",
@@ -286,7 +269,8 @@
           },
           "pointsDisplay": "auto",
           "tooltip": { "seriesDisplayMode": "single-line" },
-          "curve": "linear"
+          "curve": "linear",
+          "bandChartSettings": { "lower": "Errors4xx", "upper": "Errors5xx" }
         },
         "singleValue": {
           "showLabel": true,
@@ -296,8 +280,7 @@
           "autoscale": true,
           "alignment": "center",
           "trend": { "trendType": "auto", "isVisible": true },
-          "colorThresholdTarget": "value",
-          "sparklineSettings": { "record": "Errors5xx" }
+          "colorThresholdTarget": "value"
         },
         "table": {
           "rowDensity": "condensed",
@@ -312,7 +295,7 @@
             {
               "fields": ["Errors4xx", "Errors5xx"],
               "value": "sparkline",
-              "id": 1740759673719
+              "id": 1741626519441
             }
           ]
         },
@@ -334,9 +317,9 @@
           "truncationMode": "middle",
           "displayedFields": ["apiname"]
         },
-        "valueBoundaries": { "min": "auto", "max": "auto" },
         "label": { "showLabel": false, "label": "interval" },
         "icon": { "showIcon": false, "icon": "" },
+        "valueBoundaries": { "min": "auto", "max": "auto" },
         "unitsOverrides": [],
         "legend": { "ratio": 26 },
         "dataMapping": { "value": "interval" }
@@ -356,7 +339,7 @@
     "4": {
       "title": "Gateway Requests and Latencies (all gateways)",
       "type": "data",
-      "query": "timeseries { count = sum(cloud.aws.apigateway.countByAccountIdApiNameRegion), avgLatency = avg(cloud.aws.apigateway.latencyByAccountIdApiNameRegion), minLatency = min(cloud.aws.apigateway.latencyByAccountIdApiNameRegion), maxLatency = max(cloud.aws.apigateway.latencyByAccountIdApiNameRegion) }, \nby: { apiname }, \nfilter: { aws.account.id == $SelectedAWSAccount }, \nunion: true\n| fieldsAdd Count = arraySum(count)\n| fieldsAdd avgLatency = arrayAvg(avgLatency)\n| fieldsAdd minLatency = arrayMin(minLatency)\n| fieldsAdd maxLatency = arrayMax(maxLatency)\n| fieldsRename `API Name` = apiname\n| fieldsRename `Avg Latency` = avgLatency\n| fieldsRename `Min Latency` = minLatency\n| fieldsRename `Max Latency` = maxLatency",
+      "query": "timeseries { countByAccountIdApiNameRegion = sum(cloud.aws.apigateway.countByAccountIdApiNameRegion), latencyByAccountIdApiNameRegion = avg(cloud.aws.apigateway.latencyByAccountIdApiNameRegion) }, \nby: { apiname }, \nfilter: { aws.account.id == $SelectedAWSAccount }, \nunion: true\n| fieldsAdd Count = arraySum(countByAccountIdApiNameRegion)\n| fieldsAdd Latency = arrayAvg(latencyByAccountIdApiNameRegion)\n| fieldsRename `API Name` = apiname",
       "visualization": "table",
       "visualizationSettings": {
         "thresholds": [
@@ -389,11 +372,11 @@
             "scale": "absolute",
             "groupMode": "stacked",
             "colorPaletteMode": "multi-color",
-            "categoryAxisLabel": "API Name",
-            "valueAxisLabel": "Avg Latency,Min Latency,Max Latency,Count",
-            "tooltipVariant": "single",
             "categoryAxis": ["API Name"],
-            "valueAxis": ["Avg Latency", "Min Latency", "Max Latency", "Count"]
+            "categoryAxisLabel": "API Name",
+            "valueAxis": ["Count", "Latency"],
+            "valueAxisLabel": "Count,Latency",
+            "tooltipVariant": "single"
           },
           "colorPalette": "categorical",
           "valueRepresentation": "absolute",
@@ -407,19 +390,22 @@
             "count",
             "latency",
             "Count",
-            "Latency",
-            "Avg Latency",
-            "maxLatency",
-            "Max Latency",
-            "Min Latency"
+            "Latency"
           ],
+          "fieldMapping": {
+            "timestamp": "timeframe",
+            "leftAxisValues": [
+              "countByAccountIdApiNameRegion",
+              "latencyByAccountIdApiNameRegion"
+            ]
+          },
           "leftYAxisSettings": {
             "isLabelVisible": true,
             "label": "Count • Latency"
           },
-          "fieldMapping": {
-            "timestamp": "timeframe",
-            "leftAxisValues": ["count"]
+          "bandChartSettings": {
+            "lower": "countByAccountIdApiNameRegion",
+            "upper": "latencyByAccountIdApiNameRegion"
           }
         },
         "singleValue": {
@@ -430,19 +416,30 @@
           "autoscale": true,
           "alignment": "center",
           "trend": { "trendType": "auto", "isVisible": true },
-          "colorThresholdTarget": "value",
-          "sparklineSettings": { "record": "count" }
+          "colorThresholdTarget": "value"
         },
         "table": {
-          "hiddenColumns": [["timeframe"], ["interval"], ["count"]],
+          "hiddenColumns": [
+            ["timeframe"],
+            ["interval"],
+            ["countByAccountIdApiNameRegion"],
+            ["latencyByAccountIdApiNameRegion"]
+          ],
           "colorThresholdTarget": "value",
           "columnTypeOverrides": [
-            { "fields": ["count"], "value": "sparkline", "id": 1740759673875 }
+            {
+              "fields": [
+                "countByAccountIdApiNameRegion",
+                "latencyByAccountIdApiNameRegion"
+              ],
+              "value": "sparkline",
+              "id": 1741626519288
+            }
           ],
           "columnWidths": {
             "[\"apiname\"]": 261.6579895019531,
             "[\"countByAccountIdApiNameRegion\"]": 112.14236450195312,
-            "[\"API Name\"]": 523.9600830078125,
+            "[\"API Name\"]": 336.9600830078125,
             "[\"Count\"]": 153.50868225097656
           },
           "linewrapEnabled": false,
@@ -453,7 +450,7 @@
         "honeycomb": {
           "shape": "hexagon",
           "legend": { "hidden": false, "position": "auto", "ratio": "auto" },
-          "dataMappings": { "value": "Avg Latency" },
+          "dataMappings": { "value": "Count" },
           "displayedFields": ["API Name"],
           "truncationMode": "middle",
           "colorMode": "color-palette",
@@ -465,10 +462,8 @@
           "colorPalette": "categorical",
           "dataMappings": [
             { "valueAxis": "interval", "rangeAxis": "" },
-            { "valueAxis": "Avg Latency", "rangeAxis": "" },
-            { "valueAxis": "Min Latency", "rangeAxis": "" },
-            { "valueAxis": "Max Latency", "rangeAxis": "" },
-            { "valueAxis": "Count", "rangeAxis": "" }
+            { "valueAxis": "Count", "rangeAxis": "" },
+            { "valueAxis": "Latency", "rangeAxis": "" }
           ],
           "variant": "single",
           "truncationMode": "middle",
@@ -489,7 +484,7 @@
             "added": 1739966282364
           },
           {
-            "identifier": "Avg Latency",
+            "identifier": "Latency",
             "unitCategory": "time",
             "baseUnit": "millisecond",
             "displayUnit": "millisecond",
@@ -497,30 +492,9 @@
             "suffix": "",
             "delimiter": false,
             "added": 1739966292614
-          },
-          {
-            "identifier": "Min Latency",
-            "unitCategory": "time",
-            "baseUnit": "millisecond",
-            "displayUnit": null,
-            "decimals": 2,
-            "suffix": "",
-            "delimiter": false,
-            "added": 1740661962880
-          },
-          {
-            "identifier": "Max Latency",
-            "unitCategory": "time",
-            "baseUnit": "millisecond",
-            "displayUnit": null,
-            "decimals": 2,
-            "suffix": "",
-            "delimiter": false,
-            "added": 1740661983496
           }
         ],
-        "dataMapping": { "value": "Count" },
-        "autoSelectVisualization": false
+        "dataMapping": { "value": "Count" }
       },
       "querySettings": {
         "maxResultRecords": 1000,
@@ -601,10 +575,7 @@
           "autoscale": true,
           "alignment": "center",
           "trend": { "trendType": "auto", "isVisible": true },
-          "colorThresholdTarget": "value",
-          "sparklineSettings": {
-            "record": "4xxErrorByAccountIdApiNameRegionStage"
-          }
+          "colorThresholdTarget": "value"
         },
         "table": {
           "hiddenColumns": [
@@ -617,7 +588,7 @@
             {
               "fields": ["4xxErrorByAccountIdApiNameRegionStage"],
               "value": "sparkline",
-              "id": 1740759673871
+              "id": 1741626519495
             }
           ],
           "linewrapEnabled": false,
@@ -646,9 +617,9 @@
           "truncationMode": "middle",
           "displayedFields": ["API Name"]
         },
-        "valueBoundaries": { "min": "auto", "max": "auto" },
         "label": { "showLabel": false, "label": "4XX Error Count" },
         "icon": { "showIcon": false, "icon": "" },
+        "valueBoundaries": { "min": "auto", "max": "auto" },
         "unitsOverrides": [
           {
             "identifier": "4XX Error Count",
@@ -743,10 +714,7 @@
           "autoscale": true,
           "alignment": "center",
           "trend": { "trendType": "auto", "isVisible": true },
-          "colorThresholdTarget": "value",
-          "sparklineSettings": {
-            "record": "5xxErrorByAccountIdApiNameRegionStage"
-          }
+          "colorThresholdTarget": "value"
         },
         "table": {
           "hiddenColumns": [
@@ -759,7 +727,7 @@
             {
               "fields": ["5xxErrorByAccountIdApiNameRegionStage"],
               "value": "sparkline",
-              "id": 1740759673878
+              "id": 1741626519500
             }
           ],
           "linewrapEnabled": false,
@@ -788,9 +756,9 @@
           "truncationMode": "middle",
           "displayedFields": ["API Name"]
         },
-        "valueBoundaries": { "min": "auto", "max": "auto" },
         "label": { "showLabel": false, "label": "5XX Error Count" },
         "icon": { "showIcon": false, "icon": "" },
+        "valueBoundaries": { "min": "auto", "max": "auto" },
         "unitsOverrides": [
           {
             "identifier": "5XX Error Count",
@@ -886,10 +854,7 @@
           "trend": { "trendType": "auto", "isVisible": true },
           "colorThresholdTarget": "value",
           "recordField": "blockedRequestsByAccountIdRegionRuleWebACL",
-          "label": "blockedRequestsByAccountIdRegionRuleWebACL",
-          "sparklineSettings": {
-            "record": "blockedRequestsByAccountIdRegionRuleWebACL"
-          }
+          "label": "blockedRequestsByAccountIdRegionRuleWebACL"
         },
         "table": {
           "hiddenColumns": [
@@ -903,7 +868,7 @@
             {
               "fields": ["blockedRequestsByAccountIdRegionRuleWebACL"],
               "value": "sparkline",
-              "id": 1740755633354
+              "id": 1741626519436
             }
           ],
           "linewrapEnabled": false,
@@ -941,9 +906,9 @@
           "truncationMode": "middle",
           "displayedFields": ["Region", "Account", "Rule", "Web ACL", "region"]
         },
-        "valueBoundaries": { "min": "auto", "max": "auto" },
         "label": { "showLabel": false, "label": "Count" },
         "icon": { "showIcon": false, "icon": "" },
+        "valueBoundaries": { "min": "auto", "max": "auto" },
         "unitsOverrides": [
           {
             "identifier": "blockedRequestsByAccountIdRegionRuleWebACL",
@@ -986,7 +951,7 @@
     "25": {
       "title": "Invocations",
       "type": "code",
-      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\n  if ($Lambda == \"All\") {\n    $Lambda = $EnvironmentName.toLowerCase();\n  }\n\n  if ($EnvironmentName);\n  if ($SelectedAWSAccount);\n\n  query = `timeseries invocationsByAccountIdFunctionNameRegion = sum(cloud.aws.lambda.invocationsByAccountIdFunctionNameRegion, default: 0), by: { functionname }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${$Lambda}\") }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}",
+      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\nlet env:string = $Environment;\nlet filter:string = \"ticf-cri\";\n\nif (env.substring(0,3) == \"SSF\")\n{\n filter = \"ssf\";\n}\n\n  query = `timeseries invocationsByAccountIdFunctionNameRegion = sum(cloud.aws.lambda.invocationsByAccountIdFunctionNameRegion, default: 0), by: { functionname }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${filter}\") }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
@@ -1007,9 +972,7 @@
             "scale": "absolute",
             "groupMode": "stacked",
             "colorPaletteMode": "multi-color",
-            "categoryAxis": ["functionname"],
             "categoryAxisLabel": "functionname",
-            "valueAxis": ["interval"],
             "valueAxisLabel": "interval",
             "tooltipVariant": "single"
           },
@@ -1033,10 +996,7 @@
           "autoscale": true,
           "alignment": "center",
           "trend": { "trendType": "auto", "isVisible": true },
-          "colorThresholdTarget": "value",
-          "sparklineSettings": {
-            "record": "invocationsByAccountIdFunctionNameRegion"
-          }
+          "colorThresholdTarget": "value"
         },
         "table": {
           "rowDensity": "condensed",
@@ -1051,7 +1011,7 @@
             {
               "fields": ["invocationsByAccountIdFunctionNameRegion"],
               "value": "sparkline",
-              "id": 1741623978785
+              "id": 1741611283549
             }
           ]
         },
@@ -1083,7 +1043,7 @@
     "26": {
       "title": "Total Invocations",
       "type": "code",
-      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n  \n  if ($EnvironmentName);\n  if ($SelectedAWSAccount);\n  if ($TeamName);\n\n  query = `timeseries invocations = sum(cloud.aws.lambda.invocationsByAccountIdFunctionNameRegion), by: { functionname }, filter: { (aws.account.id == \"${$SelectedAWSAccount}\") AND contains(functionname, \"${$TeamName}\") } | fieldsAdd invocationsSum = arraySum(invocations) | sort invocationsSum desc`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}",
+      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\nlet env:string = $Environment;\nlet filter:string = \"ticf-cri\";\n\nif (env.substring(0,3) == \"SSF\")\n{\n filter = \"ssf\";\n}\n  query = `timeseries invocations = sum(cloud.aws.lambda.invocationsByAccountIdFunctionNameRegion, rate: 1min), by: { functionname }, filter: { (aws.account.id == \"${$SelectedAWSAccount}\") AND contains(functionname, \"${filter}\") } | fieldsAdd invocationsSum = arraySum(invocations) | sort invocationsSum desc`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}",
       "visualization": "categoricalBarChart",
       "visualizationSettings": {
         "thresholds": [],
@@ -1109,7 +1069,8 @@
             "valueAxis": ["invocationsSum"],
             "valueAxisLabel": "invocationsSum",
             "tooltipVariant": "single",
-            "isCategoryLabelVisible": false
+            "isCategoryLabelVisible": false,
+            "isValueLabelVisible": false
           },
           "colorPalette": "categorical",
           "valueRepresentation": "absolute",
@@ -1132,8 +1093,7 @@
           "autoscale": true,
           "alignment": "center",
           "trend": { "trendType": "auto", "isVisible": true },
-          "colorThresholdTarget": "value",
-          "sparklineSettings": { "record": "invocations" }
+          "colorThresholdTarget": "value"
         },
         "table": {
           "rowDensity": "condensed",
@@ -1148,7 +1108,7 @@
             {
               "fields": ["invocations"],
               "value": "sparkline",
-              "id": 1741623979406
+              "id": 1747903203789
             }
           ]
         },
@@ -1177,7 +1137,7 @@
         "label": { "showLabel": false, "label": "invocationsSum" },
         "icon": { "showIcon": false, "icon": "" },
         "autoSelectVisualization": false,
-        "legend": { "ratio": 21 },
+        "legend": { "ratio": 15, "showLegend": false, "position": "auto" },
         "dataMapping": { "value": "invocationsSum" },
         "unitsOverrides": [
           {
@@ -1188,7 +1148,7 @@
             "decimals": 0,
             "suffix": "",
             "delimiter": false,
-            "added": 1740653543296
+            "added": 1740653672393
           }
         ]
       }
@@ -1196,13 +1156,13 @@
     "27": {
       "title": "Duration",
       "type": "code",
-      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\n  if ($Lambda == \"All\") {\n    $Lambda = $EnvironmentName.toLowerCase();\n  }\n\n  if ($EnvironmentName);\n  if ($SelectedAWSAccount);\n\n  query = `timeseries durationByAccountIdFunctionNameRegion = avg(cloud.aws.lambda.durationByAccountIdFunctionNameRegion, default: 0), by: { functionname }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${$Lambda}\") }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}\n\n\n\n",
+      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\nlet env:string = $Environment;\nlet filter:string = \"ticf-cri\";\n\nif (env.substring(0,3) == \"SSF\")\n{\n filter = \"ssf\";\n}\n  \n  query = `timeseries durationByAccountIdFunctionNameRegion = avg(cloud.aws.lambda.durationByAccountIdFunctionNameRegion, default: 0), by: { functionname }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${filter}\") }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}\n\n\n\n",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
         "chartSettings": {
           "xAxisScaling": "analyzedTimeframe",
-          "gapPolicy": "connect",
+          "gapPolicy": "gap",
           "circleChartSettings": {
             "groupingThresholdType": "relative",
             "groupingThresholdValue": 0,
@@ -1210,16 +1170,14 @@
           },
           "categoryOverrides": {},
           "curve": "linear",
-          "pointsDisplay": "never",
+          "pointsDisplay": "auto",
           "categoricalBarChartSettings": {
             "layout": "horizontal",
             "categoryAxisTickLayout": "horizontal",
             "scale": "absolute",
             "groupMode": "stacked",
             "colorPaletteMode": "multi-color",
-            "categoryAxis": ["functionname"],
             "categoryAxisLabel": "functionname",
-            "valueAxis": ["interval"],
             "valueAxisLabel": "interval",
             "tooltipVariant": "single"
           },
@@ -1243,10 +1201,7 @@
           "autoscale": true,
           "alignment": "center",
           "trend": { "trendType": "auto", "isVisible": true },
-          "colorThresholdTarget": "value",
-          "sparklineSettings": {
-            "record": "durationByAccountIdFunctionNameRegion"
-          }
+          "colorThresholdTarget": "value"
         },
         "table": {
           "rowDensity": "condensed",
@@ -1261,7 +1216,7 @@
             {
               "fields": ["durationByAccountIdFunctionNameRegion"],
               "value": "sparkline",
-              "id": 1741623979158
+              "id": 1741616933899
             }
           ]
         },
@@ -1292,7 +1247,7 @@
             "identifier": "durationByAccountIdFunctionNameRegion",
             "unitCategory": "time",
             "baseUnit": "millisecond",
-            "displayUnit": null,
+            "displayUnit": "millisecond",
             "decimals": 0,
             "suffix": "",
             "delimiter": false,
@@ -1305,7 +1260,7 @@
     "28": {
       "title": "Concurrent Executions",
       "type": "code",
-      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\n  if ($Lambda == \"All\") {\n    $Lambda = $EnvironmentName.toLowerCase();\n  }\n\n  if ($EnvironmentName);\n  if ($SelectedAWSAccount);\n\n  query = `timeseries concurrentExecutionsByAccountIdFunctionNameRegion = max(cloud.aws.lambda.concurrentExecutionsByAccountIdFunctionNameRegion, default: 0), by: { functionname }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${$Lambda}\") }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}",
+      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\nlet env:string = $Environment;\nlet filter:string = \"ticf-cri\";\n\nif (env.substring(0,3) == \"SSF\")\n{\n filter = \"ssf\";\n}\n  query = `timeseries concurrentExecutionsByAccountIdFunctionNameRegion = max(cloud.aws.lambda.concurrentExecutionsByAccountIdFunctionNameRegion, default: 0), by: { functionname }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${filter}\") }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
@@ -1326,9 +1281,7 @@
             "scale": "absolute",
             "groupMode": "stacked",
             "colorPaletteMode": "multi-color",
-            "categoryAxis": ["functionname"],
             "categoryAxisLabel": "functionname",
-            "valueAxis": ["interval"],
             "valueAxisLabel": "interval",
             "tooltipVariant": "single"
           },
@@ -1344,7 +1297,8 @@
           "xAxisLabel": "timeframe",
           "xAxisIsLabelVisible": false,
           "hiddenLegendFields": ["interval"],
-          "leftYAxisSettings": {}
+          "leftYAxisSettings": {},
+          "tooltip": { "variant": "shared" }
         },
         "singleValue": {
           "showLabel": true,
@@ -1354,10 +1308,7 @@
           "autoscale": true,
           "alignment": "center",
           "trend": { "trendType": "auto", "isVisible": true },
-          "colorThresholdTarget": "value",
-          "sparklineSettings": {
-            "record": "concurrentExecutionsByAccountIdFunctionNameRegion"
-          }
+          "colorThresholdTarget": "value"
         },
         "table": {
           "rowDensity": "condensed",
@@ -1372,7 +1323,7 @@
             {
               "fields": ["concurrentExecutionsByAccountIdFunctionNameRegion"],
               "value": "sparkline",
-              "id": 1741623978974
+              "id": 1741616933802
             }
           ]
         },
@@ -1404,7 +1355,7 @@
     "29": {
       "title": "Error Rate",
       "type": "code",
-      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\nimport { TimeframeSelector } from '@dynatrace/strato-components-preview/forms';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\n  if ($Lambda == \"All\") {\n    $Lambda = $EnvironmentName.toLowerCase();\n  }\n\n  if ($EnvironmentName);\n  if ($SelectedAWSAccount);\n\n  query = `timeseries { errorsByAccountIdFunctionNameRegion = sum(cloud.aws.lambda.errorsByAccountIdFunctionNameRegion, default: 0), invocationsByAccountIdFunctionNameRegion = sum(cloud.aws.lambda.invocationsByAccountIdFunctionNameRegion, default: 0) }, by: { functionname, aws.account.id }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${$Lambda}\") } | fieldsAdd errorRate = (errorsByAccountIdFunctionNameRegion[] / invocationsByAccountIdFunctionNameRegion[]) * 100 | fieldsRemove invocationsByAccountIdFunctionNameRegion, errorsByAccountIdFunctionNameRegion | limit 100`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to  } });\n\n  return response.result;\n}",
+      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\nimport { TimeframeSelector } from '@dynatrace/strato-components-preview/forms';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\nlet env:string = $Environment;\nlet filter:string = \"ticf-cri\";\n\nif (env.substring(0,3) == \"SSF\")\n{\n filter = \"ssf\";\n}\n  \n  query = `timeseries { errorsByAccountIdFunctionNameRegion = sum(cloud.aws.lambda.errorsByAccountIdFunctionNameRegion), invocationsByAccountIdFunctionNameRegion = sum(cloud.aws.lambda.invocationsByAccountIdFunctionNameRegion) }, by: { functionname, aws.account.id }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${filter}\") } | fieldsAdd errorRate = (errorsByAccountIdFunctionNameRegion[] / invocationsByAccountIdFunctionNameRegion[]) * 100 | fieldsRemove invocationsByAccountIdFunctionNameRegion, errorsByAccountIdFunctionNameRegion | limit 100`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to  } });\n\n  return response.result;\n}",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
@@ -1425,9 +1376,7 @@
             "scale": "absolute",
             "groupMode": "stacked",
             "colorPaletteMode": "multi-color",
-            "categoryAxis": ["functionname", "aws.account.id"],
             "categoryAxisLabel": "functionname,aws.account.id",
-            "valueAxis": ["interval"],
             "valueAxisLabel": "interval",
             "tooltipVariant": "single"
           },
@@ -1441,7 +1390,7 @@
           "xAxisLabel": "timeframe",
           "xAxisIsLabelVisible": false,
           "hiddenLegendFields": ["aws.account.id", "interval"],
-          "leftYAxisSettings": { "max": 100, "min": 0 }
+          "leftYAxisSettings": { "max": "auto" }
         },
         "singleValue": {
           "showLabel": true,
@@ -1451,8 +1400,7 @@
           "autoscale": true,
           "alignment": "center",
           "trend": { "trendType": "auto", "isVisible": true },
-          "colorThresholdTarget": "value",
-          "sparklineSettings": { "record": "errorRate" }
+          "colorThresholdTarget": "value"
         },
         "table": {
           "rowDensity": "condensed",
@@ -1467,7 +1415,7 @@
             {
               "fields": ["errorRate"],
               "value": "sparkline",
-              "id": 1741623431718
+              "id": 1741616933930
             }
           ]
         },
@@ -1511,7 +1459,7 @@
     "30": {
       "title": "Error Count",
       "type": "code",
-      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\nimport { TimeframeSelector } from '@dynatrace/strato-components-preview/forms';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\n  if ($Lambda == \"All\") {\n    $Lambda = $EnvironmentName.toLowerCase();\n  }\n\n  if ($EnvironmentName);\n  if ($SelectedAWSAccount);\n\n  query = `timeseries errorsByAccountIdFunctionNameRegion = sum(cloud.aws.lambda.errorsByAccountIdFunctionNameRegion, default: 0), by: { functionname }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${$Lambda}\") } | fieldsAdd errorCount = arraysum(errorsByAccountIdFunctionNameRegion) | limit 100`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to  } });\n\n  return response.result;\n}",
+      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\nimport { TimeframeSelector } from '@dynatrace/strato-components-preview/forms';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\nlet env:string = $Environment;\nlet filter:string = \"ticf-cri\";\n\nif (env.substring(0,3) == \"SSF\")\n{\n filter = \"ssf\";\n}\n  \n  query = `timeseries errorsByAccountIdFunctionNameRegion = sum(cloud.aws.lambda.errorsByAccountIdFunctionNameRegion), by: { functionname }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${filter}\") } | fieldsAdd errorCount = arraysum(errorsByAccountIdFunctionNameRegion) | limit 100`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to  } });\n\n  return response.result;\n}",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
@@ -1532,9 +1480,7 @@
             "scale": "absolute",
             "groupMode": "stacked",
             "colorPaletteMode": "multi-color",
-            "categoryAxis": ["functionname"],
             "categoryAxisLabel": "functionname",
-            "valueAxis": ["errorCount"],
             "valueAxisLabel": "errorCount",
             "tooltipVariant": "single"
           },
@@ -1558,10 +1504,7 @@
           "autoscale": true,
           "alignment": "center",
           "trend": { "trendType": "auto", "isVisible": true },
-          "colorThresholdTarget": "value",
-          "sparklineSettings": {
-            "record": "errorsByAccountIdFunctionNameRegion"
-          }
+          "colorThresholdTarget": "value"
         },
         "table": {
           "rowDensity": "condensed",
@@ -1576,7 +1519,7 @@
             {
               "fields": ["errorsByAccountIdFunctionNameRegion"],
               "value": "sparkline",
-              "id": 1741623431675
+              "id": 1741616933781
             }
           ]
         },
@@ -1611,10 +1554,43 @@
     "31": {
       "title": "Throttles",
       "type": "code",
-      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\nimport { TimeframeSelector } from '@dynatrace/strato-components-preview/forms';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\n  if ($Lambda == \"All\") {\n    $Lambda = $EnvironmentName.toLowerCase();\n  }\n\n  if ($EnvironmentName);\n  if ($SelectedAWSAccount);\n\n  query = `timeseries throttleCount = sum(cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion), filter: aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${$Lambda}\"), by: { functionname }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to  } });\n\n  return response.result;\n}",
+      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\nimport { TimeframeSelector } from '@dynatrace/strato-components-preview/forms';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\n  if ($Lambda == \"All\") {\n    $Lambda = \"ticf-cri\";\n  }\n\n  if ($EnvironmentName == \"Integration\");\n  if ($EnvironmentName == \"Production\");\n  if ($SelectedAWSAccount == \"abc\");\n\n  query = `timeseries throttleCount = sum(cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion, default: 0), filter: aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${$Lambda}\"), by: { functionname }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to  } });\n\n  return response.result;\n}",
       "visualization": "lineChart",
       "visualizationSettings": {
-        "thresholds": [],
+        "thresholds": [
+          {
+            "id": 1,
+            "field": "",
+            "title": "",
+            "isEnabled": true,
+            "rules": [
+              {
+                "id": 0,
+                "color": {
+                  "Default": "var(--dt-colors-charts-status-ideal-default, #2f6863)"
+                },
+                "comparator": "≥",
+                "label": ""
+              },
+              {
+                "id": 1,
+                "color": {
+                  "Default": "var(--dt-colors-charts-status-warning-default, #eca440)"
+                },
+                "comparator": "≥",
+                "label": ""
+              },
+              {
+                "id": 2,
+                "color": {
+                  "Default": "var(--dt-colors-charts-status-critical-default, #c4233b)"
+                },
+                "comparator": "≥",
+                "label": ""
+              }
+            ]
+          }
+        ],
         "chartSettings": {
           "xAxisScaling": "analyzedTimeframe",
           "gapPolicy": "gap",
@@ -1632,9 +1608,7 @@
             "scale": "absolute",
             "groupMode": "stacked",
             "colorPaletteMode": "multi-color",
-            "categoryAxis": ["functionname"],
             "categoryAxisLabel": "functionname",
-            "valueAxis": ["interval"],
             "valueAxisLabel": "interval",
             "tooltipVariant": "single"
           },
@@ -1658,8 +1632,7 @@
           "autoscale": true,
           "alignment": "center",
           "trend": { "trendType": "auto", "isVisible": true },
-          "colorThresholdTarget": "value",
-          "sparklineSettings": { "record": "throttleCount" }
+          "colorThresholdTarget": "value"
         },
         "table": {
           "rowDensity": "condensed",
@@ -1674,7 +1647,7 @@
             {
               "fields": ["throttleCount"],
               "value": "sparkline",
-              "id": 1741623431417
+              "id": 1741611189201
             }
           ]
         },
@@ -1705,9 +1678,8 @@
     },
     "32": {
       "title": "$Lambda - Request Count & Latency (p50, p90, p95, p99)",
-      "description": "Select a lambda from the dropdown to display the stats for that lambda. ",
       "type": "code",
-      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\nimport { TimeframeSelector } from '@dynatrace/strato-components-preview/forms';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\n  if ($Lambda == \"All\") {\n    return\n  }\n\n  if ($EnvironmentName);\n  if ($SelectedAWSAccount);\n  if ($LambdaServiceID);\n\n  query = `timeseries Count = sum(dt.service.request.count), by:{dt.entity.service}, bins: 60, filter: dt.entity.service == \"${$LambdaServiceID}\", nonempty: true, default: 0  | fieldsAdd metricName = \"Throughput\" | append[timeseries p50 = percentile(dt.service.request.response_time, 50), by:{dt.entity.service}, bins: 60, filter: dt.entity.service == \"${$LambdaServiceID}\", nonempty: true, default: 0  | fieldsAdd metricName = \"p50\"]\n| append[timeseries p90 = percentile(dt.service.request.response_time, 90), by:{dt.entity.service}, bins: 60, filter: dt.entity.service == \"${$LambdaServiceID}\", nonempty: true, default: 0  | fieldsAdd metricName = \"p90\"]\n| append[timeseries p99 = percentile(dt.service.request.response_time, 99), by:{dt.entity.service}, bins: 60, filter: dt.entity.service == \"${$LambdaServiceID}\", nonempty: true, default: 0  | fieldsAdd metricName = \"p99\"] `;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to  } });\n\n  return response.result;\n}",
+      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\nimport { TimeframeSelector } from '@dynatrace/strato-components-preview/forms';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\nlet env:string = $Environment;\nlet filter:string = \"ticf-cri\";\n\nif (env.substring(0,3) == \"SSF\")\n{\n filter = \"ssf\";\n}\n  query = `timeseries Count = sum(dt.service.request.count, rate: 1m), by:{dt.entity.service}, bins: 60, filter: dt.entity.service == \"${$LambdaServiceID}\", nonempty: true, default: 0  | fieldsAdd metricName = \"Throughput\" | append[timeseries p50 = percentile(dt.service.request.response_time, 50), by:{dt.entity.service}, bins: 60, filter: dt.entity.service == \"${$LambdaServiceID}\", nonempty: true, default: 0  | fieldsAdd metricName = \"p50\"]\n| append[timeseries p90 = percentile(dt.service.request.response_time, 90), by:{dt.entity.service}, bins: 60, filter: dt.entity.service == \"${$LambdaServiceID}\", nonempty: true, default: 0  | fieldsAdd metricName = \"p90\"]\n| append[timeseries p99 = percentile(dt.service.request.response_time, 99), by:{dt.entity.service}, bins: 60, filter: dt.entity.service == \"${$LambdaServiceID}\", nonempty: true, default: 0  | fieldsAdd metricName = \"p99\"] `;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to  } });\n\n  return response.result;\n}",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
@@ -1728,15 +1700,19 @@
             "scale": "absolute",
             "groupMode": "stacked",
             "colorPaletteMode": "multi-color",
-            "categoryAxisLabel": "dt.entity.service,metricName",
-            "valueAxisLabel": "interval",
-            "tooltipVariant": "single",
             "categoryAxis": ["dt.entity.service", "metricName"],
-            "valueAxis": ["interval"]
+            "categoryAxisLabel": "dt.entity.service,metricName",
+            "valueAxis": ["interval"],
+            "valueAxisLabel": "interval",
+            "tooltipVariant": "single"
           },
           "colorPalette": "categorical",
           "valueRepresentation": "absolute",
           "truncationMode": "middle",
+          "fieldMapping": {
+            "timestamp": "timeframe",
+            "leftAxisValues": ["Count", "p50", "p90", "p99"]
+          },
           "xAxisLabel": "timeframe",
           "xAxisIsLabelVisible": false,
           "hiddenLegendFields": ["dt.entity.service", "metricName", "interval"],
@@ -1745,12 +1721,7 @@
           "rightYAxisSettings": {
             "isLabelVisible": true,
             "label": "Response Time"
-          },
-          "fieldMapping": {
-            "timestamp": "timeframe",
-            "leftAxisValues": ["Count", "p50", "p90", "p99"]
-          },
-          "bandChartSettings": { "lower": "Count", "upper": "p50" }
+          }
         },
         "singleValue": {
           "showLabel": true,
@@ -1771,9 +1742,7 @@
           "monospacedFontEnabled": false,
           "monospacedFontColumns": [],
           "columnWidths": {},
-          "columnTypeOverrides": [
-            { "fields": ["p99"], "value": "sparkline", "id": 1740996250096 }
-          ]
+          "columnTypeOverrides": []
         },
         "honeycomb": {
           "shape": "hexagon",
@@ -1788,14 +1757,14 @@
           "legend": "auto",
           "yAxis": { "label": "Frequency", "scale": "linear" },
           "colorPalette": "categorical",
-          "dataMappings": [{ "valueAxis": "interval", "rangeAxis": "" }],
+          "dataMappings": [],
           "variant": "single",
           "truncationMode": "middle",
-          "displayedFields": ["dt.entity.service", "metricName"]
+          "displayedFields": []
         },
+        "valueBoundaries": { "min": "auto", "max": "auto" },
         "label": { "showLabel": false, "label": "interval" },
         "icon": { "showIcon": false, "icon": "" },
-        "valueBoundaries": { "min": "auto", "max": "auto" },
         "autoSelectVisualization": false,
         "unitsOverrides": [
           {
@@ -1842,10 +1811,327 @@
         "dataMapping": { "value": "interval" }
       }
     },
-    "33": {
+    "34": {
+      "title": "Gateway Request Count",
+      "type": "data",
+      "query": "timeseries { countByAccountIdApiName = sum(cloud.aws.apigateway.countByAccountIdApiNameRegionStage, default: 0) }, \nby: { apiname }, \nfilter: { aws.account.id == $SelectedAWSAccount }, union: true\n| fieldsRename `Count` = countByAccountIdApiName\n| limit 100",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "thresholds": [
+          {
+            "id": 1,
+            "field": "",
+            "title": "Account Limit Threshold",
+            "isEnabled": true,
+            "rules": [
+              {
+                "id": 0,
+                "color": "#EEA746",
+                "comparator": "≥",
+                "label": "",
+                "value": 5000
+              },
+              {
+                "id": 1,
+                "color": {
+                  "Default": "var(--dt-colors-charts-categorical-color-14-default, #d56b1a)"
+                },
+                "comparator": "≥",
+                "label": "",
+                "value": 8000
+              },
+              {
+                "id": 2,
+                "color": {
+                  "Default": "var(--dt-colors-charts-status-critical-default, #c4233b)"
+                },
+                "comparator": "≥",
+                "label": "",
+                "value": 10000
+              }
+            ]
+          }
+        ],
+        "chartSettings": {
+          "xAxisScaling": "analyzedTimeframe",
+          "seriesOverrides": [],
+          "gapPolicy": "connect",
+          "legend": { "hidden": false, "position": "auto" },
+          "leftYAxisSettings": {
+            "isLabelVisible": true,
+            "label": "Request Count"
+          },
+          "hiddenLegendFields": ["interval"],
+          "circleChartSettings": {
+            "groupingThresholdType": "relative",
+            "groupingThresholdValue": 0,
+            "valueType": "relative"
+          },
+          "truncationMode": "middle",
+          "categoricalBarChartSettings": {
+            "categoryAxisLabel": "apiname",
+            "valueAxisLabel": "interval",
+            "tooltipVariant": "single"
+          },
+          "xAxisLabel": "timeframe",
+          "xAxisIsLabelVisible": false,
+          "valueRepresentation": "absolute",
+          "fieldMapping": {
+            "timestamp": "timeframe",
+            "leftAxisValues": ["Count"]
+          },
+          "pointsDisplay": "auto",
+          "rightYAxisSettings": {
+            "isLabelVisible": true,
+            "label": "Latency",
+            "scale": "linear"
+          },
+          "tooltip": { "variant": "single", "seriesDisplayMode": "single-line" }
+        },
+        "singleValue": {
+          "showLabel": true,
+          "label": "apiname",
+          "prefixIcon": "",
+          "recordField": "apiname",
+          "autoscale": true,
+          "alignment": "center",
+          "trend": { "trendType": "auto", "isVisible": true },
+          "colorThresholdTarget": "value"
+        },
+        "table": {
+          "rowDensity": "condensed",
+          "enableSparklines": false,
+          "hiddenColumns": [],
+          "linewrapEnabled": false,
+          "lineWrapIds": [],
+          "monospacedFontEnabled": false,
+          "monospacedFontColumns": [],
+          "columnWidths": {},
+          "columnTypeOverrides": [
+            { "fields": ["Count"], "value": "sparkline", "id": 1743769327074 }
+          ]
+        },
+        "honeycomb": {
+          "shape": "hexagon",
+          "legend": { "hidden": false, "position": "auto", "ratio": "auto" },
+          "dataMappings": { "value": "apiname" },
+          "displayedFields": ["apiname"],
+          "truncationMode": "middle",
+          "colorMode": "color-palette",
+          "colorPalette": "categorical"
+        },
+        "histogram": {
+          "legend": "auto",
+          "yAxis": { "label": "Frequency", "scale": "linear" },
+          "colorPalette": "categorical",
+          "dataMappings": [{ "valueAxis": "interval", "rangeAxis": "" }],
+          "variant": "single",
+          "truncationMode": "middle",
+          "displayedFields": ["apiname"]
+        },
+        "valueBoundaries": { "min": "auto", "max": "auto" },
+        "autoSelectVisualization": false,
+        "label": { "showLabel": false, "label": "interval" },
+        "icon": { "showIcon": false, "icon": "" },
+        "unitsOverrides": [
+          {
+            "identifier": "Latency",
+            "unitCategory": "time",
+            "baseUnit": "millisecond",
+            "displayUnit": null,
+            "decimals": 2,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1740138132831
+          }
+        ],
+        "legend": { "showLegend": false, "position": "auto", "ratio": 26 },
+        "dataMapping": { "value": "interval" }
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "componentState": {
+          "selectedAnalyzerName": "dt.statistics.ui.anomaly_detection.StaticThresholdAnomalyDetectionAnalyzer",
+          "inputData": {
+            "dt.statistics.ui.anomaly_detection.StaticThresholdAnomalyDetectionAnalyzer": {
+              "generalParameters": {
+                "timeframe": {
+                  "startTime": "2025-04-04T12:12:07.068Z",
+                  "endTime": "2025-04-04T12:42:07.068Z"
+                },
+                "resolveDimensionalQueryData": true,
+                "logVerbosity": "INFO"
+              },
+              "alertCondition": "ABOVE",
+              "alertOnMissingData": false,
+              "violatingSamples": 3,
+              "slidingWindow": 5,
+              "dealertingSamples": 5,
+              "query": "timeseries { countByAccountIdApiName = sum(cloud.aws.apigateway.countByAccountIdApiNameRegionStage, default: 0) }, \nby: { apiname }, \nfilter: { aws.account.id == \"640259204840\" }, union: true\n| fieldsRename `Count` = countByAccountIdApiName\n| limit 100",
+              "threshold": 8000
+            }
+          },
+          "analyzerHints": {
+            "dt.statistics.ui.anomaly_detection.StaticThresholdAnomalyDetectionAnalyzer": {
+              "unit": { "unitCategory": "unspecified", "baseUnit": "count" }
+            }
+          }
+        },
+        "davisVisualization": { "isAvailable": true }
+      },
+      "segments": { "tileSegments": [], "tileSegmentsEnabled": false }
+    },
+    "37": {
+      "title": "Claimed Account Concurrency for $SelectedAWSAccount",
+      "type": "data",
+      "query": "timeseries concurrentExecutionsByAccountIdFunctionNameRegion = max(cloud.aws.lambda.claimedAccountConcurrencyByAccountIdRegion, default: 0), \nfilter: { aws.account.id == $SelectedAWSAccount }",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "thresholds": [
+          {
+            "id": 1,
+            "field": "",
+            "title": "Account Limit Threshold",
+            "isEnabled": true,
+            "rules": [
+              {
+                "id": 0,
+                "color": "#EEA746",
+                "comparator": "≥",
+                "label": "",
+                "value": 500
+              },
+              {
+                "id": 1,
+                "color": {
+                  "Default": "var(--dt-colors-charts-categorical-color-14-default, #d56b1a)"
+                },
+                "comparator": "≥",
+                "label": "",
+                "value": 800
+              },
+              {
+                "id": 2,
+                "color": {
+                  "Default": "var(--dt-colors-charts-status-critical-default, #c4233b)"
+                },
+                "comparator": "≥",
+                "label": "",
+                "value": 1000
+              }
+            ]
+          }
+        ],
+        "chartSettings": {
+          "gapPolicy": "gap",
+          "circleChartSettings": {
+            "groupingThresholdType": "relative",
+            "groupingThresholdValue": 0,
+            "valueType": "relative"
+          },
+          "categoryOverrides": {},
+          "curve": "linear",
+          "pointsDisplay": "auto",
+          "categoricalBarChartSettings": {
+            "layout": "horizontal",
+            "categoryAxisTickLayout": "horizontal",
+            "scale": "absolute",
+            "groupMode": "stacked",
+            "colorPaletteMode": "multi-color",
+            "valueAxisScale": "linear"
+          },
+          "colorPalette": "categorical",
+          "valueRepresentation": "absolute",
+          "truncationMode": "middle",
+          "xAxisScaling": "analyzedTimeframe",
+          "xAxisLabel": "timeframe",
+          "xAxisIsLabelVisible": false,
+          "hiddenLegendFields": ["interval", "count()"],
+          "fieldMapping": {
+            "timestamp": "timeframe",
+            "leftAxisValues": [
+              "concurrentExecutionsByAccountIdFunctionNameRegion"
+            ]
+          },
+          "leftYAxisSettings": {
+            "isLabelVisible": true,
+            "label": "ConcurrentExecutions"
+          },
+          "legend": { "hidden": true }
+        },
+        "singleValue": {
+          "showLabel": true,
+          "label": "",
+          "prefixIcon": "AnalyticsIcon",
+          "isIconVisible": false,
+          "autoscale": true,
+          "alignment": "center",
+          "colorThresholdTarget": "value"
+        },
+        "table": {
+          "rowDensity": "condensed",
+          "enableSparklines": false,
+          "hiddenColumns": [],
+          "linewrapEnabled": false,
+          "lineWrapIds": [],
+          "monospacedFontEnabled": false,
+          "monospacedFontColumns": [],
+          "columnWidths": {},
+          "columnTypeOverrides": [
+            {
+              "fields": ["concurrentExecutionsByAccountIdFunctionNameRegion"],
+              "value": "sparkline",
+              "id": 1744372615720
+            }
+          ]
+        },
+        "honeycomb": {
+          "shape": "hexagon",
+          "legend": { "hidden": false, "position": "auto", "ratio": "auto" },
+          "dataMappings": {},
+          "displayedFields": [],
+          "truncationMode": "middle",
+          "colorMode": "color-palette",
+          "colorPalette": "categorical"
+        },
+        "histogram": {
+          "legend": { "position": "auto" },
+          "yAxis": {
+            "label": "Frequency",
+            "isLabelVisible": true,
+            "scale": "linear"
+          },
+          "colorPalette": "categorical",
+          "dataMappings": [],
+          "variant": "single",
+          "truncationMode": "middle"
+        },
+        "valueBoundaries": { "min": "auto", "max": "auto" },
+        "autoSelectVisualization": false
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "39": {
       "title": "Recursive Executions Dropped",
       "type": "code",
-      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\n  if ($Lambda == \"All\") {\n    $Lambda = $EnvironmentName.toLowerCase();\n  }\n\n  if ($EnvironmentName);\n  if ($SelectedAWSAccount);\n\n  query = `timeseries concurrentExecutionsByAccountIdFunctionNameRegion = sum(cloud.aws.lambda.recursiveInvocationsDroppedByAccountIdExecutedVersionFunctionNameRegionResource, default: 0), by: { functionname }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${$Lambda}\") }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}",
+      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\nlet env:string = $Environment;\nlet filter:string = \"ticf-cri\";\n\nif (env.substring(0,3) == \"SSF\")\n{\n filter = \"ssf\";\n}\n  \n  query = `timeseries concurrentExecutionsByAccountIdFunctionNameRegion = sum(cloud.aws.lambda.recursiveInvocationsDroppedByAccountIdExecutedVersionFunctionNameRegionResource, default: 0), by: { functionname }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${filter}\") }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
@@ -1931,135 +2217,6 @@
           "truncationMode": "middle",
           "displayedFields": ["functionname"]
         },
-        "label": { "showLabel": false, "label": "interval" },
-        "icon": { "showIcon": false, "icon": "" },
-        "valueBoundaries": { "min": "auto", "max": "auto" },
-        "autoSelectVisualization": false,
-        "dataMapping": { "value": "interval" }
-      }
-    },
-    "34": {
-      "title": "Claimed Account Concurrency for $SelectedAWSAccount",
-      "type": "code",
-      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\n  if ($Lambda == \"All\") {\n    $Lambda = $EnvironmentName.toLowerCase();\n  }\n\n  if ($EnvironmentName);\n  if ($SelectedAWSAccount);\n\n  query = `timeseries claimedAccountConcurrency = max(cloud.aws.lambda.claimedAccountConcurrencyByAccountIdRegion, default: 0), by: { functionname }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}",
-      "visualization": "lineChart",
-      "visualizationSettings": {
-        "thresholds": [
-          {
-            "id": 1,
-            "field": "",
-            "title": "Account Limit Threshold",
-            "isEnabled": true,
-            "rules": [
-              {
-                "id": 0,
-                "color": "#EEA746",
-                "comparator": "≥",
-                "label": "",
-                "value": 500
-              },
-              {
-                "id": 1,
-                "color": {
-                  "Default": "var(--dt-colors-charts-categorical-color-14-default, #d56b1a)"
-                },
-                "comparator": "≥",
-                "label": "",
-                "value": 800
-              },
-              {
-                "id": 2,
-                "color": {
-                  "Default": "var(--dt-colors-charts-status-critical-default, #c4233b)"
-                },
-                "comparator": "≥",
-                "label": "",
-                "value": 1000
-              }
-            ]
-          }
-        ],
-        "chartSettings": {
-          "xAxisScaling": "analyzedTimeframe",
-          "gapPolicy": "gap",
-          "circleChartSettings": {
-            "groupingThresholdType": "relative",
-            "groupingThresholdValue": 0,
-            "valueType": "relative"
-          },
-          "categoryOverrides": {},
-          "curve": "linear",
-          "pointsDisplay": "auto",
-          "categoricalBarChartSettings": {
-            "layout": "horizontal",
-            "categoryAxisTickLayout": "horizontal",
-            "scale": "absolute",
-            "groupMode": "stacked",
-            "colorPaletteMode": "multi-color",
-            "categoryAxis": ["interval"],
-            "categoryAxisLabel": "interval",
-            "valueAxis": ["interval"],
-            "valueAxisLabel": "interval",
-            "tooltipVariant": "single"
-          },
-          "colorPalette": "categorical",
-          "valueRepresentation": "absolute",
-          "truncationMode": "middle",
-          "fieldMapping": {
-            "timestamp": "timeframe",
-            "leftAxisValues": ["claimedAccountConcurrency"]
-          },
-          "xAxisLabel": "timeframe",
-          "xAxisIsLabelVisible": false,
-          "hiddenLegendFields": ["interval"],
-          "leftYAxisSettings": {}
-        },
-        "singleValue": {
-          "showLabel": true,
-          "label": "element",
-          "prefixIcon": "",
-          "recordField": "element",
-          "autoscale": true,
-          "alignment": "center",
-          "trend": { "trendType": "auto", "isVisible": true },
-          "colorThresholdTarget": "value",
-          "sparklineSettings": { "record": "claimedAccountConcurrency" }
-        },
-        "table": {
-          "rowDensity": "condensed",
-          "enableSparklines": false,
-          "hiddenColumns": [],
-          "linewrapEnabled": false,
-          "lineWrapIds": [],
-          "monospacedFontEnabled": false,
-          "monospacedFontColumns": [],
-          "columnWidths": {},
-          "columnTypeOverrides": [
-            {
-              "fields": ["claimedAccountConcurrency"],
-              "value": "sparkline",
-              "id": 1741623052675
-            }
-          ]
-        },
-        "honeycomb": {
-          "shape": "hexagon",
-          "legend": { "hidden": false, "position": "auto", "ratio": "auto" },
-          "dataMappings": {},
-          "displayedFields": [],
-          "truncationMode": "middle",
-          "colorMode": "color-palette",
-          "colorPalette": "categorical"
-        },
-        "histogram": {
-          "legend": "auto",
-          "yAxis": { "label": "Frequency", "scale": "linear" },
-          "colorPalette": "categorical",
-          "dataMappings": [{ "valueAxis": "interval", "rangeAxis": "" }],
-          "variant": "single",
-          "truncationMode": "middle",
-          "displayedFields": []
-        },
         "valueBoundaries": { "min": "auto", "max": "auto" },
         "label": { "showLabel": false, "label": "interval" },
         "icon": { "showIcon": false, "icon": "" },
@@ -2067,10 +2224,10 @@
         "dataMapping": { "value": "interval" }
       }
     },
-    "35": {
+    "40": {
       "title": "Async Event Age",
       "type": "code",
-      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\n  if ($Lambda == \"All\") {\n    $Lambda = $EnvironmentName.toLowerCase();\n  }\n\n  if ($EnvironmentName);\n  if ($SelectedAWSAccount);\n\n  query = `timeseries asyncEventAge = avg(cloud.aws.lambda.asyncEventAgeByAccountIdFunctionNameRegion, default: 0), by: { functionname }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${$Lambda}\") }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}",
+      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\nlet env:string = $Environment;\nlet filter:string = \"ticf-cri\";\n\nif (env.substring(0,3) == \"SSF\")\n{\n filter = \"ssf\";\n}\n  query = `timeseries asyncEventAge = avg(cloud.aws.lambda.asyncEventAgeByAccountIdFunctionNameRegion, default: 0), by: { functionname }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${filter}\") }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
@@ -2154,9 +2311,9 @@
           "truncationMode": "middle",
           "displayedFields": ["functionname"]
         },
+        "valueBoundaries": { "min": "auto", "max": "auto" },
         "label": { "showLabel": false, "label": "interval" },
         "icon": { "showIcon": false, "icon": "" },
-        "valueBoundaries": { "min": "auto", "max": "auto" },
         "autoSelectVisualization": false,
         "dataMapping": { "value": "interval" },
         "unitsOverrides": [
@@ -2173,10 +2330,10 @@
         ]
       }
     },
-    "36": {
+    "41": {
       "title": "Async Events Received",
       "type": "code",
-      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\n  if ($Lambda == \"All\") {\n    $Lambda = $EnvironmentName.toLowerCase();\n  }\n\n  if ($EnvironmentName);\n  if ($SelectedAWSAccount);\n\n  query = `timeseries asyncEventsReceived = sum(cloud.aws.lambda.asyncEventsReceivedByAccountIdFunctionNameRegion, default: 0), by: { functionname }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${$Lambda}\") }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}",
+      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\nlet env:string = $Environment;\nlet filter:string = \"ticf-cri\";\n\nif (env.substring(0,3) == \"SSF\")\n{\n filter = \"ssf\";\n}\n  \n  query = `timeseries asyncEventsReceived = sum(cloud.aws.lambda.asyncEventsReceivedByAccountIdFunctionNameRegion, default: 0), by: { functionname }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${filter}\") }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
@@ -2260,17 +2417,17 @@
           "truncationMode": "middle",
           "displayedFields": ["functionname"]
         },
+        "valueBoundaries": { "min": "auto", "max": "auto" },
         "label": { "showLabel": false, "label": "interval" },
         "icon": { "showIcon": false, "icon": "" },
-        "valueBoundaries": { "min": "auto", "max": "auto" },
         "autoSelectVisualization": false,
         "dataMapping": { "value": "interval" }
       }
     },
-    "37": {
+    "42": {
       "title": "Iterator Age",
       "type": "code",
-      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\n  if ($Lambda == \"All\") {\n    $Lambda = $EnvironmentName.toLowerCase();\n  }\n\n  if ($EnvironmentName);\n  if ($SelectedAWSAccount);\n\n  query = `timeseries iteratorAge = avg(cloud.aws.lambda.iteratorAgeByAccountIdFunctionNameRegionResource, default: 0), by: { functionname }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${$Lambda}\") }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}",
+      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\nlet env:string = $Environment;\nlet filter:string = \"ticf-cri\";\n\nif (env.substring(0,3) == \"SSF\")\n{\n filter = \"ssf\";\n}\n  query = `timeseries iteratorAge = avg(cloud.aws.lambda.iteratorAgeByAccountIdFunctionNameRegionResource, default: 0), by: { functionname }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${filter}\") }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
@@ -2354,9 +2511,9 @@
           "truncationMode": "middle",
           "displayedFields": ["functionname"]
         },
+        "valueBoundaries": { "min": "auto", "max": "auto" },
         "label": { "showLabel": false, "label": "interval" },
         "icon": { "showIcon": false, "icon": "" },
-        "valueBoundaries": { "min": "auto", "max": "auto" },
         "autoSelectVisualization": false,
         "dataMapping": { "value": "interval" },
         "unitsOverrides": [
@@ -2373,173 +2530,14 @@
         ]
       }
     },
-    "38": {
-      "title": "Gateway Request Latency",
-      "description": "",
-      "type": "data",
-      "query": "timeseries {avgLatencyByAccountIdApiNameRegion = avg(cloud.aws.apigateway.latencyByAccountIdApiNameRegion, default: 0), \nmaxLatencyByAccountIdApiNameRegion = max(cloud.aws.apigateway.latencyByAccountIdApiNameRegion, default: 0),\nminLatencyByAccountIdApiNameRegion = min(cloud.aws.apigateway.latencyByAccountIdApiNameRegion, default: 0) }, \nby: { apiname }, \nfilter: { aws.account.id == $SelectedAWSAccount }, union: true\n| fieldsRename `Avg Latency` = avgLatencyByAccountIdApiNameRegion\n| fieldsRename `Max Latency` = maxLatencyByAccountIdApiNameRegion\n| fieldsRename `Min Latency` = minLatencyByAccountIdApiNameRegion\n| limit 100",
+    "50": {
+      "title": "Lambda Status Codes",
+      "type": "code",
+      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  \n  const query = `timeseries a = sum(\\`cloud.aws.${$EnvironmentName}-ticf-cri.errorProcessingByAccountIdRegionStatusCodeservice\\`, default: 0), by:{statuscode, service}`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
         "chartSettings": {
-          "xAxisScaling": "analyzedTimeframe",
-          "seriesOverrides": [],
-          "gapPolicy": "gap",
-          "legend": { "hidden": false, "position": "auto" },
-          "leftYAxisSettings": {
-            "isLabelVisible": true,
-            "label": "Request Count"
-          },
-          "hiddenLegendFields": ["interval"],
-          "circleChartSettings": {
-            "groupingThresholdType": "relative",
-            "groupingThresholdValue": 0,
-            "valueType": "relative"
-          },
-          "truncationMode": "middle",
-          "categoricalBarChartSettings": {
-            "categoryAxisLabel": "apiname",
-            "valueAxisLabel": "interval",
-            "tooltipVariant": "single"
-          },
-          "bandChartSettings": {
-            "lower": "Avg Latency",
-            "upper": "Avg Latency"
-          },
-          "xAxisLabel": "timeframe",
-          "xAxisIsLabelVisible": false,
-          "valueRepresentation": "absolute",
-          "fieldMapping": {
-            "timestamp": "timeframe",
-            "leftAxisValues": ["Avg Latency", "Max Latency", "Min Latency"]
-          },
-          "pointsDisplay": "auto",
-          "rightYAxisSettings": {
-            "isLabelVisible": true,
-            "label": "Latency",
-            "scale": "linear"
-          },
-          "tooltip": { "variant": "single", "seriesDisplayMode": "single-line" }
-        },
-        "singleValue": {
-          "showLabel": true,
-          "label": "apiname",
-          "prefixIcon": "",
-          "recordField": "apiname",
-          "autoscale": true,
-          "alignment": "center",
-          "trend": { "trendType": "auto", "isVisible": true },
-          "colorThresholdTarget": "value",
-          "sparklineSettings": { "record": "Min Latency" }
-        },
-        "table": {
-          "rowDensity": "condensed",
-          "enableSparklines": false,
-          "hiddenColumns": [],
-          "linewrapEnabled": false,
-          "lineWrapIds": [],
-          "monospacedFontEnabled": false,
-          "monospacedFontColumns": [],
-          "columnWidths": {},
-          "columnTypeOverrides": [
-            {
-              "fields": ["Avg Latency", "Max Latency", "Min Latency"],
-              "value": "sparkline",
-              "id": 1740759673595
-            }
-          ]
-        },
-        "honeycomb": {
-          "shape": "hexagon",
-          "legend": { "hidden": false, "position": "auto", "ratio": "auto" },
-          "dataMappings": { "value": "apiname" },
-          "displayedFields": ["apiname"],
-          "truncationMode": "middle",
-          "colorMode": "color-palette",
-          "colorPalette": "categorical"
-        },
-        "histogram": {
-          "legend": "auto",
-          "yAxis": { "label": "Frequency", "scale": "linear" },
-          "colorPalette": "categorical",
-          "dataMappings": [{ "valueAxis": "interval", "rangeAxis": "" }],
-          "variant": "single",
-          "truncationMode": "middle",
-          "displayedFields": ["apiname"]
-        },
-        "valueBoundaries": { "min": "auto", "max": "auto" },
-        "label": { "showLabel": false, "label": "interval" },
-        "icon": { "showIcon": false, "icon": "" },
-        "unitsOverrides": [
-          {
-            "identifier": "Avg Latency",
-            "unitCategory": "time",
-            "baseUnit": "millisecond",
-            "displayUnit": null,
-            "decimals": 2,
-            "suffix": "",
-            "delimiter": false,
-            "added": 1740138132831
-          },
-          {
-            "identifier": "Max Latency",
-            "unitCategory": "time",
-            "baseUnit": "millisecond",
-            "displayUnit": null,
-            "decimals": 2,
-            "suffix": "",
-            "delimiter": false,
-            "added": 1740654578185
-          },
-          {
-            "identifier": "p50LatencyByAccountIdApiNameRegion",
-            "unitCategory": "time",
-            "baseUnit": "millisecond",
-            "displayUnit": null,
-            "decimals": 2,
-            "suffix": "",
-            "delimiter": false,
-            "added": 1740656863286
-          }
-        ],
-        "legend": { "ratio": 27 },
-        "autoSelectVisualization": false,
-        "dataMapping": { "value": "interval" }
-      },
-      "querySettings": {
-        "maxResultRecords": 1000,
-        "defaultScanLimitGbytes": 500,
-        "maxResultMegaBytes": 1,
-        "defaultSamplingRatio": 10,
-        "enableSampling": false
-      },
-      "davis": {
-        "enabled": false,
-        "davisVisualization": { "isAvailable": true }
-      }
-    },
-    "42": { "type": "markdown", "content": "## Dynamo DB Metrics" },
-    "43": {
-      "title": "Read Throttle Events",
-      "type": "data",
-      "query": "timeseries readThrottleEvents = sum(cloud.aws.dynamodb.readThrottleEventsByAccountIdRegionTableName, default: 0),\nby: { tablename },\nfilter: { aws.account.id == $SelectedAWSAccount }",
-      "visualization": "lineChart",
-      "visualizationSettings": {
-        "thresholds": [
-          {
-            "id": "0",
-            "title": "",
-            "field": "successfulRequestLatencyByAccountIdOperationRegionTableName",
-            "rules": [
-              { "id": "0", "label": "", "comparator": "≥", "color": "#7dc540" },
-              { "id": "1", "label": "", "comparator": "≥", "color": "#f5d30f" },
-              { "id": "2", "label": "", "comparator": "≥", "color": "#dc172a" }
-            ],
-            "isEnabled": true
-          }
-        ],
-        "chartSettings": {
-          "xAxisScaling": "analyzedTimeframe",
           "gapPolicy": "gap",
           "circleChartSettings": {
             "groupingThresholdType": "relative",
@@ -2555,87 +2553,71 @@
             "scale": "absolute",
             "groupMode": "stacked",
             "colorPaletteMode": "multi-color",
-            "categoryAxisLabel": "tablename",
-            "valueAxisLabel": "successfulRequestLatencyByAccountIdOperationRegionTableName,successfulRequestLatencyByAccountIdOperationRegionTableName.0,successfulRequestLatencyByAccountIdOperationRegionTableName.1",
-            "tooltipVariant": "single"
+            "valueAxisScale": "linear"
           },
           "colorPalette": "categorical",
           "valueRepresentation": "absolute",
           "truncationMode": "middle",
+          "xAxisScaling": "analyzedTimeframe",
           "xAxisLabel": "timeframe",
           "xAxisIsLabelVisible": false,
           "hiddenLegendFields": [
-            "successfulRequestLatencyByAccountIdOperationRegionTableName",
-            "successfulRequestLatencyByAccountIdOperationRegionTableName.0",
-            "successfulRequestLatencyByAccountIdOperationRegionTableName.1",
-            "interval"
+            "interval",
+            "errorCount",
+            "errorsByAccountIdFunctionNameRegion"
           ],
-          "leftYAxisSettings": { "isLabelVisible": false, "label": "" },
-          "fieldMapping": {
-            "timestamp": "timeframe",
-            "leftAxisValues": ["readThrottleEvents"]
-          }
+          "leftYAxisSettings": {},
+          "fieldMapping": { "timestamp": "timeframe", "leftAxisValues": ["a"] }
         },
         "singleValue": {
           "showLabel": true,
-          "label": "successfulRequestLatencyByAccountIdOperationRegionTableName",
-          "prefixIcon": "",
-          "recordField": "successfulRequestLatencyByAccountIdOperationRegionTableName",
+          "label": "",
+          "prefixIcon": "AnalyticsIcon",
+          "isIconVisible": false,
           "autoscale": true,
           "alignment": "center",
-          "trend": { "trendType": "auto", "isVisible": true },
           "colorThresholdTarget": "value"
         },
         "table": {
-          "hiddenColumns": [["timeframe"], ["interval"]],
-          "colorThresholdTarget": "value",
-          "columnTypeOverrides": [],
-          "columnWidths": {
-            "[\"successfulRequestLatencyByAccountIdOperationRegionTableName\"]": 186.81253051757812,
-            "[\"successfulRequestLatencyByAccountIdOperationRegionTableName.0\"]": 113.41842651367188,
-            "[\"successfulRequestLatencyByAccountIdOperationRegionTableName.1\"]": 81.41842651367188
-          }
+          "rowDensity": "condensed",
+          "enableSparklines": false,
+          "hiddenColumns": [],
+          "linewrapEnabled": false,
+          "lineWrapIds": [],
+          "monospacedFontEnabled": false,
+          "monospacedFontColumns": [],
+          "columnWidths": {},
+          "columnTypeOverrides": [
+            { "fields": ["a"], "value": "sparkline", "id": 1746191707752 }
+          ]
         },
         "honeycomb": {
           "shape": "hexagon",
           "legend": { "hidden": false, "position": "auto", "ratio": "auto" },
-          "dataMappings": {
-            "value": "successfulRequestLatencyByAccountIdOperationRegionTableName"
-          },
-          "displayedFields": ["tablename"],
+          "dataMappings": {},
+          "displayedFields": [],
           "truncationMode": "middle",
           "colorMode": "color-palette",
-          "colorPalette": "blue"
+          "colorPalette": "categorical"
         },
         "histogram": {
-          "legend": "auto",
-          "yAxis": { "label": "Frequency", "scale": "linear" },
+          "legend": { "position": "auto" },
+          "yAxis": {
+            "label": "Frequency",
+            "isLabelVisible": true,
+            "scale": "linear"
+          },
           "colorPalette": "categorical",
           "dataMappings": [],
           "variant": "single",
-          "truncationMode": "middle",
-          "displayedFields": []
+          "truncationMode": "middle"
         },
         "valueBoundaries": { "min": "auto", "max": "auto" },
-        "autoSelectVisualization": false,
-        "label": { "showLabel": false },
-        "icon": { "showIcon": false, "icon": "" },
-        "unitsOverrides": [],
-        "dataMapping": {}
-      },
-      "querySettings": {
-        "maxResultRecords": 1000,
-        "defaultScanLimitGbytes": 500,
-        "maxResultMegaBytes": 1,
-        "defaultSamplingRatio": 10,
-        "enableSampling": false
-      },
-      "davis": {
-        "enabled": false,
-        "davisVisualization": { "isAvailable": true }
+        "autoSelectVisualization": false
       }
     },
-    "44": {
+    "51": { "type": "markdown", "content": "## Dynamo DB Metrics" },
+    "52": {
       "title": "Throttled Requests",
       "type": "data",
       "query": "timeseries throttledRequests = sum(cloud.aws.dynamodb.throttledRequestsByAccountIdOperationRegionTableName, default: 0),\nby: { tablename },\nfilter: { aws.account.id == $SelectedAWSAccount }",
@@ -2739,141 +2721,16 @@
         "unitsOverrides": [],
         "dataMapping": {}
       },
-      "querySettings": {
-        "maxResultRecords": 1000,
-        "defaultScanLimitGbytes": 500,
-        "maxResultMegaBytes": 1,
-        "defaultSamplingRatio": 10,
-        "enableSampling": false
-      },
       "davis": {
         "enabled": false,
         "davisVisualization": { "isAvailable": true }
+      },
+      "timeframe": {
+        "tileTimeframeEnabled": true,
+        "tileTimeframe": { "from": "now()-365d", "to": "now()" }
       }
     },
-    "45": {
-      "title": "Consumed Read Capacity",
-      "type": "data",
-      "query": "timeseries consumedReadCapacity = sum(cloud.aws.dynamodb.consumedReadCapacityUnitsByAccountIdGlobalSecondaryIndexNameRegionTableName, default: 0),\nby: { tablename },\nfilter: { aws.account.id == $SelectedAWSAccount }",
-      "visualization": "lineChart",
-      "visualizationSettings": {
-        "thresholds": [
-          {
-            "id": "0",
-            "title": "",
-            "field": "successfulRequestLatencyByAccountIdOperationRegionTableName",
-            "rules": [
-              { "id": "0", "label": "", "comparator": "≥", "color": "#7dc540" },
-              { "id": "1", "label": "", "comparator": "≥", "color": "#f5d30f" },
-              { "id": "2", "label": "", "comparator": "≥", "color": "#dc172a" }
-            ],
-            "isEnabled": true
-          }
-        ],
-        "chartSettings": {
-          "xAxisScaling": "analyzedTimeframe",
-          "gapPolicy": "gap",
-          "circleChartSettings": {
-            "groupingThresholdType": "relative",
-            "groupingThresholdValue": 0,
-            "valueType": "relative"
-          },
-          "categoryOverrides": {},
-          "curve": "linear",
-          "pointsDisplay": "auto",
-          "categoricalBarChartSettings": {
-            "layout": "horizontal",
-            "categoryAxisTickLayout": "horizontal",
-            "scale": "absolute",
-            "groupMode": "stacked",
-            "colorPaletteMode": "multi-color",
-            "categoryAxisLabel": "tablename",
-            "valueAxisLabel": "successfulRequestLatencyByAccountIdOperationRegionTableName,successfulRequestLatencyByAccountIdOperationRegionTableName.0,successfulRequestLatencyByAccountIdOperationRegionTableName.1",
-            "tooltipVariant": "single"
-          },
-          "colorPalette": "categorical",
-          "valueRepresentation": "absolute",
-          "truncationMode": "middle",
-          "xAxisLabel": "timeframe",
-          "xAxisIsLabelVisible": false,
-          "hiddenLegendFields": [
-            "successfulRequestLatencyByAccountIdOperationRegionTableName",
-            "successfulRequestLatencyByAccountIdOperationRegionTableName.0",
-            "successfulRequestLatencyByAccountIdOperationRegionTableName.1",
-            "interval"
-          ],
-          "leftYAxisSettings": { "isLabelVisible": false, "label": "" },
-          "fieldMapping": {
-            "timestamp": "timeframe",
-            "leftAxisValues": ["consumedReadCapacity"]
-          }
-        },
-        "singleValue": {
-          "showLabel": true,
-          "label": "successfulRequestLatencyByAccountIdOperationRegionTableName",
-          "prefixIcon": "",
-          "recordField": "successfulRequestLatencyByAccountIdOperationRegionTableName",
-          "autoscale": true,
-          "alignment": "center",
-          "trend": { "trendType": "auto", "isVisible": true },
-          "colorThresholdTarget": "value"
-        },
-        "table": {
-          "hiddenColumns": [["timeframe"], ["interval"]],
-          "colorThresholdTarget": "value",
-          "columnTypeOverrides": [
-            {
-              "fields": ["consumedReadCapacity"],
-              "value": "sparkline",
-              "id": 1745589635549
-            }
-          ],
-          "columnWidths": {
-            "[\"successfulRequestLatencyByAccountIdOperationRegionTableName\"]": 186.81253051757812,
-            "[\"successfulRequestLatencyByAccountIdOperationRegionTableName.0\"]": 113.41842651367188,
-            "[\"successfulRequestLatencyByAccountIdOperationRegionTableName.1\"]": 81.41842651367188
-          }
-        },
-        "honeycomb": {
-          "shape": "hexagon",
-          "legend": { "hidden": false, "position": "auto", "ratio": "auto" },
-          "dataMappings": {
-            "value": "successfulRequestLatencyByAccountIdOperationRegionTableName"
-          },
-          "displayedFields": ["tablename"],
-          "truncationMode": "middle",
-          "colorMode": "color-palette",
-          "colorPalette": "blue"
-        },
-        "histogram": {
-          "legend": "auto",
-          "yAxis": { "label": "Frequency", "scale": "linear" },
-          "colorPalette": "categorical",
-          "dataMappings": [],
-          "variant": "single",
-          "truncationMode": "middle",
-          "displayedFields": []
-        },
-        "valueBoundaries": { "min": "auto", "max": "auto" },
-        "autoSelectVisualization": false,
-        "label": { "showLabel": false },
-        "icon": { "showIcon": false, "icon": "" },
-        "unitsOverrides": [],
-        "dataMapping": {}
-      },
-      "querySettings": {
-        "maxResultRecords": 1000,
-        "defaultScanLimitGbytes": 500,
-        "maxResultMegaBytes": 1,
-        "defaultSamplingRatio": 10,
-        "enableSampling": false
-      },
-      "davis": {
-        "enabled": false,
-        "davisVisualization": { "isAvailable": true }
-      }
-    },
-    "46": {
+    "53": {
       "title": "Write Throttle Events",
       "type": "data",
       "query": "timeseries writeThrottleEvents = sum(cloud.aws.dynamodb.writeThrottleEventsByAccountIdRegionTableName, default: 0),\nby: { tablename },\nfilter: { aws.account.id == $SelectedAWSAccount }",
@@ -2983,22 +2840,19 @@
         "unitsOverrides": [],
         "dataMapping": {}
       },
-      "querySettings": {
-        "maxResultRecords": 1000,
-        "defaultScanLimitGbytes": 500,
-        "maxResultMegaBytes": 1,
-        "defaultSamplingRatio": 10,
-        "enableSampling": false
-      },
       "davis": {
         "enabled": false,
         "davisVisualization": { "isAvailable": true }
+      },
+      "timeframe": {
+        "tileTimeframeEnabled": true,
+        "tileTimeframe": { "from": "now()-365d", "to": "now()" }
       }
     },
-    "47": {
-      "title": "Average Request Latency",
+    "54": {
+      "title": "Consumed Read Capacity",
       "type": "data",
-      "query": "timeseries requestLatency = avg(cloud.aws.dynamodb.successfulRequestLatencyByAccountIdOperationRegionTableName, default: 0),\nby: { tablename, operation },\nfilter: { aws.account.id == $SelectedAWSAccount }",
+      "query": "timeseries consumedReadCapacity = sum(cloud.aws.dynamodb.consumedReadCapacityUnitsByAccountIdGlobalSecondaryIndexNameRegionTableName, default: 0),\nby: { tablename },\nfilter: { aws.account.id == $SelectedAWSAccount }",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [
@@ -3049,7 +2903,7 @@
           "leftYAxisSettings": { "isLabelVisible": false, "label": "" },
           "fieldMapping": {
             "timestamp": "timeframe",
-            "leftAxisValues": ["requestLatency"]
+            "leftAxisValues": ["consumedReadCapacity"]
           }
         },
         "singleValue": {
@@ -3067,9 +2921,9 @@
           "colorThresholdTarget": "value",
           "columnTypeOverrides": [
             {
-              "fields": ["requestLatency"],
+              "fields": ["consumedReadCapacity"],
               "value": "sparkline",
-              "id": 1745590345086
+              "id": 1745589635549
             }
           ],
           "columnWidths": {
@@ -3105,19 +2959,16 @@
         "unitsOverrides": [],
         "dataMapping": {}
       },
-      "querySettings": {
-        "maxResultRecords": 1000,
-        "defaultScanLimitGbytes": 500,
-        "maxResultMegaBytes": 1,
-        "defaultSamplingRatio": 10,
-        "enableSampling": false
-      },
       "davis": {
         "enabled": false,
         "davisVisualization": { "isAvailable": true }
+      },
+      "timeframe": {
+        "tileTimeframeEnabled": true,
+        "tileTimeframe": { "from": "now()-365d", "to": "now()" }
       }
     },
-    "48": {
+    "55": {
       "title": "Consumed Write Capacity",
       "type": "data",
       "query": "timeseries consumedReadCapacity = sum(cloud.aws.dynamodb.consumedWriteCapacityUnitsByAccountIdRegionTableName, default: 0),\nby: { tablename },\nfilter: { aws.account.id == $SelectedAWSAccount }",
@@ -3227,23 +3078,143 @@
         "unitsOverrides": [],
         "dataMapping": {}
       },
-      "querySettings": {
-        "maxResultRecords": 1000,
-        "defaultScanLimitGbytes": 500,
-        "maxResultMegaBytes": 1,
-        "defaultSamplingRatio": 10,
-        "enableSampling": false
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      },
+      "timeframe": {
+        "tileTimeframeEnabled": true,
+        "tileTimeframe": { "from": "now()-365d", "to": "now()" }
+      }
+    },
+    "56": {
+      "title": "Average Request Latency",
+      "type": "data",
+      "query": "timeseries requestLatency = avg(cloud.aws.dynamodb.successfulRequestLatencyByAccountIdOperationRegionTableName, default: 0),\nby: { tablename, operation },\nfilter: { aws.account.id == $SelectedAWSAccount }",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "thresholds": [
+          {
+            "id": "0",
+            "title": "",
+            "field": "successfulRequestLatencyByAccountIdOperationRegionTableName",
+            "rules": [
+              { "id": "0", "label": "", "comparator": "≥", "color": "#7dc540" },
+              { "id": "1", "label": "", "comparator": "≥", "color": "#f5d30f" },
+              { "id": "2", "label": "", "comparator": "≥", "color": "#dc172a" }
+            ],
+            "isEnabled": true
+          }
+        ],
+        "chartSettings": {
+          "xAxisScaling": "analyzedTimeframe",
+          "gapPolicy": "gap",
+          "circleChartSettings": {
+            "groupingThresholdType": "relative",
+            "groupingThresholdValue": 0,
+            "valueType": "relative"
+          },
+          "categoryOverrides": {},
+          "curve": "linear",
+          "pointsDisplay": "auto",
+          "categoricalBarChartSettings": {
+            "layout": "horizontal",
+            "categoryAxisTickLayout": "horizontal",
+            "scale": "absolute",
+            "groupMode": "stacked",
+            "colorPaletteMode": "multi-color",
+            "categoryAxisLabel": "tablename",
+            "valueAxisLabel": "successfulRequestLatencyByAccountIdOperationRegionTableName,successfulRequestLatencyByAccountIdOperationRegionTableName.0,successfulRequestLatencyByAccountIdOperationRegionTableName.1",
+            "tooltipVariant": "single"
+          },
+          "colorPalette": "categorical",
+          "valueRepresentation": "absolute",
+          "truncationMode": "middle",
+          "xAxisLabel": "timeframe",
+          "xAxisIsLabelVisible": false,
+          "hiddenLegendFields": [
+            "successfulRequestLatencyByAccountIdOperationRegionTableName",
+            "successfulRequestLatencyByAccountIdOperationRegionTableName.0",
+            "successfulRequestLatencyByAccountIdOperationRegionTableName.1",
+            "interval"
+          ],
+          "leftYAxisSettings": { "isLabelVisible": false, "label": "" },
+          "fieldMapping": {
+            "timestamp": "timeframe",
+            "leftAxisValues": ["requestLatency"]
+          }
+        },
+        "singleValue": {
+          "showLabel": true,
+          "label": "successfulRequestLatencyByAccountIdOperationRegionTableName",
+          "prefixIcon": "",
+          "recordField": "successfulRequestLatencyByAccountIdOperationRegionTableName",
+          "autoscale": true,
+          "alignment": "center",
+          "trend": { "trendType": "auto", "isVisible": true },
+          "colorThresholdTarget": "value"
+        },
+        "table": {
+          "hiddenColumns": [["timeframe"], ["interval"]],
+          "colorThresholdTarget": "value",
+          "columnTypeOverrides": [
+            {
+              "fields": ["requestLatency"],
+              "value": "sparkline",
+              "id": 1745590345086
+            }
+          ],
+          "columnWidths": {
+            "[\"successfulRequestLatencyByAccountIdOperationRegionTableName\"]": 186.81253051757812,
+            "[\"successfulRequestLatencyByAccountIdOperationRegionTableName.0\"]": 113.41842651367188,
+            "[\"successfulRequestLatencyByAccountIdOperationRegionTableName.1\"]": 81.41842651367188
+          }
+        },
+        "honeycomb": {
+          "shape": "hexagon",
+          "legend": { "hidden": false, "position": "auto", "ratio": "auto" },
+          "dataMappings": {
+            "value": "successfulRequestLatencyByAccountIdOperationRegionTableName"
+          },
+          "displayedFields": ["tablename"],
+          "truncationMode": "middle",
+          "colorMode": "color-palette",
+          "colorPalette": "blue"
+        },
+        "histogram": {
+          "legend": "auto",
+          "yAxis": { "label": "Frequency", "scale": "linear" },
+          "colorPalette": "categorical",
+          "dataMappings": [],
+          "variant": "single",
+          "truncationMode": "middle",
+          "displayedFields": []
+        },
+        "valueBoundaries": { "min": "auto", "max": "auto" },
+        "autoSelectVisualization": false,
+        "label": { "showLabel": false },
+        "icon": { "showIcon": false, "icon": "" },
+        "unitsOverrides": [],
+        "dataMapping": {}
       },
       "davis": {
         "enabled": false,
         "davisVisualization": { "isAvailable": true }
+      },
+      "timeframe": {
+        "tileTimeframeEnabled": true,
+        "tileTimeframe": { "from": "now()-365d", "to": "now()" }
       }
     },
-    "49": {
-      "title": "Lambda Status Codes",
-      "type": "code",
-      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n\n  if ($EnvironmentName);\n  \n  const query = `timeseries a = sum(\\`cloud.aws.${$EnvironmentName}-ticf-cri.errorProcessingByAccountIdRegionStatusCodeservice\\`, default: 0), by:{statuscode, service}`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}",
-      "visualization": "lineChart",
+    "57": { "type": "markdown", "content": "## SQS Metrics" },
+    "58": {
+      "type": "data",
+      "title": "Messages Sent",
+      "query": "timeseries { max(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion), value.A = avg(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion, scalar: true) }, by: { queuename, aws.account.id }, filter: { ( matchesValue(queuename, \"*ssf-main*\") OR matchesValue(queuename, \"*inbound-ssf*\") OR matchesValue(queuename, \"*ticf-cri*\") ) AND matchesValue(`aws.account.id`, $SelectedAWSAccount) }",
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      },
       "visualizationSettings": {
         "thresholds": [],
         "chartSettings": {
@@ -3270,13 +3241,17 @@
           "xAxisScaling": "analyzedTimeframe",
           "xAxisLabel": "timeframe",
           "xAxisIsLabelVisible": false,
-          "hiddenLegendFields": [
-            "interval",
-            "errorCount",
-            "errorsByAccountIdFunctionNameRegion"
-          ],
-          "leftYAxisSettings": {},
-          "fieldMapping": { "timestamp": "timeframe", "leftAxisValues": ["a"] }
+          "hiddenLegendFields": ["interval", "value.A"],
+          "fieldMapping": {
+            "timestamp": "timeframe",
+            "leftAxisValues": [
+              "max(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion)"
+            ]
+          },
+          "leftYAxisSettings": {
+            "isLabelVisible": true,
+            "label": "Approximate Number Of Messages Sent"
+          }
         },
         "singleValue": {
           "showLabel": true,
@@ -3297,7 +3272,13 @@
           "monospacedFontColumns": [],
           "columnWidths": {},
           "columnTypeOverrides": [
-            { "fields": ["a"], "value": "sparkline", "id": 1746194219677 }
+            {
+              "fields": [
+                "max(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion)"
+              ],
+              "value": "sparkline",
+              "id": 1745418015984
+            }
           ]
         },
         "honeycomb": {
@@ -3323,43 +3304,436 @@
         },
         "valueBoundaries": { "min": "auto", "max": "auto" },
         "autoSelectVisualization": false
-      }
+      },
+      "queryConfig": {
+        "version": "13.7.1",
+        "subQueries": [
+          {
+            "id": "A",
+            "isEnabled": true,
+            "datatype": "metrics",
+            "metric": {
+              "key": "cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion",
+              "aggregation": "max"
+            },
+            "by": ["queuename", "aws.account.id"],
+            "filter": "(queuename = *ssf-main*OR queuename = *inbound-ssf* OR queuename = *ticf-cri*) AND `aws.account.id` = $SelectedAWSAccount"
+          }
+        ]
+      },
+      "subType": "dql-builder-metrics",
+      "visualization": "areaChart",
+      "timeframe": {
+        "tileTimeframeEnabled": true,
+        "tileTimeframe": { "from": "now()-365d", "to": "now()" }
+      },
+      "segments": { "tileSegmentsEnabled": true, "tileSegments": [] }
+    },
+    "59": {
+      "type": "data",
+      "title": "Messages Received",
+      "query": "timeseries { max(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion), value.A = avg(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion, scalar: true) }, by: { queuename }, filter: { ( matchesValue(queuename, \"*ssf-main*\") OR matchesValue(queuename, \"*inbound-ssf*\") OR matchesValue(queuename, \"*ticf-cri*\") ) AND matchesValue(`aws.account.id`, $SelectedAWSAccount) }",
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      },
+      "visualizationSettings": {
+        "thresholds": [],
+        "chartSettings": {
+          "gapPolicy": "gap",
+          "circleChartSettings": {
+            "groupingThresholdType": "relative",
+            "groupingThresholdValue": 0,
+            "valueType": "relative"
+          },
+          "categoryOverrides": {},
+          "curve": "linear",
+          "pointsDisplay": "auto",
+          "categoricalBarChartSettings": {
+            "layout": "horizontal",
+            "categoryAxisTickLayout": "horizontal",
+            "scale": "absolute",
+            "groupMode": "stacked",
+            "colorPaletteMode": "multi-color",
+            "valueAxisScale": "linear"
+          },
+          "colorPalette": "categorical",
+          "valueRepresentation": "absolute",
+          "truncationMode": "middle",
+          "xAxisScaling": "analyzedTimeframe",
+          "xAxisLabel": "timeframe",
+          "xAxisIsLabelVisible": false,
+          "hiddenLegendFields": ["interval", "value.A"],
+          "fieldMapping": {
+            "timestamp": "timeframe",
+            "leftAxisValues": [
+              "max(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion)"
+            ]
+          },
+          "leftYAxisSettings": {
+            "isLabelVisible": true,
+            "label": "Approximate Number Of Messages Received"
+          }
+        },
+        "singleValue": {
+          "showLabel": true,
+          "label": "",
+          "prefixIcon": "AnalyticsIcon",
+          "isIconVisible": false,
+          "autoscale": true,
+          "alignment": "center",
+          "colorThresholdTarget": "value"
+        },
+        "table": {
+          "rowDensity": "condensed",
+          "enableSparklines": false,
+          "hiddenColumns": [],
+          "linewrapEnabled": false,
+          "lineWrapIds": [],
+          "monospacedFontEnabled": false,
+          "monospacedFontColumns": [],
+          "columnWidths": {},
+          "columnTypeOverrides": [
+            {
+              "fields": [
+                "max(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion)"
+              ],
+              "value": "sparkline",
+              "id": 1745402202884
+            }
+          ]
+        },
+        "honeycomb": {
+          "shape": "hexagon",
+          "legend": { "hidden": false, "position": "auto", "ratio": "auto" },
+          "dataMappings": {},
+          "displayedFields": [],
+          "truncationMode": "middle",
+          "colorMode": "color-palette",
+          "colorPalette": "categorical"
+        },
+        "histogram": {
+          "legend": { "position": "auto" },
+          "yAxis": {
+            "label": "Frequency",
+            "isLabelVisible": true,
+            "scale": "linear"
+          },
+          "colorPalette": "categorical",
+          "dataMappings": [],
+          "variant": "single",
+          "truncationMode": "middle"
+        },
+        "valueBoundaries": { "min": "auto", "max": "auto" },
+        "autoSelectVisualization": false
+      },
+      "queryConfig": {
+        "version": "13.7.1",
+        "subQueries": [
+          {
+            "id": "A",
+            "isEnabled": true,
+            "datatype": "metrics",
+            "metric": {
+              "key": "cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion",
+              "aggregation": "max"
+            },
+            "by": ["queuename"],
+            "filter": "(queuename = *ssf-main* OR queuename = *inbound-ssf* OR queuename = *ticf-cri*) AND `aws.account.id` = $SelectedAWSAccount"
+          }
+        ]
+      },
+      "subType": "dql-builder-metrics",
+      "visualization": "areaChart",
+      "timeframe": {
+        "tileTimeframeEnabled": true,
+        "tileTimeframe": { "from": "now()-365d", "to": "now()" }
+      },
+      "segments": { "tileSegmentsEnabled": true, "tileSegments": [] }
+    },
+    "60": {
+      "type": "data",
+      "title": "Messages Visible",
+      "query": "timeseries { max(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion), value.A = avg(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion, scalar: true) }, by: { queuename }, filter: { ( matchesValue(queuename, \"*ssf-main*\") OR matchesValue(queuename, \"*inbound-ssf*\") OR matchesValue(queuename, \"*ticf-cri*\") ) AND matchesValue(`aws.account.id`, $SelectedAWSAccount) }",
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      },
+      "visualizationSettings": {
+        "thresholds": [],
+        "chartSettings": {
+          "gapPolicy": "gap",
+          "circleChartSettings": {
+            "groupingThresholdType": "relative",
+            "groupingThresholdValue": 0,
+            "valueType": "relative"
+          },
+          "categoryOverrides": {},
+          "curve": "linear",
+          "pointsDisplay": "auto",
+          "categoricalBarChartSettings": {
+            "layout": "horizontal",
+            "categoryAxisTickLayout": "horizontal",
+            "scale": "absolute",
+            "groupMode": "stacked",
+            "colorPaletteMode": "multi-color",
+            "valueAxisScale": "linear"
+          },
+          "colorPalette": "categorical",
+          "valueRepresentation": "absolute",
+          "truncationMode": "middle",
+          "xAxisScaling": "analyzedTimeframe",
+          "xAxisLabel": "timeframe",
+          "xAxisIsLabelVisible": false,
+          "hiddenLegendFields": ["interval", "value.A"],
+          "fieldMapping": {
+            "timestamp": "timeframe",
+            "leftAxisValues": [
+              "max(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion)"
+            ]
+          },
+          "leftYAxisSettings": {
+            "isLabelVisible": true,
+            "label": "Approximate Number Of Messages Visible"
+          }
+        },
+        "singleValue": {
+          "showLabel": true,
+          "label": "",
+          "prefixIcon": "AnalyticsIcon",
+          "isIconVisible": false,
+          "autoscale": true,
+          "alignment": "center",
+          "colorThresholdTarget": "value"
+        },
+        "table": {
+          "rowDensity": "condensed",
+          "enableSparklines": false,
+          "hiddenColumns": [],
+          "linewrapEnabled": false,
+          "lineWrapIds": [],
+          "monospacedFontEnabled": false,
+          "monospacedFontColumns": [],
+          "columnWidths": {},
+          "columnTypeOverrides": [
+            {
+              "fields": [
+                "max(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion)"
+              ],
+              "value": "sparkline",
+              "id": 1744727473380
+            }
+          ]
+        },
+        "honeycomb": {
+          "shape": "hexagon",
+          "legend": { "hidden": false, "position": "auto", "ratio": "auto" },
+          "dataMappings": {},
+          "displayedFields": [],
+          "truncationMode": "middle",
+          "colorMode": "color-palette",
+          "colorPalette": "categorical"
+        },
+        "histogram": {
+          "legend": { "position": "auto" },
+          "yAxis": {
+            "label": "Frequency",
+            "isLabelVisible": true,
+            "scale": "linear"
+          },
+          "colorPalette": "categorical",
+          "dataMappings": [],
+          "variant": "single",
+          "truncationMode": "middle"
+        },
+        "valueBoundaries": { "min": "auto", "max": "auto" },
+        "autoSelectVisualization": false
+      },
+      "queryConfig": {
+        "version": "13.7.1",
+        "subQueries": [
+          {
+            "id": "A",
+            "isEnabled": true,
+            "datatype": "metrics",
+            "metric": {
+              "key": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion",
+              "aggregation": "max"
+            },
+            "by": ["queuename"],
+            "filter": "(queuename = *ssf-main* OR queuename = *inbound-ssf* OR queuename = *ticf-cri*) AND `aws.account.id` = $SelectedAWSAccount"
+          }
+        ]
+      },
+      "subType": "dql-builder-metrics",
+      "visualization": "areaChart",
+      "timeframe": {
+        "tileTimeframeEnabled": true,
+        "tileTimeframe": { "from": "now()-365d", "to": "now()" }
+      },
+      "segments": { "tileSegmentsEnabled": true, "tileSegments": [] }
+    },
+    "61": {
+      "type": "data",
+      "title": "Messages Not Visible",
+      "query": "timeseries { avg(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion), value.A = avg(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion, scalar: true) }, by: { queuename }, filter: { ( matchesValue(queuename, \"*ssf-main*\") OR matchesValue(queuename, \"*inbound-ssf*\") OR matchesValue(queuename, \"*ticf-cri*\") ) AND matchesValue(`aws.account.id`, $SelectedAWSAccount) }",
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      },
+      "visualizationSettings": {
+        "thresholds": [],
+        "chartSettings": {
+          "gapPolicy": "gap",
+          "circleChartSettings": {
+            "groupingThresholdType": "relative",
+            "groupingThresholdValue": 0,
+            "valueType": "relative"
+          },
+          "categoryOverrides": {},
+          "curve": "linear",
+          "pointsDisplay": "auto",
+          "categoricalBarChartSettings": {
+            "layout": "horizontal",
+            "categoryAxisTickLayout": "horizontal",
+            "scale": "absolute",
+            "groupMode": "stacked",
+            "colorPaletteMode": "multi-color",
+            "valueAxisScale": "linear"
+          },
+          "colorPalette": "categorical",
+          "valueRepresentation": "absolute",
+          "truncationMode": "middle",
+          "xAxisScaling": "analyzedTimeframe",
+          "xAxisLabel": "timeframe",
+          "xAxisIsLabelVisible": false,
+          "hiddenLegendFields": ["interval", "value.A"],
+          "fieldMapping": {
+            "timestamp": "timeframe",
+            "leftAxisValues": [
+              "avg(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion)"
+            ]
+          },
+          "leftYAxisSettings": {
+            "isLabelVisible": true,
+            "label": "Approximate Number Of Messages Not Visible"
+          }
+        },
+        "singleValue": {
+          "showLabel": true,
+          "label": "",
+          "prefixIcon": "AnalyticsIcon",
+          "isIconVisible": false,
+          "autoscale": true,
+          "alignment": "center",
+          "colorThresholdTarget": "value"
+        },
+        "table": {
+          "rowDensity": "condensed",
+          "enableSparklines": false,
+          "hiddenColumns": [],
+          "linewrapEnabled": false,
+          "lineWrapIds": [],
+          "monospacedFontEnabled": false,
+          "monospacedFontColumns": [],
+          "columnWidths": {},
+          "columnTypeOverrides": [
+            {
+              "fields": [
+                "avg(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion)"
+              ],
+              "value": "sparkline",
+              "id": 1744724339778
+            }
+          ]
+        },
+        "honeycomb": {
+          "shape": "hexagon",
+          "legend": { "hidden": false, "position": "auto", "ratio": "auto" },
+          "dataMappings": {},
+          "displayedFields": [],
+          "truncationMode": "middle",
+          "colorMode": "color-palette",
+          "colorPalette": "categorical"
+        },
+        "histogram": {
+          "legend": { "position": "auto" },
+          "yAxis": {
+            "label": "Frequency",
+            "isLabelVisible": true,
+            "scale": "linear"
+          },
+          "colorPalette": "categorical",
+          "dataMappings": [],
+          "variant": "single",
+          "truncationMode": "middle"
+        },
+        "valueBoundaries": { "min": "auto", "max": "auto" },
+        "autoSelectVisualization": false
+      },
+      "queryConfig": {
+        "version": "13.7.1",
+        "subQueries": [
+          {
+            "id": "A",
+            "isEnabled": true,
+            "datatype": "metrics",
+            "metric": {
+              "key": "cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion",
+              "aggregation": "avg"
+            },
+            "by": ["queuename"],
+            "filter": "(queuename = *ssf-main* OR queuename = *inbound-ssf* OR queuename = *ticf-cri*) AND `aws.account.id` = $SelectedAWSAccount"
+          }
+        ]
+      },
+      "subType": "dql-builder-metrics",
+      "visualization": "areaChart",
+      "timeframe": {
+        "tileTimeframeEnabled": true,
+        "tileTimeframe": { "from": "now()-365d", "to": "now()" }
+      },
+      "segments": { "tileSegmentsEnabled": true, "tileSegments": [] }
     }
   },
   "layouts": {
     "0": { "x": 0, "y": 0, "w": 36, "h": 2 },
     "1": { "x": 0, "y": 2, "w": 36, "h": 1 },
-    "2": { "x": 0, "y": 3, "w": 18, "h": 10 },
+    "2": { "x": 18, "y": 3, "w": 18, "h": 10 },
     "3": { "x": 0, "y": 13, "w": 18, "h": 10 },
-    "4": { "x": 18, "y": 13, "w": 18, "h": 4 },
-    "5": { "x": 18, "y": 17, "w": 18, "h": 3 },
-    "6": { "x": 18, "y": 20, "w": 18, "h": 3 },
+    "4": { "x": 18, "y": 19, "w": 18, "h": 4 },
+    "5": { "x": 18, "y": 13, "w": 18, "h": 3 },
+    "6": { "x": 18, "y": 16, "w": 18, "h": 3 },
     "7": { "x": 0, "y": 23, "w": 36, "h": 4 },
     "8": { "x": 0, "y": 27, "w": 36, "h": 1 },
-    "25": { "x": 0, "y": 28, "w": 18, "h": 9 },
-    "26": { "x": 18, "y": 28, "w": 18, "h": 9 },
-    "27": { "x": 0, "y": 37, "w": 18, "h": 9 },
-    "28": { "x": 18, "y": 37, "w": 18, "h": 9 },
-    "29": { "x": 0, "y": 55, "w": 18, "h": 9 },
-    "30": { "x": 18, "y": 46, "w": 18, "h": 9 },
-    "31": { "x": 0, "y": 71, "w": 18, "h": 9 },
+    "25": { "x": 0, "y": 28, "w": 19, "h": 9 },
+    "26": { "x": 19, "y": 28, "w": 17, "h": 9 },
+    "27": { "x": 0, "y": 37, "w": 19, "h": 9 },
+    "28": { "x": 19, "y": 37, "w": 17, "h": 9 },
+    "29": { "x": 0, "y": 55, "w": 19, "h": 9 },
+    "30": { "x": 19, "y": 46, "w": 17, "h": 9 },
+    "31": { "x": 0, "y": 71, "w": 19, "h": 9 },
     "32": { "x": 0, "y": 64, "w": 36, "h": 7 },
-    "33": { "x": 18, "y": 71, "w": 18, "h": 9 },
-    "34": { "x": 0, "y": 80, "w": 18, "h": 9 },
-    "35": { "x": 18, "y": 80, "w": 18, "h": 9 },
-    "36": { "x": 0, "y": 89, "w": 18, "h": 9 },
-    "37": { "x": 18, "y": 89, "w": 18, "h": 9 },
-    "38": { "x": 18, "y": 3, "w": 18, "h": 10 },
-    "42": { "x": 0, "y": 98, "w": 36, "h": 1 },
-    "43": { "x": 18, "y": 99, "w": 18, "h": 9 },
-    "44": { "x": 0, "y": 99, "w": 18, "h": 9 },
-    "45": { "x": 18, "y": 108, "w": 18, "h": 9 },
-    "46": { "x": 0, "y": 108, "w": 18, "h": 9 },
-    "47": { "x": 18, "y": 117, "w": 18, "h": 9 },
-    "48": { "x": 0, "y": 117, "w": 18, "h": 9 },
-    "49": { "x": 0, "y": 46, "w": 18, "h": 9 }
+    "34": { "x": 0, "y": 3, "w": 18, "h": 10 },
+    "37": { "x": 19, "y": 55, "w": 17, "h": 9 },
+    "39": { "x": 19, "y": 71, "w": 17, "h": 9 },
+    "40": { "x": 0, "y": 80, "w": 19, "h": 9 },
+    "41": { "x": 19, "y": 80, "w": 17, "h": 9 },
+    "42": { "x": 0, "y": 89, "w": 19, "h": 9 },
+    "50": { "x": 0, "y": 46, "w": 19, "h": 9 },
+    "51": { "x": 0, "y": 98, "w": 36, "h": 1 },
+    "52": { "x": 0, "y": 99, "w": 19, "h": 9 },
+    "53": { "x": 0, "y": 108, "w": 19, "h": 9 },
+    "54": { "x": 19, "y": 99, "w": 17, "h": 9 },
+    "55": { "x": 0, "y": 117, "w": 19, "h": 9 },
+    "56": { "x": 19, "y": 108, "w": 17, "h": 9 },
+    "57": { "x": 0, "y": 126, "w": 36, "h": 1 },
+    "58": { "x": 0, "y": 127, "w": 18, "h": 9 },
+    "59": { "x": 18, "y": 127, "w": 18, "h": 9 },
+    "60": { "x": 0, "y": 136, "w": 18, "h": 9 },
+    "61": { "x": 18, "y": 136, "w": 18, "h": 9 }
   },
-  "importedWithCode": false,
+  "importedWithCode": true,
   "settings": {
     "gridLayout": { "mode": "responsive", "columnsCount": 36 },
     "defaultTimeframe": {
