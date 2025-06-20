@@ -3442,284 +3442,190 @@
         ]
       },
       {
-      "name": "Self Serve Event Delivery Latency P99",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 3344,
-        "left": 0,
-        "width": 1064,
-        "height": 380
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "consumername"
-          ],
-          "metricSelector": "cloud.aws.selfserve.evenT_LATENCYByAccountIdRegionconsumerNameservice:setUnit(MilliSecond):filter(and(or(eq(\"aws.account.id\",\"451773080033\")))):splitBy(consumername):percentile(99.0):sort(value(percentile(99.0),descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "HEATMAP",
-        "global": {
-          "hideLegend": true
+        "name": "JWT cache miss %",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 1444,
+          "left": 1596,
+          "width": 1178,
+          "height": 380
         },
-        "rules": [
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Single value",
+        "queries": [
           {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
+            "id": "A",
+            "metric": "cloud.aws.sharedsignals.autH_CACHE_MISSByAccountIdRegionclientIdservice",
+            "spaceAggregation": "COUNT",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "clientid"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "aws.account.id",
+                  "filterType": "DIMENSION",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "658501491317",
+                      "evaluator": "EQ"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
             },
-            "seriesOverrides": []
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": false
+          },
+          {
+            "id": "B",
+            "metric": "cloud.aws.sharedsignals.evenT_LATENCYByAccountIdRegionclientIdservice",
+            "spaceAggregation": "COUNT",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "clientid"
+            ],
+            "sortBy": "DESC",
+            "sortByDimension": "",
+            "filterBy": {
+              "filterOperator": "AND",
+              "nestedFilters": [
+                {
+                  "filter": "aws.account.id",
+                  "filterType": "DIMENSION",
+                  "filterOperator": "OR",
+                  "nestedFilters": [],
+                  "criteria": [
+                    {
+                      "value": "658501491317",
+                      "evaluator": "EQ"
+                    }
+                  ]
+                }
+              ],
+              "criteria": []
+            },
+            "limit": 20,
+            "rate": "NONE",
+            "enabled": false
+          },
+          {
+            "id": "C",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [
+              "clientid"
+            ],
+            "metricSelector": "(cloud.aws.sharedsignals.autH_CACHE_MISSByAccountIdRegionclientIdservice:filter(and(or(eq(\"aws.account.id\",\"658501491317\")))):splitBy(clientid):count:sort(value(avg,descending)):limit(20)/cloud.aws.sharedsignals.evenT_LATENCYByAccountIdRegionclientIdservice:filter(and(or(eq(\"aws.account.id\",\"658501491317\")))):splitBy(clientid):count:sort(value(avg,descending)):limit(20))*100",
+            "rate": "NONE",
+            "enabled": true
           }
         ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "DIMENSIONS",
-          "showLabels": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
+        "visualConfig": {
+          "type": "HEATMAP",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "A:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE"
               },
-              {
-                "value": 200,
-                "color": "#f5d30f"
-              },
-              {
-                "value": 500,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "A:consumername.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.selfserve.evenT_LATENCYByAccountIdRegionconsumerNameservice:setUnit(MilliSecond):filter(and(or(eq(\"aws.account.id\",\"451773080033\")))):splitBy(consumername):percentile(99.0):sort(value(percentile(99.0),descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
-      "name": "JWT cache miss %",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1444,
-        "left": 1596,
-        "width": 1178,
-        "height": 380
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Single value",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "cloud.aws.sharedsignals.autH_CACHE_MISSByAccountIdRegionclientIdservice",
-          "spaceAggregation": "COUNT",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "clientid"
-          ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "aws.account.id",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "658501491317",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": false
-        },
-        {
-          "id": "B",
-          "metric": "cloud.aws.sharedsignals.evenT_LATENCYByAccountIdRegionclientIdservice",
-          "spaceAggregation": "COUNT",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "clientid"
-          ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "aws.account.id",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "658501491317",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": false
-        },
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "clientid"
-          ],
-          "metricSelector": "(cloud.aws.sharedsignals.autH_CACHE_MISSByAccountIdRegionclientIdservice:filter(and(or(eq(\"aws.account.id\",\"658501491317\")))):splitBy(clientid):count:sort(value(avg,descending)):limit(20)/cloud.aws.sharedsignals.evenT_LATENCYByAccountIdRegionclientIdservice:filter(and(or(eq(\"aws.account.id\",\"658501491317\")))):splitBy(clientid):count:sort(value(avg,descending)):limit(20))*100",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "HEATMAP",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
+              "seriesOverrides": []
             },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "C:",
-            "unitTransform": "%",
-            "valueFormat": "0,00",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "JWT Cache miss %"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "DIMENSIONS",
-          "showLabels": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
+            {
+              "matcher": "B:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE"
               },
-              {
-                "color": "#f5d30f"
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "C:",
+              "unitTransform": "%",
+              "valueFormat": "0,00",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "JWT Cache miss %"
               },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "visible": true
+            },
+            "yAxes": []
+          },
+          "heatmapSettings": {
+            "yAxis": "DIMENSIONS",
+            "showLabels": true
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
           }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
         },
-        "graphChartSettings": {
-          "connectNulls": false
+        "queriesSettings": {
+          "resolution": ""
         },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
+        "metricExpressions": [
+          "resolution=null&((cloud.aws.sharedsignals.autH_CACHE_MISSByAccountIdRegionclientIdservice:filter(and(or(eq(\"aws.account.id\",\"658501491317\")))):splitBy(clientid):count:sort(value(avg,descending)):limit(20)/cloud.aws.sharedsignals.evenT_LATENCYByAccountIdRegionclientIdservice:filter(and(or(eq(\"aws.account.id\",\"658501491317\")))):splitBy(clientid):count:sort(value(avg,descending)):limit(20))*100):limit(100):names"
+        ]
       },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&((cloud.aws.sharedsignals.autH_CACHE_MISSByAccountIdRegionclientIdservice:filter(and(or(eq(\"aws.account.id\",\"658501491317\")))):splitBy(clientid):count:sort(value(avg,descending)):limit(20)/cloud.aws.sharedsignals.evenT_LATENCYByAccountIdRegionclientIdservice:filter(and(or(eq(\"aws.account.id\",\"658501491317\")))):splitBy(clientid):count:sort(value(avg,descending)):limit(20))*100):limit(100):names"
-      ]
-    },
-    {
-      "name": "Markdown",
-      "tileType": "MARKDOWN",
-      "configured": true,
-      "bounds": {
-        "top": 1444,
-        "left": 2774,
-        "width": 304,
-        "height": 380
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "markdown": "## JWT cache miss %\n\nThis is the % of lambda calls per client ID where the lambda was required to re-authenticate instead of being able to use a the cached JWT.\n\nThis is calculated by diving the number of times credentials are generated per client ID divided by the number of times lambdas are invoked per client ID and then multiplied by 100. \n\nThe number of lambda invocations are calculated by taking a count of how many event latency metrics are collected."
-    }
+      {
+        "name": "Markdown",
+        "tileType": "MARKDOWN",
+        "configured": true,
+        "bounds": {
+          "top": 1444,
+          "left": 2774,
+          "width": 304,
+          "height": 380
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "markdown": "## JWT cache miss %\n\nThis is the % of lambda calls per client ID where the lambda was required to re-authenticate instead of being able to use a the cached JWT.\n\nThis is calculated by diving the number of times credentials are generated per client ID divided by the number of times lambdas are invoked per client ID and then multiplied by 100. \n\nThe number of lambda invocations are calculated by taking a count of how many event latency metrics are collected."
+      }
     ]
   }
