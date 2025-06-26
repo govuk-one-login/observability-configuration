@@ -647,6 +647,12 @@ module "service_quotas_dashboard" {
   path   = "id-check/service-quotas.json"
 }
 
+module "dcmaw_backend_completion_rate" {
+  count  = local.is_production ? 1 : 0 # Only create in production
+  source = "./modules/dashboard"
+  path   = "id-check/dcmaw-backend-completion-rate.json"
+}
+
 module "dcmaw_backend_api_gateway" {
   count  = local.is_production ? 1 : 0 # Only create in production
   source = "./modules/dashboard"
