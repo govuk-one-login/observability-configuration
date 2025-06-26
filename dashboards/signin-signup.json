@@ -3,8 +3,9 @@
     "configurationVersions": [
       7
     ],
-    "clusterVersion": "1.291.94.20240511-084321"
+    "clusterVersion": "1.317.46.20250625-133757"
   },
+  "id": "1588f7b7-0df7-4730-b726-6b9320bc7cc7",
   "dashboardMetadata": {
     "name": "GOV.UK One Login - Service - Sign In/Sign Up",
     "shared": true,
@@ -494,19 +495,12 @@
       "queries": [
         {
           "id": "A",
-          "metric": "cloud.aws.authentication.signInNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType",
-          "spaceAggregation": "SUM",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [
             "clientname"
           ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "cloud.aws.authentication.signInNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(eq(\"environment\",\"production\")):splitBy(clientname):sum:sort(value(sum,descending)):limit(100)",
           "rate": "NONE",
           "enabled": true
         }
@@ -578,7 +572,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.authentication.signInNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy(clientname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.authentication.signInNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(eq(environment,production)):splitBy(clientname):sum:sort(value(sum,descending)):limit(100)):limit(100):names"
       ]
     },
     {
@@ -597,33 +591,12 @@
       "queries": [
         {
           "id": "A",
-          "metric": "cloud.aws.authentication.claimIssuedByAccountIdClaimClientEnvironmentLogGroupRegionServiceNameServiceType",
-          "spaceAggregation": "SUM",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [
             "client"
           ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "claim",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "https://vocab.account.gov.uk/v1/coreIdentityJWT",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "cloud.aws.authentication.claimIssuedByAccountIdClaimClientEnvironmentLogGroupRegionServiceNameServiceType:filter(and(eq(claim,\"https://vocab.account.gov.uk/v1/coreIdentityJWT\"),eq(\"environment\",\"production\"))):splitBy(client):sum:sort(value(sum,descending)):limit(100)",
           "rate": "NONE",
           "enabled": true
         }
@@ -695,7 +668,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.authentication.claimIssuedByAccountIdClaimClientEnvironmentLogGroupRegionServiceNameServiceType:filter(and(or(eq(claim,\"https://vocab.account.gov.uk/v1/coreIdentityJWT\")))):splitBy(client):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.authentication.claimIssuedByAccountIdClaimClientEnvironmentLogGroupRegionServiceNameServiceType:filter(and(eq(claim,\"https://vocab.account.gov.uk/v1/coreIdentityJWT\"),eq(environment,production))):splitBy(client):sum:sort(value(sum,descending)):limit(100)):limit(100):names"
       ]
     },
     {
@@ -763,6 +736,33 @@
           "timeAggregation": "DEFAULT",
           "splitBy": [],
           "metricSelector": "builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"dl-cri-api-v1-DrivingPermitCheckingFunction~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "G",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:filter(and(or(eq(documenttype,NFC_PASSPORT)))):splitBy():count:sort(value(avg,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "H",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:filter(and(or(eq(documenttype,UK_DRIVING_LICENCE)))):splitBy():count:sort(value(avg,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "I",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:filter(and(or(eq(documenttype,UK_NFC_BRP)))):splitBy():count:sort(value(avg,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         }
@@ -836,6 +836,39 @@
               "alias": "Driving License"
             },
             "seriesOverrides": []
+          },
+          {
+            "matcher": "G:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "V2 App (Passport)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "H:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "V2 App (UK Driving Licence)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "I:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "V2 App (BRP)"
+            },
+            "seriesOverrides": []
           }
         ],
         "axes": {
@@ -856,7 +889,10 @@
                 "C",
                 "D",
                 "E",
-                "F"
+                "F",
+                "G",
+                "H",
+                "I"
               ],
               "defaultAxis": true
             }
@@ -898,7 +934,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"initialise-ipv-session~\")\"))))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"ipv-cri-passport-api-IssueCredentialFunction~\")\"))))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"address-cri-api-v1-IssueCredentialFunction~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"fraud-cri-api-v1-IssueCredentialFunction~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"kbv-cri-api-v1-IssueCredentialFunction~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"dl-cri-api-v1-DrivingPermitCheckingFunction~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+        "resolution=null&(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"initialise-ipv-session~\")\"))))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"ipv-cri-passport-api-IssueCredentialFunction~\")\"))))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"address-cri-api-v1-IssueCredentialFunction~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"fraud-cri-api-v1-IssueCredentialFunction~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"kbv-cri-api-v1-IssueCredentialFunction~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(builtin:cloud.aws.lambda.invocations:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.startswith(~\"dl-cri-api-v1-DrivingPermitCheckingFunction~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names,(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:filter(and(or(eq(documenttype,NFC_PASSPORT)))):splitBy():count:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:filter(and(or(eq(documenttype,UK_DRIVING_LICENCE)))):splitBy():count:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:filter(and(or(eq(documenttype,UK_NFC_BRP)))):splitBy():count:sort(value(avg,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -917,10 +953,20 @@
       "queries": [
         {
           "id": "A",
-          "spaceAggregation": "SUM",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.authentication.docAppCallbackByAccountIdEnvironmentLogGroupRegionServiceNameServiceTypeSuccessful:sum:sort(value(sum,descending)):limit(20)",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region",
+            "environment",
+            "loggroup",
+            "servicename",
+            "servicetype",
+            "successful"
+          ],
+          "metricSelector": "cloud.aws.authentication.docAppCallbackByAccountIdEnvironmentLogGroupRegionServiceNameServiceTypeSuccessful:filter(eq(\"environment\",\"production\")):sum:sort(value(sum,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         }
@@ -994,7 +1040,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.authentication.docAppCallbackByAccountIdEnvironmentLogGroupRegionServiceNameServiceTypeSuccessful:sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.authentication.docAppCallbackByAccountIdEnvironmentLogGroupRegionServiceNameServiceTypeSuccessful:filter(eq(environment,production)):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -1013,19 +1059,12 @@
       "queries": [
         {
           "id": "A",
-          "metric": "cloud.aws.authentication.logoutSuccessByAccountIdAccountInterventionStateClientEnvironmentLogGroupRegionServiceNameServiceType",
-          "spaceAggregation": "SUM",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [
             "client"
           ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "cloud.aws.authentication.logoutSuccessByAccountIdAccountInterventionStateClientEnvironmentLogGroupRegionServiceNameServiceType:filter(eq(\"environment\",\"production\")):splitBy(client):sum:sort(value(sum,descending)):limit(100)",
           "rate": "NONE",
           "enabled": true
         }
@@ -1084,7 +1123,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(cloud.aws.authentication.logoutSuccessByAccountIdAccountInterventionStateClientEnvironmentLogGroupRegionServiceNameServiceType:splitBy(client):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+        "resolution=Inf&(cloud.aws.authentication.logoutSuccessByAccountIdAccountInterventionStateClientEnvironmentLogGroupRegionServiceNameServiceType:filter(eq(environment,production)):splitBy(client):sum:sort(value(sum,descending)):limit(100)):limit(100):names"
       ]
     },
     {
@@ -1243,20 +1282,12 @@
       "queries": [
         {
           "id": "A",
-          "metric": "cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType",
-          "spaceAggregation": "SUM",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [
             "clientname"
           ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(eq(\"environment\",\"production\")):splitBy(clientname):sum:sort(value(sum,descending)):limit(100)",
           "rate": "NONE",
           "enabled": true
         }
@@ -1331,7 +1362,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy(clientname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(eq(environment,production)):splitBy(clientname):sum:sort(value(sum,descending)):limit(100)):limit(100):names"
       ]
     },
     {
@@ -1350,19 +1381,12 @@
       "queries": [
         {
           "id": "A",
-          "metric": "cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType",
-          "spaceAggregation": "SUM",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [
             "clientname"
           ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(eq(\"environment\",\"production\")):splitBy(clientname):sum:sort(value(sum,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         }
@@ -1421,7 +1445,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy(clientname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+        "resolution=Inf&(cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(eq(environment,production)):splitBy(clientname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -1440,19 +1464,12 @@
       "queries": [
         {
           "id": "A",
-          "metric": "cloud.aws.authentication.signInNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType",
-          "spaceAggregation": "SUM",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [
             "clientname"
           ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "cloud.aws.authentication.signInNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(eq(\"environment\",\"production\")):splitBy(clientname):sum:sort(value(sum,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         }
@@ -1511,7 +1528,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(cloud.aws.authentication.signInNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy(clientname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+        "resolution=Inf&(cloud.aws.authentication.signInNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(eq(environment,production)):splitBy(clientname):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -1533,7 +1550,7 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "metricSelector": "cloud.aws.authentication.signInNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy():sum",
+          "metricSelector": "cloud.aws.authentication.signInNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(eq(\"environment\",\"production\")):splitBy():sum",
           "rate": "NONE",
           "enabled": true
         }
@@ -1600,8 +1617,8 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(cloud.aws.authentication.signInNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy():sum):limit(100):names",
-        "resolution=null&(cloud.aws.authentication.signInNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy():sum)"
+        "resolution=Inf&(cloud.aws.authentication.signInNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(eq(environment,production)):splitBy():sum):limit(100):names",
+        "resolution=null&(cloud.aws.authentication.signInNewAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(eq(environment,production)):splitBy():sum)"
       ]
     },
     {
@@ -1706,7 +1723,7 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "metricSelector": "cloud.aws.authentication.docAppCallbackByAccountIdEnvironmentLogGroupRegionServiceNameServiceTypeSuccessful:splitBy():sum",
+          "metricSelector": "cloud.aws.authentication.docAppCallbackByAccountIdEnvironmentLogGroupRegionServiceNameServiceTypeSuccessful:filter(eq(\"environment\",\"production\")):splitBy():sum",
           "rate": "NONE",
           "enabled": true
         }
@@ -1773,8 +1790,8 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(cloud.aws.authentication.docAppCallbackByAccountIdEnvironmentLogGroupRegionServiceNameServiceTypeSuccessful:splitBy():sum):limit(100):names",
-        "resolution=null&(cloud.aws.authentication.docAppCallbackByAccountIdEnvironmentLogGroupRegionServiceNameServiceTypeSuccessful:splitBy():sum)"
+        "resolution=Inf&(cloud.aws.authentication.docAppCallbackByAccountIdEnvironmentLogGroupRegionServiceNameServiceTypeSuccessful:filter(eq(environment,production)):splitBy():sum):limit(100):names",
+        "resolution=null&(cloud.aws.authentication.docAppCallbackByAccountIdEnvironmentLogGroupRegionServiceNameServiceTypeSuccessful:filter(eq(environment,production)):splitBy():sum)"
       ]
     },
     {
@@ -1886,7 +1903,7 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "metricSelector": "cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy():sum",
+          "metricSelector": "cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(eq(\"environment\",\"production\")):splitBy():sum",
           "rate": "NONE",
           "enabled": true
         }
@@ -1953,8 +1970,8 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy():sum):limit(100):names",
-        "resolution=null&(cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:splitBy():sum)"
+        "resolution=Inf&(cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(eq(environment,production)):splitBy():sum):limit(100):names",
+        "resolution=null&(cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(eq(environment,production)):splitBy():sum)"
       ]
     }
   ]
