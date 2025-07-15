@@ -703,6 +703,11 @@ module "sts" {
   path   = "mobile-platform/sts.json"
 }
 
+module "wallet" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "wallet/wallet.json"
+}
 
 ### STS ###
 
