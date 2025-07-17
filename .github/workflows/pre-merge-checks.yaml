@@ -1,0 +1,37 @@
+---
+name: Pre Merge Checks
+
+#Prevent default write-all access - this was pointed out by this checkov check CKV2_GHA_1
+permissions:
+  contents: read
+  actions: read
+  security-events: write
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  checkov:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Checkov Github Action
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          output_format: cli,sarif
+          output_file_path: console,results.sarif
+          directory: .
+          soft_fail: true
+          quiet: true
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v3
+        if: success() || failure()
+        with:
+          sarif_file: results.sarif
