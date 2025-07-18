@@ -697,12 +697,17 @@ module "mobile-platform" {
   path   = "mobile-platform/mobile-platform.json"
 }
 
+module "mobile_platform_behaviours" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "mobile-platform/mobile-platform-behaviours.json"
+}
+
 module "sts" {
   count  = local.is_production ? 1 : 0
   source = "./modules/dashboard"
   path   = "mobile-platform/sts.json"
 }
-
 module "wallet" {
   count  = local.is_production ? 1 : 0
   source = "./modules/dashboard"
@@ -710,6 +715,12 @@ module "wallet" {
 }
 
 ### STS ###
+
+module "sts_behaviours" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "mobile-platform/sts/sts-behaviours.json"
+}
 
 module "sts_standard_metrics_prod" {
   count  = local.is_production ? 1 : 0 # Only create in production
