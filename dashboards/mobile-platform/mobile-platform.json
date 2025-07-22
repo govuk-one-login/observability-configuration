@@ -3,7 +3,7 @@
     "configurationVersions": [
       7
     ],
-    "clusterVersion": "1.314.35.20250514-171150"
+    "clusterVersion": "1.319.25.20250721-123850"
   },
   "dashboardMetadata": {
     "name": "MOBILE - Mobile Platform",
@@ -52,7 +52,7 @@
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "## Max TPSPS \n\nIs it possible to get the max increase in transactions per second? \n\n"
+      "markdown": "## Max TPSPS \n\nIs it possible to get the max increase in transactions per second? \n\n"
     },
     {
       "name": "Markdown",
@@ -67,103 +67,6 @@
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
       "markdown": "Percentiles do not work :) "
-    },
-    {
-      "name": "Mobile Platform Backend Api - Count",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 570,
-        "left": 0,
-        "width": 912,
-        "height": 228
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "stage"
-          ],
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameRegionStage\n:filter(\n  and(\n    eq(\"apiname\",\"mobile-backend-api-backend-api\"),\n    or(\n        eq(\"aws.account.id\",\"671524980203\"),\n        eq(\"aws.account.id\",\"497065468681\"),\n        eq(\"aws.account.id\",\"921104553881\"),\n        eq(\"aws.account.id\",\"677276120913\"),\n        eq(\"aws.account.id\",\"605134434404\")\n      )\n    )\n)\n:partition(\n  \"env\",\n  dimension(\"1-dev\"   ,eq(\"aws.account.id\",\"671524980203\")),\n  dimension(\"2-build\" ,eq(\"aws.account.id\",\"497065468681\")),\n  dimension(\"3-stage\" ,eq(\"aws.account.id\",\"921104553881\")),\n  dimension(\"4-int\"   ,eq(\"aws.account.id\",\"677276120913\")),\n  dimension(\"5-prod\"  ,eq(\"aws.account.id\",\"605134434404\")),\n  otherwise(\"UNKNOWN\")\n)\n:splitBy(env,stage)\n:sum:sort(dimension(\"env\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameRegionStage:filter(and(eq(apiname,mobile-backend-api-backend-api),or(eq(\"aws.account.id\",\"671524980203\"),eq(\"aws.account.id\",\"497065468681\"),eq(\"aws.account.id\",\"921104553881\"),eq(\"aws.account.id\",\"677276120913\"),eq(\"aws.account.id\",\"605134434404\")))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"671524980203\")),dimension(\"2-build\",eq(\"aws.account.id\",\"497065468681\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"921104553881\")),dimension(\"4-int\",eq(\"aws.account.id\",\"677276120913\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"605134434404\")),otherwise(UNKNOWN)):splitBy(env,stage):sum:sort(dimension(env,ascending))):limit(100):names"
-      ]
     },
     {
       "name": "Mobile Platform Backend Api - Count by Endpoint",
@@ -11247,6 +11150,106 @@
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "Mobile Platform Backend Api - Count",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 570,
+        "left": 0,
+        "width": 912,
+        "height": 228
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "env",
+            "stage"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameRegionStage\n:filter(\n  and(\n    eq(\"apiname\",\"mobile-backend-api-backend-api\"),\n    or(\n        eq(\"aws.account.id\",\"671524980203\"),\n        eq(\"aws.account.id\",\"497065468681\"),\n        eq(\"aws.account.id\",\"921104553881\"),\n        eq(\"aws.account.id\",\"677276120913\"),\n        eq(\"aws.account.id\",\"605134434404\")\n      )\n    )\n)\n:partition(\n  \"env\",\n  dimension(\"1-dev\"   ,eq(\"aws.account.id\",\"671524980203\")),\n  dimension(\"2-build\" ,eq(\"aws.account.id\",\"497065468681\")),\n  dimension(\"3-stage\" ,eq(\"aws.account.id\",\"921104553881\")),\n  dimension(\"4-int\"   ,eq(\"aws.account.id\",\"677276120913\")),\n  dimension(\"5-prod\"  ,eq(\"aws.account.id\",\"605134434404\")),\n  otherwise(\"UNKNOWN\")\n)\n:splitBy(env,stage)\n:sum:rate(1s):sort(dimension(\"env\",ascending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "value": 7000,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 9000,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1h"
+      },
+      "metricExpressions": [
+        "resolution=1h&(cloud.aws.apigateway.countByAccountIdApiNameRegionStage:filter(and(eq(apiname,mobile-backend-api-backend-api),or(eq(\"aws.account.id\",\"671524980203\"),eq(\"aws.account.id\",\"497065468681\"),eq(\"aws.account.id\",\"921104553881\"),eq(\"aws.account.id\",\"677276120913\"),eq(\"aws.account.id\",\"605134434404\")))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"671524980203\")),dimension(\"2-build\",eq(\"aws.account.id\",\"497065468681\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"921104553881\")),dimension(\"4-int\",eq(\"aws.account.id\",\"677276120913\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"605134434404\")),otherwise(UNKNOWN)):splitBy(env,stage):sum:rate(1s):sort(dimension(env,ascending))):limit(100):names"
+      ]
     }
   ]
 }
