@@ -205,6 +205,28 @@ module "authentication_services" {
 
 
 
+### Authentication - Account Management ###
+
+module "di_auth_account_management_staging_dashboard" {
+  count  = local.is_production ? 0 : 1
+  source = "./modules/dashboard"
+  path   = "authentication/account-management/authentication-account-management-staging.json"
+}
+
+module "di_auth_account_management_integration_dashboard" {
+  count  = local.is_production ? 0 : 1
+  source = "./modules/dashboard"
+  path   = "authentication/account-management/authentication-account-management-integration.json"
+}
+
+module "di_auth_account_management_production_dashboard" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "authentication/account-management/authentication-account-management-production.json"
+}
+
+
+
 ### Core ###
 
 module "core_lambda_metrics_dashboard" {
