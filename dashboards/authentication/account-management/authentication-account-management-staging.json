@@ -1,0 +1,2122 @@
+{
+  "metadata": {
+    "configurationVersions": [
+      7
+    ],
+    "clusterVersion": "1.319.28.20250722-142119"
+  },
+  "dashboardMetadata": {
+    "name": "Authentication - Account Management (Staging)",
+    "shared": true,
+    "hasConsistentColors": false
+  },
+  "tiles": [
+    {
+      "name": "Method Management - Lambda Analysis",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 1368,
+        "left": 0,
+        "width": 1900,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "Method Management - Action Metrics",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 0,
+        "width": 1900,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 38,
+        "left": 0,
+        "width": 1520,
+        "height": 114
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "This dashboard measures successful backend operations.\n\nMore details around what the metrics are measuring can be found on the far right of the page."
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 456,
+        "left": 1520,
+        "width": 380,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## \"Update\" Operations\n\n\"Phone number updates\" and \"Auth app updates\" track both \"change\" and \"switch\" journeys.\n\n- \"Change\" journey - “Change phone number” and “Change authenticator app\" on the frontend. (So changing the default MFA method to a new one of the same type).\n- \"Switch\" journey - \"Use a different default method\" on the frontend. (So switching the default method to the opposite method - so SMS → new Auth App OR Auth App → new SMS)."
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 152,
+        "left": 1520,
+        "width": 380,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## \"Add Backup\" Operations\n\nThese track the number of each type of MFA method (SMS or Auth App at present) being added as a new backup MFA method."
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 760,
+        "left": 1520,
+        "width": 380,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## \"Delete\" Operations\n\nThese track the number of deleted backup MFA methods."
+    },
+    {
+      "name": "Failed Lambda Invocations",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1406,
+        "left": 0,
+        "width": 684,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "dt.entity.aws_lambda_function"
+          ],
+          "metricSelector": "builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(~\"AWS_LAMBDA_FUNCTION~\"),  entityName.startsWith(~\"staging-mfa-methods-~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "LambdaFunctionRunTime (by Region and LambdaFunctionArn)",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:LambdaFunctionArn.name",
+            "A:Region.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(~\"AWS_LAMBDA_FUNCTION~\"),  entityName.startsWith(~\"staging-mfa-methods-~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Failed Lambda Invocation Counts",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1406,
+        "left": 684,
+        "width": 380,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "dt.entity.aws_lambda_function"
+          ],
+          "metricSelector": "builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(~\"AWS_LAMBDA_FUNCTION~\"),  entityName.startsWith(~\"staging-mfa-methods-~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(30)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TOP_LIST",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:LambdaFunctionArn.name",
+            "A:Region.name",
+            "A:dt.entity.aws_lambda_function.name",
+            "B:dt.entity.aws_lambda_function.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(builtin:cloud.aws.lambda.errors:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(~\"AWS_LAMBDA_FUNCTION~\"),  entityName.startsWith(~\"staging-mfa-methods-~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(30)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Max Lambda Concurrency Counts",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1406,
+        "left": 1064,
+        "width": 380,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "dt.entity.aws_lambda_function"
+          ],
+          "metricSelector": "builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(~\"AWS_LAMBDA_FUNCTION~\"),  entityName.startsWith(~\"staging-mfa-methods-~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(30)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TOP_LIST",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:LambdaFunctionArn.name",
+            "A:Region.name",
+            "A:dt.entity.aws_lambda_function.name",
+            "B:dt.entity.aws_lambda_function.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(builtin:cloud.aws.lambda.concExecutions:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(~\"AWS_LAMBDA_FUNCTION~\"),  entityName.startsWith(~\"staging-mfa-methods-~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(30)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Deletion failures: 5xx count",
+      "nameSize": "",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 760,
+        "left": 608,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Backups added: SMS",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiname",
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:api_gateway:api",
+            "dt.entity.cloud:aws:region",
+            "method",
+            "resource",
+            "stage"
+          ],
+          "metricSelector": "cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\"\n:filter(\n    and(\n        eq(\"aws.account.id\", \"758531536632\"),\n        eq(stage, staging),\n        contains(\"apiname\",\"account-management-api-method-management\"),\n        eq(\"method\",\"DELETE\")\n    )\n)\n:sum\n:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "5XXError",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:apiname.name",
+            "A:aws.account.id.name",
+            "A:aws.region.name",
+            "A:dt.entity.cloud:aws:account.name",
+            "A:dt.entity.cloud:aws:api_gateway:api.name",
+            "A:dt.entity.cloud:aws:region.name",
+            "A:method.name",
+            "A:resource.name",
+            "A:stage.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(stage,staging),contains(apiname,account-management-api-method-management),eq(method,DELETE))):sum:default(0, always)):limit(100):names:fold(auto)",
+        "resolution=null&(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(stage,staging),contains(apiname,account-management-api-method-management),eq(method,DELETE))):sum:default(0, always))"
+      ]
+    },
+    {
+      "name": "Add failures: 4xx count",
+      "nameSize": "",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 152,
+        "left": 608,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Backups added: SMS",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiname",
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:api_gateway:api",
+            "dt.entity.cloud:aws:region",
+            "method",
+            "resource",
+            "stage"
+          ],
+          "metricSelector": "cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\"\n:filter(\n    and(\n        eq(\"aws.account.id\", \"758531536632\"),\n        eq(stage, staging),\n        contains(\"apiname\",\"account-management-api-method-management\"),\n        eq(\"method\",\"POST\")\n    )\n)\n:sum\n:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(stage,staging),contains(apiname,account-management-api-method-management),eq(method,POST))):sum:default(0, always)):limit(100):names:fold(auto)"
+      ]
+    },
+    {
+      "name": "Add failures: 5xx count",
+      "nameSize": "",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 152,
+        "left": 912,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Backups added: SMS",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiname",
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:api_gateway:api",
+            "dt.entity.cloud:aws:region",
+            "method",
+            "resource",
+            "stage"
+          ],
+          "metricSelector": "cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\"\n:filter(\n    and(\n        eq(\"aws.account.id\", \"758531536632\"),\n        eq(stage, staging),\n        contains(\"apiname\",\"account-management-api-method-management\"),\n        eq(\"method\",\"POST\")\n    )\n)\n:sum\n:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(stage,staging),contains(apiname,account-management-api-method-management),eq(method,POST))):sum:default(0, always)):limit(100):names:fold(auto)"
+      ]
+    },
+    {
+      "name": "Update failures: 4xx count",
+      "nameSize": "",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 456,
+        "left": 912,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Backups added: SMS",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiname",
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:api_gateway:api",
+            "dt.entity.cloud:aws:region",
+            "method",
+            "resource",
+            "stage"
+          ],
+          "metricSelector": "cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\"\n:filter(\n    and(\n        eq(\"aws.account.id\", \"758531536632\"),\n        eq(stage, staging),\n        contains(\"apiname\",\"account-management-api-method-management\"),\n        eq(\"method\",\"PUT\")\n    )\n)\n:sum\n:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(stage,staging),contains(apiname,account-management-api-method-management),eq(method,PUT))):sum:default(0, always)):limit(100):names:fold(auto)",
+        "resolution=null&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(stage,staging),contains(apiname,account-management-api-method-management),eq(method,PUT))):sum:default(0, always))"
+      ]
+    },
+    {
+      "name": "Update failures: 5xx count",
+      "nameSize": "",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 456,
+        "left": 1216,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Backups added: SMS",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiname",
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:api_gateway:api",
+            "dt.entity.cloud:aws:region",
+            "method",
+            "resource",
+            "stage"
+          ],
+          "metricSelector": "cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\"\n:filter(\n    and(\n        eq(\"aws.account.id\", \"758531536632\"),\n        eq(stage, staging),\n        contains(\"apiname\",\"account-management-api-method-management\"),\n        eq(\"method\",\"PUT\")\n    )\n)\n:sum\n:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "5XXError",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:apiname.name",
+            "A:aws.account.id.name",
+            "A:aws.region.name",
+            "A:dt.entity.cloud:aws:account.name",
+            "A:dt.entity.cloud:aws:api_gateway:api.name",
+            "A:dt.entity.cloud:aws:region.name",
+            "A:method.name",
+            "A:resource.name",
+            "A:stage.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(stage,staging),contains(apiname,account-management-api-method-management),eq(method,PUT))):sum:default(0, always)):limit(100):names:fold(auto)",
+        "resolution=null&(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(stage,staging),contains(apiname,account-management-api-method-management),eq(method,PUT))):sum:default(0, always))"
+      ]
+    },
+    {
+      "name": "Swap backup with default",
+      "nameSize": "",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 456,
+        "left": 608,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Backups added: SMS",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region",
+            "environment",
+            "journeytype",
+            "loggroup",
+            "mfamethodtype",
+            "operation",
+            "priorityidentifier",
+            "result",
+            "servicename",
+            "servicetype"
+          ],
+          "metricSelector": "cloud.aws.authentication.mfaMethodOperationCountByAccountIdEnvironmentJourneyTypeLogGroupMfaMethodTypeOperationPriorityIdentifierRegionResultServiceNameServiceType\n:filter(and(\n    eq(\"aws.account.id\", \"758531536632\"),\n    eq(environment, staging),\n    eq(operation, \"SwapBackupWithDefaultMfaMethod\"),\n    eq(result, \"SUCCESS\")\n  ))\n:count\n:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.authentication.mfaMethodOperationCountByAccountIdEnvironmentJourneyTypeLogGroupMfaMethodTypeOperationPriorityIdentifierRegionResultServiceNameServiceType:filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(environment,staging),eq(operation,SwapBackupWithDefaultMfaMethod),eq(result,SUCCESS))):count:default(0, always)):limit(100):names:fold(auto)",
+        "resolution=null&(cloud.aws.authentication.mfaMethodOperationCountByAccountIdEnvironmentJourneyTypeLogGroupMfaMethodTypeOperationPriorityIdentifierRegionResultServiceNameServiceType:filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(environment,staging),eq(operation,SwapBackupWithDefaultMfaMethod),eq(result,SUCCESS))):count:default(0, always))"
+      ]
+    },
+    {
+      "name": "Backups added: SMS",
+      "nameSize": "",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 152,
+        "left": 0,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Backups added: SMS",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region",
+            "environment",
+            "journeytype",
+            "loggroup",
+            "mfamethodtype",
+            "operation",
+            "priorityidentifier",
+            "result",
+            "servicename",
+            "servicetype"
+          ],
+          "metricSelector": "cloud.aws.authentication.mfaMethodOperationCountByAccountIdEnvironmentJourneyTypeLogGroupMfaMethodTypeOperationPriorityIdentifierRegionResultServiceNameServiceType\n:filter(and(\n    eq(\"aws.account.id\", \"758531536632\"),\n    eq(environment, staging),\n    eq(operation, \"CreateMfaMethod\"),\n    eq(mfamethodtype, \"SMS\"),\n    eq(result, \"SUCCESS\")\n  ))\n:count\n:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:aws.account.id.name",
+            "A:aws.region.name",
+            "A:dt.entity.cloud:aws:account.name",
+            "A:dt.entity.cloud:aws:region.name",
+            "A:environment.name",
+            "A:journeytype.name",
+            "A:loggroup.name",
+            "A:mfamethodtype.name",
+            "A:operation.name",
+            "A:priorityidentifier.name",
+            "A:result.name",
+            "A:servicename.name",
+            "A:servicetype.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.authentication.mfaMethodOperationCountByAccountIdEnvironmentJourneyTypeLogGroupMfaMethodTypeOperationPriorityIdentifierRegionResultServiceNameServiceType:filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(environment,staging),eq(operation,CreateMfaMethod),eq(mfamethodtype,SMS),eq(result,SUCCESS))):count:default(0, always)):limit(100):names:fold(auto)",
+        "resolution=null&(cloud.aws.authentication.mfaMethodOperationCountByAccountIdEnvironmentJourneyTypeLogGroupMfaMethodTypeOperationPriorityIdentifierRegionResultServiceNameServiceType:filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(environment,staging),eq(operation,CreateMfaMethod),eq(mfamethodtype,SMS),eq(result,SUCCESS))):count:default(0, always))"
+      ]
+    },
+    {
+      "name": "Backups added: Auth App",
+      "nameSize": "",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 152,
+        "left": 304,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Backups added: SMS",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region",
+            "environment",
+            "journeytype",
+            "loggroup",
+            "mfamethodtype",
+            "operation",
+            "priorityidentifier",
+            "result",
+            "servicename",
+            "servicetype"
+          ],
+          "metricSelector": "cloud.aws.authentication.mfaMethodOperationCountByAccountIdEnvironmentJourneyTypeLogGroupMfaMethodTypeOperationPriorityIdentifierRegionResultServiceNameServiceType\n:filter(and(\n    eq(\"aws.account.id\", \"758531536632\"),\n    eq(environment, staging),\n    eq(operation, \"CreateMfaMethod\"),\n    eq(mfamethodtype, \"AUTH_APP\"),\n    eq(result, \"SUCCESS\")\n  ))\n:count\n:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.authentication.mfaMethodOperationCountByAccountIdEnvironmentJourneyTypeLogGroupMfaMethodTypeOperationPriorityIdentifierRegionResultServiceNameServiceType:filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(environment,staging),eq(operation,CreateMfaMethod),eq(mfamethodtype,AUTH_APP),eq(result,SUCCESS))):count:default(0, always)):limit(100):names:fold(auto)",
+        "resolution=null&(cloud.aws.authentication.mfaMethodOperationCountByAccountIdEnvironmentJourneyTypeLogGroupMfaMethodTypeOperationPriorityIdentifierRegionResultServiceNameServiceType:filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(environment,staging),eq(operation,CreateMfaMethod),eq(mfamethodtype,AUTH_APP),eq(result,SUCCESS))):count:default(0, always))"
+      ]
+    },
+    {
+      "name": "Auth app updates",
+      "nameSize": "",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 456,
+        "left": 304,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Backups added: SMS",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region",
+            "environment",
+            "journeytype",
+            "loggroup",
+            "mfamethodtype",
+            "operation",
+            "priorityidentifier",
+            "result",
+            "servicename",
+            "servicetype"
+          ],
+          "metricSelector": "cloud.aws.authentication.mfaMethodOperationCountByAccountIdEnvironmentJourneyTypeLogGroupMfaMethodTypeOperationPriorityIdentifierRegionResultServiceNameServiceType\n:filter(and(\n    eq(\"aws.account.id\", \"758531536632\"),\n    eq(environment, staging),\n    eq(operation, \"UpdateMfaMethod\"),\n    eq(mfamethodtype, \"AUTH_APP\"),\n    eq(result, \"SUCCESS\")\n  ))\n:count\n:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.authentication.mfaMethodOperationCountByAccountIdEnvironmentJourneyTypeLogGroupMfaMethodTypeOperationPriorityIdentifierRegionResultServiceNameServiceType:filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(environment,staging),eq(operation,UpdateMfaMethod),eq(mfamethodtype,AUTH_APP),eq(result,SUCCESS))):count:default(0, always)):limit(100):names:fold(auto)",
+        "resolution=null&(cloud.aws.authentication.mfaMethodOperationCountByAccountIdEnvironmentJourneyTypeLogGroupMfaMethodTypeOperationPriorityIdentifierRegionResultServiceNameServiceType:filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(environment,staging),eq(operation,UpdateMfaMethod),eq(mfamethodtype,AUTH_APP),eq(result,SUCCESS))):count:default(0, always))"
+      ]
+    },
+    {
+      "name": "Phone number updates",
+      "nameSize": "",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 456,
+        "left": 0,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Backups added: SMS",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region",
+            "environment",
+            "journeytype",
+            "loggroup",
+            "mfamethodtype",
+            "operation",
+            "priorityidentifier",
+            "result",
+            "servicename",
+            "servicetype"
+          ],
+          "metricSelector": "cloud.aws.authentication.mfaMethodOperationCountByAccountIdEnvironmentJourneyTypeLogGroupMfaMethodTypeOperationPriorityIdentifierRegionResultServiceNameServiceType\n:filter(and(\n    eq(\"aws.account.id\", \"758531536632\"),\n    eq(environment, staging),\n    eq(operation, \"UpdateMfaMethod\"),\n    eq(mfamethodtype, \"SMS\"),\n    eq(result, \"SUCCESS\")\n  ))\n:count\n:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.authentication.mfaMethodOperationCountByAccountIdEnvironmentJourneyTypeLogGroupMfaMethodTypeOperationPriorityIdentifierRegionResultServiceNameServiceType:filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(environment,staging),eq(operation,UpdateMfaMethod),eq(mfamethodtype,SMS),eq(result,SUCCESS))):count:default(0, always)):limit(100):names:fold(auto)",
+        "resolution=null&(cloud.aws.authentication.mfaMethodOperationCountByAccountIdEnvironmentJourneyTypeLogGroupMfaMethodTypeOperationPriorityIdentifierRegionResultServiceNameServiceType:filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(environment,staging),eq(operation,UpdateMfaMethod),eq(mfamethodtype,SMS),eq(result,SUCCESS))):count:default(0, always))"
+      ]
+    },
+    {
+      "name": "Backups deleted",
+      "nameSize": "",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 760,
+        "left": 0,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Backups added: SMS",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region",
+            "environment",
+            "journeytype",
+            "loggroup",
+            "mfamethodtype",
+            "operation",
+            "priorityidentifier",
+            "result",
+            "servicename",
+            "servicetype"
+          ],
+          "metricSelector": "cloud.aws.authentication.mfaMethodOperationCountByAccountIdEnvironmentJourneyTypeLogGroupMfaMethodTypeOperationPriorityIdentifierRegionResultServiceNameServiceType\n:filter(and(\n    eq(\"aws.account.id\", \"758531536632\"),\n    eq(environment, staging),\n    eq(operation, \"DeleteMfaMethod\"),\n    eq(result, \"SUCCESS\")\n  ))\n:count\n:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.authentication.mfaMethodOperationCountByAccountIdEnvironmentJourneyTypeLogGroupMfaMethodTypeOperationPriorityIdentifierRegionResultServiceNameServiceType:filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(environment,staging),eq(operation,DeleteMfaMethod),eq(result,SUCCESS))):count:default(0, always)):limit(100):names:fold(auto)",
+        "resolution=null&(cloud.aws.authentication.mfaMethodOperationCountByAccountIdEnvironmentJourneyTypeLogGroupMfaMethodTypeOperationPriorityIdentifierRegionResultServiceNameServiceType:filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(environment,staging),eq(operation,DeleteMfaMethod),eq(result,SUCCESS))):count:default(0, always))"
+      ]
+    },
+    {
+      "name": "Deletion failures: 4xx count",
+      "nameSize": "",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 760,
+        "left": 304,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Backups added: SMS",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiname",
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:api_gateway:api",
+            "dt.entity.cloud:aws:region",
+            "method",
+            "resource",
+            "stage"
+          ],
+          "metricSelector": "cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\"\n:filter(\n    and(\n        eq(\"aws.account.id\", \"758531536632\"),\n        eq(stage, staging),\n        contains(\"apiname\",\"account-management-api-method-management\"),\n        eq(\"method\",\"DELETE\")\n    )\n)\n:sum\n:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(stage,staging),contains(apiname,account-management-api-method-management),eq(method,DELETE))):sum:default(0, always)):limit(100):names:fold(auto)",
+        "resolution=null&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(stage,staging),contains(apiname,account-management-api-method-management),eq(method,DELETE))):sum:default(0, always))"
+      ]
+    },
+    {
+      "name": "Retrieval failures: 4xx count",
+      "nameSize": "",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1064,
+        "left": 0,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Backups added: SMS",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiname",
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:api_gateway:api",
+            "dt.entity.cloud:aws:region",
+            "method",
+            "resource",
+            "stage"
+          ],
+          "metricSelector": "cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\"\n:filter(\n    and(\n        eq(\"aws.account.id\", \"758531536632\"),\n        eq(stage, staging),\n        contains(\"apiname\",\"account-management-api-method-management\"),\n        eq(\"method\",\"GET\")\n    )\n)\n:sum\n:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(stage,staging),contains(apiname,account-management-api-method-management),eq(method,GET))):sum:default(0, always)):limit(100):names:fold(auto)",
+        "resolution=null&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(stage,staging),contains(apiname,account-management-api-method-management),eq(method,GET))):sum:default(0, always))"
+      ]
+    },
+    {
+      "name": "Retrieval failures: 5xx count",
+      "nameSize": "",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1064,
+        "left": 304,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Backups added: SMS",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiname",
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:api_gateway:api",
+            "dt.entity.cloud:aws:region",
+            "method",
+            "resource",
+            "stage"
+          ],
+          "metricSelector": "cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\"\n:filter(\n    and(\n        eq(\"aws.account.id\", \"758531536632\"),\n        eq(stage, staging),\n        contains(\"apiname\",\"account-management-api-method-management\"),\n        eq(\"method\",\"GET\")\n    )\n)\n:sum\n:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "5XXError",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:apiname.name",
+            "A:aws.account.id.name",
+            "A:aws.region.name",
+            "A:dt.entity.cloud:aws:account.name",
+            "A:dt.entity.cloud:aws:api_gateway:api.name",
+            "A:dt.entity.cloud:aws:region.name",
+            "A:method.name",
+            "A:resource.name",
+            "A:stage.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(stage,staging),contains(apiname,account-management-api-method-management),eq(method,GET))):sum:default(0,always)):limit(100):names:fold(auto)",
+        "resolution=null&(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(stage,staging),contains(apiname,account-management-api-method-management),eq(method,GET))):sum:default(0,always))"
+      ]
+    },
+    {
+      "name": "Backend 5XX Errors",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1710,
+        "left": 684,
+        "width": 684,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "resource",
+            "method"
+          ],
+          "metricSelector": "cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\"\n:filter(and(\n    eq(\"aws.account.id\", \"758531536632\"),\n    eq(stage, staging),\n    contains(\"apiname\",\"di-account-management-api-method-management\"),\n    contains(\"resource\",\"/mfa-methods/\"))\n)\n:splitBy(resource,method):sum:sort(value(sum,descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "5XXError",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:apiname.name",
+            "A:resource.name",
+            "A:method.name",
+            "B:apiname.name",
+            "B:resource.name",
+            "B:method.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(stage,staging),contains(apiname,di-account-management-api-method-management),contains(resource,\"/mfa-methods/\"))):splitBy(resource,method):sum:sort(value(sum,descending))):names"
+      ]
+    },
+    {
+      "name": "Backend 4XX Failures",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1710,
+        "left": 0,
+        "width": 684,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "resource",
+            "method"
+          ],
+          "metricSelector": "cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\"\n:filter(and(\n    eq(\"aws.account.id\", \"758531536632\"),\n    eq(stage, staging),\n    contains(\"apiname\",\"di-account-management-api-method-management\"),\n    contains(\"resource\",\"/mfa-methods/\"))\n)\n:splitBy(resource,method):sum:sort(value(sum,descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "B:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "4XXError",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "B",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:apiname.name",
+            "A:resource.name",
+            "A:method.name",
+            "B:apiname.name",
+            "B:resource.name",
+            "B:method.name",
+            "B:aws.account.id.name",
+            "B:aws.region.name",
+            "B:stage.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(and(eq(\"aws.account.id\",\"758531536632\"),eq(stage,staging),contains(apiname,di-account-management-api-method-management),contains(resource,\"/mfa-methods/\"))):splitBy(resource,method):sum:sort(value(sum,descending))):names"
+      ]
+    },
+    {
+      "name": "Lambda Execution Times",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1976,
+        "left": 0,
+        "width": 684,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "functionname"
+          ],
+          "metricSelector": "cloud.aws.lambda.durationByAccountIdFunctionNameRegion\n:filter(and(\n    eq(\"aws.account.id\", \"758531536632\"),\n    contains(\"functionname\", \"staging-mfa-methods-\")\n))\n:splitBy(\"functionname\")\n:avg\n:sort(value(max,descending))\n:limit(100)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "STACKED_AREA"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "Duration",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 2000,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 4000,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "isThresholdBackgroundAppliedToCell": false,
+          "hiddenColumns": [
+            "A:dt.entity.aws_lambda_function.name",
+            "B:dt.entity.aws_lambda_function.name",
+            "C:dt.entity.aws_lambda_function.name",
+            "A:functionname.name",
+            "B:functionname.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.lambda.durationByAccountIdFunctionNameRegion:filter(and(eq(\"aws.account.id\",\"758531536632\"),contains(functionname,staging-mfa-methods-))):splitBy(functionname):avg:sort(value(max,descending)):limit(100)):names"
+      ]
+    }
+  ]
+}
