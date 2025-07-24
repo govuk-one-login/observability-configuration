@@ -136,6 +136,18 @@ resource "dynatrace_dashboard_sharing" "aws_service_quotas" {
   }
 }
 
+### Fraud Pod ###
+
+module "fpad-ssf-infrastructure" {
+  source = "./modules/dashboard"
+  path   = "fraud/ssf/fpad-ssf-infrastructure.json"
+}
+
+module "fpad-ticf-cri-infrastructure" {
+  source = "./modules/dashboard"
+  path   = "fraud/ssf/fpad-ticf-cri-infrastructure.json"
+}
+
 ### Authentication ###
 
 module "di_auth_check_experian_build_dashboard" {
