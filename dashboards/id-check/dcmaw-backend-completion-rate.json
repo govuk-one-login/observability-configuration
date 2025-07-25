@@ -18,7 +18,7 @@
       "tileType": "HEADER",
       "configured": true,
       "bounds": {
-        "top": 798,
+        "top": 1026,
         "left": 0,
         "width": 1026,
         "height": 38
@@ -72,7 +72,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 418,
+        "top": 646,
         "left": 684,
         "width": 342,
         "height": 304
@@ -575,7 +575,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 418,
+        "top": 646,
         "left": 0,
         "width": 684,
         "height": 304
@@ -714,7 +714,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 836,
+        "top": 1064,
         "left": 0,
         "width": 1026,
         "height": 190
@@ -953,6 +953,109 @@
       },
       "metricExpressions": [
         "resolution=Inf&(cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:timeshift(1w)):names,(cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:timeshift(0w)):names,(cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:timeshift(-1w)):names,(cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:timeshift(-2w)):names,(cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:timeshift(-3w)):names,(cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:timeshift(-4w)):names,(cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:timeshift(-5w)):names"
+      ]
+    },
+    {
+      "name": "Journey Completion Rate Over 7 Days",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 418,
+        "left": 0,
+        "width": 1026,
+        "height": 228
+      },
+      "tileFilter": {
+        "timeframe": "-7d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "(cloud.aws.userinfo.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\") / cloud.aws.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\") ) * 100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": true
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1d"
+      },
+      "metricExpressions": [
+        "resolution=1d&((cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\")/cloud.aws.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"))*100):limit(100):names"
       ]
     }
   ]
