@@ -138,14 +138,14 @@ resource "dynatrace_dashboard_sharing" "aws_service_quotas" {
 
 ### Fraud Pod ###
 
-module "fpad-ssf-infrastructure" {
+module "ssf-infrastructure" {
   source = "./modules/dashboard"
-  path   = "fraud/ssf/fpad-ssf-infrastructure.json"
+  path   = "fraud/ssf/ssf-infrastructure.json"
 }
 
-module "fpad-ticf-cri-infrastructure" {
+module "ticf-cri-infrastructure" {
   source = "./modules/dashboard"
-  path   = "fraud/ssf/fpad-ticf-cri-infrastructure.json"
+  path   = "fraud/ssf/ticf-cri-infrastructure.json"
 }
 
 ### Authentication ###
