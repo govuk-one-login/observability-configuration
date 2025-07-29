@@ -16,7 +16,7 @@ module "ssf-infrastructure" {
 
 module "ticf-cri-infrastructure" {
   source = "./modules/documents"
-  document_path = "fraud/ssf/ticf-cri-infrastructure.json"
+  document_path = "fraud/ticf-cri/ticf-cri-infrastructure.json"
   document_name = "TICF-CRI Infrastructure Dashboard"
   document_type = "dashboard"
 }
