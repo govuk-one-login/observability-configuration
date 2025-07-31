@@ -3799,11 +3799,11 @@
         }
       },
       "timeframe": {
+        "tileTimeframeEnabled": true,
         "tileTimeframe": {
           "from": "now()-365d",
           "to": "now()"
-        },
-        "tileTimeframeEnabled": true
+        }
       }
     },
     "53": {
@@ -3886,19 +3886,6 @@
           "legend": {},
           "tooltip": {}
         },
-        "singleValue": {
-          "showLabel": true,
-          "label": "successfulRequestLatencyByAccountIdOperationRegionTableName",
-          "prefixIcon": "",
-          "recordField": "successfulRequestLatencyByAccountIdOperationRegionTableName",
-          "autoscale": true,
-          "alignment": "center",
-          "trend": {
-            "trendType": "auto",
-            "isVisible": true
-          },
-          "colorThresholdTarget": "value"
-        },
         "table": {
           "hiddenColumns": [
             [
@@ -3909,15 +3896,7 @@
             ]
           ],
           "colorThresholdTarget": "value",
-          "columnTypeOverrides": [
-            {
-              "fields": [
-                "throttledRequests"
-              ],
-              "value": "sparkline",
-              "id": 1745586077988
-            }
-          ],
+          "columnTypeOverrides": [],
           "columnWidths": {
             "[\"successfulRequestLatencyByAccountIdOperationRegionTableName\"]": 186.81253051757812,
             "[\"successfulRequestLatencyByAccountIdOperationRegionTableName.0\"]": 113.41842651367188,
@@ -3957,6 +3936,19 @@
           "min": "auto",
           "max": "auto"
         },
+        "singleValue": {
+          "showLabel": true,
+          "label": "successfulRequestLatencyByAccountIdOperationRegionTableName",
+          "prefixIcon": "",
+          "recordField": "successfulRequestLatencyByAccountIdOperationRegionTableName",
+          "autoscale": true,
+          "alignment": "center",
+          "trend": {
+            "trendType": "auto",
+            "isVisible": true
+          },
+          "colorThresholdTarget": "value"
+        },
         "autoSelectVisualization": false,
         "label": {
           "showLabel": false
@@ -3968,6 +3960,13 @@
         "unitsOverrides": [],
         "dataMapping": {}
       },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
       "davis": {
         "enabled": false,
         "davisVisualization": {
@@ -3975,18 +3974,11 @@
         }
       },
       "timeframe": {
+        "tileTimeframeEnabled": true,
         "tileTimeframe": {
           "from": "now()-365d",
           "to": "now()"
-        },
-        "tileTimeframeEnabled": true
-      },
-      "querySettings": {
-        "maxResultRecords": 1000,
-        "defaultScanLimitGbytes": 500,
-        "maxResultMegaBytes": 1,
-        "defaultSamplingRatio": 10,
-        "enableSampling": false
+        }
       }
     },
     "54": {
@@ -4155,11 +4147,11 @@
         }
       },
       "timeframe": {
+        "tileTimeframeEnabled": true,
         "tileTimeframe": {
           "from": "now()-365d",
           "to": "now()"
-        },
-        "tileTimeframeEnabled": true
+        }
       }
     },
     "55": {
@@ -4328,11 +4320,11 @@
         }
       },
       "timeframe": {
+        "tileTimeframeEnabled": true,
         "tileTimeframe": {
           "from": "now()-365d",
           "to": "now()"
-        },
-        "tileTimeframeEnabled": true
+        }
       }
     },
     "56": {
@@ -4501,11 +4493,11 @@
         }
       },
       "timeframe": {
+        "tileTimeframeEnabled": true,
         "tileTimeframe": {
           "from": "now()-365d",
           "to": "now()"
-        },
-        "tileTimeframeEnabled": true
+        }
       }
     },
     "57": {
@@ -4513,10 +4505,10 @@
       "content": "## SQS Metrics"
     },
     "62": {
-      "title": "Messages Sent",
+      "title": "Messages Sent - SQS",
       "description": "",
       "type": "data",
-      "query": "timeseries sum(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion), \nby: { queuename },\nfilter: { aws.account.id == $SelectedAWSAccount }",
+      "query": "timeseries sum(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion), \nby: { queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND NOT(contains( queuename, \"DeadLetterQueue\")) }",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
@@ -4572,14 +4564,6 @@
           "legend": {},
           "tooltip": {}
         },
-        "singleValue": {
-          "showLabel": true,
-          "label": "",
-          "prefixIcon": "AnalyticsIcon",
-          "isIconVisible": false,
-          "alignment": "center",
-          "colorThresholdTarget": "value"
-        },
         "table": {
           "rowDensity": "condensed",
           "enableSparklines": false,
@@ -4589,7 +4573,15 @@
           "monospacedFontEnabled": false,
           "monospacedFontColumns": [],
           "columnWidths": {},
-          "columnTypeOverrides": []
+          "columnTypeOverrides": [
+            {
+              "fields": [
+                "sum(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion)"
+              ],
+              "value": "sparkline",
+              "id": 1753973252561
+            }
+          ]
         },
         "honeycomb": {
           "shape": "hexagon",
@@ -4625,6 +4617,14 @@
           "min": "auto",
           "max": "auto"
         },
+        "singleValue": {
+          "showLabel": true,
+          "label": "",
+          "prefixIcon": "AnalyticsIcon",
+          "isIconVisible": false,
+          "alignment": "center",
+          "colorThresholdTarget": "value"
+        },
         "autoSelectVisualization": false
       },
       "querySettings": {
@@ -4653,9 +4653,9 @@
       }
     },
     "63": {
-      "title": "Messages Received",
+      "title": "Messages Received - SQS",
       "type": "data",
-      "query": "timeseries sum(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion),\nby: { queuename },\nfilter: { aws.account.id == $SelectedAWSAccount }",
+      "query": "timeseries sum(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion),\nby: { queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND NOT(contains( queuename, \"DeadLetterQueue\")) }",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
@@ -4701,14 +4701,6 @@
           "legend": {},
           "tooltip": {}
         },
-        "singleValue": {
-          "showLabel": true,
-          "label": "",
-          "prefixIcon": "AnalyticsIcon",
-          "isIconVisible": false,
-          "alignment": "center",
-          "colorThresholdTarget": "value"
-        },
         "table": {
           "rowDensity": "condensed",
           "enableSparklines": false,
@@ -4718,7 +4710,15 @@
           "monospacedFontEnabled": false,
           "monospacedFontColumns": [],
           "columnWidths": {},
-          "columnTypeOverrides": []
+          "columnTypeOverrides": [
+            {
+              "fields": [
+                "sum(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion)"
+              ],
+              "value": "sparkline",
+              "id": 1753973252909
+            }
+          ]
         },
         "honeycomb": {
           "shape": "hexagon",
@@ -4754,6 +4754,14 @@
           "min": "auto",
           "max": "auto"
         },
+        "singleValue": {
+          "showLabel": true,
+          "label": "",
+          "prefixIcon": "AnalyticsIcon",
+          "isIconVisible": false,
+          "alignment": "center",
+          "colorThresholdTarget": "value"
+        },
         "autoSelectVisualization": false
       },
       "querySettings": {
@@ -4778,12 +4786,11 @@
       }
     },
     "64": {
-      "title": "Messages Visible",
+      "title": "Messages Visible - SQS",
       "type": "data",
-      "query": "timeseries approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion=sum(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion),\nby:{ queuename },\nfilter: { aws.account.id == $SelectedAWSAccount }",
+      "query": "timeseries approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion=sum(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion),\nby:{ queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND NOT(contains( queuename, \"DeadLetterQueue\")) }",
       "visualization": "lineChart",
       "visualizationSettings": {
-        "autoSelectVisualization": false,
         "thresholds": [],
         "chartSettings": {
           "gapPolicy": "gap",
@@ -4826,14 +4833,6 @@
           "rightYAxisSettings": {},
           "legend": {},
           "tooltip": {}
-        },
-        "singleValue": {
-          "showLabel": true,
-          "label": "",
-          "prefixIcon": "AnalyticsIcon",
-          "isIconVisible": false,
-          "alignment": "center",
-          "colorThresholdTarget": "value"
         },
         "table": {
           "rowDensity": "condensed",
@@ -4894,6 +4893,15 @@
         "valueBoundaries": {
           "min": "auto",
           "max": "auto"
+        },
+        "autoSelectVisualization": false,
+        "singleValue": {
+          "showLabel": true,
+          "label": "",
+          "prefixIcon": "AnalyticsIcon",
+          "isIconVisible": false,
+          "alignment": "center",
+          "colorThresholdTarget": "value"
         }
       },
       "querySettings": {
@@ -4918,9 +4926,9 @@
       }
     },
     "65": {
-      "title": "Messages not visible",
+      "title": "Messages not visible - SQS",
       "type": "data",
-      "query": "timeseries approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion=sum(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion),\nby:{ queuename },\nfilter: { aws.account.id == $SelectedAWSAccount }",
+      "query": "timeseries approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion=sum(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion),\nby:{ queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND NOT(contains( queuename, \"DeadLetterQueue\")) }",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
@@ -4965,14 +4973,6 @@
           "rightYAxisSettings": {},
           "legend": {},
           "tooltip": {}
-        },
-        "singleValue": {
-          "showLabel": true,
-          "label": "",
-          "prefixIcon": "AnalyticsIcon",
-          "isIconVisible": false,
-          "alignment": "center",
-          "colorThresholdTarget": "value"
         },
         "table": {
           "rowDensity": "condensed",
@@ -5027,6 +5027,14 @@
           "min": "auto",
           "max": "auto"
         },
+        "singleValue": {
+          "showLabel": true,
+          "label": "",
+          "prefixIcon": "AnalyticsIcon",
+          "isIconVisible": false,
+          "alignment": "center",
+          "colorThresholdTarget": "value"
+        },
         "autoSelectVisualization": false
       },
       "querySettings": {
@@ -5048,6 +5056,842 @@
           "to": "now()"
         },
         "tileTimeframeEnabled": false
+      }
+    },
+    "67": {
+      "title": "ApproximateAgeOfOldestMessage - SQS",
+      "type": "data",
+      "query": "timeseries approximateAgeOfOldestMessageByAccountIdQueueNameRegion=avg(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion),by:{queuename}, filter: { aws.account.id == $SelectedAWSAccount AND NOT(contains( queuename, \"DeadLetterQueue\"))}",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "thresholds": [
+          {
+            "id": 1,
+            "field": "",
+            "title": "",
+            "isEnabled": true,
+            "rules": [
+              {
+                "id": 1,
+                "color": {
+                  "Default": "var(--dt-colors-charts-status-warning-default, #eca440)"
+                },
+                "comparator": "≥",
+                "label": "80 percent ",
+                "value": 103680
+              },
+              {
+                "id": 2,
+                "color": {
+                  "Default": "var(--dt-colors-charts-status-critical-default, #c4233b)"
+                },
+                "comparator": "≥",
+                "label": "100 percent",
+                "value": 129680
+              }
+            ]
+          }
+        ],
+        "chartSettings": {
+          "gapPolicy": "gap",
+          "circleChartSettings": {
+            "groupingThresholdType": "relative",
+            "groupingThresholdValue": 0,
+            "valueType": "relative"
+          },
+          "categoryOverrides": {},
+          "curve": "linear",
+          "pointsDisplay": "auto",
+          "categoricalBarChartSettings": {
+            "layout": "horizontal",
+            "categoryAxisTickLayout": "horizontal",
+            "scale": "absolute",
+            "groupMode": "stacked",
+            "colorPaletteMode": "multi-color",
+            "valueAxisScale": "linear"
+          },
+          "colorPalette": "categorical",
+          "valueRepresentation": "absolute",
+          "truncationMode": "end",
+          "xAxisScaling": "analyzedTimeframe",
+          "xAxisIsLabelVisible": false
+        },
+        "table": {
+          "rowDensity": "condensed",
+          "enableSparklines": false,
+          "hiddenColumns": [],
+          "linewrapEnabled": false,
+          "lineWrapIds": [],
+          "monospacedFontEnabled": false,
+          "monospacedFontColumns": [],
+          "columnWidths": {},
+          "columnTypeOverrides": [
+            {
+              "fields": [
+                "approximateAgeOfOldestMessageByAccountIdQueueNameRegion"
+              ],
+              "value": "sparkline",
+              "id": 1753974831053
+            }
+          ]
+        },
+        "honeycomb": {
+          "shape": "hexagon",
+          "legend": {
+            "hidden": false,
+            "position": "auto",
+            "ratio": "auto"
+          },
+          "dataMappings": {},
+          "displayedFields": [],
+          "truncationMode": "end",
+          "labels": {
+            "showLabels": false
+          },
+          "colorMode": "color-palette",
+          "colorPalette": "categorical"
+        },
+        "histogram": {
+          "legend": {
+            "position": "auto"
+          },
+          "yAxis": {
+            "label": "Frequency",
+            "isLabelVisible": true,
+            "scale": "linear"
+          },
+          "colorPalette": "categorical",
+          "dataMappings": [],
+          "variant": "single",
+          "truncationMode": "end"
+        },
+        "valueBoundaries": {
+          "min": "auto",
+          "max": "auto"
+        },
+        "autoSelectVisualization": false,
+        "legend": {
+          "showLegend": false,
+          "position": "auto",
+          "ratio": 23
+        }
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": {
+          "isAvailable": true
+        }
+      },
+      "timeframe": {
+        "tileTimeframeEnabled": false,
+        "tileTimeframe": {
+          "from": "now()-2h",
+          "to": "now()"
+        }
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      }
+    },
+    "68": {
+      "type": "markdown",
+      "content": "## DLQ Metrics\n"
+    },
+    "69": {
+      "title": "Messages Sent - DLQ",
+      "description": "",
+      "type": "data",
+      "query": "timeseries sum(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion), \nby: { queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND contains( queuename, \"DeadLetterQueue\") }",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "thresholds": [],
+        "chartSettings": {
+          "gapPolicy": "gap",
+          "circleChartSettings": {
+            "groupingThresholdType": "relative",
+            "groupingThresholdValue": 0,
+            "valueType": "relative"
+          },
+          "categoryOverrides": {},
+          "curve": "linear",
+          "pointsDisplay": "auto",
+          "categoricalBarChartSettings": {
+            "layout": "horizontal",
+            "categoryAxisTickLayout": "horizontal",
+            "scale": "absolute",
+            "groupMode": "stacked",
+            "colorPaletteMode": "multi-color",
+            "valueAxisScale": "linear"
+          },
+          "colorPalette": "categorical",
+          "valueRepresentation": "absolute",
+          "truncationMode": "middle",
+          "xAxisScaling": "analyzedTimeframe",
+          "xAxisLabel": "timeframe",
+          "xAxisIsLabelVisible": false,
+          "hiddenLegendFields": [
+            "interval",
+            "numberOfMessagesSentByAccountIdQueueNameRegion"
+          ],
+          "fieldMapping": {
+            "timestamp": "timeframe",
+            "leftAxisValues": [
+              "sum(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion)"
+            ]
+          },
+          "leftYAxisSettings": {
+            "label": "NumberOfMessagesSent",
+            "isLabelVisible": true
+          },
+          "seriesOverrides": [
+            {
+              "seriesId": [
+                "count(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion)"
+              ],
+              "override": {
+                "color": "#b3007d"
+              }
+            }
+          ],
+          "rightYAxisSettings": {},
+          "legend": {},
+          "tooltip": {}
+        },
+        "table": {
+          "rowDensity": "condensed",
+          "enableSparklines": false,
+          "hiddenColumns": [],
+          "linewrapEnabled": false,
+          "lineWrapIds": [],
+          "monospacedFontEnabled": false,
+          "monospacedFontColumns": [],
+          "columnWidths": {},
+          "columnTypeOverrides": [
+            {
+              "fields": [
+                "sum(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion)"
+              ],
+              "value": "sparkline",
+              "id": 1753973252561
+            }
+          ]
+        },
+        "honeycomb": {
+          "shape": "hexagon",
+          "legend": {
+            "hidden": false,
+            "position": "auto",
+            "ratio": "auto"
+          },
+          "dataMappings": {},
+          "displayedFields": [],
+          "truncationMode": "middle",
+          "labels": {
+            "showLabels": false
+          },
+          "colorMode": "color-palette",
+          "colorPalette": "categorical"
+        },
+        "histogram": {
+          "legend": {
+            "position": "auto"
+          },
+          "yAxis": {
+            "label": "Frequency",
+            "isLabelVisible": true,
+            "scale": "linear"
+          },
+          "colorPalette": "categorical",
+          "dataMappings": [],
+          "variant": "single",
+          "truncationMode": "middle"
+        },
+        "valueBoundaries": {
+          "min": "auto",
+          "max": "auto"
+        },
+        "singleValue": {
+          "showLabel": true,
+          "label": "",
+          "prefixIcon": "AnalyticsIcon",
+          "isIconVisible": false,
+          "alignment": "center",
+          "colorThresholdTarget": "value"
+        },
+        "autoSelectVisualization": false
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 100,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": {
+          "isAvailable": true
+        }
+      },
+      "timeframe": {
+        "tileTimeframe": {
+          "from": "now()-365d",
+          "to": "now()"
+        },
+        "tileTimeframeEnabled": false
+      },
+      "segments": {
+        "tileSegments": [],
+        "tileSegmentsEnabled": false
+      }
+    },
+    "70": {
+      "title": "Messages Received - DLQ",
+      "type": "data",
+      "query": "timeseries sum(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion),\nby: { queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND contains( queuename, \"DeadLetterQueue\") }",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "thresholds": [],
+        "chartSettings": {
+          "gapPolicy": "gap",
+          "circleChartSettings": {
+            "groupingThresholdType": "relative",
+            "groupingThresholdValue": 0,
+            "valueType": "relative"
+          },
+          "categoryOverrides": {},
+          "curve": "linear",
+          "pointsDisplay": "auto",
+          "categoricalBarChartSettings": {
+            "layout": "horizontal",
+            "categoryAxisTickLayout": "horizontal",
+            "scale": "absolute",
+            "groupMode": "stacked",
+            "colorPaletteMode": "multi-color",
+            "valueAxisScale": "linear"
+          },
+          "colorPalette": "categorical",
+          "valueRepresentation": "absolute",
+          "truncationMode": "middle",
+          "xAxisScaling": "analyzedTimeframe",
+          "xAxisLabel": "timeframe",
+          "xAxisIsLabelVisible": false,
+          "hiddenLegendFields": [
+            "interval",
+            "numberOfMessagesReceivedByAccountIdQueueNameRegion"
+          ],
+          "fieldMapping": {
+            "timestamp": "timeframe",
+            "leftAxisValues": [
+              "sum(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion)"
+            ]
+          },
+          "leftYAxisSettings": {
+            "label": "NumberOfMessagesReceived",
+            "isLabelVisible": true
+          },
+          "rightYAxisSettings": {},
+          "legend": {},
+          "tooltip": {}
+        },
+        "table": {
+          "rowDensity": "condensed",
+          "enableSparklines": false,
+          "hiddenColumns": [],
+          "linewrapEnabled": false,
+          "lineWrapIds": [],
+          "monospacedFontEnabled": false,
+          "monospacedFontColumns": [],
+          "columnWidths": {},
+          "columnTypeOverrides": [
+            {
+              "fields": [
+                "sum(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion)"
+              ],
+              "value": "sparkline",
+              "id": 1753973252909
+            }
+          ]
+        },
+        "honeycomb": {
+          "shape": "hexagon",
+          "legend": {
+            "hidden": false,
+            "position": "auto",
+            "ratio": "auto"
+          },
+          "dataMappings": {},
+          "displayedFields": [],
+          "truncationMode": "middle",
+          "labels": {
+            "showLabels": false
+          },
+          "colorMode": "color-palette",
+          "colorPalette": "categorical"
+        },
+        "histogram": {
+          "legend": {
+            "position": "auto"
+          },
+          "yAxis": {
+            "label": "Frequency",
+            "isLabelVisible": true,
+            "scale": "linear"
+          },
+          "colorPalette": "categorical",
+          "dataMappings": [],
+          "variant": "single",
+          "truncationMode": "middle"
+        },
+        "valueBoundaries": {
+          "min": "auto",
+          "max": "auto"
+        },
+        "singleValue": {
+          "showLabel": true,
+          "label": "",
+          "prefixIcon": "AnalyticsIcon",
+          "isIconVisible": false,
+          "alignment": "center",
+          "colorThresholdTarget": "value"
+        },
+        "autoSelectVisualization": false
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": {
+          "isAvailable": true
+        }
+      },
+      "timeframe": {
+        "tileTimeframe": {
+          "from": "now()-365d",
+          "to": "now()"
+        },
+        "tileTimeframeEnabled": false
+      }
+    },
+    "71": {
+      "title": "Messages Visible - DLQ",
+      "type": "data",
+      "query": "timeseries approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion=sum(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion),\nby:{ queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND contains( queuename, \"DeadLetterQueue\")}",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "thresholds": [],
+        "chartSettings": {
+          "gapPolicy": "gap",
+          "circleChartSettings": {
+            "groupingThresholdType": "relative",
+            "groupingThresholdValue": 0,
+            "valueType": "relative"
+          },
+          "categoryOverrides": {},
+          "curve": "linear",
+          "pointsDisplay": "auto",
+          "categoricalBarChartSettings": {
+            "layout": "horizontal",
+            "categoryAxisTickLayout": "horizontal",
+            "scale": "absolute",
+            "groupMode": "stacked",
+            "colorPaletteMode": "multi-color",
+            "valueAxisScale": "linear"
+          },
+          "colorPalette": "categorical",
+          "valueRepresentation": "absolute",
+          "truncationMode": "middle",
+          "xAxisScaling": "analyzedTimeframe",
+          "xAxisLabel": "timeframe",
+          "xAxisIsLabelVisible": false,
+          "hiddenLegendFields": [
+            "interval",
+            "approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion"
+          ],
+          "fieldMapping": {
+            "timestamp": "timeframe",
+            "leftAxisValues": [
+              "approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion"
+            ]
+          },
+          "leftYAxisSettings": {
+            "isLabelVisible": true,
+            "label": "ApproximateNumberOfMessagesVisible"
+          },
+          "rightYAxisSettings": {},
+          "legend": {},
+          "tooltip": {}
+        },
+        "table": {
+          "rowDensity": "condensed",
+          "enableSparklines": false,
+          "hiddenColumns": [],
+          "linewrapEnabled": false,
+          "lineWrapIds": [],
+          "monospacedFontEnabled": false,
+          "monospacedFontColumns": [],
+          "columnWidths": {},
+          "columnTypeOverrides": [
+            {
+              "fields": [
+                "approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion"
+              ],
+              "value": "sparkline",
+              "id": 1753180664607
+            }
+          ],
+          "columnOrder": [
+            "[\"timeframe\",\"start\"]",
+            "[\"timeframe\",\"end\"]",
+            "[\"interval\"]",
+            "[\"queuename\"]",
+            "[\"approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion\"]"
+          ]
+        },
+        "honeycomb": {
+          "shape": "hexagon",
+          "legend": {
+            "hidden": false,
+            "position": "auto",
+            "ratio": "auto"
+          },
+          "dataMappings": {},
+          "displayedFields": [],
+          "truncationMode": "middle",
+          "labels": {
+            "showLabels": false
+          },
+          "colorMode": "color-palette",
+          "colorPalette": "categorical"
+        },
+        "histogram": {
+          "legend": {
+            "position": "auto"
+          },
+          "yAxis": {
+            "label": "Frequency",
+            "isLabelVisible": true,
+            "scale": "linear"
+          },
+          "colorPalette": "categorical",
+          "dataMappings": [],
+          "variant": "single",
+          "truncationMode": "middle"
+        },
+        "valueBoundaries": {
+          "min": "auto",
+          "max": "auto"
+        },
+        "autoSelectVisualization": false,
+        "singleValue": {
+          "showLabel": true,
+          "label": "",
+          "prefixIcon": "AnalyticsIcon",
+          "isIconVisible": false,
+          "alignment": "center",
+          "colorThresholdTarget": "value"
+        }
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": {
+          "isAvailable": true
+        }
+      },
+      "timeframe": {
+        "tileTimeframe": {
+          "from": "now()-365d",
+          "to": "now()"
+        },
+        "tileTimeframeEnabled": false
+      }
+    },
+    "72": {
+      "title": "Messages not visible - DLQ",
+      "type": "data",
+      "query": "timeseries approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion=sum(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion),\nby:{ queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND contains( queuename, \"DeadLetterQueue\") }",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "thresholds": [],
+        "chartSettings": {
+          "gapPolicy": "gap",
+          "circleChartSettings": {
+            "groupingThresholdType": "relative",
+            "groupingThresholdValue": 0,
+            "valueType": "relative"
+          },
+          "categoryOverrides": {},
+          "curve": "linear",
+          "pointsDisplay": "auto",
+          "categoricalBarChartSettings": {
+            "layout": "horizontal",
+            "categoryAxisTickLayout": "horizontal",
+            "scale": "absolute",
+            "groupMode": "stacked",
+            "colorPaletteMode": "multi-color",
+            "valueAxisScale": "linear"
+          },
+          "colorPalette": "categorical",
+          "valueRepresentation": "absolute",
+          "truncationMode": "middle",
+          "xAxisScaling": "analyzedTimeframe",
+          "xAxisLabel": "timeframe",
+          "xAxisIsLabelVisible": false,
+          "hiddenLegendFields": [
+            "interval",
+            "approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion"
+          ],
+          "fieldMapping": {
+            "timestamp": "timeframe",
+            "leftAxisValues": [
+              "approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion"
+            ]
+          },
+          "leftYAxisSettings": {
+            "isLabelVisible": true,
+            "label": "ApproximateNumberOfMessagesNotVisible"
+          },
+          "rightYAxisSettings": {},
+          "legend": {},
+          "tooltip": {}
+        },
+        "table": {
+          "rowDensity": "condensed",
+          "enableSparklines": false,
+          "hiddenColumns": [],
+          "linewrapEnabled": false,
+          "lineWrapIds": [],
+          "monospacedFontEnabled": false,
+          "monospacedFontColumns": [],
+          "columnWidths": {},
+          "columnTypeOverrides": [
+            {
+              "fields": [
+                "approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion"
+              ],
+              "value": "sparkline",
+              "id": 1753180747239
+            }
+          ]
+        },
+        "honeycomb": {
+          "shape": "hexagon",
+          "legend": {
+            "hidden": false,
+            "position": "auto",
+            "ratio": "auto"
+          },
+          "dataMappings": {},
+          "displayedFields": [],
+          "truncationMode": "middle",
+          "labels": {
+            "showLabels": false
+          },
+          "colorMode": "color-palette",
+          "colorPalette": "categorical"
+        },
+        "histogram": {
+          "legend": {
+            "position": "auto"
+          },
+          "yAxis": {
+            "label": "Frequency",
+            "isLabelVisible": true,
+            "scale": "linear"
+          },
+          "colorPalette": "categorical",
+          "dataMappings": [],
+          "variant": "single",
+          "truncationMode": "middle"
+        },
+        "valueBoundaries": {
+          "min": "auto",
+          "max": "auto"
+        },
+        "singleValue": {
+          "showLabel": true,
+          "label": "",
+          "prefixIcon": "AnalyticsIcon",
+          "isIconVisible": false,
+          "alignment": "center",
+          "colorThresholdTarget": "value"
+        },
+        "autoSelectVisualization": false
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": {
+          "isAvailable": true
+        }
+      },
+      "timeframe": {
+        "tileTimeframe": {
+          "from": "now()-365d",
+          "to": "now()"
+        },
+        "tileTimeframeEnabled": false
+      }
+    },
+    "73": {
+      "title": "ApproximateAgeOfOldestMessage - DLQ",
+      "type": "data",
+      "query": "timeseries approximateAgeOfOldestMessageByAccountIdQueueNameRegion=avg(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion),by:{queuename}, filter: { aws.account.id == $SelectedAWSAccount AND contains( queuename, \"DeadLetterQueue\")}",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "thresholds": [
+          {
+            "id": 1,
+            "field": "",
+            "title": "",
+            "isEnabled": true,
+            "rules": [
+              {
+                "id": 1,
+                "color": {
+                  "Default": "var(--dt-colors-charts-status-warning-default, #eca440)"
+                },
+                "comparator": "≥",
+                "label": "80 percent ",
+                "value": 103680
+              },
+              {
+                "id": 2,
+                "color": {
+                  "Default": "var(--dt-colors-charts-status-critical-default, #c4233b)"
+                },
+                "comparator": "≥",
+                "label": "100 percent",
+                "value": 129680
+              }
+            ]
+          }
+        ],
+        "chartSettings": {
+          "gapPolicy": "gap",
+          "circleChartSettings": {
+            "groupingThresholdType": "relative",
+            "groupingThresholdValue": 0,
+            "valueType": "relative"
+          },
+          "categoryOverrides": {},
+          "curve": "linear",
+          "pointsDisplay": "auto",
+          "categoricalBarChartSettings": {
+            "layout": "horizontal",
+            "categoryAxisTickLayout": "horizontal",
+            "scale": "absolute",
+            "groupMode": "stacked",
+            "colorPaletteMode": "multi-color",
+            "valueAxisScale": "linear"
+          },
+          "colorPalette": "categorical",
+          "valueRepresentation": "absolute",
+          "truncationMode": "end",
+          "xAxisScaling": "analyzedTimeframe",
+          "xAxisIsLabelVisible": false
+        },
+        "table": {
+          "rowDensity": "condensed",
+          "enableSparklines": false,
+          "hiddenColumns": [],
+          "linewrapEnabled": false,
+          "lineWrapIds": [],
+          "monospacedFontEnabled": false,
+          "monospacedFontColumns": [],
+          "columnWidths": {},
+          "columnTypeOverrides": [
+            {
+              "fields": [
+                "approximateAgeOfOldestMessageByAccountIdQueueNameRegion"
+              ],
+              "value": "sparkline",
+              "id": 1753973095615
+            }
+          ]
+        },
+        "honeycomb": {
+          "shape": "hexagon",
+          "legend": {
+            "hidden": false,
+            "position": "auto",
+            "ratio": "auto"
+          },
+          "dataMappings": {},
+          "displayedFields": [],
+          "truncationMode": "end",
+          "labels": {
+            "showLabels": false
+          },
+          "colorMode": "color-palette",
+          "colorPalette": "categorical"
+        },
+        "histogram": {
+          "legend": {
+            "position": "auto"
+          },
+          "yAxis": {
+            "label": "Frequency",
+            "isLabelVisible": true,
+            "scale": "linear"
+          },
+          "colorPalette": "categorical",
+          "dataMappings": [],
+          "variant": "single",
+          "truncationMode": "end"
+        },
+        "valueBoundaries": {
+          "min": "auto",
+          "max": "auto"
+        },
+        "autoSelectVisualization": false,
+        "legend": {
+          "showLegend": false,
+          "position": "auto",
+          "ratio": 23
+        }
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": {
+          "isAvailable": true
+        }
+      },
+      "timeframe": {
+        "tileTimeframeEnabled": false,
+        "tileTimeframe": {
+          "from": "now()-2h",
+          "to": "now()"
+        }
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
       }
     }
   },
@@ -5261,6 +6105,48 @@
       "y": 134,
       "w": 18,
       "h": 8
+    },
+    "67": {
+      "x": 0,
+      "y": 142,
+      "w": 18,
+      "h": 7
+    },
+    "68": {
+      "x": 0,
+      "y": 149,
+      "w": 36,
+      "h": 2
+    },
+    "69": {
+      "x": 0,
+      "y": 151,
+      "w": 18,
+      "h": 7
+    },
+    "70": {
+      "x": 18,
+      "y": 151,
+      "w": 18,
+      "h": 7
+    },
+    "71": {
+      "x": 0,
+      "y": 158,
+      "w": 18,
+      "h": 8
+    },
+    "72": {
+      "x": 18,
+      "y": 158,
+      "w": 18,
+      "h": 8
+    },
+    "73": {
+      "x": 0,
+      "y": 166,
+      "w": 18,
+      "h": 7
     }
   },
   "importedWithCode": true,
