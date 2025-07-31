@@ -344,27 +344,27 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "stage",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": []
-              },
-              {
                 "filter": "apiname",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "address-cri-api-v1-PrivateAddressApi",
+                    "value": "address-cri-api-v1-PublicAddressApi",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "address-cri-api-v1-PublicAddressApi",
+                    "value": "address-cri-api-v1-PrivateAddressApi",
                     "evaluator": "EQ"
                   }
                 ]
+              },
+              {
+                "filter": "stage",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": []
               }
             ],
             "criteria": []
@@ -608,11 +608,11 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "address-cri-api-v1-PublicAddressApi",
+                    "value": "address-cri-api-v1-PrivateAddressApi",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "address-cri-api-v1-PrivateAddressApi",
+                    "value": "address-cri-api-v1-PublicAddressApi",
                     "evaluator": "EQ"
                   }
                 ]
@@ -737,11 +737,11 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "address-cri-api-v1-PublicAddressApi",
+                    "value": "address-cri-api-v1-PrivateAddressApi",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "address-cri-api-v1-PrivateAddressApi",
+                    "value": "address-cri-api-v1-PublicAddressApi",
                     "evaluator": "EQ"
                   }
                 ]
@@ -860,11 +860,11 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "address-cri-api-v1-PublicAddressApi",
+                    "value": "address-cri-api-v1-PrivateAddressApi",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "address-cri-api-v1-PrivateAddressApi",
+                    "value": "address-cri-api-v1-PublicAddressApi",
                     "evaluator": "EQ"
                   }
                 ]
@@ -2501,6 +2501,194 @@
       },
       "metricExpressions": [
         "resolution=Inf&(cloud.aws.di-ipv-cri-address-api.postcode_lookup_errorByAccountIdRegionpostcode_lookup_error_messagepostcode_lookup_error_type:splitBy(postcode_lookup_error_type,postcode_lookup_error_message):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Manual Address Entries",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 3040,
+        "left": 0,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Manual Address Entries",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "cloud.aws.di-ipv-cri-address-api.manualaddressentryByAccountIdRegionService",
+          "spaceAggregation": "SUM",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.di-ipv-cri-address-api.manualaddressentryByAccountIdRegionService:splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names",
+        "resolution=null&(cloud.aws.di-ipv-cri-address-api.manualaddressentryByAccountIdRegionService:splitBy():sum:sort(value(sum,descending)):limit(20))"
+      ]
+    },
+    {
+      "name": "Pre-populated Address Entries",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 3040,
+        "left": 304,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Pre-populated Address Entries",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "cloud.aws.di-ipv-cri-address-api.prepopulatedaddressentryByAccountIdRegionService",
+          "spaceAggregation": "SUM",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.di-ipv-cri-address-api.prepopulatedaddressentryByAccountIdRegionService:splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names",
+        "resolution=null&(cloud.aws.di-ipv-cri-address-api.prepopulatedaddressentryByAccountIdRegionService:splitBy():sum:sort(value(sum,descending)):limit(20))"
       ]
     }
   ]
