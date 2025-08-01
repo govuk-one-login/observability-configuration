@@ -4508,7 +4508,7 @@
       "title": "Messages Sent - SQS",
       "description": "",
       "type": "data",
-      "query": "timeseries sum(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion), \nby: { queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND NOT(contains( queuename, \"DeadLetterQueue\")) }",
+      "query": "timeseries sum(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion), \nby: { queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND NOT(contains( queuename, \"DeadLetter\")) }",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
@@ -4655,7 +4655,7 @@
     "63": {
       "title": "Messages Received - SQS",
       "type": "data",
-      "query": "timeseries sum(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion),\nby: { queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND NOT(contains( queuename, \"DeadLetterQueue\")) }",
+      "query": "timeseries sum(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion),\nby: { queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND NOT(contains( queuename, \"DeadLetter\")) }",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
@@ -4788,7 +4788,7 @@
     "64": {
       "title": "Messages Visible - SQS",
       "type": "data",
-      "query": "timeseries approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion=sum(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion),\nby:{ queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND NOT(contains( queuename, \"DeadLetterQueue\")) }",
+      "query": "timeseries approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion=sum(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion),\nby:{ queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND NOT(contains( queuename, \"DeadLetter\")) }",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
@@ -4928,7 +4928,7 @@
     "65": {
       "title": "Messages not visible - SQS",
       "type": "data",
-      "query": "timeseries approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion=sum(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion),\nby:{ queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND NOT(contains( queuename, \"DeadLetterQueue\")) }",
+      "query": "timeseries approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion=sum(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion),\nby:{ queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND NOT(contains( queuename, \"DeadLetter\")) }",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
@@ -5061,7 +5061,7 @@
     "67": {
       "title": "ApproximateAgeOfOldestMessage - SQS",
       "type": "data",
-      "query": "timeseries approximateAgeOfOldestMessageByAccountIdQueueNameRegion=avg(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion),by:{queuename}, filter: { aws.account.id == $SelectedAWSAccount AND NOT(contains( queuename, \"DeadLetterQueue\"))}",
+      "query": "timeseries approximateAgeOfOldestMessageByAccountIdQueueNameRegion=avg(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion),by:{queuename}, filter: { aws.account.id == $SelectedAWSAccount AND NOT(contains( queuename, \"DeadLetter\"))}",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [
@@ -5077,8 +5077,8 @@
                   "Default": "var(--dt-colors-charts-status-warning-default, #eca440)"
                 },
                 "comparator": "≥",
-                "label": "80 percent ",
-                "value": 103680
+                "label": "50 percent ",
+                "value": 21600
               },
               {
                 "id": 2,
@@ -5087,7 +5087,7 @@
                 },
                 "comparator": "≥",
                 "label": "100 percent",
-                "value": 129680
+                "value": 43200
               }
             ]
           }
@@ -5176,6 +5176,13 @@
           "ratio": 23
         }
       },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
       "davis": {
         "enabled": false,
         "davisVisualization": {
@@ -5183,18 +5190,11 @@
         }
       },
       "timeframe": {
-        "tileTimeframeEnabled": false,
         "tileTimeframe": {
           "from": "now()-2h",
           "to": "now()"
-        }
-      },
-      "querySettings": {
-        "maxResultRecords": 1000,
-        "defaultScanLimitGbytes": 500,
-        "maxResultMegaBytes": 1,
-        "defaultSamplingRatio": 10,
-        "enableSampling": false
+        },
+        "tileTimeframeEnabled": false
       }
     },
     "68": {
@@ -5205,7 +5205,7 @@
       "title": "Messages Sent - DLQ",
       "description": "",
       "type": "data",
-      "query": "timeseries sum(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion), \nby: { queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND contains( queuename, \"DeadLetterQueue\") }",
+      "query": "timeseries sum(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion), \nby: { queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND contains( queuename, \"DeadLetter\") }",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
@@ -5352,7 +5352,7 @@
     "70": {
       "title": "Messages Received - DLQ",
       "type": "data",
-      "query": "timeseries sum(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion),\nby: { queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND contains( queuename, \"DeadLetterQueue\") }",
+      "query": "timeseries sum(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion),\nby: { queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND contains( queuename, \"DeadLetter\") }",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
@@ -5485,7 +5485,7 @@
     "71": {
       "title": "Messages Visible - DLQ",
       "type": "data",
-      "query": "timeseries approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion=sum(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion),\nby:{ queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND contains( queuename, \"DeadLetterQueue\")}",
+      "query": "timeseries approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion=sum(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion),\nby:{ queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND contains( queuename, \"DeadLetter\")}",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
@@ -5625,7 +5625,7 @@
     "72": {
       "title": "Messages not visible - DLQ",
       "type": "data",
-      "query": "timeseries approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion=sum(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion),\nby:{ queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND contains( queuename, \"DeadLetterQueue\") }",
+      "query": "timeseries approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion=sum(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion),\nby:{ queuename },\nfilter: { aws.account.id == $SelectedAWSAccount AND contains( queuename, \"DeadLetter\") }",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [],
@@ -5758,7 +5758,7 @@
     "73": {
       "title": "ApproximateAgeOfOldestMessage - DLQ",
       "type": "data",
-      "query": "timeseries approximateAgeOfOldestMessageByAccountIdQueueNameRegion=avg(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion),by:{queuename}, filter: { aws.account.id == $SelectedAWSAccount AND contains( queuename, \"DeadLetterQueue\")}",
+      "query": "timeseries approximateAgeOfOldestMessageByAccountIdQueueNameRegion=avg(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion),by:{queuename}, filter: { aws.account.id == $SelectedAWSAccount AND contains( queuename, \"DeadLetter\")}",
       "visualization": "lineChart",
       "visualizationSettings": {
         "thresholds": [
@@ -5873,6 +5873,13 @@
           "ratio": 23
         }
       },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
       "davis": {
         "enabled": false,
         "davisVisualization": {
@@ -5880,18 +5887,11 @@
         }
       },
       "timeframe": {
-        "tileTimeframeEnabled": false,
         "tileTimeframe": {
           "from": "now()-2h",
           "to": "now()"
-        }
-      },
-      "querySettings": {
-        "maxResultRecords": 1000,
-        "defaultScanLimitGbytes": 500,
-        "maxResultMegaBytes": 1,
-        "defaultSamplingRatio": 10,
-        "enableSampling": false
+        },
+        "tileTimeframeEnabled": false
       }
     }
   },
@@ -6110,41 +6110,41 @@
       "x": 0,
       "y": 142,
       "w": 18,
-      "h": 7
+      "h": 8
     },
     "68": {
       "x": 0,
-      "y": 149,
+      "y": 150,
       "w": 36,
       "h": 2
     },
     "69": {
       "x": 0,
-      "y": 151,
+      "y": 152,
       "w": 18,
       "h": 7
     },
     "70": {
       "x": 18,
-      "y": 151,
+      "y": 152,
       "w": 18,
       "h": 7
     },
     "71": {
       "x": 0,
-      "y": 158,
+      "y": 159,
       "w": 18,
       "h": 8
     },
     "72": {
       "x": 18,
-      "y": 158,
+      "y": 159,
       "w": 18,
       "h": 8
     },
     "73": {
       "x": 0,
-      "y": 166,
+      "y": 167,
       "w": 18,
       "h": 7
     }
