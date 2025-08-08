@@ -39,7 +39,7 @@
             "kmsid",
             "kid"
           ],
-          "metricSelector": "cloud.aws.spot.identitySignedByAccountIdRegionkidkmsId\n:splitBy(kmsid,kid)\n:sum\n:sort(value(sum,descending))",
+          "metricSelector": "cloud.aws.spot.identitySignedByAccountIdRegionkidkmsId\n:splitBy(kmsid,kid)\n:sum\n:sort(value(sum,descending))\n:default(0, always) + cloud.aws.spot.identitySignedByAccountIdLogGroupRegionServiceNameServiceTypekidkmsId\n:splitBy(kmsid,kid)\n:sum\n:sort(value(sum,descending))\n:default(0, always)",
           "rate": "NONE",
           "enabled": true
         }
@@ -114,7 +114,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.spot.identitySignedByAccountIdRegionkidkmsId:splitBy(kmsid,kid):sum:sort(value(sum,descending))):limit(100):names"
+        "resolution=null&(cloud.aws.spot.identitySignedByAccountIdRegionkidkmsId:splitBy(kmsid,kid):sum:sort(value(sum,descending)):default(0,always)+cloud.aws.spot.identitySignedByAccountIdLogGroupRegionServiceNameServiceTypekidkmsId:splitBy(kmsid,kid):sum:sort(value(sum,descending)):default(0,always)):limit(100):names"
       ]
     },
     {
@@ -244,7 +244,7 @@
             "kmsid",
             "kid"
           ],
-          "metricSelector": "cloud.aws.spot.identitySignedByAccountIdRegionkidkmsId\n:splitBy(\"kmsid\", \"kid\")\n:lastReal\n:sum",
+          "metricSelector": "cloud.aws.spot.identitySignedByAccountIdRegionkidkmsId\n:splitBy(\"kmsid\", \"kid\")\n:lastReal\n:sum\n:default(0, always) + cloud.aws.spot.identitySignedByAccountIdLogGroupRegionServiceNameServiceTypekidkmsId\n:splitBy(\"kmsid\", \"kid\")\n:lastReal\n:sum\n:default(0, always)",
           "rate": "NONE",
           "enabled": true
         }
@@ -315,7 +315,7 @@
         "foldAggregation": "SUM"
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.spot.identitySignedByAccountIdRegionkidkmsId:splitBy(kmsid,kid):lastReal:sum):limit(100):names:fold(sum)"
+        "resolution=null&(cloud.aws.spot.identitySignedByAccountIdRegionkidkmsId:splitBy(kmsid,kid):lastReal:sum:default(0,always)+cloud.aws.spot.identitySignedByAccountIdLogGroupRegionServiceNameServiceTypekidkmsId:splitBy(kmsid,kid):lastReal:sum:default(0,always)):limit(100):names:fold(sum)"
       ]
     },
     {
