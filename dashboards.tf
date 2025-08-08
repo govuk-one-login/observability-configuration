@@ -442,10 +442,6 @@ module "check_hmrc_lambda_metrics_dashboard" {
   source = "./modules/dashboard"
   path   = "orange/check-hmrc-lambda-metrics.json"
 }
-module "check_hmrc_step_function_metrics_dashboard" {
-  source = "./modules/dashboard"
-  path   = "orange/orange-check-hmrc-step-function.json"
-}
 module "otg_step_function_metrics_dashboard" {
   source = "./modules/dashboard"
   path   = "orange/orange-otg-step-function.json"
