@@ -490,7 +490,7 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "metricSelector": "cloud.aws.spot.identitySignedByAccountIdRegionkidkmsId\n:splitBy()\n:sum",
+          "metricSelector": "cloud.aws.spot.identitySignedByAccountIdRegionkidkmsId\n:splitBy()\n:sum\n:default(0,always)+cloud.aws.spot.identitySignedByAccountIdLogGroupRegionServiceNameServiceTypekidkmsId\n:splitBy()\n:sum\n:default(0,always)",
           "rate": "NONE",
           "enabled": true
         }
@@ -557,8 +557,8 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(cloud.aws.spot.identitySignedByAccountIdRegionkidkmsId:splitBy():sum):limit(100):names",
-        "resolution=null&(cloud.aws.spot.identitySignedByAccountIdRegionkidkmsId:splitBy():sum)"
+        "resolution=null&(cloud.aws.spot.identitySignedByAccountIdRegionkidkmsId:splitBy():sum:default(0,always)+cloud.aws.spot.identitySignedByAccountIdLogGroupRegionServiceNameServiceTypekidkmsId:splitBy():sum:default(0,always)):limit(100):names:fold(auto)",
+        "resolution=null&(cloud.aws.spot.identitySignedByAccountIdRegionkidkmsId:splitBy():sum:default(0,always)+cloud.aws.spot.identitySignedByAccountIdLogGroupRegionServiceNameServiceTypekidkmsId:splitBy():sum:default(0,always))"
       ]
     },
     {
@@ -577,19 +577,12 @@
       "queries": [
         {
           "id": "A",
-          "metric": "cloud.aws.spot.identityIssuedByAccountIdRegiongpg45ProfilelevelOfConfidence",
-          "spaceAggregation": "SUM",
+          "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [
             "levelofconfidence"
           ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
+          "metricSelector": "cloud.aws.spot.identityIssuedByAccountIdRegiongpg45ProfilelevelOfConfidence\n:splitBy(levelofconfidence)\n:sum\n:sort(value(sum,descending))\n:limit(20)\n:default(0,always) + cloud.aws.spot.identityIssuedByAccountIdLogGroupRegionServiceNameServiceTypegpg45ProfilelevelOfConfidence:splitBy(levelofconfidence)\n:sum\n:sort(value(sum,descending))\n:limit(20)\n:default(0,always) ",
           "rate": "NONE",
           "enabled": true
         }
@@ -653,7 +646,7 @@
         "foldAggregation": "SUM"
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.spot.identityIssuedByAccountIdRegiongpg45ProfilelevelOfConfidence:splitBy(levelofconfidence):sum:sort(value(sum,descending)):limit(20)):limit(100):names:fold(sum)"
+        "resolution=null&(cloud.aws.spot.identityIssuedByAccountIdRegiongpg45ProfilelevelOfConfidence:splitBy(levelofconfidence):sum:sort(value(sum,descending)):limit(20):default(0,always)+cloud.aws.spot.identityIssuedByAccountIdLogGroupRegionServiceNameServiceTypegpg45ProfilelevelOfConfidence:splitBy(levelofconfidence):sum:sort(value(sum,descending)):limit(20):default(0,always)):limit(100):names:fold(sum)"
       ]
     },
     {
@@ -677,7 +670,7 @@
           "splitBy": [
             "gpg45profile"
           ],
-          "metricSelector": "cloud.aws.spot.identityIssuedByAccountIdRegiongpg45ProfilelevelOfConfidence\n:splitBy(gpg45profile)\n:sum:sort(value(sum,descending))",
+          "metricSelector": "cloud.aws.spot.identityIssuedByAccountIdRegiongpg45ProfilelevelOfConfidence\n:splitBy(gpg45profile)\n:sum:sort(value(sum,descending))\n:default(0,always)+cloud.aws.spot.identityIssuedByAccountIdLogGroupRegionServiceNameServiceTypegpg45ProfilelevelOfConfidence\n:splitBy(gpg45profile)\n:sum:sort(value(sum,descending))\n:default(0,always)",
           "rate": "NONE",
           "enabled": true
         }
@@ -741,7 +734,7 @@
         "foldAggregation": "SUM"
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.spot.identityIssuedByAccountIdRegiongpg45ProfilelevelOfConfidence:splitBy(gpg45profile):sum:sort(value(sum,descending))):limit(100):names:fold(sum)"
+        "resolution=null&(cloud.aws.spot.identityIssuedByAccountIdRegiongpg45ProfilelevelOfConfidence:splitBy(gpg45profile):sum:sort(value(sum,descending)):default(0,always)+cloud.aws.spot.identityIssuedByAccountIdLogGroupRegionServiceNameServiceTypegpg45ProfilelevelOfConfidence:splitBy(gpg45profile):sum:sort(value(sum,descending)):default(0,always)):limit(100):names:fold(sum)"
       ]
     },
     {
@@ -765,7 +758,7 @@
           "splitBy": [
             "gpg45profile"
           ],
-          "metricSelector": "cloud.aws.spot.identityIssuedByAccountIdRegiongpg45ProfilelevelOfConfidence\n:splitBy(gpg45profile)\n:sum\n:sort(value(sum,descending))",
+          "metricSelector": "cloud.aws.spot.identityIssuedByAccountIdRegiongpg45ProfilelevelOfConfidence\n:splitBy(gpg45profile)\n:sum\n:sort(value(sum,descending))\n:default(0,always)+cloud.aws.spot.identityIssuedByAccountIdLogGroupRegionServiceNameServiceTypegpg45ProfilelevelOfConfidence\n:splitBy(gpg45profile)\n:sum\n:sort(value(sum,descending))\n:default(0,always)",
           "rate": "NONE",
           "enabled": true
         }
@@ -840,7 +833,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.spot.identityIssuedByAccountIdRegiongpg45ProfilelevelOfConfidence:splitBy(gpg45profile):sum:sort(value(sum,descending))):limit(100):names"
+        "resolution=null&(cloud.aws.spot.identityIssuedByAccountIdRegiongpg45ProfilelevelOfConfidence:splitBy(gpg45profile):sum:sort(value(sum,descending)):default(0,always)+cloud.aws.spot.identityIssuedByAccountIdLogGroupRegionServiceNameServiceTypegpg45ProfilelevelOfConfidence:splitBy(gpg45profile):sum:sort(value(sum,descending)):default(0,always)):limit(100):names"
       ]
     },
     {
@@ -1416,7 +1409,7 @@
             "gpg45profile",
             "reason"
           ],
-          "metricSelector": "cloud.aws.spot.conditionalProfileAllowedByAccountIdRegiongpg45Profilereason\n:splitBy(\"gpg45profile\",\"reason\")\n:sum\n:sort(value(auto,descending))",
+          "metricSelector": "cloud.aws.spot.conditionalProfileAllowedByAccountIdRegiongpg45Profilereason\n:splitBy(\"gpg45profile\",\"reason\")\n:sum\n:sort(value(auto,descending))\n:default(0,always)+cloud.aws.spot.conditionalProfileAllowedByAccountIdLogGroupRegionServiceNameServiceTypegpg45Profilereason\n:splitBy(\"gpg45profile\",\"reason\")\n:sum\n:sort(value(auto,descending))\n:default(0,always)",
           "rate": "NONE",
           "enabled": true
         }
@@ -1475,7 +1468,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(cloud.aws.spot.conditionalProfileAllowedByAccountIdRegiongpg45Profilereason:splitBy(gpg45profile,reason):sum:sort(value(auto,descending))):limit(100):names"
+        "resolution=null&(cloud.aws.spot.conditionalProfileAllowedByAccountIdRegiongpg45Profilereason:splitBy(gpg45profile,reason):sum:sort(value(auto,descending)):default(0,always)+cloud.aws.spot.conditionalProfileAllowedByAccountIdLogGroupRegionServiceNameServiceTypegpg45Profilereason:splitBy(gpg45profile,reason):sum:sort(value(auto,descending)):default(0,always)):limit(100):names:fold(auto)"
       ]
     },
     {
