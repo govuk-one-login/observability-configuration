@@ -353,7 +353,7 @@ resource "dynatrace_metric_events" "waf_blocked_requests" {
     WAF details: {dims}.
     EOT
 
-    davis_merge = true
+    davis_merge = false
     event_type  = "ERROR"
     title       = "WAF Blocked Requests Alert"
   }
@@ -364,6 +364,7 @@ resource "dynatrace_metric_events" "waf_blocked_requests" {
     violating_samples  = 50
     samples            = 60
     dealerting_samples = 60
+    signal_fluctuation = 10
   }
   query_definition {
     type            = "METRIC_SELECTOR"
