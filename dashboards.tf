@@ -46,8 +46,8 @@ module "ls_lambda_errors" {
 
 module "reference_pipeline_status" {
   count  = local.is_production ? 1 : 0
-  source = "./modules/dashboard/platform-sre"
-  path   = "reference_pipeline_status.json"
+  source = "./modules/dashboard"
+  path   = "platform-sre/reference_pipeline_status.json"
 }
 
 resource "dynatrace_json_dashboard" "team-idc-app" {
