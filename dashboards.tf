@@ -46,7 +46,7 @@ module "ls_lambda_errors" {
 
 module "reference_pipeline_status" {
   count  = local.is_production ? 1 : 0
-  source = "./modules/dashboard"
+  source = "./modules/dashboard/platform-sre"
   path   = "reference_pipeline_status.json"
 }
 
