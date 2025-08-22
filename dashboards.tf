@@ -44,6 +44,12 @@ module "ls_lambda_errors" {
   path   = "ls-operations-lambda-errors.json"
 }
 
+module "reference_pipeline_status" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "platform-sre/reference_pipeline_status.json"
+}
+
 resource "dynatrace_json_dashboard" "team-idc-app" {
   contents = templatefile("${path.module}/dashboards/platform-sre/team-idc-app.tftpl",
   { team_account_id = var.team_account_id })
