@@ -508,6 +508,18 @@ module "orch_dcmaw_journeys" {
   path   = "orchestration/dcmaw-journeys.json"
 }
 
+module "orch_general_non_prod" {
+  count  = local.is_production ? 0 : 1
+  source = "./modules/dashboard"
+  path   = "orchestration/general_non_prod.json"
+}
+
+module "orch_general_prod" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "orchestration/general_prod.json"
+}
+
 # Authentication
 module "auth_ais_production" {
   count  = local.is_production ? 1 : 0
