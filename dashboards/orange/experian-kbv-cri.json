@@ -3,7 +3,7 @@
     "configurationVersions": [
       7
     ],
-    "clusterVersion": "1.290.46.20240425-162131"
+    "clusterVersion": "1.322.31.20250827-121511"
   },
   "dashboardMetadata": {
     "name": "Orange Experian KBV CRI",
@@ -931,7 +931,6 @@
           "filterBy": {
             "filterOperator": "AND",
             "nestedFilters": [
-
               {
                 "filter": "apiname",
                 "filterType": "DIMENSION",
@@ -1052,7 +1051,6 @@
           "filterBy": {
             "filterOperator": "AND",
             "nestedFilters": [
-
               {
                 "filter": "apiname",
                 "filterType": "DIMENSION",
@@ -1840,7 +1838,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1482,
+        "top": 1520,
         "left": 1026,
         "width": 912,
         "height": 304
@@ -2344,7 +2342,7 @@
         "top": 1216,
         "left": 1026,
         "width": 912,
-        "height": 266
+        "height": 304
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
@@ -3293,6 +3291,438 @@
       },
       "metricExpressions": [
         "resolution=Inf&(builtin:cloud.aws.lambda.duration:filter(and(or(in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.contains(~\"common-cri-api~\")\")),in(\"dt.entity.aws_lambda_function\",entitySelector(\"type(aws_lambda_function),entityName.contains(~\"kbv-cri-api-v1~\")\"))))):splitBy(\"dt.entity.aws_lambda_function\"):sort(value(auto,descending)):limit(20)):names"
+      ]
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 1862,
+        "left": 1634,
+        "width": 304,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "We use the mTLS protocol to communicate with the Experian IIQ API that powers the KBV CRI. In order to communicate over mTLS, we need to manually generate and store a certificate. This certificate will expire eventually, so we have a weekly job that checks if it's expiring soon and alerts us if so.\n\nThe numbers to the left show the last results, and the graph below is to check that the step function is running successfully."
+    },
+    {
+      "name": "Certificate expiry step function executions",
+      "nameSize": "",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2128,
+        "left": 1026,
+        "width": 912,
+        "height": 304
+      },
+      "tileFilter": {
+        "timeframe": "-90d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Stacked column",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region"
+          ],
+          "metricSelector": "cloud.aws.states.executionsStartedByAccountIdRegionStateMachineArn:filter(contains(statemachinearn,\"CertificateExpiryStateMachine\")):sum:merge(\"statemachinearn\")",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region"
+          ],
+          "metricSelector": "cloud.aws.states.executionsSucceededByAccountIdRegionStateMachineArn:filter(contains(statemachinearn,\"CertificateExpiryStateMachine\")):sum:merge(\"statemachinearn\")",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region"
+          ],
+          "metricSelector": "cloud.aws.states.executionsFailedByAccountIdRegionStateMachineArn:filter(contains(statemachinearn,\"CertificateExpiryStateMachine\")):sum:merge(\"statemachinearn\")",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region"
+          ],
+          "metricSelector": "cloud.aws.states.executionsAbortedByAccountIdRegionStateMachineArn:filter(contains(statemachinearn,\"CertificateExpiryStateMachine\")):sum:merge(\"statemachinearn\")",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "E",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region"
+          ],
+          "metricSelector": "cloud.aws.states.executionsTimedOutByAccountIdRegionStateMachineArn:filter(contains(statemachinearn,\"CertificateExpiryStateMachine\")):sum:merge(\"statemachinearn\")",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "BLUE",
+              "seriesType": "LINE",
+              "alias": "Executions started"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "STACKED_AREA",
+              "alias": "Executions succeeded"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA",
+              "alias": "Executions failed"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "E:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "RED",
+              "seriesType": "STACKED_AREA"
+            },
+            "seriesOverrides": [
+              {
+                "name": "Select series",
+                "color": "#ab0c17"
+              }
+            ]
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C",
+                "D",
+                "E"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1d"
+      },
+      "metricExpressions": [
+        "resolution=1d&(cloud.aws.states.executionsStartedByAccountIdRegionStateMachineArn:filter(contains(statemachinearn,CertificateExpiryStateMachine)):sum:merge(statemachinearn)):limit(100):names,(cloud.aws.states.executionsSucceededByAccountIdRegionStateMachineArn:filter(contains(statemachinearn,CertificateExpiryStateMachine)):sum:merge(statemachinearn)):limit(100):names,(cloud.aws.states.executionsFailedByAccountIdRegionStateMachineArn:filter(contains(statemachinearn,CertificateExpiryStateMachine)):sum:merge(statemachinearn)):limit(100):names,(cloud.aws.states.executionsAbortedByAccountIdRegionStateMachineArn:filter(contains(statemachinearn,CertificateExpiryStateMachine)):sum:merge(statemachinearn)):limit(100):names,(cloud.aws.states.executionsTimedOutByAccountIdRegionStateMachineArn:filter(contains(statemachinearn,CertificateExpiryStateMachine)):sum:merge(statemachinearn)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Experian mTLS certificates",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 1824,
+        "left": 1026,
+        "width": 912,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "Expiring within 90 days",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1862,
+        "left": 1026,
+        "width": 304,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region"
+          ],
+          "metricSelector": "cloud.aws.di-ipv-cri-kbv-api.experianMTLSCertificateExpiryLessThan90DaysByAccountIdRegion:count",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 1,
+                "color": "#ffe11c"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1d",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=1d&(cloud.aws.di-ipv-cri-kbv-api.experianMTLSCertificateExpiryLessThan90DaysByAccountIdRegion:count):limit(100):names:last",
+        "resolution=1d&(cloud.aws.di-ipv-cri-kbv-api.experianMTLSCertificateExpiryLessThan90DaysByAccountIdRegion:count)"
+      ]
+    },
+    {
+      "name": "Expiring within 7 days",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1862,
+        "left": 1330,
+        "width": 304,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region"
+          ],
+          "metricSelector": "cloud.aws.di-ipv-cri-kbv-api.experianMTLSCertificateExpiryLessThan7DaysByAccountIdRegion:count",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 1,
+                "color": "#dc172a"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1d",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=1d&(cloud.aws.di-ipv-cri-kbv-api.experianMTLSCertificateExpiryLessThan7DaysByAccountIdRegion:count):limit(100):names:last",
+        "resolution=1d&(cloud.aws.di-ipv-cri-kbv-api.experianMTLSCertificateExpiryLessThan7DaysByAccountIdRegion:count)"
       ]
     }
   ]
