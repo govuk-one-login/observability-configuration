@@ -13,13 +13,13 @@
     },
     "tiles": [
       {
-        "name": "Sign Ins (integration)",
+        "name": "Tokens issued",
         "tileType": "DATA_EXPLORER",
         "configured": true,
         "bounds": {
-          "top": 0,
-          "left": 0,
-          "width": 1140,
+          "top": 646,
+          "left": 570,
+          "width": 570,
           "height": 304
         },
         "tileFilter": {},
@@ -31,7 +31,7 @@
             "spaceAggregation": "AUTO",
             "timeAggregation": "DEFAULT",
             "splitBy": ["clientname"],
-            "metricSelector": "cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(eq(\"environment\",\"integration\")):splitBy(clientname):sum:sort(value(sum,descending)):limit(100)",
+            "metricSelector": "cloud.aws.authentication.successfulTokenIssuedByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(not(eq(\"environment\",\"production\"))):splitBy(clientname):sort(value(auto,descending)):count:value:default(0)",
             "rate": "NONE",
             "enabled": true
           }
@@ -101,18 +101,18 @@
           "resolution": ""
         },
         "metricExpressions": [
-          "resolution=null&(cloud.aws.authentication.signInExistingAccountByClientByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(eq(environment,integration)):splitBy(clientname):sum:sort(value(sum,descending)):limit(100)):limit(100):names"
+          "resolution=null&(cloud.aws.authentication.successfulTokenIssuedByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(not(eq(environment,production))):splitBy(clientname):sort(value(auto,descending)):count:value:default(0)):limit(100):names"
         ]
       },
       {
-        "name": "Valid /authorize requests",
+        "name": "Tokens and auth codes issued",
         "tileType": "DATA_EXPLORER",
         "configured": true,
         "bounds": {
-          "top": 304,
+          "top": 646,
           "left": 0,
-          "width": 1140,
-          "height": 266
+          "width": 570,
+          "height": 304
         },
         "tileFilter": {},
         "isAutoRefreshDisabled": false,
@@ -122,8 +122,17 @@
             "id": "A",
             "spaceAggregation": "AUTO",
             "timeAggregation": "DEFAULT",
-            "splitBy": ["clientname"],
-            "metricSelector": "cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientName:filter(not(eq(\"aws.account.id\", \"533266965190\"))):splitBy(clientname):sum:sort(value(auto,descending)):limit(20)",
+            "splitBy": [],
+            "metricSelector": "cloud.aws.authentication.successfulTokenIssuedByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(not(or(eq(\"environment\",\"production\"),eq(\"environment\",\"integration\")))):splitBy():count",
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "B",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": [],
+            "metricSelector": "cloud.aws.authentication.signInByAccountAccountIdClientClientNameEnvironmentIsDocAppIsTestLogGroupMfaMethodMfaRequiredRegionRequestedLevelOfConfidenceServiceNameServiceType:filter(not(or(eq(\"environment\",\"production\"),eq(\"environment\",\"integration\")))):splitBy():count:value:default(0, always)+cloud.aws.authentication.signInByAccountAccountIdClientClientNameEnvironmentIsDocAppIsTestLogGroupMfaMethodRegionServiceNameServiceType:filter(not(or(eq(\"environment\",\"production\"),eq(\"environment\",\"integration\")))):splitBy():count:value:default(0, always)+cloud.aws.authentication.signInByAccountAccountIdClientClientNameEnvironmentIsDocAppIsTestLogGroupMfaRequiredRegionRequestedLevelOfConfidenceServiceNameServiceType:filter(not(or(eq(\"environment\",\"production\"),eq(\"environment\",\"integration\")))):splitBy():count:value:default(0, always)+cloud.aws.authentication.docAppCallbackByAccountIdEnvironmentLogGroupRegionServiceNameServiceTypeSuccessful:filter(not(or(eq(\"environment\",\"production\"),eq(\"environment\",\"integration\")))):splitBy():count:value:default(0, always)",
             "rate": "NONE",
             "enabled": true
           }
@@ -134,8 +143,23 @@
           "rules": [
             {
               "matcher": "A:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
               "properties": {
-                "color": "DEFAULT"
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "Tokens issued"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "B:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "Auth Codes issued"
               },
               "seriesOverrides": []
             }
@@ -152,7 +176,7 @@
                 "min": "AUTO",
                 "max": "AUTO",
                 "position": "LEFT",
-                "queryIds": ["A"],
+                "queryIds": ["A", "B"],
                 "defaultAxis": true
               }
             ]
@@ -193,7 +217,563 @@
           "resolution": ""
         },
         "metricExpressions": [
-          "resolution=null&(cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientName:filter(not(eq(\"aws.account.id\",\"533266965190\"))):splitBy(clientname):sum:sort(value(auto,descending)):limit(20)):limit(100):names"
+          "resolution=null&(cloud.aws.authentication.successfulTokenIssuedByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(not(or(eq(environment,production),eq(environment,integration)))):splitBy():count):limit(100):names,(cloud.aws.authentication.signInByAccountAccountIdClientClientNameEnvironmentIsDocAppIsTestLogGroupMfaMethodMfaRequiredRegionRequestedLevelOfConfidenceServiceNameServiceType:filter(not(or(eq(environment,production),eq(environment,integration)))):splitBy():count:value:default(0,always)+cloud.aws.authentication.signInByAccountAccountIdClientClientNameEnvironmentIsDocAppIsTestLogGroupMfaMethodRegionServiceNameServiceType:filter(not(or(eq(environment,production),eq(environment,integration)))):splitBy():count:value:default(0,always)+cloud.aws.authentication.signInByAccountAccountIdClientClientNameEnvironmentIsDocAppIsTestLogGroupMfaRequiredRegionRequestedLevelOfConfidenceServiceNameServiceType:filter(not(or(eq(environment,production),eq(environment,integration)))):splitBy():count:value:default(0,always)+cloud.aws.authentication.docAppCallbackByAccountIdEnvironmentLogGroupRegionServiceNameServiceTypeSuccessful:filter(not(or(eq(environment,production),eq(environment,integration)))):splitBy():count:value:default(0,always)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Use the filter in the top right to filter by environment",
+        "tileType": "HEADER",
+        "configured": true,
+        "bounds": {
+          "top": 0,
+          "left": 0,
+          "width": 608,
+          "height": 38
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false
+      },
+      {
+        "name": "% of successful Identity journeys",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 342,
+          "left": 570,
+          "width": 570,
+          "height": 304
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "B",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": ["aws.account.id"],
+            "metricSelector": "((cloud.aws.authentication.orchIdentityJourneyCompletedByAccountIdLogGroupRegionServiceNameServiceTypeclientIdclientName\n    :filter(eq(\"aws.account.id\", \"590183975515\"))    \n    :splitby(\"aws.account.id\")\n    :count\n/ \ncloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney\n    :filter(and(eq(\"aws.account.id\", \"590183975515\"),eq(\"isdocappjourney\", \"false\"), eq(\"isidentityjourney\", \"true\")))\n    :splitBy(\"aws.account.id\")\n    :count\n))* 100",
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "C",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": ["aws.account.id"],
+            "metricSelector": "((cloud.aws.authentication.orchIdentityJourneyCompletedByAccountIdLogGroupRegionServiceNameServiceTypeclientIdclientName\n    :filter(eq(\"aws.account.id\", \"767397776536\"))    \n    :splitby(\"aws.account.id\")\n    :count\n/ \ncloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney\n    :filter(and(eq(\"aws.account.id\", \"767397776536\"),eq(\"isdocappjourney\", \"false\"), eq(\"isidentityjourney\", \"true\")))\n    :splitBy(\"aws.account.id\")\n    :count\n))* 100",
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "D",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": ["aws.account.id"],
+            "metricSelector": "((cloud.aws.authentication.orchIdentityJourneyCompletedByAccountIdLogGroupRegionServiceNameServiceTypeclientIdclientName\n    :filter(eq(\"aws.account.id\", \"816047645251\"))    \n    :splitby(\"aws.account.id\")\n    :count\n/ \ncloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney\n    :filter(and(eq(\"aws.account.id\", \"816047645251\"),eq(\"isdocappjourney\", \"false\"), eq(\"isidentityjourney\", \"true\")))\n    :splitBy(\"aws.account.id\")\n    :count\n))* 100",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {
+            "hideLegend": false
+          },
+          "rules": [
+            {
+              "matcher": "B:",
+              "unitTransform": "%",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "GREEN",
+                "seriesType": "AREA",
+                "alias": "Staging"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "C:",
+              "unitTransform": "%",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "GREEN",
+                "seriesType": "AREA",
+                "alias": "Build"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "D:",
+              "unitTransform": "%",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "GREEN",
+                "seriesType": "AREA"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "0",
+                "max": "100",
+                "position": "LEFT",
+                "queryIds": ["B", "C", "D"],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": true
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": "10m"
+        },
+        "metricExpressions": [
+          "resolution=10m&(((cloud.aws.authentication.orchIdentityJourneyCompletedByAccountIdLogGroupRegionServiceNameServiceTypeclientIdclientName:filter(eq(\"aws.account.id\",\"590183975515\")):splitBy(\"aws.account.id\"):count/cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney:filter(and(eq(\"aws.account.id\",\"590183975515\"),eq(isdocappjourney,false),eq(isidentityjourney,true))):splitBy(\"aws.account.id\"):count))*100):limit(100):names,(((cloud.aws.authentication.orchIdentityJourneyCompletedByAccountIdLogGroupRegionServiceNameServiceTypeclientIdclientName:filter(eq(\"aws.account.id\",\"767397776536\")):splitBy(\"aws.account.id\"):count/cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney:filter(and(eq(\"aws.account.id\",\"767397776536\"),eq(isdocappjourney,false),eq(isidentityjourney,true))):splitBy(\"aws.account.id\"):count))*100):limit(100):names,(((cloud.aws.authentication.orchIdentityJourneyCompletedByAccountIdLogGroupRegionServiceNameServiceTypeclientIdclientName:filter(eq(\"aws.account.id\",\"816047645251\")):splitBy(\"aws.account.id\"):count/cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney:filter(and(eq(\"aws.account.id\",\"816047645251\"),eq(isdocappjourney,false),eq(isidentityjourney,true))):splitBy(\"aws.account.id\"):count))*100):limit(100):names"
+        ]
+      },
+      {
+        "name": "% of successful Auth Only journeys",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 342,
+          "left": 0,
+          "width": 570,
+          "height": 304
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "B",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": ["aws.account.id"],
+            "metricSelector": "(cloud.aws.authentication.orchAuthJourneyCompletedByAccountIdLogGroupRegionServiceNameServiceTypeclientIdclientName\n   :filter(eq(\"aws.account.id\", \"590183975515\"))\n    :splitby(\"aws.account.id\")\n    :count / \n(cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney\n    :filter(and(eq(\"aws.account.id\", \"590183975515\"), eq(\"isdocappjourney\", \"false\"),eq(\"isidentityjourney\", \"false\")))\n    :splitby(\"aws.account.id\")\n    :count\n) * 100)",
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "C",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": ["aws.account.id"],
+            "metricSelector": "(cloud.aws.authentication.orchAuthJourneyCompletedByAccountIdLogGroupRegionServiceNameServiceTypeclientIdclientName\n   :filter(eq(\"aws.account.id\", \"767397776536\"))\n    :splitby(\"aws.account.id\")\n    :count / \n(cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney\n    :filter(and(eq(\"aws.account.id\", \"767397776536\"), eq(\"isdocappjourney\", \"false\"),eq(\"isidentityjourney\", \"false\")))\n    :splitby(\"aws.account.id\")\n    :count\n) * 100)",
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "D",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": ["aws.account.id"],
+            "metricSelector": "(cloud.aws.authentication.orchAuthJourneyCompletedByAccountIdLogGroupRegionServiceNameServiceTypeclientIdclientName\n   :filter(eq(\"aws.account.id\", \"816047645251\"))\n    :splitby(\"aws.account.id\")\n    :count / \n(cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney\n    :filter(and(eq(\"aws.account.id\", \"816047645251\"), eq(\"isdocappjourney\", \"false\"),eq(\"isidentityjourney\", \"false\")))\n    :splitby(\"aws.account.id\")\n    :count\n) * 100)",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {
+            "hideLegend": false
+          },
+          "rules": [
+            {
+              "matcher": "B:",
+              "unitTransform": "%",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "GREEN",
+                "seriesType": "AREA",
+                "alias": "Staging"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "C:",
+              "unitTransform": "%",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "GREEN",
+                "seriesType": "AREA",
+                "alias": "Build"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "D:",
+              "properties": {
+                "color": "DEFAULT"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "0",
+                "max": "100",
+                "position": "LEFT",
+                "queryIds": ["B", "C", "D"],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": "10m"
+        },
+        "metricExpressions": [
+          "resolution=10m&((cloud.aws.authentication.orchAuthJourneyCompletedByAccountIdLogGroupRegionServiceNameServiceTypeclientIdclientName:filter(eq(\"aws.account.id\",\"590183975515\")):splitBy(\"aws.account.id\"):count/(cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney:filter(and(eq(\"aws.account.id\",\"590183975515\"),eq(isdocappjourney,false),eq(isidentityjourney,false))):splitBy(\"aws.account.id\"):count)*100)):limit(100):names,((cloud.aws.authentication.orchAuthJourneyCompletedByAccountIdLogGroupRegionServiceNameServiceTypeclientIdclientName:filter(eq(\"aws.account.id\",\"767397776536\")):splitBy(\"aws.account.id\"):count/(cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney:filter(and(eq(\"aws.account.id\",\"767397776536\"),eq(isdocappjourney,false),eq(isidentityjourney,false))):splitBy(\"aws.account.id\"):count)*100)):limit(100):names,((cloud.aws.authentication.orchAuthJourneyCompletedByAccountIdLogGroupRegionServiceNameServiceTypeclientIdclientName:filter(eq(\"aws.account.id\",\"816047645251\")):splitBy(\"aws.account.id\"):count/(cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney:filter(and(eq(\"aws.account.id\",\"816047645251\"),eq(isdocappjourney,false),eq(isidentityjourney,false))):splitBy(\"aws.account.id\"):count)*100)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Valid /authorize requests (Identity)",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 38,
+          "left": 570,
+          "width": 570,
+          "height": 304
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "B",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": ["clientname"],
+            "metricSelector": "cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney\n  :filter(and(eq(\"aws.account.id\",\"590183975515\"), eq(\"isdocappjourney\", \"false\"),eq(\"isidentityjourney\", \"true\")))\n  :splitBy(clientname):sum:sort(value(auto,descending)):limit(20)",
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "C",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": ["clientname"],
+            "metricSelector": "cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney\n  :filter(and(eq(\"aws.account.id\",\"767397776536\"), eq(\"isdocappjourney\", \"false\"),eq(\"isidentityjourney\", \"true\")))\n  :splitBy(clientname):sum:sort(value(auto,descending)):limit(20)",
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "D",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": ["clientname"],
+            "metricSelector": "cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney\n  :filter(and(eq(\"aws.account.id\",\"816047645251\"), eq(\"isdocappjourney\", \"false\"),eq(\"isidentityjourney\", \"true\")))\n  :splitBy(clientname):sum:sort(value(auto,descending)):limit(20)",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "B:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "Staging"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "C:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "Build"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "D:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "Dev"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": ["B", "C", "D"],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney:filter(and(eq(\"aws.account.id\",\"590183975515\"),eq(isdocappjourney,false),eq(isidentityjourney,true))):splitBy(clientname):sum:sort(value(auto,descending)):limit(20)):limit(100):names,(cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney:filter(and(eq(\"aws.account.id\",\"767397776536\"),eq(isdocappjourney,false),eq(isidentityjourney,true))):splitBy(clientname):sum:sort(value(auto,descending)):limit(20)):limit(100):names,(cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney:filter(and(eq(\"aws.account.id\",\"816047645251\"),eq(isdocappjourney,false),eq(isidentityjourney,true))):splitBy(clientname):sum:sort(value(auto,descending)):limit(20)):limit(100):names"
+        ]
+      },
+      {
+        "name": "Valid /authorize requests (Auth Only)",
+        "tileType": "DATA_EXPLORER",
+        "configured": true,
+        "bounds": {
+          "top": 38,
+          "left": 0,
+          "width": 570,
+          "height": 304
+        },
+        "tileFilter": {},
+        "isAutoRefreshDisabled": false,
+        "customName": "Data explorer results",
+        "queries": [
+          {
+            "id": "B",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": ["clientname"],
+            "metricSelector": "cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney\n:filter(and(eq(\"aws.account.id\",\"590183975515\"), eq(\"isdocappjourney\", \"false\"), eq(\"isidentityjourney\", \"false\")))\n:splitBy(clientname):sum:sort(value(auto,descending)):limit(20)",
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "C",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": ["clientname"],
+            "metricSelector": "cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney\n:filter(and(eq(\"aws.account.id\",\"767397776536\"), eq(\"isdocappjourney\", \"false\"), eq(\"isidentityjourney\", \"false\")))\n:splitBy(clientname):sum:sort(value(auto,descending)):limit(20)",
+            "rate": "NONE",
+            "enabled": true
+          },
+          {
+            "id": "D",
+            "spaceAggregation": "AUTO",
+            "timeAggregation": "DEFAULT",
+            "splitBy": ["clientname"],
+            "metricSelector": "cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney\n:filter(and(eq(\"aws.account.id\",\"816047645251\"), eq(\"isdocappjourney\", \"false\"), eq(\"isidentityjourney\", \"false\")))\n:splitBy(clientname):sum:sort(value(auto,descending)):limit(20)",
+            "rate": "NONE",
+            "enabled": true
+          }
+        ],
+        "visualConfig": {
+          "type": "GRAPH_CHART",
+          "global": {},
+          "rules": [
+            {
+              "matcher": "B:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "Staging"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "C:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "Build"
+              },
+              "seriesOverrides": []
+            },
+            {
+              "matcher": "D:",
+              "unitTransform": "auto",
+              "valueFormat": "auto",
+              "properties": {
+                "color": "DEFAULT",
+                "seriesType": "LINE",
+                "alias": "Dev"
+              },
+              "seriesOverrides": []
+            }
+          ],
+          "axes": {
+            "xAxis": {
+              "displayName": "",
+              "visible": true
+            },
+            "yAxes": [
+              {
+                "displayName": "",
+                "visible": true,
+                "min": "AUTO",
+                "max": "AUTO",
+                "position": "LEFT",
+                "queryIds": ["B", "C", "D"],
+                "defaultAxis": true
+              }
+            ]
+          },
+          "heatmapSettings": {
+            "yAxis": "VALUE"
+          },
+          "thresholds": [
+            {
+              "axisTarget": "LEFT",
+              "rules": [
+                {
+                  "color": "#7dc540"
+                },
+                {
+                  "color": "#f5d30f"
+                },
+                {
+                  "color": "#dc172a"
+                }
+              ],
+              "visible": true
+            }
+          ],
+          "tableSettings": {
+            "hiddenColumns": []
+          },
+          "graphChartSettings": {
+            "connectNulls": false
+          },
+          "honeycombSettings": {
+            "showHive": true,
+            "showLegend": true,
+            "showLabels": false
+          }
+        },
+        "queriesSettings": {
+          "resolution": ""
+        },
+        "metricExpressions": [
+          "resolution=null&(cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney:filter(and(eq(\"aws.account.id\",\"590183975515\"),eq(isdocappjourney,false),eq(isidentityjourney,false))):splitBy(clientname):sum:sort(value(auto,descending)):limit(20)):limit(100):names,(cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney:filter(and(eq(\"aws.account.id\",\"767397776536\"),eq(isdocappjourney,false),eq(isidentityjourney,false))):splitBy(clientname):sum:sort(value(auto,descending)):limit(20)):limit(100):names,(cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney:filter(and(eq(\"aws.account.id\",\"816047645251\"),eq(isdocappjourney,false),eq(isidentityjourney,false))):splitBy(clientname):sum:sort(value(auto,descending)):limit(20)):limit(100):names"
         ]
       }
     ]
