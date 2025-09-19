@@ -20,3 +20,12 @@ module "ticf-cri-infrastructure" {
   document_name = "TICF-CRI Infrastructure Dashboard"
   document_type = "dashboard"
 }
+
+### Data Pod ###
+
+module "signal-exchange-production-dashboard" {
+  source        = "./modules/documents"
+  document_path = "signal-exchange/signal-exchange-production-dashboard"
+  document_name = "Signal Exchange Production Dashboard"
+  document_type = "dashboard"
+}
