@@ -1,6 +1,7 @@
 locals {
   notify_delivery_receipts = {
     application_environment = var.application_environment
+    account_id             = var.account_id
   }
 }
 
