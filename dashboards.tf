@@ -26,6 +26,12 @@ module "service_dashboard_tsd" {
   path   = "service-health-overview-tsd.json"
 }
 
+module "mi_data_dashboard" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "mi-data.json"
+}
+
 module "fms_dashboard" {
   count  = local.is_production ? 1 : 0
   source = "./modules/dashboard"
