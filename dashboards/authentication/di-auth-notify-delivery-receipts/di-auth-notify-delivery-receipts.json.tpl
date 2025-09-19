@@ -76,7 +76,6 @@
             ],
             "criteria": []
           },
-          "limit": 20,
           "rate": "NONE",
           "enabled": true
         }
@@ -212,7 +211,6 @@
             ],
             "criteria": []
           },
-          "limit": 20,
           "rate": "NONE",
           "enabled": true
         }
@@ -334,7 +332,6 @@
             ],
             "criteria": []
           },
-          "limit": 20,
           "rate": "NONE",
           "enabled": true
         }
@@ -463,7 +460,6 @@
             ],
             "criteria": []
           },
-          "limit": 20,
           "rate": "NONE",
           "enabled": true
         }
@@ -546,9 +542,9 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [
-            "notificationtype"
+            "smstype"
           ],
-          "metric": "cloud.aws.authentication.smsNotificationSentByAccountIdApplicationCountryEnvironmentIsTestLogGroupNotificationTypeRegionServiceNameServiceTypeSmsDestinationType",
+          "metric": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsDestinationTypeSmsType",
           "sortBy": "DESC",
           "sortByDimension": "",
           "filterBy": {
@@ -575,11 +571,21 @@
                     "evaluator": "EQ"
                   }
                 ]
+              },
+              {
+                "filter": "notifystatus",
+                "filterType": "DIMENSION",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "delivered",
+                    "evaluator": "EQ"
+                  }
+                ]
               }
             ],
             "criteria": []
           },
-          "limit": 20,
           "rate": "NONE",
           "enabled": true
         }
@@ -706,7 +712,6 @@
             ],
             "criteria": []
           },
-          "limit": 20,
           "rate": "NONE",
           "enabled": true
         }
@@ -830,7 +835,6 @@
             ],
             "criteria": []
           },
-          "limit": 20,
           "rate": "NONE",
           "enabled": true
         }
@@ -941,7 +945,6 @@
             ],
             "criteria": []
           },
-          "limit": 20,
           "rate": "NONE",
           "enabled": true
         }
@@ -1074,7 +1077,6 @@
             ],
             "criteria": []
           },
-          "limit": 20,
           "rate": "NONE",
           "enabled": true
         }
@@ -1157,10 +1159,11 @@
         {
           "id": "A",
           "metric": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsDestinationTypeSmsType",
-          "spaceAggregation": "AUTO",
+          "spaceAggregation": "SUM",
           "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
+          "splitBy": [
+            "notifystatus"
+          ],
           "sortByDimension": "",
           "filterBy": {
             "filterOperator": "AND",
@@ -1201,7 +1204,6 @@
             ],
             "criteria": []
           },
-          "limit": 20,
           "rate": "NONE",
           "enabled": true
         }
@@ -1289,13 +1291,12 @@
       "queries": [
         {
           "id": "A",
-          "metric": "cloud.aws.authentication.smsNotificationSentByAccountIdApplicationCountryEnvironmentIsTestLogGroupNotificationTypeRegionServiceNameServiceTypeSmsDestinationType",
+          "metric": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsDestinationTypeSmsType",
           "spaceAggregation": "SUM",
           "timeAggregation": "DEFAULT",
           "splitBy": [
-            "country"
+            "notifystatus"
           ],
-          "sortBy": "DESC",
           "sortByDimension": "",
           "filterBy": {
             "filterOperator": "AND",
@@ -1321,11 +1322,21 @@
                     "evaluator": "EQ"
                   }
                 ]
+              },
+              {
+                "filter": "countrycode",
+                "filterType": "DIMENSION",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "44",
+                    "evaluator": "NE"
+                  }
+                ]
               }
             ],
             "criteria": []
           },
-          "limit": 20,
           "rate": "NONE",
           "enabled": true
         }
@@ -1405,11 +1416,11 @@
       "queries": [
         {
           "id": "A",
-          "metric": "cloud.aws.authentication.smsNotificationSentByAccountIdApplicationCountryEnvironmentIsTestLogGroupNotificationTypeRegionServiceNameServiceTypeSmsDestinationType",
+          "metric": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsDestinationTypeSmsType",
           "spaceAggregation": "SUM",
           "timeAggregation": "DEFAULT",
           "splitBy": [
-            "notificationtype"
+            "notifystatus"
           ],
           "sortBy": "DESC",
           "sortByDimension": "",
@@ -1428,17 +1439,6 @@
                 ]
               },
               {
-                "filter": "country",
-                "filterType": "DIMENSION",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "44",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
                 "filter": "environment",
                 "filterType": "DIMENSION",
                 "nestedFilters": [],
@@ -1448,11 +1448,21 @@
                     "evaluator": "EQ"
                   }
                 ]
+              },
+              {
+                "filter": "countrycode",
+                "filterType": "DIMENSION",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "44",
+                    "evaluator": "EQ"
+                  }
+                ]
               }
             ],
             "criteria": []
           },
-          "limit": 20,
           "rate": "NONE",
           "enabled": true
         }
@@ -1532,14 +1542,14 @@
       "queries": [
         {
           "id": "A",
-          "metric": "cloud.aws.authentication.smsNotificationSentByAccountIdApplicationCountryEnvironmentIsTestLogGroupNotificationTypeRegionServiceNameServiceTypeSmsDestinationType",
+          "metric": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsDestinationTypeSmsType",
           "spaceAggregation": "SUM",
           "timeAggregation": "DEFAULT",
           "splitBy": [
-            "country"
+            "notifystatus"
           ],
           "sortBy": "DESC",
-          "sortByDimension": "",
+          "sortByDimension": "notifystatus",
           "filterBy": {
             "filterOperator": "AND",
             "nestedFilters": [
@@ -1555,17 +1565,6 @@
                 ]
               },
               {
-                "filter": "country",
-                "filterType": "DIMENSION",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "44",
-                    "evaluator": "NE"
-                  }
-                ]
-              },
-              {
                 "filter": "environment",
                 "filterType": "DIMENSION",
                 "nestedFilters": [],
@@ -1575,11 +1574,21 @@
                     "evaluator": "EQ"
                   }
                 ]
+              },
+              {
+                "filter": "countrycode",
+                "filterType": "DIMENSION",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "44",
+                    "evaluator": "NE"
+                  }
+                ]
               }
             ],
             "criteria": []
           },
-          "limit": 20,
           "rate": "NONE",
           "enabled": true
         }
@@ -1689,8 +1698,7 @@
           "splitBy": [
             "notifystatus"
           ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
+          "sortByDimension": "notifystatus",
           "filterBy": {
             "filterOperator": "AND",
             "nestedFilters": [
@@ -1706,17 +1714,6 @@
                 ]
               },
               {
-                "filter": "countrycode",
-                "filterType": "DIMENSION",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "44",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
                 "filter": "environment",
                 "filterType": "DIMENSION",
                 "nestedFilters": [],
@@ -1726,11 +1723,21 @@
                     "evaluator": "EQ"
                   }
                 ]
+              },
+              {
+                "filter": "countrycode",
+                "filterType": "DIMENSION",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "44",
+                    "evaluator": "EQ"
+                  }
+                ]
               }
             ],
             "criteria": []
           },
-          "limit": 20,
           "rate": "NONE",
           "enabled": true
         }
@@ -1834,12 +1841,12 @@
       "queries": [
         {
           "id": "A",
-          "metric": "cloud.aws.authentication.smsNotificationSentByAccountIdApplicationCountryEnvironmentIsTestLogGroupNotificationTypeRegionServiceNameServiceTypeSmsDestinationType",
-          "spaceAggregation": "AUTO",
+          "metric": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsDestinationTypeSmsType",
+          "spaceAggregation": "SUM",
           "timeAggregation": "DEFAULT",
           "splitBy": [
-            "country",
-            "notificationtype"
+            "countrycode",
+            "smstype"
           ],
           "sortBy": "DESC",
           "sortByDimension": "",
@@ -1867,11 +1874,21 @@
                     "evaluator": "EQ"
                   }
                 ]
+              },
+              {
+                "filter": "notifystatus",
+                "filterType": "DIMENSION",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "delivered",
+                    "evaluator": "EQ"
+                  }
+                ]
               }
             ],
             "criteria": []
           },
-          "limit": 20,
           "rate": "NONE",
           "enabled": true
         }
@@ -1960,7 +1977,7 @@
         {
           "id": "A",
           "metric": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsDestinationTypeSmsType",
-          "spaceAggregation": "AUTO",
+          "spaceAggregation": "SUM",
           "timeAggregation": "DEFAULT",
           "splitBy": [
             "countrycode",
@@ -2007,7 +2024,6 @@
             ],
             "criteria": []
           },
-          "limit": 20,
           "rate": "NONE",
           "enabled": true
         }
@@ -2131,7 +2147,6 @@
             ],
             "criteria": []
           },
-          "limit": 20,
           "rate": "NONE",
           "enabled": true
         }
