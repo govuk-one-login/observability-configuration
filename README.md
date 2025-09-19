@@ -44,7 +44,7 @@ Then, you can use `terraform plan` to test changes, `terraform apply` to apply t
 
 This repository is *PUBLIC*, do not commit anything sensitive. If you feel you have to, reach out to the Observability team to discuss your use case.
 
-### Adding a dashboard
+### Adding a dashboard using Dynatrace Classic
 
 Dashboards should be created in the Dynatrace Web UI in the first instance, unless you really, really want to handcraft some JSON.
 
@@ -61,6 +61,26 @@ module "mydashboard_dashboard" {
   path   = "myteam/mydashboard.json"
 }
 ```
+
+### Adding a dashboard using new Dynatrace dashboards
+
+- Create the dashboard within the Dynatrace web UI.
+- Click `⋮` next to the dashboard name and click `Download`, this will download a JSON file of the created dashboard.
+- Save this JSON file under the `documents/` directory of this repo, potentially under a directory specific to your team (i.e. `documents/core/`).
+- Optionally, you can tailor the JSON that was produced if you want.
+
+Then add a block like this to `documents.tf`:
+
+```terraform
+module "mydashboard_dashboard" {  
+  source        = "./modules/documents"
+  document_path = "myteam/mydashboard.json"
+  document_name = "the name of your dashboard"
+  document_type = "dashboard"
+}
+```
+
+### Dashboard review and deployment process
 
 Commit these files on a new branch, push and open a pull request. A member of the Observability team will be able to review and merge. Send a message on the [#di-observability-team](https://gds.slack.com/archives/C04UF0B02NR) channel on Slack about your PR.
 
