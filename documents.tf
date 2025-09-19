@@ -25,7 +25,7 @@ module "ticf-cri-infrastructure" {
 
 module "signal-exchange-production-dashboard" {
   source        = "./modules/documents"
-  document_path = "signal-exchange/signal-exchange-production-dashboard"
+  document_path = "signal-exchange/signal-exchange-production-dashboard.json"
   document_name = "Signal Exchange Production Dashboard"
   document_type = "dashboard"
 }
