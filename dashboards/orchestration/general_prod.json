@@ -31,7 +31,7 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "metricSelector": "cloud.aws.authentication.successfulTokenIssuedByAccountIdClientEnvironmentLogGroupRegionServiceNameServiceType:filter(or(eq(\"environment\",\"production\"), eq(\"environment\",\"integration\"))):splitBy():count",
+          "metricSelector": "cloud.aws.authentication.successfulTokenIssuedByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(or(eq(\"environment\",\"production\"), eq(\"environment\",\"integration\"))):splitBy():count",
           "rate": "NONE",
           "enabled": true
         },
@@ -125,7 +125,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.authentication.successfulTokenIssuedByAccountIdClientEnvironmentLogGroupRegionServiceNameServiceType:filter(or(eq(environment,production),eq(environment,integration))):splitBy():count):limit(100):names,(cloud.aws.authentication.signInByAccountAccountIdClientClientNameEnvironmentIsDocAppIsTestLogGroupMfaMethodMfaRequiredRegionRequestedLevelOfConfidenceServiceNameServiceType:filter(or(eq(environment,production),eq(environment,integration))):splitBy():count:value:default(0)+cloud.aws.authentication.signInByAccountAccountIdClientClientNameEnvironmentIsDocAppIsTestLogGroupMfaMethodRegionServiceNameServiceType:filter(or(eq(environment,production),eq(environment,integration))):splitBy():count:value:default(0)+cloud.aws.authentication.signInByAccountAccountIdClientClientNameEnvironmentIsDocAppIsTestLogGroupMfaRequiredRegionRequestedLevelOfConfidenceServiceNameServiceType:filter(or(eq(environment,production),eq(environment,integration))):splitBy():count:value:default(0)+cloud.aws.authentication.docAppCallbackByAccountIdEnvironmentLogGroupRegionServiceNameServiceTypeSuccessful:filter(or(eq(environment,production),eq(environment,integration))):splitBy():count:value:default(0)):limit(100):names"
+        "resolution=null&(cloud.aws.authentication.successfulTokenIssuedByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(or(eq(environment,production),eq(environment,integration))):splitBy():count):limit(100):names,(cloud.aws.authentication.signInByAccountAccountIdClientClientNameEnvironmentIsDocAppIsTestLogGroupMfaMethodMfaRequiredRegionRequestedLevelOfConfidenceServiceNameServiceType:filter(or(eq(environment,production),eq(environment,integration))):splitBy():count:value:default(0)+cloud.aws.authentication.signInByAccountAccountIdClientClientNameEnvironmentIsDocAppIsTestLogGroupMfaMethodRegionServiceNameServiceType:filter(or(eq(environment,production),eq(environment,integration))):splitBy():count:value:default(0)+cloud.aws.authentication.signInByAccountAccountIdClientClientNameEnvironmentIsDocAppIsTestLogGroupMfaRequiredRegionRequestedLevelOfConfidenceServiceNameServiceType:filter(or(eq(environment,production),eq(environment,integration))):splitBy():count:value:default(0)+cloud.aws.authentication.docAppCallbackByAccountIdEnvironmentLogGroupRegionServiceNameServiceTypeSuccessful:filter(or(eq(environment,production),eq(environment,integration))):splitBy():count:value:default(0)):limit(100):names"
       ]
     },
     {
@@ -559,6 +559,102 @@
       },
       "metricExpressions": [
         "resolution=10m&((cloud.aws.authentication.orchIdentityJourneyCompletedByAccountIdLogGroupRegionServiceNameServiceTypeclientIdclientName:filter(eq(\"aws.account.id\",\"533266965190\")):splitBy(\"aws.account.id\"):count/(cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney:filter(and(eq(\"aws.account.id\",\"533266965190\"),eq(isdocappjourney,false),eq(isidentityjourney,true))):splitBy(\"aws.account.id\"):count))*100):limit(100):names,(((cloud.aws.authentication.orchIdentityJourneyCompletedByAccountIdLogGroupRegionServiceNameServiceTypeclientIdclientName:filter(eq(\"aws.account.id\",\"058264132019\")):splitBy(\"aws.account.id\"):count/cloud.aws.authentication.orchAuthorizeRequestCountByAccountIdLogGroupRegionServiceNameServiceTypeclientNameisDocAppJourneyisIdentityJourney:filter(and(eq(\"aws.account.id\",\"058264132019\"),eq(isdocappjourney,false),eq(isidentityjourney,true))):splitBy(\"aws.account.id\"):count))*100):limit(100):names"
+      ]
+    },
+    {
+      "name": "Tokens issued",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 646,
+        "left": 570,
+        "width": 570,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "clientname"
+          ],
+          "metricSelector": "cloud.aws.authentication.successfulTokenIssuedByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(or(eq(\"environment\",\"production\"), eq(\"environment\",\"integration\"))):splitBy(clientname):count:sort(value(avg,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.authentication.successfulTokenIssuedByAccountIdClientClientNameEnvironmentLogGroupRegionServiceNameServiceType:filter(or(eq(environment,production),eq(environment,integration))):splitBy(clientname):count:sort(value(avg,descending)):limit(20)):limit(100):names"
       ]
     }
   ]
