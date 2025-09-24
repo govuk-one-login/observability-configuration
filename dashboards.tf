@@ -23,7 +23,7 @@ resource "dynatrace_dashboard_sharing" "signin-signup" {
 module "service_dashboard_tsd" {
   count  = local.is_production ? 1 : 0
   source = "./modules/dashboard"
-  path   = "service-health-overview-tsd.json"
+  path   = "technical-service-desk/service-health-overview-tsd.json"
 }
 
 module "mi_data_dashboard" {
@@ -41,13 +41,25 @@ module "fms_dashboard" {
 module "slo_dashboard" {
   count  = local.is_production ? 1 : 0
   source = "./modules/dashboard"
-  path   = "slos.json"
+  path   = "technical-service-desk/slos.json"
 }
 
 module "ls_lambda_errors" {
   count  = local.is_production ? 1 : 0
   source = "./modules/dashboard"
-  path   = "ls-operations-lambda-errors.json"
+  path   = "technical-service-desk/ls-operations-lambda-errors.json"
+}
+
+module "dns_dashboard" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "technical-service-desk/dns.json"
+}
+
+module "rp_monitoring" {
+  count  = local.is_production ? 1 : 0
+  source = "./modules/dashboard"
+  path   = "technical-service-desk/rp-monitoring.json"
 }
 
 module "reference_pipeline_status" {
@@ -63,28 +75,6 @@ resource "dynatrace_json_dashboard" "team-idc-app" {
 
 resource "dynatrace_dashboard_sharing" "team-idc-app" {
   dashboard_id = dynatrace_json_dashboard.team-idc-app.id
-
-  enabled = true
-
-  permissions {
-    permission {
-      level = "VIEW"
-      type  = "ALL"
-    }
-    permission {
-      id    = data.dynatrace_iam_group.all.id
-      level = "VIEW"
-      type  = "GROUP"
-    }
-  }
-}
-
-resource "dynatrace_json_dashboard" "dns" {
-  contents = file("${path.module}/dashboards/dns.json")
-}
-
-resource "dynatrace_dashboard_sharing" "dns" {
-  dashboard_id = dynatrace_json_dashboard.dns.id
 
   enabled = true
 
