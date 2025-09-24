@@ -1,12 +1,12 @@
 locals {
-  notify_delivery_receipts = {
+  notifications = {
     application_environment = var.application_environment
-    account_id             = var.account_id
+    account_id              = var.account_id
   }
 }
 
 resource "dynatrace_json_dashboard" "main" {
-  contents = templatefile("${path.module}/di-auth-notify-delivery-receipts.json.tpl", local.notify_delivery_receipts)
+  contents = templatefile("${path.module}/di-auth-notifications.json.tpl", local.notifications)
 }
 
 data "dynatrace_iam_group" "all" {
