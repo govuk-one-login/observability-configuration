@@ -2214,12 +2214,12 @@
       "bounds": {
         "top": 1786,
         "left": 0,
-        "width": 950,
+        "width": 1140,
         "height": 190
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "## SMS\n\nNote that there are two types of SMS metric:\n- **\"Send\" metrics**: This data is recorded each time we send a request to Notify to deliver an SMS message.\n- **\"Delivery receipt\" metrics**: These are provided by Notify and are not guaranteed. For international SMS' we only receive confirmations for approximately two-thirds of messages Notify attempted to send."
+      "markdown": "## SMS\n\nNote that there are two types of SMS metric:\n- **\"Send\" metrics**: This data is recorded each time we send a request to Notify to deliver an SMS message.\n- **\"Delivery receipt\" metrics**: These are provided by Notify and are not guaranteed. For international SMS' we only receive confirmations for approximately two-thirds of messages messages Notify attempted to send.\n\nAlso note that \"delivery metric\" statistics can sometimes be higher than the \"send\" statistics due to a delay in delivery receipts being issued by Notify."
     },
     {
       "name": "Markdown",
@@ -3095,14 +3095,14 @@
       "tileType": "MARKDOWN",
       "configured": true,
       "bounds": {
-        "top": 2850,
+        "top": 2812,
         "left": 0,
         "width": 1216,
-        "height": 38
+        "height": 76
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "### SMS Delivery Metrics"
+      "markdown": "### SMS Delivery Metrics\n\nIf you see a \"delivery\" count which is higher than the \"send\" count (above), this may be due to delays in delivery receipts being issued by Notify."
     },
     {
       "name": "Domestic SMS' Delivered",
