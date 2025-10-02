@@ -7,7 +7,7 @@
   },
   "dashboardMetadata": {
     "name": "DI Authentication - Notification Metrics (${application_environment})",
-    "shared": false,
+    "shared": true,
     "owner": "authentication-developers@digital.cabinet-office.gov.uk",
     "tags": [
       "authentication"
