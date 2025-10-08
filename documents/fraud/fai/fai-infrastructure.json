@@ -855,272 +855,7 @@
         "davisVisualization": { "isAvailable": true }
       }
     },
-    "39": {
-      "title": "Recursive Executions Dropped",
-      "type": "code",
-      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n  let env:string = $Environment;\n  let filter:string = \"-fa-\";\n  \n  query = `timeseries concurrentExecutionsByAccountIdFunctionNameRegion = sum(cloud.aws.lambda.recursiveInvocationsDroppedByAccountIdExecutedVersionFunctionNameRegionResource, default: 0), by: { functionname }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${filter}\") }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}",
-      "visualization": "lineChart",
-      "visualizationSettings": {
-        "chartSettings": {
-          "truncationMode": "middle",
-          "xAxisLabel": "timeframe",
-          "xAxisScaling": "analyzedTimeframe",
-          "hiddenLegendFields": ["interval"],
-          "fieldMapping": {
-            "leftAxisValues": [
-              "concurrentExecutionsByAccountIdFunctionNameRegion"
-            ],
-            "timestamp": "timeframe"
-          }
-        },
-        "autoSelectVisualization": false,
-        "thresholds": []
-      }
-    },
-    "40": {
-      "title": "Async Event Age",
-      "type": "code",
-      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\nlet env:string = $Environment;\nlet filter:string = \"-fa-\";\n\n  query = `timeseries asyncEventAge = avg(cloud.aws.lambda.asyncEventAgeByAccountIdFunctionNameRegion, default: 0), by: { functionname }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${filter}\") }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}",
-      "visualization": "lineChart",
-      "visualizationSettings": {
-        "chartSettings": {
-          "truncationMode": "middle",
-          "xAxisLabel": "timeframe",
-          "xAxisScaling": "analyzedTimeframe",
-          "hiddenLegendFields": ["interval"],
-          "fieldMapping": {
-            "leftAxisValues": ["asyncEventAge"],
-            "timestamp": "timeframe"
-          }
-        },
-        "autoSelectVisualization": false,
-        "thresholds": [],
-        "unitsOverrides": [
-          {
-            "identifier": "asyncEventAge",
-            "unitCategory": "time",
-            "baseUnit": "millisecond",
-            "displayUnit": null,
-            "decimals": 2,
-            "suffix": "",
-            "delimiter": false,
-            "added": 1741623406425
-          }
-        ]
-      }
-    },
-    "41": {
-      "title": "Async Events Received",
-      "type": "code",
-      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\nlet env:string = $Environment;\nlet filter:string = \"-fa-\";\n  \n  query = `timeseries asyncEventsReceived = sum(cloud.aws.lambda.asyncEventsReceivedByAccountIdFunctionNameRegion, default: 0), by: { functionname }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${filter}\") }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}",
-      "visualization": "lineChart",
-      "visualizationSettings": {
-        "chartSettings": {
-          "truncationMode": "middle",
-          "xAxisLabel": "timeframe",
-          "xAxisScaling": "analyzedTimeframe",
-          "hiddenLegendFields": ["interval"],
-          "fieldMapping": {
-            "leftAxisValues": ["asyncEventsReceived"],
-            "timestamp": "timeframe"
-          }
-        },
-        "autoSelectVisualization": false,
-        "thresholds": []
-      }
-    },
-    "42": {
-      "title": "Iterator Age",
-      "type": "code",
-      "input": "import { queryExecutionClient } from '@dynatrace-sdk/client-query';\n\nexport default async function () {\n  const timeout = 60;\n  let query;\n\nlet env:string = $Environment;\nlet filter:string = \"-fa-\";\n\n  query = `timeseries iteratorAge = avg(cloud.aws.lambda.iteratorAgeByAccountIdFunctionNameRegionResource, default: 0), by: { functionname }, filter: { aws.account.id == \"${$SelectedAWSAccount}\" AND contains(functionname, \"${filter}\") }`;\n  \n  const response = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: timeout * 1000, fetchTimeoutSeconds: timeout, defaultTimeframeStart: $dt_timeframe_from, defaultTimeframeEnd: $dt_timeframe_to } });\n\n  return response.result;\n}",
-      "visualization": "lineChart",
-      "visualizationSettings": {
-        "chartSettings": {
-          "truncationMode": "middle",
-          "xAxisLabel": "timeframe",
-          "xAxisScaling": "analyzedTimeframe",
-          "hiddenLegendFields": ["interval"],
-          "fieldMapping": {
-            "leftAxisValues": ["iteratorAge"],
-            "timestamp": "timeframe"
-          }
-        },
-        "autoSelectVisualization": false,
-        "thresholds": [],
-        "unitsOverrides": [
-          {
-            "identifier": "iteratorAge",
-            "unitCategory": "time",
-            "baseUnit": "millisecond",
-            "displayUnit": null,
-            "decimals": 2,
-            "suffix": "",
-            "delimiter": false,
-            "added": 1741623770672
-          }
-        ]
-      }
-    },
     "51": { "type": "markdown", "content": "## Dynamo DB Metrics" },
-    "52": {
-      "title": "Throttled Requests",
-      "type": "data",
-      "query": "timeseries throttledRequests = sum(cloud.aws.dynamodb.throttledRequestsByAccountIdOperationRegionTableName, default: 0),\nby: { tablename },\nfilter: { aws.account.id == $SelectedAWSAccount }",
-      "visualization": "lineChart",
-      "visualizationSettings": {
-        "chartSettings": {
-          "truncationMode": "middle",
-          "xAxisLabel": "timeframe",
-          "xAxisScaling": "analyzedTimeframe",
-          "hiddenLegendFields": [
-            "successfulRequestLatencyByAccountIdOperationRegionTableName",
-            "successfulRequestLatencyByAccountIdOperationRegionTableName.0",
-            "successfulRequestLatencyByAccountIdOperationRegionTableName.1",
-            "interval"
-          ],
-          "fieldMapping": {
-            "leftAxisValues": ["throttledRequests"],
-            "timestamp": "timeframe"
-          }
-        },
-        "autoSelectVisualization": false,
-        "thresholds": [
-          {
-            "id": "0",
-            "title": "",
-            "field": "successfulRequestLatencyByAccountIdOperationRegionTableName",
-            "rules": [
-              { "id": "0", "label": "", "comparator": "≥", "color": "#7dc540" },
-              { "id": "1", "label": "", "comparator": "≥", "color": "#f5d30f" },
-              { "id": "2", "label": "", "comparator": "≥", "color": "#dc172a" }
-            ],
-            "isEnabled": true
-          }
-        ],
-        "unitsOverrides": []
-      },
-      "querySettings": {
-        "maxResultRecords": 1000,
-        "defaultScanLimitGbytes": 500,
-        "maxResultMegaBytes": 1,
-        "defaultSamplingRatio": 10,
-        "enableSampling": false
-      },
-      "davis": {
-        "enabled": false,
-        "davisVisualization": { "isAvailable": true }
-      },
-      "timeframe": {
-        "tileTimeframeEnabled": true,
-        "tileTimeframe": { "from": "now()-365d", "to": "now()" }
-      }
-    },
-    "53": {
-      "title": "Write Throttle Events",
-      "type": "data",
-      "query": "timeseries writeThrottleEvents = sum(cloud.aws.dynamodb.writeThrottleEventsByAccountIdRegionTableName, default: 0),\nby: { tablename },\nfilter: { aws.account.id == $SelectedAWSAccount }",
-      "visualization": "lineChart",
-      "visualizationSettings": {
-        "chartSettings": {
-          "truncationMode": "middle",
-          "xAxisLabel": "timeframe",
-          "xAxisScaling": "analyzedTimeframe",
-          "hiddenLegendFields": [
-            "successfulRequestLatencyByAccountIdOperationRegionTableName",
-            "successfulRequestLatencyByAccountIdOperationRegionTableName.0",
-            "successfulRequestLatencyByAccountIdOperationRegionTableName.1",
-            "interval"
-          ],
-          "fieldMapping": {
-            "leftAxisValues": ["writeThrottleEvents"],
-            "timestamp": "timeframe"
-          }
-        },
-        "autoSelectVisualization": false,
-        "thresholds": [
-          {
-            "id": "0",
-            "title": "",
-            "field": "successfulRequestLatencyByAccountIdOperationRegionTableName",
-            "rules": [
-              { "id": "0", "label": "", "comparator": "≥", "color": "#7dc540" },
-              { "id": "1", "label": "", "comparator": "≥", "color": "#f5d30f" },
-              { "id": "2", "label": "", "comparator": "≥", "color": "#dc172a" }
-            ],
-            "isEnabled": true
-          }
-        ],
-        "unitsOverrides": []
-      },
-      "querySettings": {
-        "maxResultRecords": 1000,
-        "defaultScanLimitGbytes": 500,
-        "maxResultMegaBytes": 1,
-        "defaultSamplingRatio": 10,
-        "enableSampling": false
-      },
-      "davis": {
-        "enabled": false,
-        "davisVisualization": { "isAvailable": true }
-      },
-      "timeframe": {
-        "tileTimeframeEnabled": true,
-        "tileTimeframe": { "from": "now()-365d", "to": "now()" }
-      }
-    },
-    "54": {
-      "title": "Consumed Read Capacity",
-      "type": "data",
-      "query": "timeseries consumedReadCapacity = sum(cloud.aws.dynamodb.consumedReadCapacityUnitsByAccountIdGlobalSecondaryIndexNameRegionTableName, default: 0),\nby: { tablename },\nfilter: { aws.account.id == $SelectedAWSAccount }",
-      "visualization": "lineChart",
-      "visualizationSettings": {
-        "chartSettings": {
-          "truncationMode": "middle",
-          "xAxisLabel": "timeframe",
-          "xAxisScaling": "analyzedTimeframe",
-          "hiddenLegendFields": [
-            "successfulRequestLatencyByAccountIdOperationRegionTableName",
-            "successfulRequestLatencyByAccountIdOperationRegionTableName.0",
-            "successfulRequestLatencyByAccountIdOperationRegionTableName.1",
-            "interval"
-          ],
-          "fieldMapping": {
-            "leftAxisValues": ["consumedReadCapacity"],
-            "timestamp": "timeframe"
-          }
-        },
-        "autoSelectVisualization": false,
-        "thresholds": [
-          {
-            "id": "0",
-            "title": "",
-            "field": "successfulRequestLatencyByAccountIdOperationRegionTableName",
-            "rules": [
-              { "id": "0", "label": "", "comparator": "≥", "color": "#7dc540" },
-              { "id": "1", "label": "", "comparator": "≥", "color": "#f5d30f" },
-              { "id": "2", "label": "", "comparator": "≥", "color": "#dc172a" }
-            ],
-            "isEnabled": true
-          }
-        ],
-        "unitsOverrides": []
-      },
-      "querySettings": {
-        "maxResultRecords": 1000,
-        "defaultScanLimitGbytes": 500,
-        "maxResultMegaBytes": 1,
-        "defaultSamplingRatio": 10,
-        "enableSampling": false
-      },
-      "davis": {
-        "enabled": false,
-        "davisVisualization": { "isAvailable": true }
-      },
-      "timeframe": {
-        "tileTimeframeEnabled": true,
-        "tileTimeframe": { "from": "now()-365d", "to": "now()" }
-      }
-    },
     "55": {
       "title": "Consumed Write Capacity",
       "type": "data",
@@ -1692,31 +1427,24 @@
     "28": { "x": 19, "y": 37, "w": 17, "h": 9 },
     "29": { "x": 0, "y": 46, "w": 19, "h": 9 },
     "30": { "x": 19, "y": 46, "w": 17, "h": 9 },
-    "31": { "x": 0, "y": 64, "w": 25, "h": 10 },
+    "31": { "x": 19, "y": 55, "w": 17, "h": 9 },
     "34": { "x": 0, "y": 3, "w": 18, "h": 10 },
-    "37": { "x": 0, "y": 55, "w": 18, "h": 9 },
-    "39": { "x": 19, "y": 74, "w": 17, "h": 9 },
-    "40": { "x": 0, "y": 74, "w": 19, "h": 9 },
-    "41": { "x": 19, "y": 83, "w": 17, "h": 9 },
-    "42": { "x": 0, "y": 83, "w": 19, "h": 9 },
-    "51": { "x": 0, "y": 92, "w": 36, "h": 1 },
-    "52": { "x": 0, "y": 102, "w": 19, "h": 9 },
-    "53": { "x": 0, "y": 111, "w": 19, "h": 9 },
-    "54": { "x": 19, "y": 102, "w": 17, "h": 9 },
-    "55": { "x": 0, "y": 93, "w": 19, "h": 9 },
-    "56": { "x": 19, "y": 93, "w": 17, "h": 9 },
-    "57": { "x": 0, "y": 120, "w": 36, "h": 1 },
-    "62": { "x": 0, "y": 121, "w": 18, "h": 7 },
-    "63": { "x": 18, "y": 121, "w": 18, "h": 7 },
-    "64": { "x": 0, "y": 128, "w": 18, "h": 8 },
-    "65": { "x": 18, "y": 128, "w": 18, "h": 8 },
-    "67": { "x": 0, "y": 136, "w": 18, "h": 8 },
-    "68": { "x": 0, "y": 144, "w": 36, "h": 2 },
-    "69": { "x": 0, "y": 146, "w": 18, "h": 7 },
-    "70": { "x": 18, "y": 146, "w": 18, "h": 7 },
-    "71": { "x": 0, "y": 153, "w": 18, "h": 8 },
-    "72": { "x": 18, "y": 153, "w": 18, "h": 8 },
-    "73": { "x": 0, "y": 161, "w": 18, "h": 7 }
+    "37": { "x": 0, "y": 55, "w": 19, "h": 9 },
+    "51": { "x": 0, "y": 64, "w": 36, "h": 1 },
+    "55": { "x": 0, "y": 65, "w": 19, "h": 9 },
+    "56": { "x": 19, "y": 65, "w": 17, "h": 9 },
+    "57": { "x": 0, "y": 74, "w": 36, "h": 1 },
+    "62": { "x": 0, "y": 75, "w": 18, "h": 7 },
+    "63": { "x": 18, "y": 75, "w": 18, "h": 7 },
+    "64": { "x": 0, "y": 82, "w": 18, "h": 8 },
+    "65": { "x": 18, "y": 82, "w": 18, "h": 8 },
+    "67": { "x": 0, "y": 90, "w": 18, "h": 8 },
+    "68": { "x": 0, "y": 98, "w": 36, "h": 2 },
+    "69": { "x": 0, "y": 100, "w": 18, "h": 7 },
+    "70": { "x": 18, "y": 100, "w": 18, "h": 7 },
+    "71": { "x": 0, "y": 107, "w": 18, "h": 8 },
+    "72": { "x": 18, "y": 107, "w": 18, "h": 8 },
+    "73": { "x": 0, "y": 115, "w": 18, "h": 7 }
   },
   "importedWithCode": true,
   "settings": {
