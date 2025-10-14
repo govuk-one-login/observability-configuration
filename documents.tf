@@ -21,6 +21,13 @@ module "ticf-cri-infrastructure" {
   document_type = "dashboard"
 }
 
+module "fai-infrastructure" {
+  source        = "./modules/documents"
+  document_path = "fraud/fai/fai-infrastructure.json"
+  document_name = "FAI Infrastructure Dashboard"
+  document_type = "dashboard"
+}
+
 ### Data Pod ###
 
 module "signal-exchange-production-dashboard" {
