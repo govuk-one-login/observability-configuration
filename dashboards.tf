@@ -297,6 +297,10 @@ module "cimit_performance_metrics_dashboard" {
   source = "./modules/dashboard"
   path   = "spot/cimit-performance-metrics.json"
 }
+module "sis_performance_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "spot/sis-performance-metrics.json"
+}
 
 ### Kiwi ###
 
