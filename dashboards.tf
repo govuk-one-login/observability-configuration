@@ -197,7 +197,7 @@ module "di_auth_notifications_staging_dashboard" {
   source = "./dashboards/authentication/di-auth-notifications"
 
   application_environment = "staging"
-  auth_account_ids        = ["758531536632", "851725205974"]
+  account_id              = "758531536632"
 }
 
 module "di_auth_notifications_production_dashboard" {
@@ -205,7 +205,7 @@ module "di_auth_notifications_production_dashboard" {
   source = "./dashboards/authentication/di-auth-notifications"
 
   application_environment = "production"
-  auth_account_ids        = ["172348255554", "211125303002"]
+  account_id              = "172348255554"
 }
 
 module "authentication_services" {

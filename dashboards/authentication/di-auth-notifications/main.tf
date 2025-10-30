@@ -1,8 +1,7 @@
 locals {
   notifications = {
     application_environment = var.application_environment
-    account_ids             = jsonencode([for id in var.auth_account_ids : { value = id, evaluator = "IN" }])
-    account_ids_list        = jsonencode(var.auth_account_ids)
+    account_id              = var.account_id
   }
 }
 
