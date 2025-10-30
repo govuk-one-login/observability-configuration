@@ -4,7 +4,7 @@
   "dashboardMetadata": {
     "name": "di-auth-check-experian-${application_environment}",
     "shared": true,
-    "owner": "matt.votsikas-mclean@digital.cabinet-office.gov.uk",
+    "owner": "christian.sophocleous@digital.cabinet-office.gov.uk",
     "hasConsistentColors": false
   },
   "tiles": [
@@ -51,41 +51,41 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "queuename",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "${application_environment}-pending-email-check-queue",
-                    "evaluator": "EQ"
-                  },
-                  {
-                    "value": "PendingEmailCheckResultsDeadLetterQueue",
-                    "evaluator": "EQ"
-                  },
-                  {
-                    "value": "PendingEmailCheckResultsQueue",
-                    "evaluator": "EQ"
-                  },
-                  {
-                    "value": "${application_environment}-pending-email-check-dlq",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
                 "filter": "aws.account.id",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "${check_account_id}",
+                    "value": "${api_account_id}",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "${api_account_id}",
+                    "value": "${check_account_id}",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
+                "filter": "queuename",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "PendingEmailCheckResultsQueue",
+                    "evaluator": "EQ"
+                  },
+                  {
+                    "value": "${application_environment}-pending-email-check-queue",
+                    "evaluator": "EQ"
+                  },
+                  {
+                    "value": "${application_environment}-pending-email-check-dlq",
+                    "evaluator": "EQ"
+                  },
+                  {
+                    "value": "PendingEmailCheckResultsDeadLetterQueue",
                     "evaluator": "EQ"
                   }
                 ]
@@ -165,7 +165,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(and(or(eq(queuename,PendingEmailCheckResultsDeadLetterQueue),eq(queuename,${application_environment}-pending-email-check-queue),eq(queuename,${application_environment}-pending-email-check-dlq),eq(queuename,PendingEmailCheckResultsQueue)),or(eq(\"aws.account.id\",\"${api_account_id}\"),eq(\"aws.account.id\",\"${check_account_id}\")))):splitBy(\"aws.account.id\",queuename):max:sort(value(max,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(and(or(eq(queuename,PendingEmailCheckResultsQueue),eq(queuename,${application_environment}-pending-email-check-queue),eq(queuename,PendingEmailCheckResultsDeadLetterQueue),eq(queuename,${application_environment}-pending-email-check-dlq)),or(eq(\"aws.account.id\",\"${api_account_id}\"),eq(\"aws.account.id\",\"${check_account_id}\")))):splitBy(\"aws.account.id\",queuename):max:sort(value(max,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -304,7 +304,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"${api_account_id}\"),eq(\"aws.account.id\",\"${check_account_id}\")),or(eq(queuename,${application_environment}-pending-email-check-queue),eq(queuename,PendingEmailCheckResultsQueue)))):splitBy(\"aws.account.id\",queuename):sort(value(auto,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.account.id\",\"${api_account_id}\"),eq(\"aws.account.id\",\"${check_account_id}\")),or(eq(queuename,PendingEmailCheckResultsQueue),eq(queuename,${application_environment}-pending-email-check-queue)))):splitBy(\"aws.account.id\",queuename):sort(value(auto,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -312,7 +312,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2964,
+        "top": 3230,
         "left": 0,
         "width": 304,
         "height": 304
@@ -418,7 +418,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2964,
+        "top": 3230,
         "left": 304,
         "width": 304,
         "height": 304
@@ -528,7 +528,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2660,
+        "top": 2926,
         "left": 0,
         "width": 304,
         "height": 304
@@ -636,7 +636,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2660,
+        "top": 2926,
         "left": 304,
         "width": 304,
         "height": 304
@@ -723,7 +723,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2660,
+        "top": 2926,
         "left": 608,
         "width": 304,
         "height": 304
@@ -810,7 +810,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2964,
+        "top": 3230,
         "left": 608,
         "width": 304,
         "height": 304
@@ -897,7 +897,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2394,
+        "top": 2660,
         "left": 532,
         "width": 380,
         "height": 266
@@ -1014,7 +1014,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 3268,
+        "top": 3534,
         "left": 0,
         "width": 912,
         "height": 380
@@ -1136,7 +1136,7 @@
       "tileType": "HEADER",
       "configured": true,
       "bounds": {
-        "top": 2052,
+        "top": 2318,
         "left": 532,
         "width": 380,
         "height": 38
@@ -1149,7 +1149,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2242,
+        "top": 2508,
         "left": 532,
         "width": 190,
         "height": 152
@@ -1263,8 +1263,8 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(cloud.aws.authentication.experianRequestLatencyByAccountIdLogGroupRegionServiceNameServiceTypestatusurl:filter(and(or(eq(status,\"200\")),or(eq(\"aws.account.id\",\"${api_account_id}\")))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names",
-        "resolution=null&(cloud.aws.authentication.experianRequestLatencyByAccountIdLogGroupRegionServiceNameServiceTypestatusurl:filter(and(or(eq(status,\"200\")),or(eq(\"aws.account.id\",\"${api_account_id}\")))):splitBy():min:sort(value(min,descending)):limit(20))"
+        "resolution=Inf&(cloud.aws.authentication.experianRequestLatencyByAccountIdLogGroupRegionServiceNameServiceTypestatusurl:filter(and(or(eq(\"aws.account.id\",\"${api_account_id}\")),or(eq(status,\"200\")))):splitBy():min:sort(value(min,descending)):limit(20)):limit(100):names",
+        "resolution=null&(cloud.aws.authentication.experianRequestLatencyByAccountIdLogGroupRegionServiceNameServiceTypestatusurl:filter(and(or(eq(\"aws.account.id\",\"${api_account_id}\")),or(eq(status,\"200\")))):splitBy():min:sort(value(min,descending)):limit(20))"
       ]
     },
     {
@@ -1272,7 +1272,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2242,
+        "top": 2508,
         "left": 722,
         "width": 190,
         "height": 152
@@ -1293,18 +1293,6 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "status",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "200",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
                 "filter": "aws.account.id",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
@@ -1312,6 +1300,18 @@
                 "criteria": [
                   {
                     "value": "${api_account_id}",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
+                "filter": "status",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "200",
                     "evaluator": "EQ"
                   }
                 ]
@@ -1386,8 +1386,8 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(cloud.aws.authentication.experianRequestLatencyByAccountIdLogGroupRegionServiceNameServiceTypestatusurl:filter(and(or(eq(status,\"200\")),or(eq(\"aws.account.id\",\"${api_account_id}\")))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names",
-        "resolution=null&(cloud.aws.authentication.experianRequestLatencyByAccountIdLogGroupRegionServiceNameServiceTypestatusurl:filter(and(or(eq(status,\"200\")),or(eq(\"aws.account.id\",\"${api_account_id}\")))):splitBy():max:sort(value(max,descending)):limit(20))"
+        "resolution=Inf&(cloud.aws.authentication.experianRequestLatencyByAccountIdLogGroupRegionServiceNameServiceTypestatusurl:filter(and(or(eq(\"aws.account.id\",\"${api_account_id}\")),or(eq(status,\"200\")))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names",
+        "resolution=null&(cloud.aws.authentication.experianRequestLatencyByAccountIdLogGroupRegionServiceNameServiceTypestatusurl:filter(and(or(eq(\"aws.account.id\",\"${api_account_id}\")),or(eq(status,\"200\")))):splitBy():max:sort(value(max,descending)):limit(20))"
       ]
     },
     {
@@ -1395,7 +1395,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2394,
+        "top": 2660,
         "left": 0,
         "width": 532,
         "height": 266
@@ -1524,7 +1524,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2052,
+        "top": 2318,
         "left": 0,
         "width": 532,
         "height": 342
@@ -1545,18 +1545,6 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "aws.account.id",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "${api_account_id}",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
                 "filter": "status",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
@@ -1564,6 +1552,18 @@
                 "criteria": [
                   {
                     "value": "200",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
+                "filter": "aws.account.id",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "${api_account_id}",
                     "evaluator": "EQ"
                   }
                 ]
@@ -1708,7 +1708,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.authentication.experianRequestLatencyByAccountIdLogGroupRegionServiceNameServiceTypestatusurl:filter(and(or(eq(status,\"200\")),or(eq(\"aws.account.id\",\"${api_account_id}\")))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.authentication.experianRequestLatencyByAccountIdLogGroupRegionServiceNameServiceTypestatusurl:filter(and(or(eq(status,\"200\")),or(eq(\"aws.account.id\",\"${api_account_id}\")))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names"
+        "resolution=null&(cloud.aws.authentication.experianRequestLatencyByAccountIdLogGroupRegionServiceNameServiceTypestatusurl:filter(and(or(eq(\"aws.account.id\",\"${api_account_id}\")),or(eq(status,\"200\")))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names,(cloud.aws.authentication.experianRequestLatencyByAccountIdLogGroupRegionServiceNameServiceTypestatusurl:filter(and(or(eq(\"aws.account.id\",\"${api_account_id}\")),or(eq(status,\"200\")))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names"
       ]
     },
     {
@@ -1716,7 +1716,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2090,
+        "top": 2356,
         "left": 532,
         "width": 380,
         "height": 152
@@ -1737,18 +1737,6 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "status",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "200",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
                 "filter": "aws.account.id",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
@@ -1756,6 +1744,18 @@
                 "criteria": [
                   {
                     "value": "${api_account_id}",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
+                "filter": "status",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "200",
                     "evaluator": "EQ"
                   }
                 ]
@@ -1830,8 +1830,8 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(cloud.aws.authentication.experianRequestLatencyByAccountIdLogGroupRegionServiceNameServiceTypestatusurl:filter(and(or(eq(status,\"200\")),or(eq(\"aws.account.id\",\"${api_account_id}\")))):splitBy():median:sort(value(median,descending)):limit(20)):limit(100):names",
-        "resolution=null&(cloud.aws.authentication.experianRequestLatencyByAccountIdLogGroupRegionServiceNameServiceTypestatusurl:filter(and(or(eq(status,\"200\")),or(eq(\"aws.account.id\",\"${api_account_id}\")))):splitBy():median:sort(value(median,descending)):limit(20))"
+        "resolution=Inf&(cloud.aws.authentication.experianRequestLatencyByAccountIdLogGroupRegionServiceNameServiceTypestatusurl:filter(and(or(eq(\"aws.account.id\",\"${api_account_id}\")),or(eq(status,\"200\")))):splitBy():median:sort(value(median,descending)):limit(20)):limit(100):names",
+        "resolution=null&(cloud.aws.authentication.experianRequestLatencyByAccountIdLogGroupRegionServiceNameServiceTypestatusurl:filter(and(or(eq(\"aws.account.id\",\"${api_account_id}\")),or(eq(status,\"200\")))):splitBy():median:sort(value(median,descending)):limit(20))"
       ]
     },
     {
@@ -1839,9 +1839,9 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 342,
-        "left": 608,
-        "width": 304,
+        "top": 684,
+        "left": 456,
+        "width": 456,
         "height": 342
       },
       "tileFilter": {},
@@ -1947,7 +1947,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1634,
+        "top": 1900,
         "left": 0,
         "width": 646,
         "height": 304
@@ -1968,18 +1968,6 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "emailcheckresultstatus",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "ALLOW",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
                 "filter": "aws.account.id",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
@@ -1987,6 +1975,18 @@
                 "criteria": [
                   {
                     "value": "${check_account_id}",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
+                "filter": "emailcheckresultstatus",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "ALLOW",
                     "evaluator": "EQ"
                   }
                 ]
@@ -2179,7 +2179,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1634,
+        "top": 1900,
         "left": 646,
         "width": 266,
         "height": 304
@@ -2285,7 +2285,7 @@
       "bounds": {
         "top": 342,
         "left": 0,
-        "width": 608,
+        "width": 912,
         "height": 342
       },
       "tileFilter": {},
@@ -2528,7 +2528,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1254,
+        "top": 1520,
         "left": 532,
         "width": 380,
         "height": 190
@@ -2639,7 +2639,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1444,
+        "top": 1710,
         "left": 532,
         "width": 190,
         "height": 152
@@ -2750,7 +2750,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1444,
+        "top": 1710,
         "left": 722,
         "width": 190,
         "height": 152
@@ -2861,7 +2861,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1254,
+        "top": 1520,
         "left": 0,
         "width": 532,
         "height": 342
@@ -3022,7 +3022,7 @@
       "tileType": "HEADER",
       "configured": true,
       "bounds": {
-        "top": 684,
+        "top": 1026,
         "left": 0,
         "width": 912,
         "height": 38
@@ -3035,7 +3035,7 @@
       "tileType": "HEADER",
       "configured": true,
       "bounds": {
-        "top": 1596,
+        "top": 1862,
         "left": 0,
         "width": 912,
         "height": 38
@@ -3048,7 +3048,7 @@
       "tileType": "HEADER",
       "configured": true,
       "bounds": {
-        "top": 1216,
+        "top": 1482,
         "left": 0,
         "width": 912,
         "height": 38
@@ -3061,7 +3061,7 @@
       "tileType": "MARKDOWN",
       "configured": true,
       "bounds": {
-        "top": 1976,
+        "top": 2242,
         "left": 0,
         "width": 912,
         "height": 38
@@ -3075,13 +3075,119 @@
       "tileType": "HEADER",
       "configured": true,
       "bounds": {
-        "top": 2014,
+        "top": 2280,
         "left": 0,
         "width": 912,
         "height": 38
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 1064,
+        "left": 0,
+        "width": 304,
+        "height": 152
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "AUT-4870 will fill in this space when possible (currently blocked on a AWS to Dynatrace metric ingestion issue)"
+    },
+    {
+      "name": "Lambda Act level Concurrent usage %",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 684,
+        "left": 0,
+        "width": 456,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region"
+          ],
+          "metricSelector": "cloud.aws.lambda.concurrentExecutionsByAccountIdRegion:filter(or(eq(\"aws.account.id\",\"${check_account_id}\")))/6000*100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.lambda.concurrentExecutionsByAccountIdRegion:filter(or(eq(\"aws.account.id\",\"${check_account_id}\")))/6000*100):limit(100):names",
+        "resolution=null&(cloud.aws.lambda.concurrentExecutionsByAccountIdRegion:filter(or(eq(\"aws.account.id\",\"${check_account_id}\")))/6000*100)"
+      ]
     }
   ]
 }
