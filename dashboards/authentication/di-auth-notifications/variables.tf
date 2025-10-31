@@ -5,3 +5,7 @@ variable "application_environment" {
 variable "account_id" {
   description = "AWS Account ID"
 }
+
+variable "account_id_new" {
+  description = "New Auth prod Account"
+}
