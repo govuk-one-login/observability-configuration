@@ -2,6 +2,7 @@ locals {
   notifications = {
     application_environment = var.application_environment
     account_id              = var.account_id
+    account_id_new          = var.account_id_new
   }
 }
 
