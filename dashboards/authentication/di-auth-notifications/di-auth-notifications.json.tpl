@@ -4493,6 +4493,10 @@
                   {
                     "value": "${account_id}",
                     "evaluator": "EQ"
+                  },
+                  {
+                    "value": "${account_id_new}",
+                    "evaluator": "EQ"
                   }
                 ]
               },
