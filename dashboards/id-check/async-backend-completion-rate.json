@@ -13,1048 +13,13 @@
   },
   "tiles": [
     {
-      "name": "VCs Issued By Document Type",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 874,
-        "left": 380,
-        "width": 684,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "VCs Issued By Document Type",
-      "queries": [
-        {
-          "id": "B",
-          "metric": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion",
-          "spaceAggregation": "SUM",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "documenttype"
-          ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "PIE_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "B:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy(documenttype):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
-      "name": "All VCs Issued",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2318,
-        "left": 0,
-        "width": 1064,
-        "height": 190
-      },
-      "tileFilter": {
-        "timeframe": "now\\0w-1w to now\\0w-0w"
-      },
-      "isAutoRefreshDisabled": false,
-      "customName": "TPS comparison window",
-      "queries": [
-        {
-          "id": "L",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "aws.account.id"
-          ],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion\n:filter(or(eq(\"aws.account.id\",\"211125300205\"),\n    eq(\"aws.account.id\",\"058264551042\"),\n    eq(\"aws.account.id\",\"730335288219\"),\n    eq(\"aws.account.id\",\"992382392501\"),\n    eq(\"aws.account.id\",\"339712924890\")))\n:partition(\"env\",dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(\"UNKNOWN\"))\n:timeshift(1w)\n:sum\n:splitBy(env,\"aws.account.id\")\n:sort(dimension(\"env\",ascending),dimension(\"resource\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "M",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "aws.account.id"
-          ],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion\n:filter(or(eq(\"aws.account.id\",\"211125300205\"),\n    eq(\"aws.account.id\",\"058264551042\"),\n    eq(\"aws.account.id\",\"730335288219\"),\n    eq(\"aws.account.id\",\"992382392501\"),\n    eq(\"aws.account.id\",\"339712924890\")))\n:partition(\"env\",dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(\"UNKNOWN\"))\n:timeshift(-0w)\n:sum\n:splitBy(env,\"aws.account.id\")\n:sort(dimension(\"env\",ascending),dimension(\"resource\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "N",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "aws.account.id"
-          ],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion\n:filter(or(eq(\"aws.account.id\",\"211125300205\"),\n    eq(\"aws.account.id\",\"058264551042\"),\n    eq(\"aws.account.id\",\"730335288219\"),\n    eq(\"aws.account.id\",\"992382392501\"),\n    eq(\"aws.account.id\",\"339712924890\")))\n:partition(\"env\",dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(\"UNKNOWN\"))\n:timeshift(-1w)\n:sum\n:splitBy(env,\"aws.account.id\")\n:sort(dimension(\"env\",ascending),dimension(\"resource\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "O",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "aws.account.id"
-          ],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion\n:filter(or(eq(\"aws.account.id\",\"211125300205\"),\n    eq(\"aws.account.id\",\"058264551042\"),\n    eq(\"aws.account.id\",\"730335288219\"),\n    eq(\"aws.account.id\",\"992382392501\"),\n    eq(\"aws.account.id\",\"339712924890\")))\n:partition(\"env\",dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(\"UNKNOWN\"))\n:timeshift(-2w)\n:sum\n:splitBy(env,\"aws.account.id\")\n:sort(dimension(\"env\",ascending),dimension(\"resource\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "P",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "aws.account.id"
-          ],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion\n:filter(or(eq(\"aws.account.id\",\"211125300205\"),\n    eq(\"aws.account.id\",\"058264551042\"),\n    eq(\"aws.account.id\",\"730335288219\"),\n    eq(\"aws.account.id\",\"992382392501\"),\n    eq(\"aws.account.id\",\"339712924890\")))\n:partition(\"env\",dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(\"UNKNOWN\"))\n:timeshift(-3w)\n:sum\n:splitBy(env,\"aws.account.id\")\n:sort(dimension(\"env\",ascending),dimension(\"resource\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "Q",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "aws.account.id"
-          ],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion\n:filter(or(eq(\"aws.account.id\",\"211125300205\"),\n    eq(\"aws.account.id\",\"058264551042\"),\n    eq(\"aws.account.id\",\"730335288219\"),\n    eq(\"aws.account.id\",\"992382392501\"),\n    eq(\"aws.account.id\",\"339712924890\")))\n:partition(\"env\",dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(\"UNKNOWN\"))\n:timeshift(-4w)\n:sum\n:splitBy(env,\"aws.account.id\")\n:sort(dimension(\"env\",ascending),dimension(\"resource\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "R",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "aws.account.id"
-          ],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion\n:filter(or(eq(\"aws.account.id\",\"211125300205\"),\n    eq(\"aws.account.id\",\"058264551042\"),\n    eq(\"aws.account.id\",\"730335288219\"),\n    eq(\"aws.account.id\",\"992382392501\"),\n    eq(\"aws.account.id\",\"339712924890\")))\n:partition(\"env\",dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(\"UNKNOWN\"))\n:timeshift(-5w)\n:sum\n:splitBy(env,\"aws.account.id\")\n:sort(dimension(\"env\",ascending),dimension(\"resource\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "TABLE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "L:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Week to Date"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "M:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Last Week"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "N:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "-2 Weeks"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "O:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "-3 Weeks"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "P:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "-4 Weeks"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "Q:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "-5 Weeks"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "R:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "-6 Weeks"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "(1w) ",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "L",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "A:env.name",
-            "A:projectname.name",
-            "A:aws.account.id.name",
-            "A:aws.region.name",
-            "B:env.name",
-            "B:apiname.name",
-            "B:resource.name",
-            "C:env.name",
-            "C:projectname.name",
-            "C:aws.account.id.name",
-            "C:aws.region.name",
-            "D:env.name",
-            "D:projectname.name",
-            "D:aws.account.id.name",
-            "D:aws.region.name",
-            "E:env.name",
-            "E:projectname.name",
-            "E:aws.account.id.name",
-            "E:aws.region.name",
-            "C:apiname.name",
-            "C:resource.name",
-            "D:apiname.name",
-            "D:resource.name",
-            "E:apiname.name",
-            "E:resource.name",
-            "F:env.name",
-            "F:apiname.name",
-            "F:resource.name",
-            "G:env.name",
-            "G:apiname.name",
-            "G:resource.name",
-            "H:env.name",
-            "H:apiname.name",
-            "H:resource.name",
-            "I:env.name",
-            "I:apiname.name",
-            "I:resource.name",
-            "J:env.name",
-            "J:apiname.name",
-            "J:resource.name",
-            "K:env.name",
-            "K:apiname.name",
-            "K:resource.name",
-            "L:env.name",
-            "L:apiname.name",
-            "L:resource.name",
-            "M:apiname.name",
-            "M:resource.name",
-            "L:aws.account.id.name",
-            "M:env.name",
-            "M:aws.account.id.name",
-            "N:env.name",
-            "N:aws.account.id.name",
-            "O:env.name",
-            "O:aws.account.id.name",
-            "P:env.name",
-            "P:aws.account.id.name",
-            "Q:env.name",
-            "Q:aws.account.id.name",
-            "R:env.name",
-            "R:aws.account.id.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "SUM"
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:filter(or(eq(\"aws.account.id\",\"211125300205\"),eq(\"aws.account.id\",\"058264551042\"),eq(\"aws.account.id\",\"730335288219\"),eq(\"aws.account.id\",\"992382392501\"),eq(\"aws.account.id\",\"339712924890\"))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(UNKNOWN)):timeshift(1w):sum:splitBy(env,\"aws.account.id\"):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:filter(or(eq(\"aws.account.id\",\"211125300205\"),eq(\"aws.account.id\",\"058264551042\"),eq(\"aws.account.id\",\"730335288219\"),eq(\"aws.account.id\",\"992382392501\"),eq(\"aws.account.id\",\"339712924890\"))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(UNKNOWN)):timeshift(0w):sum:splitBy(env,\"aws.account.id\"):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:filter(or(eq(\"aws.account.id\",\"211125300205\"),eq(\"aws.account.id\",\"058264551042\"),eq(\"aws.account.id\",\"730335288219\"),eq(\"aws.account.id\",\"992382392501\"),eq(\"aws.account.id\",\"339712924890\"))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(UNKNOWN)):timeshift(-1w):sum:splitBy(env,\"aws.account.id\"):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:filter(or(eq(\"aws.account.id\",\"211125300205\"),eq(\"aws.account.id\",\"058264551042\"),eq(\"aws.account.id\",\"730335288219\"),eq(\"aws.account.id\",\"992382392501\"),eq(\"aws.account.id\",\"339712924890\"))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(UNKNOWN)):timeshift(-2w):sum:splitBy(env,\"aws.account.id\"):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:filter(or(eq(\"aws.account.id\",\"211125300205\"),eq(\"aws.account.id\",\"058264551042\"),eq(\"aws.account.id\",\"730335288219\"),eq(\"aws.account.id\",\"992382392501\"),eq(\"aws.account.id\",\"339712924890\"))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(UNKNOWN)):timeshift(-3w):sum:splitBy(env,\"aws.account.id\"):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:filter(or(eq(\"aws.account.id\",\"211125300205\"),eq(\"aws.account.id\",\"058264551042\"),eq(\"aws.account.id\",\"730335288219\"),eq(\"aws.account.id\",\"992382392501\"),eq(\"aws.account.id\",\"339712924890\"))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(UNKNOWN)):timeshift(-4w):sum:splitBy(env,\"aws.account.id\"):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:filter(or(eq(\"aws.account.id\",\"211125300205\"),eq(\"aws.account.id\",\"058264551042\"),eq(\"aws.account.id\",\"730335288219\"),eq(\"aws.account.id\",\"992382392501\"),eq(\"aws.account.id\",\"339712924890\"))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(UNKNOWN)):timeshift(-5w):sum:splitBy(env,\"aws.account.id\"):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum)"
-      ]
-    },
-    {
-      "name": "VCs Issued By Document Type",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2508,
-        "left": 0,
-        "width": 1064,
-        "height": 266
-      },
-      "tileFilter": {
-        "timeframe": "now\\0w-1w to now\\0w-0w"
-      },
-      "isAutoRefreshDisabled": false,
-      "customName": "TPS comparison window",
-      "queries": [
-        {
-          "id": "L",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "documenttype"
-          ],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion\n:filter(or(eq(\"aws.account.id\",\"211125300205\"),\n    eq(\"aws.account.id\",\"058264551042\"),\n    eq(\"aws.account.id\",\"730335288219\"),\n    eq(\"aws.account.id\",\"992382392501\"),\n    eq(\"aws.account.id\",\"339712924890\")))\n:partition(\"env\",dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(\"UNKNOWN\"))\n:timeshift(1w)\n:sum\n:splitBy(env,\"documenttype\")\n:sort(dimension(\"env\",ascending),dimension(\"resource\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "M",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "documenttype"
-          ],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion\n:filter(or(eq(\"aws.account.id\",\"211125300205\"),\n    eq(\"aws.account.id\",\"058264551042\"),\n    eq(\"aws.account.id\",\"730335288219\"),\n    eq(\"aws.account.id\",\"992382392501\"),\n    eq(\"aws.account.id\",\"339712924890\")))\n:partition(\"env\",dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(\"UNKNOWN\"))\n:timeshift(-0w)\n:sum\n:splitBy(env,\"documenttype\")\n:sort(dimension(\"env\",ascending),dimension(\"resource\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "N",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "documenttype"
-          ],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion\n:filter(or(eq(\"aws.account.id\",\"211125300205\"),\n    eq(\"aws.account.id\",\"058264551042\"),\n    eq(\"aws.account.id\",\"730335288219\"),\n    eq(\"aws.account.id\",\"992382392501\"),\n    eq(\"aws.account.id\",\"339712924890\")))\n:partition(\"env\",dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(\"UNKNOWN\"))\n:timeshift(-1w)\n:sum\n:splitBy(env,\"documenttype\")\n:sort(dimension(\"env\",ascending),dimension(\"resource\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "O",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "documenttype"
-          ],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion\n:filter(or(eq(\"aws.account.id\",\"211125300205\"),\n    eq(\"aws.account.id\",\"058264551042\"),\n    eq(\"aws.account.id\",\"730335288219\"),\n    eq(\"aws.account.id\",\"992382392501\"),\n    eq(\"aws.account.id\",\"339712924890\")))\n:partition(\"env\",dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(\"UNKNOWN\"))\n:timeshift(-2w)\n:sum\n:splitBy(env,\"documenttype\")\n:sort(dimension(\"env\",ascending),dimension(\"resource\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "P",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "documenttype"
-          ],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion\n:filter(or(eq(\"aws.account.id\",\"211125300205\"),\n    eq(\"aws.account.id\",\"058264551042\"),\n    eq(\"aws.account.id\",\"730335288219\"),\n    eq(\"aws.account.id\",\"992382392501\"),\n    eq(\"aws.account.id\",\"339712924890\")))\n:partition(\"env\",dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(\"UNKNOWN\"))\n:timeshift(-3w)\n:sum\n:splitBy(env,\"documenttype\")\n:sort(dimension(\"env\",ascending),dimension(\"resource\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "Q",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "documenttype"
-          ],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion\n:filter(or(eq(\"aws.account.id\",\"211125300205\"),\n    eq(\"aws.account.id\",\"058264551042\"),\n    eq(\"aws.account.id\",\"730335288219\"),\n    eq(\"aws.account.id\",\"992382392501\"),\n    eq(\"aws.account.id\",\"339712924890\")))\n:partition(\"env\",dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(\"UNKNOWN\"))\n:timeshift(-4w)\n:sum\n:splitBy(env,\"documenttype\")\n:sort(dimension(\"env\",ascending),dimension(\"resource\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "R",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "documenttype"
-          ],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion\n:filter(or(eq(\"aws.account.id\",\"211125300205\"),\n    eq(\"aws.account.id\",\"058264551042\"),\n    eq(\"aws.account.id\",\"730335288219\"),\n    eq(\"aws.account.id\",\"992382392501\"),\n    eq(\"aws.account.id\",\"339712924890\")))\n:partition(\"env\",dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(\"UNKNOWN\"))\n:timeshift(-5w)\n:sum\n:splitBy(env,\"documenttype\")\n:sort(dimension(\"env\",ascending),dimension(\"resource\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "TABLE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "L:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Week to Date"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "M:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Last Week"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "N:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "-2 Weeks"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "O:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "-3 Weeks"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "P:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "-4 Weeks"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "Q:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "-5 Weeks"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "R:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "-6 Weeks"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "(1w) ",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "L",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "A:env.name",
-            "A:projectname.name",
-            "A:aws.account.id.name",
-            "A:aws.region.name",
-            "B:env.name",
-            "B:apiname.name",
-            "B:resource.name",
-            "C:env.name",
-            "C:projectname.name",
-            "C:aws.account.id.name",
-            "C:aws.region.name",
-            "D:env.name",
-            "D:projectname.name",
-            "D:aws.account.id.name",
-            "D:aws.region.name",
-            "E:env.name",
-            "E:projectname.name",
-            "E:aws.account.id.name",
-            "E:aws.region.name",
-            "C:apiname.name",
-            "C:resource.name",
-            "D:apiname.name",
-            "D:resource.name",
-            "E:apiname.name",
-            "E:resource.name",
-            "F:env.name",
-            "F:apiname.name",
-            "F:resource.name",
-            "G:env.name",
-            "G:apiname.name",
-            "G:resource.name",
-            "H:env.name",
-            "H:apiname.name",
-            "H:resource.name",
-            "I:env.name",
-            "I:apiname.name",
-            "I:resource.name",
-            "J:env.name",
-            "J:apiname.name",
-            "J:resource.name",
-            "K:env.name",
-            "K:apiname.name",
-            "K:resource.name",
-            "L:env.name",
-            "L:apiname.name",
-            "L:resource.name",
-            "M:apiname.name",
-            "M:resource.name",
-            "L:aws.account.id.name",
-            "M:env.name",
-            "M:aws.account.id.name",
-            "N:env.name",
-            "N:aws.account.id.name",
-            "O:env.name",
-            "O:aws.account.id.name",
-            "P:env.name",
-            "P:aws.account.id.name",
-            "Q:env.name",
-            "Q:aws.account.id.name",
-            "R:env.name",
-            "R:aws.account.id.name",
-            "L:documenttype.name",
-            "M:documenttype.name",
-            "N:documenttype.name",
-            "O:documenttype.name",
-            "P:documenttype.name",
-            "Q:documenttype.name",
-            "R:documenttype.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "SUM"
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:filter(or(eq(\"aws.account.id\",\"211125300205\"),eq(\"aws.account.id\",\"058264551042\"),eq(\"aws.account.id\",\"730335288219\"),eq(\"aws.account.id\",\"992382392501\"),eq(\"aws.account.id\",\"339712924890\"))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(UNKNOWN)):timeshift(1w):sum:splitBy(env,documenttype):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:filter(or(eq(\"aws.account.id\",\"211125300205\"),eq(\"aws.account.id\",\"058264551042\"),eq(\"aws.account.id\",\"730335288219\"),eq(\"aws.account.id\",\"992382392501\"),eq(\"aws.account.id\",\"339712924890\"))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(UNKNOWN)):timeshift(0w):sum:splitBy(env,documenttype):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:filter(or(eq(\"aws.account.id\",\"211125300205\"),eq(\"aws.account.id\",\"058264551042\"),eq(\"aws.account.id\",\"730335288219\"),eq(\"aws.account.id\",\"992382392501\"),eq(\"aws.account.id\",\"339712924890\"))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(UNKNOWN)):timeshift(-1w):sum:splitBy(env,documenttype):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:filter(or(eq(\"aws.account.id\",\"211125300205\"),eq(\"aws.account.id\",\"058264551042\"),eq(\"aws.account.id\",\"730335288219\"),eq(\"aws.account.id\",\"992382392501\"),eq(\"aws.account.id\",\"339712924890\"))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(UNKNOWN)):timeshift(-2w):sum:splitBy(env,documenttype):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:filter(or(eq(\"aws.account.id\",\"211125300205\"),eq(\"aws.account.id\",\"058264551042\"),eq(\"aws.account.id\",\"730335288219\"),eq(\"aws.account.id\",\"992382392501\"),eq(\"aws.account.id\",\"339712924890\"))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(UNKNOWN)):timeshift(-3w):sum:splitBy(env,documenttype):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:filter(or(eq(\"aws.account.id\",\"211125300205\"),eq(\"aws.account.id\",\"058264551042\"),eq(\"aws.account.id\",\"730335288219\"),eq(\"aws.account.id\",\"992382392501\"),eq(\"aws.account.id\",\"339712924890\"))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(UNKNOWN)):timeshift(-4w):sum:splitBy(env,documenttype):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:filter(or(eq(\"aws.account.id\",\"211125300205\"),eq(\"aws.account.id\",\"058264551042\"),eq(\"aws.account.id\",\"730335288219\"),eq(\"aws.account.id\",\"992382392501\"),eq(\"aws.account.id\",\"339712924890\"))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"211125300205\")),dimension(\"2-build\",eq(\"aws.account.id\",\"058264551042\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"730335288219\")),dimension(\"4-int\",eq(\"aws.account.id\",\"992382392501\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"339712924890\")),otherwise(UNKNOWN)):timeshift(-5w):sum:splitBy(env,documenttype):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum)"
-      ]
-    },
-    {
-      "name": "Current Unprocessed Messages",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1292,
-        "left": 380,
-        "width": 342,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Unprocessed Messages",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion",
-          "spaceAggregation": "MAX",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "queuename",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "mob-async-backend-ipv-core-outbound",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "5m",
-        "foldTransformation": "LAST_VALUE"
-      },
-      "metricExpressions": [
-        "resolution=5m&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(and(or(eq(queuename,mob-async-backend-ipv-core-outbound)))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names:last"
-      ]
-    },
-    {
-      "name": "Current In-flight Messages",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1292,
-        "left": 722,
-        "width": 342,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "In-flight Messages",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion",
-          "spaceAggregation": "MAX",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "queuename",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "mob-async-backend-ipv-core-outbound",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
-                "filter": "aws.region",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "eu-west-2",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "5m",
-        "foldTransformation": "LAST_VALUE"
-      },
-      "metricExpressions": [
-        "resolution=5m&(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.region\",eu-west-2)),or(eq(queuename,mob-async-backend-ipv-core-outbound)))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names:last"
-      ]
-    },
-    {
-      "name": "Total Messages Processed",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1292,
-        "left": 0,
-        "width": 380,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Messaged Deleted from Outbound Queue",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion",
-          "spaceAggregation": "SUM",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "aws.region",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "eu-west-2",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
-                "filter": "queuename",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "mob-async-backend-ipv-core-outbound",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "SUM"
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(and(or(eq(\"aws.region\",eu-west-2)),or(eq(queuename,mob-async-backend-ipv-core-outbound)))):splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names:fold(sum)"
-      ]
-    },
-    {
-      "name": "Weekly VCs Issued",
+      "name": "VCs Issued",
       "tileType": "HEADER",
       "configured": true,
       "bounds": {
-        "top": 2280,
+        "top": 1102,
         "left": 0,
-        "width": 266,
+        "width": 456,
         "height": 38
       },
       "tileFilter": {},
@@ -1065,7 +30,7 @@
       "tileType": "HEADER",
       "configured": true,
       "bounds": {
-        "top": 1254,
+        "top": 2812,
         "left": 0,
         "width": 570,
         "height": 38
@@ -1078,9 +43,9 @@
       "tileType": "HEADER",
       "configured": true,
       "bounds": {
-        "top": 76,
+        "top": 418,
         "left": 0,
-        "width": 570,
+        "width": 456,
         "height": 38
       },
       "tileFilter": {},
@@ -1091,10 +56,10 @@
       "tileType": "MARKDOWN",
       "configured": true,
       "bounds": {
-        "top": 1292,
-        "left": 1064,
+        "top": 2850,
+        "left": 1368,
         "width": 228,
-        "height": 190
+        "height": 304
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
@@ -1105,10 +70,10 @@
       "tileType": "MARKDOWN",
       "configured": true,
       "bounds": {
-        "top": 114,
-        "left": 1064,
+        "top": 342,
+        "left": 2812,
         "width": 228,
-        "height": 152
+        "height": 304
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
@@ -1121,7 +86,7 @@
       "bounds": {
         "top": 0,
         "left": 0,
-        "width": 1064,
+        "width": 912,
         "height": 38
       },
       "tileFilter": {},
@@ -1129,225 +94,12 @@
       "markdown": "*To see production-only data, use the filter in the top right to select the `di-mobile-id-check-async-prod` management zone.*"
     },
     {
-      "name": "Messages Visible on DLQ",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1900,
-        "left": 0,
-        "width": 722,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(and(or(eq(queuename,\"mob-async-backend-ipv-core-outbound-dlq\")),or(eq(\"aws.region\",eu-west-2)))):splitBy():max",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "STACKED_AREA",
-        "global": {
-          "hideLegend": true
-        },
-        "rules": [
-          {
-            "matcher": "B:",
-            "unitTransform": "none",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "STACKED_AREA",
-              "alias": "Messages Visible"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "B"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "cloud.aws.jh-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.jh-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": true
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(and(or(eq(queuename,mob-async-backend-ipv-core-outbound-dlq)),or(eq(\"aws.region\",eu-west-2)))):splitBy():max):limit(100):names"
-      ]
-    },
-    {
-      "name": "Age of Oldest Message on DLQ",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1900,
-        "left": 722,
-        "width": 342,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "In-flight Messages",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion",
-          "spaceAggregation": "MAX",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "queuename",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "mob-async-backend-ipv-core-outbound-dlq",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "Hour",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "5m",
-        "foldTransformation": "LAST_VALUE"
-      },
-      "metricExpressions": [
-        "resolution=5m&(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(and(or(eq(queuename,mob-async-backend-ipv-core-outbound-dlq)))):splitBy():max:sort(value(max,descending)):limit(20)):limit(100):names:last"
-      ]
-    },
-    {
       "name": "Markdown",
       "tileType": "MARKDOWN",
       "configured": true,
       "bounds": {
-        "top": 1900,
-        "left": 1064,
+        "top": 3458,
+        "left": 1368,
         "width": 228,
         "height": 190
       },
@@ -1360,9 +112,9 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 114,
-        "left": 684,
-        "width": 380,
+        "top": 456,
+        "left": 0,
+        "width": 456,
         "height": 304
       },
       "tileFilter": {},
@@ -1450,9 +202,9 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 874,
-        "left": 0,
-        "width": 380,
+        "top": 76,
+        "left": 912,
+        "width": 456,
         "height": 304
       },
       "tileFilter": {},
@@ -1540,9 +292,9 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 114,
+        "top": 76,
         "left": 0,
-        "width": 342,
+        "width": 456,
         "height": 304
       },
       "tileFilter": {},
@@ -1639,9 +391,9 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 114,
-        "left": 342,
-        "width": 342,
+        "top": 76,
+        "left": 456,
+        "width": 456,
         "height": 304
       },
       "tileFilter": {},
@@ -1732,259 +484,13 @@
       ]
     },
     {
-      "name": "Journeys and Outcomes Over Time",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 570,
-        "left": 0,
-        "width": 1064,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum:default(0, always)",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum:default(0, always)",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "D",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(and(or(eq(messagecode,\"MOBILE_ASYNC_ABORT_SESSION_COMPLETED\")))):splitBy():sum:default(0, always)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "STACKED_AREA",
-        "global": {
-          "hideLegend": false
-        },
-        "rules": [
-          {
-            "matcher": "B:",
-            "unitTransform": "none",
-            "valueFormat": "none",
-            "properties": {
-              "color": "YELLOW",
-              "seriesType": "STACKED_AREA",
-              "alias": "Journeys Started"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "C:",
-            "unitTransform": "none",
-            "valueFormat": "none",
-            "properties": {
-              "color": "GREEN",
-              "seriesType": "STACKED_AREA",
-              "alias": "Credentials Issued"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "D:",
-            "unitTransform": "none",
-            "valueFormat": "none",
-            "properties": {
-              "color": "RED",
-              "seriesType": "STACKED_AREA",
-              "alias": "Journeys Aborted"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "B",
-                "C",
-                "D"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "cloud.aws.jh-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.jh-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": true
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum:default(0,always)):limit(100):names,(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum:default(0,always)):limit(100):names,(cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(and(or(eq(messagecode,MOBILE_ASYNC_ABORT_SESSION_COMPLETED)))):splitBy():sum:default(0,always)):limit(100):names"
-      ]
-    },
-    {
-      "name": "Message Processing Rate",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1596,
-        "left": 0,
-        "width": 1064,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(and(or(eq(queuename,mob-async-backend-ipv-core-outbound)),or(eq(\"aws.region\",eu-west-2)))):splitBy():sum:default(0, always)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "STACKED_AREA",
-        "global": {
-          "hideLegend": true
-        },
-        "rules": [
-          {
-            "matcher": "B:",
-            "unitTransform": "none",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "STACKED_AREA",
-              "alias": "Messages Processed"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "B"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "cloud.aws.jh-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.jh-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": true
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(and(or(eq(queuename,mob-async-backend-ipv-core-outbound)),or(eq(\"aws.region\",eu-west-2)))):splitBy():sum:default(0,always)):limit(100):names"
-      ]
-    },
-    {
       "name": "Percentage of VCs Issued by Number of Invocations",
       "tileType": "HEADER",
       "configured": true,
       "bounds": {
-        "top": 2850,
+        "top": 1786,
         "left": 0,
-        "width": 1064,
+        "width": 684,
         "height": 38
       },
       "tileFilter": {},
@@ -1995,9 +501,9 @@
       "tileType": "HEADER",
       "configured": true,
       "bounds": {
-        "top": 3420,
+        "top": 2432,
         "left": 0,
-        "width": 1064,
+        "width": 608,
         "height": 38
       },
       "tileFilter": {},
@@ -2008,10 +514,10 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2888,
-        "left": 608,
-        "width": 152,
-        "height": 152
+        "top": 1824,
+        "left": 684,
+        "width": 228,
+        "height": 190
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
@@ -2097,10 +603,10 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2888,
-        "left": 760,
-        "width": 152,
-        "height": 152
+        "top": 1824,
+        "left": 912,
+        "width": 228,
+        "height": 190
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
@@ -2186,10 +692,10 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2888,
-        "left": 912,
-        "width": 152,
-        "height": 152
+        "top": 1824,
+        "left": 1140,
+        "width": 228,
+        "height": 190
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
@@ -2275,10 +781,10 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 3040,
-        "left": 608,
-        "width": 152,
-        "height": 152
+        "top": 2014,
+        "left": 684,
+        "width": 228,
+        "height": 190
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
@@ -2364,10 +870,10 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 3040,
-        "left": 760,
-        "width": 152,
-        "height": 152
+        "top": 2014,
+        "left": 912,
+        "width": 228,
+        "height": 190
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
@@ -2453,10 +959,10 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 3040,
-        "left": 912,
-        "width": 152,
-        "height": 152
+        "top": 2014,
+        "left": 1140,
+        "width": 228,
+        "height": 190
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
@@ -2542,10 +1048,10 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 3192,
-        "left": 608,
-        "width": 152,
-        "height": 152
+        "top": 2204,
+        "left": 684,
+        "width": 228,
+        "height": 190
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
@@ -2631,10 +1137,10 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 3192,
-        "left": 760,
-        "width": 152,
-        "height": 152
+        "top": 2204,
+        "left": 912,
+        "width": 228,
+        "height": 190
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
@@ -2720,10 +1226,10 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 3192,
-        "left": 912,
-        "width": 152,
-        "height": 152
+        "top": 2204,
+        "left": 1140,
+        "width": 228,
+        "height": 190
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
@@ -2809,9 +1315,9 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 3458,
+        "top": 2470,
         "left": 0,
-        "width": 1064,
+        "width": 1368,
         "height": 304
       },
       "tileFilter": {},
@@ -2919,14 +1425,1275 @@
       ]
     },
     {
+      "name": "Journeys and Outcomes Over Time",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 760,
+        "left": 0,
+        "width": 1368,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(eq(messagecode,\"MOBILE_ASYNC_ABORT_SESSION_COMPLETED\")):splitBy():sum:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "none",
+            "valueFormat": "none",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "LINE",
+              "alias": "Journeys Started"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "none",
+            "valueFormat": "none",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "Credentials Issued"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "none",
+            "valueFormat": "none",
+            "properties": {
+              "color": "RED",
+              "seriesType": "LINE",
+              "alias": "Journeys Aborted"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "B",
+                "C",
+                "D"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "cloud.aws.jh-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.jh-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum:default(0,always)):limit(100):names,(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum:default(0,always)):limit(100):names,(cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(eq(messagecode,MOBILE_ASYNC_ABORT_SESSION_COMPLETED)):splitBy():sum:default(0,always)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Daily Journey Completion Rate Over Time",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 456,
+        "left": 456,
+        "width": 912,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Top list",
+      "queries": [
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\") / cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:sum:splitBy(\"aws.account.id\") ) * 100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": true
+        },
+        "rules": [
+          {
+            "matcher": "D:",
+            "unitTransform": "%",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Yesterday"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "D"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\"):timeshift(-1d)/cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-1d))*100",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:aws.account.id.name",
+            "A:aws.region.name",
+            "A:documenttype.name",
+            "A:dt.entity.cloud:aws:account.name",
+            "A:dt.entity.cloud:aws:region.name",
+            "B:aws.account.id.name",
+            "B:aws.region.name",
+            "B:documenttype.name",
+            "B:dt.entity.cloud:aws:account.name",
+            "B:dt.entity.cloud:aws:region.name",
+            "C:aws.account.id.name",
+            "C:aws.region.name",
+            "C:dt.entity.cloud:aws:account.name",
+            "C:dt.entity.cloud:aws:region.name",
+            "D:aws.account.id.name",
+            "E:aws.account.id.name",
+            "F:aws.account.id.name",
+            "G:aws.account.id.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1d"
+      },
+      "metricExpressions": [
+        "resolution=1d&((cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\")/cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:sum:splitBy(\"aws.account.id\"))*100):limit(100):names"
+      ]
+    },
+    {
+      "name": "Total Messages Processed Over Time",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 3154,
+        "left": 0,
+        "width": 1368,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():sum:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": true
+        },
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "none",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Messages Processed"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "cloud.aws.jh-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.jh-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():sum:default(0,always)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Total Messages Processed",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2850,
+        "left": 0,
+        "width": 456,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Messaged Deleted from Outbound Queue",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():sum",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():sum):limit(100):names:fold(sum)"
+      ]
+    },
+    {
+      "name": "Maximum No. of Messages on Queue at Once",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2850,
+        "left": 456,
+        "width": 456,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Unprocessed Messages",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():max",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():max):limit(100):names:last"
+      ]
+    },
+    {
+      "name": "Maximum No. of In-Flight Messages at Once",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2850,
+        "left": 912,
+        "width": 456,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "In-flight Messages",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():max",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():max):limit(100):names:last"
+      ]
+    },
+    {
+      "name": "Messages Visible on DLQ",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 3458,
+        "left": 0,
+        "width": 912,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(queuename,\"mob-async-backend-ipv-core-outbound-dlq\")):splitBy():max",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": true
+        },
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "none",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Messages Visible"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "cloud.aws.jh-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.jh-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound-dlq)):splitBy():max):limit(100):names"
+      ]
+    },
+    {
+      "name": "Age of Oldest Message on DLQ",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 3458,
+        "left": 912,
+        "width": 456,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "In-flight Messages",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound-dlq)):splitBy():max",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "Hour",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound-dlq)):splitBy():max):limit(100):names:last"
+      ]
+    },
+    {
+      "name": "VCs Issued Over Time",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1140,
+        "left": 0,
+        "width": 1368,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "TPS comparison window",
+      "queries": [
+        {
+          "id": "L",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\")",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": true
+        },
+        "rules": [
+          {
+            "matcher": "L:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Week to Date"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "L",
+                "M",
+                "N",
+                "O",
+                "P",
+                "Q",
+                "R"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "(1w) ",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "L",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:env.name",
+            "A:projectname.name",
+            "A:aws.account.id.name",
+            "A:aws.region.name",
+            "B:env.name",
+            "B:apiname.name",
+            "B:resource.name",
+            "C:env.name",
+            "C:projectname.name",
+            "C:aws.account.id.name",
+            "C:aws.region.name",
+            "D:env.name",
+            "D:projectname.name",
+            "D:aws.account.id.name",
+            "D:aws.region.name",
+            "E:env.name",
+            "E:projectname.name",
+            "E:aws.account.id.name",
+            "E:aws.region.name",
+            "C:apiname.name",
+            "C:resource.name",
+            "D:apiname.name",
+            "D:resource.name",
+            "E:apiname.name",
+            "E:resource.name",
+            "F:env.name",
+            "F:apiname.name",
+            "F:resource.name",
+            "G:env.name",
+            "G:apiname.name",
+            "G:resource.name",
+            "H:env.name",
+            "H:apiname.name",
+            "H:resource.name",
+            "I:env.name",
+            "I:apiname.name",
+            "I:resource.name",
+            "J:env.name",
+            "J:apiname.name",
+            "J:resource.name",
+            "K:env.name",
+            "K:apiname.name",
+            "K:resource.name",
+            "L:env.name",
+            "L:apiname.name",
+            "L:resource.name",
+            "M:apiname.name",
+            "M:resource.name",
+            "L:aws.account.id.name",
+            "M:env.name",
+            "M:aws.account.id.name",
+            "N:env.name",
+            "N:aws.account.id.name",
+            "O:env.name",
+            "O:aws.account.id.name",
+            "P:env.name",
+            "P:aws.account.id.name",
+            "Q:env.name",
+            "Q:aws.account.id.name",
+            "R:env.name",
+            "R:aws.account.id.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\")):limit(100):names"
+      ]
+    },
+    {
+      "name": "VCs Issued By Document Type Over Time",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1444,
+        "left": 456,
+        "width": 912,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "TPS comparison window",
+      "queries": [
+        {
+          "id": "L",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "documenttype"
+          ],
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion\n:sum\n:splitBy(\"documenttype\")",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "L:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Week to Date"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "L",
+                "M",
+                "N",
+                "O",
+                "P",
+                "Q",
+                "R"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "(1w) ",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "L",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:env.name",
+            "A:projectname.name",
+            "A:aws.account.id.name",
+            "A:aws.region.name",
+            "B:env.name",
+            "B:apiname.name",
+            "B:resource.name",
+            "C:env.name",
+            "C:projectname.name",
+            "C:aws.account.id.name",
+            "C:aws.region.name",
+            "D:env.name",
+            "D:projectname.name",
+            "D:aws.account.id.name",
+            "D:aws.region.name",
+            "E:env.name",
+            "E:projectname.name",
+            "E:aws.account.id.name",
+            "E:aws.region.name",
+            "C:apiname.name",
+            "C:resource.name",
+            "D:apiname.name",
+            "D:resource.name",
+            "E:apiname.name",
+            "E:resource.name",
+            "F:env.name",
+            "F:apiname.name",
+            "F:resource.name",
+            "G:env.name",
+            "G:apiname.name",
+            "G:resource.name",
+            "H:env.name",
+            "H:apiname.name",
+            "H:resource.name",
+            "I:env.name",
+            "I:apiname.name",
+            "I:resource.name",
+            "J:env.name",
+            "J:apiname.name",
+            "J:resource.name",
+            "K:env.name",
+            "K:apiname.name",
+            "K:resource.name",
+            "L:env.name",
+            "L:apiname.name",
+            "L:resource.name",
+            "M:apiname.name",
+            "M:resource.name",
+            "L:aws.account.id.name",
+            "M:env.name",
+            "M:aws.account.id.name",
+            "N:env.name",
+            "N:aws.account.id.name",
+            "O:env.name",
+            "O:aws.account.id.name",
+            "P:env.name",
+            "P:aws.account.id.name",
+            "Q:env.name",
+            "Q:aws.account.id.name",
+            "R:env.name",
+            "R:aws.account.id.name",
+            "L:documenttype.name",
+            "M:documenttype.name",
+            "N:documenttype.name",
+            "O:documenttype.name",
+            "P:documenttype.name",
+            "Q:documenttype.name",
+            "R:documenttype.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(documenttype)):limit(100):names"
+      ]
+    },
+    {
+      "name": "VCs Issued By Document Type",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1444,
+        "left": 0,
+        "width": 456,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "VCs Issued By Document Type",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "documenttype"
+          ],
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy(documenttype):sum:sort(value(sum,descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "PIE_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy(documenttype):sum:sort(value(sum,descending))):limit(100):names"
+      ]
+    },
+    {
       "name": "",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2888,
+        "top": 1824,
         "left": 0,
-        "width": 608,
-        "height": 456
+        "width": 684,
+        "height": 570
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
@@ -2939,7 +2706,7 @@
           "splitBy": [
             "receivecount"
           ],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n  :filter(eq(messagecode,\"MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED\"))\n  :splitBy(receivecount)\n  :count\n  :sort(dimension(\"receivecount\",descending))",
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n  :filter(eq(messagecode,\"MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED\"))\n  :splitBy(receivecount)\n  :count\n  :sort(dimension(\"receivecount\",ascending,natural))",
           "rate": "NONE",
           "enabled": true
         }
@@ -3014,250 +2781,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(receivecount):count:sort(dimension(receivecount,descending))):limit(100):names"
-      ]
-    },
-    {
-      "name": "Journey Completion Rate Over 7 Day",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 418,
-        "left": 0,
-        "width": 1064,
-        "height": 152
-      },
-      "tileFilter": {
-        "timeframe": "yesterday"
-      },
-      "isAutoRefreshDisabled": false,
-      "customName": "Top list",
-      "queries": [
-        {
-          "id": "D",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\"):timeshift(0d) / cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(0d) ) * 100",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\"):timeshift(-1d) / cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-1d) ) * 100",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\"):timeshift(-2d) / cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-2d) ) * 100",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\"):timeshift(-3d) / cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-3d) ) * 100",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "E",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\"):timeshift(-4d) / cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-4d) ) * 100",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "F",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\"):timeshift(-5d) / cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-5d) ) * 100",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "G",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\"):timeshift(-6d) / cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-6d) ) * 100",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "TABLE",
-        "global": {
-          "hideLegend": true
-        },
-        "rules": [
-          {
-            "matcher": "D:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Yesterday"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "A:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "2 days ago"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "3 days ago"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "C:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "4 days ago"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "E:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "5 days ago"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "F:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "6 days ago"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "G:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "7 days ago"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "A:aws.account.id.name",
-            "A:aws.region.name",
-            "A:documenttype.name",
-            "A:dt.entity.cloud:aws:account.name",
-            "A:dt.entity.cloud:aws:region.name",
-            "B:aws.account.id.name",
-            "B:aws.region.name",
-            "B:documenttype.name",
-            "B:dt.entity.cloud:aws:account.name",
-            "B:dt.entity.cloud:aws:region.name",
-            "C:aws.account.id.name",
-            "C:aws.region.name",
-            "C:dt.entity.cloud:aws:account.name",
-            "C:dt.entity.cloud:aws:region.name",
-            "D:aws.account.id.name",
-            "E:aws.account.id.name",
-            "F:aws.account.id.name",
-            "G:aws.account.id.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": true
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\"):timeshift(0d)/cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(0d))*100):names,((cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\"):timeshift(-1d)/cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-1d))*100):names,((cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\"):timeshift(-2d)/cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-2d))*100):names,((cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\"):timeshift(-3d)/cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-3d))*100):names,((cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\"):timeshift(-4d)/cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-4d))*100):names,((cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\"):timeshift(-5d)/cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-5d))*100):names,((cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\"):timeshift(-6d)/cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-6d))*100):names"
+        "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(receivecount):count:sort(dimension(receivecount,ascending,natural))):limit(100):names"
       ]
     }
   ]
