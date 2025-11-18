@@ -1,6 +1,7 @@
 data "dynatrace_entity" "di-ipv-cri-check-hmrc-front" {
   name = "di-ipv-cri-check-hmrc-front"
   type = "SERVICE"
+  from = var.key_requests_from_date
 }
 
 module "cri_check_hmrc_front_key_requests" {
@@ -20,6 +21,7 @@ module "cri_check_hmrc_front_key_requests" {
 data "dynatrace_entity" "di-ipv-cri-address-front" {
   name = "di-ipv-cri-address-front"
   type = "SERVICE"
+  from = var.key_requests_from_date
 }
 
 module "cri_address_front_key_requests" {
@@ -48,6 +50,7 @@ module "cri_address_front_key_requests" {
 data "dynatrace_entity" "di-ipv-cri-kbv-front" {
   name = "di-ipv-cri-kbv-front"
   type = "SERVICE"
+  from = var.key_requests_from_date
 }
 
 module "cri_experian_kbv_front_key_requests" {
