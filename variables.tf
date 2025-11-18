@@ -24,3 +24,7 @@ variable "synthetic_requests_cost" {
 variable "team_account_id" {
   type = string
 }
+
+variable "key_requests_from_date" {
+  default = "now-30d"
+}
