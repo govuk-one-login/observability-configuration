@@ -342,36 +342,6 @@ resource "dynatrace_metric_events" "aws_codebuild_memory_utilized_percent" {
   }
 }
 
-resource "dynatrace_metric_events" "waf_blocked_requests" {
-  count   = local.is_production ? 1 : 0
-  enabled = true
-  summary = "WAF Blocked Requests Alert"
-  event_template {
-    description = <<-EOT
-    The {metricname} value was {alert_condition} {threshold}.
-
-    WAF details: {dims}.
-    EOT
-
-    davis_merge = false
-    event_type  = "ERROR"
-    title       = "WAF Blocked Requests Alert"
-  }
-  model_properties {
-    type               = "AUTO_ADAPTIVE_THRESHOLD"
-    alert_condition    = "ABOVE"
-    alert_on_no_data   = false
-    violating_samples  = 50
-    samples            = 60
-    dealerting_samples = 60
-    signal_fluctuation = 10
-  }
-  query_definition {
-    type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.wafv2.blockedRequestsByAccountIdManagedRuleGroupManagedRuleGroupRuleRegionWebACL:splitBy(\"webacl\",\"managedrulegrouprule\")"
-  }
-}
-
 # Frequent issue detection
 resource "dynatrace_frequent_issues" "frequent_issue_detection" {
   detect_apps  = true
