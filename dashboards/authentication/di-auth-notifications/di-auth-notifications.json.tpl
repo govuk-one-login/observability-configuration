@@ -3,7 +3,7 @@
     "configurationVersions": [
       7
     ],
-    "clusterVersion": "1.324.29.20250922-090614"
+    "clusterVersion": "1.328.38.20251118-072621"
   },
   "dashboardMetadata": {
     "name": "DI Authentication - Notification Metrics (${application_environment})",
@@ -41,17 +41,6 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "notifystatus",
-                "filterType": "DIMENSION",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "delivered",
-                    "evaluator": "NE"
-                  }
-                ]
-              },
-              {
                 "filter": "environment",
                 "filterType": "DIMENSION",
                 "nestedFilters": [],
@@ -59,6 +48,17 @@
                   {
                     "value": "${application_environment}",
                     "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
+                "filter": "notifystatus",
+                "filterType": "DIMENSION",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "delivered",
+                    "evaluator": "NE"
                   }
                 ]
               },
@@ -151,8 +151,7 @@
       },
       "queriesSettings": {
         "resolution": "10m"
-      }
-    },
+      }    },
     {
       "name": "Email Successful Delivery Rate by Type",
       "tileType": "DATA_EXPLORER",
@@ -187,22 +186,11 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "${account_id}",
+                    "value": "${account_id_new}",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "${account_id_new}",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
-                "filter": "notifystatus",
-                "filterType": "DIMENSION",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "delivered",
+                    "value": "${account_id}",
                     "evaluator": "EQ"
                   }
                 ]
@@ -214,6 +202,17 @@
                 "criteria": [
                   {
                     "value": "${application_environment}",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
+                "filter": "notifystatus",
+                "filterType": "DIMENSION",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "delivered",
                     "evaluator": "EQ"
                   }
                 ]
@@ -290,128 +289,7 @@
       },
       "queriesSettings": {
         "resolution": "1m"
-      }
-    },
-    {
-      "name": "All SMS' Delivered",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2926,
-        "left": 0,
-        "width": 266,
-        "height": 266
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Single value",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "cloud.aws.authentication.smsNotificationSentByAccountIdApplicationCountryEnvironmentIsTestLogGroupNotificationTypeRegionServiceNameServiceTypeSmsDestinationType",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "aws.account.id",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "${account_id}",
-                    "evaluator": "EQ"
-                  },
-                  {
-                    "value": "${account_id_new}",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
-                "filter": "environment",
-                "filterType": "DIMENSION",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "${application_environment}",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "1h",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "SUM"
-      }
-    },
+      }    },
     {
       "name": "All SMS Delivery Failures by Type",
       "tileType": "DATA_EXPLORER",
@@ -457,11 +335,11 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "${account_id}",
+                    "value": "${account_id_new}",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "${account_id_new}",
+                    "value": "${account_id}",
                     "evaluator": "EQ"
                   }
                 ]
@@ -541,10 +419,9 @@
         "resolution": "",
         "foldTransformation": "TOTAL",
         "foldAggregation": "SUM"
-      }
-    },
+      }    },
     {
-      "name": "SMS' Delivered by Type",
+      "name": "SMS Delivered by Type",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
@@ -672,8 +549,7 @@
         "resolution": "1m",
         "foldTransformation": "TOTAL",
         "foldAggregation": "SUM"
-      }
-    },
+      }    },
     {
       "name": "Email Delivery Failure Count by Type",
       "tileType": "DATA_EXPLORER",
@@ -702,6 +578,17 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
+                "filter": "notifystatus",
+                "filterType": "DIMENSION",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "delivered",
+                    "evaluator": "NE"
+                  }
+                ]
+              },
+              {
                 "filter": "aws.account.id",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
@@ -714,17 +601,6 @@
                   {
                     "value": "${account_id_new}",
                     "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
-                "filter": "notifystatus",
-                "filterType": "DIMENSION",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "delivered",
-                    "evaluator": "NE"
                   }
                 ]
               },
@@ -800,8 +676,7 @@
         "resolution": "1h",
         "foldTransformation": "TOTAL",
         "foldAggregation": "SUM"
-      }
-    },
+      }    },
     {
       "name": "Email Successful Delivery Count by Type",
       "tileType": "DATA_EXPLORER",
@@ -830,17 +705,6 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "environment",
-                "filterType": "DIMENSION",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "${application_environment}",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
                 "filter": "notifystatus",
                 "filterType": "DIMENSION",
                 "nestedFilters": [],
@@ -863,6 +727,17 @@
                   },
                   {
                     "value": "${account_id_new}",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
+                "filter": "environment",
+                "filterType": "DIMENSION",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "${application_environment}",
                     "evaluator": "EQ"
                   }
                 ]
@@ -928,8 +803,7 @@
         "resolution": "1h",
         "foldTransformation": "TOTAL",
         "foldAggregation": "SUM"
-      }
-    },
+      }    },
     {
       "name": "All SMS Successful Delivery Rate",
       "tileType": "DATA_EXPLORER",
@@ -1054,139 +928,7 @@
       },
       "queriesSettings": {
         "resolution": "10m"
-      }
-    },
-    {
-      "name": "All SMS Delivery Failures",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 4218,
-        "left": 0,
-        "width": 342,
-        "height": 266
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Single value",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsDestinationTypeSmsType",
-          "spaceAggregation": "SUM",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "environment",
-                "filterType": "DIMENSION",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "${application_environment}",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
-                "filter": "notifystatus",
-                "filterType": "DIMENSION",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "delivered",
-                    "evaluator": "NE"
-                  }
-                ]
-              },
-              {
-                "filter": "aws.account.id",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "${account_id}",
-                    "evaluator": "EQ"
-                  },
-                  {
-                    "value": "${account_id_new}",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": false
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "1h",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "SUM"
-      }
-    },
+      }    },
     {
       "name": "All SMS Delivery Failure Rate",
       "tileType": "DATA_EXPLORER",
@@ -1214,17 +956,6 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "environment",
-                "filterType": "DIMENSION",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "${application_environment}",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
                 "filter": "notifystatus",
                 "filterType": "DIMENSION",
                 "nestedFilters": [],
@@ -1236,17 +967,28 @@
                 ]
               },
               {
+                "filter": "environment",
+                "filterType": "DIMENSION",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "${application_environment}",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
                 "filter": "aws.account.id",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "${account_id}",
+                    "value": "${account_id_new}",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "${account_id_new}",
+                    "value": "${account_id}",
                     "evaluator": "EQ"
                   }
                 ]
@@ -1323,8 +1065,7 @@
       },
       "queriesSettings": {
         "resolution": "10m"
-      }
-    },
+      }    },
     {
       "name": "International SMS Delivery Success Statuses",
       "tileType": "DATA_EXPLORER",
@@ -1352,17 +1093,6 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "environment",
-                "filterType": "DIMENSION",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "${application_environment}",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
                 "filter": "countrycode",
                 "filterType": "DIMENSION",
                 "nestedFilters": [],
@@ -1374,17 +1104,28 @@
                 ]
               },
               {
+                "filter": "environment",
+                "filterType": "DIMENSION",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "${application_environment}",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
                 "filter": "aws.account.id",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "${account_id}",
+                    "value": "${account_id_new}",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "${account_id_new}",
+                    "value": "${account_id}",
                     "evaluator": "EQ"
                   }
                 ]
@@ -1453,8 +1194,7 @@
         "resolution": "",
         "foldTransformation": "TOTAL",
         "foldAggregation": "SUM"
-      }
-    },
+      }    },
     {
       "name": "Domestic SMS Delivery Success Statuses",
       "tileType": "DATA_EXPLORER",
@@ -1483,12 +1223,12 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "countrycode",
+                "filter": "environment",
                 "filterType": "DIMENSION",
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "44",
+                    "value": "${application_environment}",
                     "evaluator": "EQ"
                   }
                 ]
@@ -1500,22 +1240,22 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "${account_id}",
+                    "value": "${account_id_new}",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "${account_id_new}",
+                    "value": "${account_id}",
                     "evaluator": "EQ"
                   }
                 ]
               },
               {
-                "filter": "environment",
+                "filter": "countrycode",
                 "filterType": "DIMENSION",
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "${application_environment}",
+                    "value": "44",
                     "evaluator": "EQ"
                   }
                 ]
@@ -1584,8 +1324,7 @@
         "resolution": "",
         "foldTransformation": "TOTAL",
         "foldAggregation": "SUM"
-      }
-    },
+      }    },
     {
       "name": "International SMS Successful Delivery Rate",
       "tileType": "DATA_EXPLORER",
@@ -1739,8 +1478,7 @@
       },
       "queriesSettings": {
         "resolution": "10m"
-      }
-    },
+      }    },
     {
       "name": "Domestic SMS Successful Delivery Rate",
       "tileType": "DATA_EXPLORER",
@@ -1785,11 +1523,11 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "${account_id}",
+                    "value": "${account_id_new}",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "${account_id_new}",
+                    "value": "${account_id}",
                     "evaluator": "EQ"
                   }
                 ]
@@ -1893,8 +1631,7 @@
       },
       "queriesSettings": {
         "resolution": "10m"
-      }
-    },
+      }    },
     {
       "name": "SMS Successful Deliveries by Country Code and Template",
       "tileType": "DATA_EXPLORER",
@@ -1935,17 +1672,6 @@
                 ]
               },
               {
-                "filter": "notifystatus",
-                "filterType": "DIMENSION",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "delivered",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
                 "filter": "aws.account.id",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
@@ -1957,6 +1683,17 @@
                   },
                   {
                     "value": "${account_id_new}",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
+                "filter": "notifystatus",
+                "filterType": "DIMENSION",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "delivered",
                     "evaluator": "EQ"
                   }
                 ]
@@ -2033,8 +1770,7 @@
       },
       "queriesSettings": {
         "resolution": "10m"
-      }
-    },
+      }    },
     {
       "name": "All SMS Failures by Country Code and Template",
       "tileType": "DATA_EXPLORER",
@@ -2064,17 +1800,6 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "environment",
-                "filterType": "DIMENSION",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "${application_environment}",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
                 "filter": "aws.account.id",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
@@ -2098,6 +1823,17 @@
                   {
                     "value": "delivered",
                     "evaluator": "NE"
+                  }
+                ]
+              },
+              {
+                "filter": "environment",
+                "filterType": "DIMENSION",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "${application_environment}",
+                    "evaluator": "EQ"
                   }
                 ]
               }
@@ -2173,8 +1909,7 @@
       },
       "queriesSettings": {
         "resolution": "10m"
-      }
-    },
+      }    },
     {
       "name": "Bulk Email Delivery by Status (will only display data when bulk email send in progress)",
       "tileType": "DATA_EXPLORER",
@@ -2290,8 +2025,7 @@
         "resolution": "1h",
         "foldTransformation": "TOTAL",
         "foldAggregation": "SUM"
-      }
-    },
+      }    },
     {
       "name": "Markdown",
       "tileType": "MARKDOWN",
@@ -2321,196 +2055,6 @@
       "markdown": "---"
     },
     {
-      "name": "Domestic SMS Sent",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2014,
-        "left": 0,
-        "width": 266,
-        "height": 266
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Single value",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "application",
-            "aws.account.id",
-            "aws.region",
-            "dt.entity.cloud:aws:account",
-            "dt.entity.cloud:aws:region",
-            "environment",
-            "loggroup",
-            "servicename",
-            "servicetype"
-          ],
-          "metricSelector": "cloud.aws.authentication.domesticSmsSentByAccountIdApplicationEnvironmentLogGroupRegionServiceNameServiceType\n:filter(and(\n    eq(environment,${application_environment}),\n    or(eq(\"aws.account.id\",\"${account_id}\"),eq(\"aws.account.id\",\"${account_id_new}\"))\n))",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "1h",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "SUM"
-      }
-    },
-    {
-      "name": "International SMS Sent",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2280,
-        "left": 0,
-        "width": 266,
-        "height": 266
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Single value",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "application",
-            "aws.account.id",
-            "aws.region",
-            "dt.entity.cloud:aws:account",
-            "dt.entity.cloud:aws:region",
-            "environment",
-            "loggroup",
-            "servicename",
-            "servicetype"
-          ],
-          "metricSelector": "cloud.aws.authentication.internationalSmsSentByAccountIdApplicationEnvironmentLogGroupRegionServiceNameServiceType\n:filter(and(\n    eq(environment,${application_environment}),\n    or(eq(\"aws.account.id\",\"${account_id}\"),eq(\"aws.account.id\",\"${account_id_new}\"))\n))",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "1h",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "SUM"
-      }
-    },
-    {
       "name": "Markdown",
       "tileType": "MARKDOWN",
       "configured": true,
@@ -2537,91 +2081,6 @@
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
       "markdown": "**Note**\n\n\"SMS 'Auth -> Notify' Send Failures\" is a count for the failed requests to Notify and does not count the delivery failures experienced by Notify (see the section below for this).\n\nThe \"failed requests\" count should include any rate limiting that Notify imposes on us (e.g., if we've hit a daily limit). "
-    },
-    {
-      "name": "SMS 'Auth -> Notify' Send Failures",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2546,
-        "left": 0,
-        "width": 418,
-        "height": 266
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Single value",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.authentication.smsNotificationErrorByAccountIdApplicationCountryEnvironmentIsTestLogGroupNotificationHttpErrorNotificationTypeRegionServiceNameServiceType\n:filter(and(\n    eq(environment,${application_environment}),\n    or(eq(\"aws.account.id\",\"${account_id}\"),eq(\"aws.account.id\",\"${account_id_new}\"))\n))\n:sum\n:default(0,always)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": false
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "1h",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "SUM"
-      }
     },
     {
       "name": "Domestic SMS Sent by type",
@@ -2706,8 +2165,7 @@
         "resolution": "1m",
         "foldTransformation": "TOTAL",
         "foldAggregation": "SUM"
-      }
-    },
+      }    },
     {
       "name": "International SMS Sent by type",
       "tileType": "DATA_EXPLORER",
@@ -2791,8 +2249,7 @@
         "resolution": "1m",
         "foldTransformation": "TOTAL",
         "foldAggregation": "SUM"
-      }
-    },
+      }    },
     {
       "name": "Domestic SMS Successful Send Rate",
       "tileType": "DATA_EXPLORER",
@@ -2882,8 +2339,7 @@
       },
       "queriesSettings": {
         "resolution": "5m"
-      }
-    },
+      }    },
     {
       "name": "International SMS Successful Send Rate",
       "tileType": "DATA_EXPLORER",
@@ -2973,8 +2429,7 @@
       },
       "queriesSettings": {
         "resolution": "5m"
-      }
-    },
+      }    },
     {
       "name": "Domestic SMS Send Failure Rate",
       "tileType": "DATA_EXPLORER",
@@ -3066,8 +2521,7 @@
       },
       "queriesSettings": {
         "resolution": "10m"
-      }
-    },
+      }    },
     {
       "name": "International SMS Send Failure Rate",
       "tileType": "DATA_EXPLORER",
@@ -3159,8 +2613,7 @@
       },
       "queriesSettings": {
         "resolution": "10m"
-      }
-    },
+      }    },
     {
       "name": "Markdown",
       "tileType": "MARKDOWN",
@@ -3190,261 +2643,6 @@
       "markdown": "### SMS Delivery Metrics\n\nIf you see a \"delivery\" count which is higher than the \"send\" count (above), this may be due to delays in delivery receipts being issued by Notify."
     },
     {
-      "name": "Domestic SMS' Delivered",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2926,
-        "left": 608,
-        "width": 266,
-        "height": 266
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Single value",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.authentication.smsNotificationSentByAccountIdApplicationCountryEnvironmentIsTestLogGroupNotificationTypeRegionServiceNameServiceTypeSmsDestinationType:filter(and(eq(environment,${application_environment}),or(eq(\"aws.account.id\",\"${account_id}\"),eq(\"aws.account.id\",\"${account_id_new}\")),eq(\"smsdestinationtype\",\"DOMESTIC\"))):splitBy():sort(value(auto,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "1h",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "SUM"
-      }
-    },
-    {
-      "name": "International SMS' Delivered",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2926,
-        "left": 874,
-        "width": 342,
-        "height": 266
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Single value",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.authentication.smsNotificationSentByAccountIdApplicationCountryEnvironmentIsTestLogGroupNotificationTypeRegionServiceNameServiceTypeSmsDestinationType:filter(and(eq(environment,${application_environment}),or(eq(\"aws.account.id\",\"${account_id}\"),eq(\"aws.account.id\",\"${account_id_new}\")),eq(\"smsdestinationtype\",\"INTERNATIONAL\"))):splitBy():sort(value(auto,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "1h",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "SUM"
-      }
-    },
-    {
-      "name": "Domestic SMS Delivery Failures",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 4484,
-        "left": 0,
-        "width": 342,
-        "height": 266
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Single value",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsDestinationTypeSmsType:filter(and(eq(environment,${application_environment}),or(eq(\"aws.account.id\",\"${account_id}\"),eq(\"aws.account.id\",\"${account_id_new}\")),ne(notifystatus,delivered),eq(\"smsdestinationtype\",\"DOMESTIC\"))):splitBy():sum:sort(value(sum,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": false
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "1h",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "SUM"
-      }
-    },
-    {
       "name": "Markdown",
       "tileType": "MARKDOWN",
       "configured": true,
@@ -3471,91 +2669,6 @@
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
       "markdown": "**Failed SMS Deliveries**\n\n[Scroll to the right to see more graphs.]"
-    },
-    {
-      "name": "International SMS Delivery Failures",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 4750,
-        "left": 0,
-        "width": 342,
-        "height": 266
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Single value",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsDestinationTypeSmsType:filter(and(eq(environment,${application_environment}),or(eq(\"aws.account.id\",\"${account_id}\"),eq(\"aws.account.id\",\"${account_id_new}\")),ne(notifystatus,delivered),eq(\"smsdestinationtype\",\"INTERNATIONAL\"))):splitBy():sum:sort(value(sum,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": false
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "1h",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "SUM"
-      }
     },
     {
       "name": "Domestic SMS Delivery Failures by Type",
@@ -3640,8 +2753,7 @@
         "resolution": "",
         "foldTransformation": "TOTAL",
         "foldAggregation": "SUM"
-      }
-    },
+      }    },
     {
       "name": "International SMS Delivery Failures by Type",
       "tileType": "DATA_EXPLORER",
@@ -3725,8 +2837,7 @@
         "resolution": "",
         "foldTransformation": "TOTAL",
         "foldAggregation": "SUM"
-      }
-    },
+      }    },
     {
       "name": "Domestic SMS Delivery Failure Rate",
       "tileType": "DATA_EXPLORER",
@@ -3818,8 +2929,7 @@
       },
       "queriesSettings": {
         "resolution": "10m"
-      }
-    },
+      }    },
     {
       "name": "International SMS Delivery Failure Rate",
       "tileType": "DATA_EXPLORER",
@@ -3911,8 +3021,7 @@
       },
       "queriesSettings": {
         "resolution": "10m"
-      }
-    },
+      }    },
     {
       "name": "Domestic SMS Failures by Template",
       "tileType": "DATA_EXPLORER",
@@ -4004,8 +3113,7 @@
       },
       "queriesSettings": {
         "resolution": "10m"
-      }
-    },
+      }    },
     {
       "name": "International SMS Failures by Country Code and Template",
       "tileType": "DATA_EXPLORER",
@@ -4098,8 +3206,7 @@
       },
       "queriesSettings": {
         "resolution": "10m"
-      }
-    },
+      }    },
     {
       "name": "Markdown",
       "tileType": "MARKDOWN",
@@ -4250,8 +3357,7 @@
         "resolution": "1h",
         "foldTransformation": "TOTAL",
         "foldAggregation": "SUM"
-      }
-    },
+      }    },
     {
       "name": "Markdown",
       "tileType": "MARKDOWN",
@@ -4362,8 +3468,7 @@
         "resolution": "1h",
         "foldTransformation": "TOTAL",
         "foldAggregation": "SUM"
-      }
-    },
+      }    },
     {
       "name": "Email Send Failure Rate by Type",
       "tileType": "DATA_EXPLORER",
@@ -4455,8 +3560,7 @@
       },
       "queriesSettings": {
         "resolution": "1m"
-      }
-    },
+      }    },
     {
       "name": "Email Successful Send Rate by Type",
       "tileType": "DATA_EXPLORER",
@@ -4491,11 +3595,11 @@
                 "nestedFilters": [],
                 "criteria": [
                   {
-                    "value": "${account_id}",
+                    "value": "${account_id_new}",
                     "evaluator": "EQ"
                   },
                   {
-                    "value": "${account_id_new}",
+                    "value": "${account_id}",
                     "evaluator": "EQ"
                   }
                 ]
@@ -4585,8 +3689,7 @@
       },
       "queriesSettings": {
         "resolution": "1m"
-      }
-    },
+      }    },
     {
       "name": "International SMS Successful Deliveries by Country Code and Template",
       "tileType": "DATA_EXPLORER",
@@ -4679,8 +3782,7 @@
       },
       "queriesSettings": {
         "resolution": "10m"
-      }
-    },
+      }    },
     {
       "name": "Domestic SMS Successful Deliveries by Template",
       "tileType": "DATA_EXPLORER",
@@ -4772,8 +3874,7 @@
       },
       "queriesSettings": {
         "resolution": "10m"
-      }
-    },
+      }    },
     {
       "name": "SMS Successful Deliveries Average Duration (mIlliseconds)",
       "tileType": "DATA_EXPLORER",
@@ -4800,18 +3901,6 @@
             "filterOperator": "AND",
             "nestedFilters": [
               {
-                "filter": "aws.account.id",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "${account_id}",
-                    "evaluator": "EQ"
-                  }
-                ]
-              },
-              {
                 "filter": "notificationtype",
                 "filterType": "DIMENSION",
                 "filterOperator": "OR",
@@ -4819,6 +3908,18 @@
                 "criteria": [
                   {
                     "value": "sms",
+                    "evaluator": "EQ"
+                  }
+                ]
+              },
+              {
+                "filter": "aws.account.id",
+                "filterType": "DIMENSION",
+                "filterOperator": "OR",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "${account_id}",
                     "evaluator": "EQ"
                   }
                 ]
@@ -4897,10 +3998,762 @@
       },
       "queriesSettings": {
         "resolution": ""
+      }    },
+    {
+      "name": "Domestic SMS Sent",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2014,
+        "left": 0,
+        "width": 266,
+        "height": 266
       },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.authentication.notifyDeliveryDurationByAccountIdEnvironmentLogGroupNotificationTypeRegionServiceNameServiceType:filter(and(or(eq(\"aws.account.id\",\"${account_id}\")),or(eq(notificationtype,sms)))):splitBy():avg:sort(value(avg,descending)):limit(20)):limit(100):names"
-      ]
-    }
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.domesticSmsSentByAccountIdApplicationEnvironmentLogGroupRegionServiceNameServiceType\n:filter(and(\n    eq(environment,${application_environment}),\n    or(eq(\"aws.account.id\",\"${account_id}\"),eq(\"aws.account.id\",\"${account_id_new}\"))\n))\n:splitBy()\n:sum",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1h",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      }    },
+    {
+      "name": "International SMS Sent",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2280,
+        "left": 0,
+        "width": 266,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.internationalSmsSentByAccountIdApplicationEnvironmentLogGroupRegionServiceNameServiceType\n:filter(and(\n    eq(environment,${application_environment}),\n    or(eq(\"aws.account.id\",\"${account_id}\"),eq(\"aws.account.id\",\"${account_id_new}\"))\n))\n:splitBy()\n:sum",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1h",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      }    },
+    {
+      "name": "SMS 'Auth -> Notify' Send Failures",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2546,
+        "left": 0,
+        "width": 418,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.smsNotificationErrorByAccountIdApplicationCountryEnvironmentIsTestLogGroupNotificationHttpErrorNotificationTypeRegionServiceNameServiceType\n:filter(and(\n    eq(environment,${application_environment}),\n    or(eq(\"aws.account.id\",\"${account_id}\"),eq(\"aws.account.id\",\"${account_id_new}\"))\n))\n:splitBy()\n:sum\n:default(0,always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1h",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      }    },
+    {
+      "name": "All SMS Delivered",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2926,
+        "left": 0,
+        "width": 266,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.smsNotificationSentByAccountIdApplicationCountryEnvironmentIsTestLogGroupNotificationTypeRegionServiceNameServiceTypeSmsDestinationType\n:filter(and(eq(environment,${application_environment}),or(eq(\"aws.account.id\",\"${account_id}\"),eq(\"aws.account.id\",\"${account_id_new}\"))))\n:splitBy()\n:sum",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1h",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      }    },
+    {
+      "name": "Domestic SMS Delivered",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2926,
+        "left": 608,
+        "width": 266,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.smsNotificationSentByAccountIdApplicationCountryEnvironmentIsTestLogGroupNotificationTypeRegionServiceNameServiceTypeSmsDestinationType\n:filter(and(eq(environment,${application_environment}),or(eq(\"aws.account.id\",\"${account_id}\"),eq(\"aws.account.id\",\"${account_id_new}\")),eq(\"smsdestinationtype\",\"DOMESTIC\")))\n:splitBy()\n:sum",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1h",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      }    },
+    {
+      "name": "International SMS Delivered",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2926,
+        "left": 874,
+        "width": 342,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.smsNotificationSentByAccountIdApplicationCountryEnvironmentIsTestLogGroupNotificationTypeRegionServiceNameServiceTypeSmsDestinationType\n:filter(and(eq(environment,${application_environment}),or(eq(\"aws.account.id\",\"${account_id}\"),eq(\"aws.account.id\",\"${account_id_new}\")),eq(\"smsdestinationtype\",\"INTERNATIONAL\")))\n:splitBy()\n:sum",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1h",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      }    },
+    {
+      "name": "Domestic SMS Delivery Failures",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 4484,
+        "left": 0,
+        "width": 342,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsDestinationTypeSmsType\n:filter(and(eq(environment,${application_environment}),or(eq(\"aws.account.id\",\"${account_id}\"),eq(\"aws.account.id\",\"${account_id_new}\")),ne(notifystatus,delivered),eq(\"smsdestinationtype\",\"DOMESTIC\")))\n:splitBy()\n:sum",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1h",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      }    },
+    {
+      "name": "All SMS Delivery Failures",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 4218,
+        "left": 0,
+        "width": 342,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsDestinationTypeSmsType\n:filter(and(ne(notifystatus,delivered),eq(environment,${application_environment}),or(eq(\"aws.account.id\",\"${account_id}\"),eq(\"aws.account.id\",\"${account_id_new}\"))))\n:splitBy()\n:sum",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1h",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      }    },
+    {
+      "name": "International SMS Delivery Failures",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 4750,
+        "left": 0,
+        "width": 342,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.smsSentByAccountIdCountryCodeEnvironmentLogGroupNotifyStatusRegionServiceNameServiceTypeSmsDestinationTypeSmsType\n:filter(and(eq(environment,${application_environment}),or(eq(\"aws.account.id\",\"${account_id}\"),eq(\"aws.account.id\",\"${account_id_new}\")),ne(notifystatus,delivered),eq(\"smsdestinationtype\",\"INTERNATIONAL\")))\n:splitBy()\n:sum",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1h",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      }    }
   ]
 }
