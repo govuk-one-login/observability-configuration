@@ -26,5 +26,5 @@ variable "team_account_id" {
 }
 
 variable "key_requests_from_date" {
-  default = "now-30d"
+  default = "now-1d"
 }
