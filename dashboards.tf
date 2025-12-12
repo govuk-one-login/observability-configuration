@@ -276,6 +276,11 @@ module "core_traffic_dashboard" {
   path   = "core/traffic.json"
 }
 
+module "core_product_level_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "core/product-level-metrics.json"
+}
+
 
 ### SPOT ###
 
