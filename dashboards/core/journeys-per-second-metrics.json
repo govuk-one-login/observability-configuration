@@ -1,0 +1,1990 @@
+{
+  "metadata": {
+    "configurationVersions": [
+      7
+    ],
+    "clusterVersion": "1.329.43.20251216-193405"
+  },
+  "dashboardMetadata": {
+    "name": "IPV Core Identity Proving and Reuse Journey Metrics",
+    "shared": true,
+    "owner": "ipv-core@digital.cabinet-office.gov.uk",
+    "tags": [
+      "ipv-core"
+    ],
+    "popularity": 10,
+    "hasConsistentColors": false
+  },
+  "tiles": [
+    {
+      "name": "Identity Reuse",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 228,
+        "left": 0,
+        "width": 798,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 608,
+        "width": 608,
+        "height": 190
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## True Journeys per second\nLimitations:\nDynatrace dashboards have a granularity of 1 minute despite the data being recorded at a higher granularity so the graphs aggregate the data to a minute then divide by 60 to get a journeys/second.\n\n**To calculate journey/second metrics using cloudWatch, see our team manual page: [here](https://team-manual.account.gov.uk/teams/IPV-Core-team/Supporting-IPV-Core/using-support-tools/).**"
+    },
+    {
+      "name": "Identity Proving",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 988,
+        "left": 0,
+        "width": 798,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "Identity Reuse",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 114,
+        "left": 1330,
+        "width": 798,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "Identity Proving",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 874,
+        "left": 1330,
+        "width": 798,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 0,
+        "width": 608,
+        "height": 76
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "# Production"
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 1330,
+        "width": 608,
+        "height": 76
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "# Integration"
+    },
+    {
+      "name": "Combined Identity Reuse and Proving",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 1748,
+        "left": 0,
+        "width": 798,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "Combined Identity Reuse and Proving",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 1634,
+        "left": 1330,
+        "width": 798,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "Reuse journeys started over time",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 266,
+        "left": 0,
+        "width": 1216,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.corebackembeddedmetrics-production.identityReuseByAccountIdRegionService:splitBy():sum:sort(value(sum,descending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region",
+            "service"
+          ],
+          "metricSelector": "cloud.aws.corebackembeddedmetrics-production.identityReuseByAccountIdRegionService:sum:rollup(avg,5m)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Journeys started per minute"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Rolling average (5m)"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "D"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m"
+      },
+      "metricExpressions": [
+        "resolution=1m&(cloud.aws.corebackembeddedmetrics-production.identityReuseByAccountIdRegionService:splitBy():sum:sort(value(sum,descending))):limit(100):names,(cloud.aws.corebackembeddedmetrics-production.identityReuseByAccountIdRegionService:sum:rollup(avg,5m)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Identity proving journeys started over time",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1026,
+        "left": 0,
+        "width": 1216,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.corebackembeddedmetrics-production.identityProvingByAccountIdRegionService:splitBy():sum:sort(value(sum,descending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.corebackembeddedmetrics-production.identityProvingByAccountIdRegionService:splitBy:sum:rollup(avg,5m)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "E",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "metricSelector": "cloud.aws.corebackembeddedmetrics-production.identityProvingByAccountIdRegionService:splitBy():sum:rollup(avg,10m)",
+          "rate": "NONE",
+          "enabled": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Journeys started per minute"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "LINE",
+              "alias": "Rolling average (5m)"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "E:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "GREEN",
+              "seriesType": "LINE",
+              "alias": "Rolling average (10m)"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "D"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m"
+      },
+      "metricExpressions": [
+        "resolution=1m&(cloud.aws.corebackembeddedmetrics-production.identityProvingByAccountIdRegionService:splitBy():sum:sort(value(sum,descending))):limit(100):names,(cloud.aws.corebackembeddedmetrics-production.identityProvingByAccountIdRegionService:splitBy():sum:rollup(avg,5m)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Identity and reuse proving journeys started over time",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1786,
+        "left": 0,
+        "width": 1216,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "((cloud.aws.corebackembeddedmetrics-production.identityProvingByAccountIdRegionService:splitBy():sum) + (cloud.aws.corebackembeddedmetrics-production.identityReuseByAccountIdRegionService:splitBy():sum))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "((cloud.aws.corebackembeddedmetrics-production.identityProvingByAccountIdRegionService:splitBy():sum) + (cloud.aws.corebackembeddedmetrics-production.identityReuseByAccountIdRegionService:splitBy():sum)):rollup(avg,5m)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Journeys started per minute"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "LINE",
+              "alias": "Rolling average (5m)"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "D"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m"
+      },
+      "metricExpressions": [
+        "resolution=1m&(((cloud.aws.corebackembeddedmetrics-production.identityProvingByAccountIdRegionService:splitBy():sum)+(cloud.aws.corebackembeddedmetrics-production.identityReuseByAccountIdRegionService:splitBy():sum))):limit(100):names,(((cloud.aws.corebackembeddedmetrics-production.identityProvingByAccountIdRegionService:splitBy():sum)+(cloud.aws.corebackembeddedmetrics-production.identityReuseByAccountIdRegionService:splitBy():sum)):rollup(avg,5m)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Reuse journeys started over time",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 152,
+        "left": 1330,
+        "width": 1216,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.corebackembeddedmetrics-integration.identityReuseByAccountIdRegionService:splitBy():sum:sort(value(sum,descending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region",
+            "service"
+          ],
+          "metricSelector": "cloud.aws.corebackembeddedmetrics-integration.identityReuseByAccountIdRegionService:sum:rollup(avg,5m)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Journeys started per minute"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Rolling average (5m)"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "D"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m"
+      },
+      "metricExpressions": [
+        "resolution=1m&(cloud.aws.corebackembeddedmetrics-integration.identityReuseByAccountIdRegionService:splitBy():sum:sort(value(sum,descending))):limit(100):names,(cloud.aws.corebackembeddedmetrics-integration.identityReuseByAccountIdRegionService:sum:rollup(avg,5m)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Identity proving journeys started over time",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 912,
+        "left": 1330,
+        "width": 1216,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.corebackembeddedmetrics-integration.identityProvingByAccountIdRegionService:splitBy():sum:sort(value(sum,descending))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.corebackembeddedmetrics-integration.identityProvingByAccountIdRegionService:splitBy:sum:rollup(avg,5m)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Journeys started per minute"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "LINE",
+              "alias": "Rolling average (5m)"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "D",
+                "E"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m"
+      },
+      "metricExpressions": [
+        "resolution=1m&(cloud.aws.corebackembeddedmetrics-integration.identityProvingByAccountIdRegionService:splitBy():sum:sort(value(sum,descending))):limit(100):names,(cloud.aws.corebackembeddedmetrics-integration.identityProvingByAccountIdRegionService:splitBy():sum:rollup(avg,5m)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Identity and reuse proving journeys started over time",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1672,
+        "left": 1330,
+        "width": 1216,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "((cloud.aws.corebackembeddedmetrics-integration.identityProvingByAccountIdRegionService:splitBy():sum) + (cloud.aws.corebackembeddedmetrics-integration.identityReuseByAccountIdRegionService:splitBy():sum))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "((cloud.aws.corebackembeddedmetrics-integration.identityProvingByAccountIdRegionService:splitBy():sum) + (cloud.aws.corebackembeddedmetrics-integration.identityReuseByAccountIdRegionService:splitBy():sum)):rollup(avg,5m)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Journeys started per minute"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "LINE",
+              "alias": "Rolling average (5m)"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "D"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m"
+      },
+      "metricExpressions": [
+        "resolution=1m&(((cloud.aws.corebackembeddedmetrics-integration.identityProvingByAccountIdRegionService:splitBy():sum)+(cloud.aws.corebackembeddedmetrics-integration.identityReuseByAccountIdRegionService:splitBy():sum))):limit(100):names,(((cloud.aws.corebackembeddedmetrics-integration.identityProvingByAccountIdRegionService:splitBy():sum)+(cloud.aws.corebackembeddedmetrics-integration.identityReuseByAccountIdRegionService:splitBy():sum)):rollup(avg,5m)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Sustained peak journeys/s (avg journeys/s in peakiest 5m window)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 608,
+        "left": 0,
+        "width": 608,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Maximum 5-min average",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region",
+            "service"
+          ],
+          "metricSelector": "cloud.aws.corebackembeddedmetrics-production.identityReuseByAccountIdRegionService:sum:rate(s):rollup(avg,5m):fold(max)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "MAX"
+      },
+      "metricExpressions": [
+        "resolution=1m&(cloud.aws.corebackembeddedmetrics-production.identityReuseByAccountIdRegionService:sum:rate(1s):rollup(avg,5m):fold(max)):limit(100):names:fold(max)",
+        "resolution=1m&(cloud.aws.corebackembeddedmetrics-production.identityReuseByAccountIdRegionService:sum:rate(1s):rollup(avg,5m):fold(max))"
+      ]
+    },
+    {
+      "name": "Sustained peak journeys/s (avg journeys/s in peakiest 5m window)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1368,
+        "left": 0,
+        "width": 608,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Maximum 5-min average",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.corebackembeddedmetrics-production.identityProvingByAccountIdRegionService:splitBy():sum:rate(s):rollup(avg,5m):fold(max)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "MAX"
+      },
+      "metricExpressions": [
+        "resolution=1m&(cloud.aws.corebackembeddedmetrics-production.identityProvingByAccountIdRegionService:splitBy():sum:rate(1s):rollup(avg,5m):fold(max)):limit(100):names:fold(max)",
+        "resolution=1m&(cloud.aws.corebackembeddedmetrics-production.identityProvingByAccountIdRegionService:splitBy():sum:rate(1s):rollup(avg,5m):fold(max))"
+      ]
+    },
+    {
+      "name": "Sustained peak journeys/s (avg journeys/s in peakiest 5m window)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2128,
+        "left": 0,
+        "width": 608,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Maximum 5-min average",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "((cloud.aws.corebackembeddedmetrics-production.identityProvingByAccountIdRegionService:splitBy():sum) + (cloud.aws.corebackembeddedmetrics-production.identityReuseByAccountIdRegionService:splitBy():sum)):rate(s):rollup(avg,5m):fold(max)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "MAX"
+      },
+      "metricExpressions": [
+        "resolution=1m&(((cloud.aws.corebackembeddedmetrics-production.identityProvingByAccountIdRegionService:splitBy():sum)+(cloud.aws.corebackembeddedmetrics-production.identityReuseByAccountIdRegionService:splitBy():sum)):rate(1s):rollup(avg,5m):fold(max)):limit(100):names:fold(max)",
+        "resolution=1m&(((cloud.aws.corebackembeddedmetrics-production.identityProvingByAccountIdRegionService:splitBy():sum)+(cloud.aws.corebackembeddedmetrics-production.identityReuseByAccountIdRegionService:splitBy():sum)):rate(1s):rollup(avg,5m):fold(max))"
+      ]
+    },
+    {
+      "name": "Sustained peak journeys/s (avg journeys/s in peakiest 5m window)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 494,
+        "left": 1330,
+        "width": 608,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Maximum 5-min average",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region",
+            "service"
+          ],
+          "metricSelector": "cloud.aws.corebackembeddedmetrics-integration.identityReuseByAccountIdRegionService:sum:rate(s):rollup(avg,5m):fold(max)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "MAX"
+      },
+      "metricExpressions": [
+        "resolution=1m&(cloud.aws.corebackembeddedmetrics-integration.identityReuseByAccountIdRegionService:sum:rate(1s):rollup(avg,5m):fold(max)):limit(100):names:fold(max)",
+        "resolution=1m&(cloud.aws.corebackembeddedmetrics-integration.identityReuseByAccountIdRegionService:sum:rate(1s):rollup(avg,5m):fold(max))"
+      ]
+    },
+    {
+      "name": "Sustained peak journeys/s (avg journeys/s in peakiest 5m window)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1254,
+        "left": 1330,
+        "width": 608,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Maximum 5-min average",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.corebackembeddedmetrics-integration.identityProvingByAccountIdRegionService:splitBy():sum:rate(s):rollup(avg,5m):fold(max)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "MAX"
+      },
+      "metricExpressions": [
+        "resolution=1m&(cloud.aws.corebackembeddedmetrics-integration.identityProvingByAccountIdRegionService:splitBy():sum:rate(1s):rollup(avg,5m):fold(max)):limit(100):names:fold(max)",
+        "resolution=1m&(cloud.aws.corebackembeddedmetrics-integration.identityProvingByAccountIdRegionService:splitBy():sum:rate(1s):rollup(avg,5m):fold(max))"
+      ]
+    },
+    {
+      "name": "Sustained peak journeys/s (avg journeys/s in peakiest 5m window)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2014,
+        "left": 1330,
+        "width": 608,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Maximum 5-min average",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "((cloud.aws.corebackembeddedmetrics-integration.identityProvingByAccountIdRegionService:splitBy():sum) + (cloud.aws.corebackembeddedmetrics-integration.identityReuseByAccountIdRegionService:splitBy():sum)):rate(s):rollup(avg,5m):fold(max)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "MAX"
+      },
+      "metricExpressions": [
+        "resolution=1m&(((cloud.aws.corebackembeddedmetrics-integration.identityProvingByAccountIdRegionService:splitBy():sum)+(cloud.aws.corebackembeddedmetrics-integration.identityReuseByAccountIdRegionService:splitBy():sum)):rate(1s):rollup(avg,5m):fold(max)):limit(100):names:fold(max)",
+        "resolution=1m&(((cloud.aws.corebackembeddedmetrics-integration.identityProvingByAccountIdRegionService:splitBy():sum)+(cloud.aws.corebackembeddedmetrics-integration.identityReuseByAccountIdRegionService:splitBy():sum)):rate(1s):rollup(avg,5m):fold(max))"
+      ]
+    },
+    {
+      "name": "Overall average journeys/s",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 608,
+        "left": 608,
+        "width": 608,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Maximum 5-min average",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region",
+            "service"
+          ],
+          "metricSelector": "cloud.aws.corebackembeddedmetrics-production.identityReuseByAccountIdRegionService:sum:rate(s):fold(avg)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "MAX"
+      },
+      "metricExpressions": [
+        "resolution=1m&(cloud.aws.corebackembeddedmetrics-production.identityReuseByAccountIdRegionService:sum:rate(1s):fold(avg)):limit(100):names:fold(max)",
+        "resolution=1m&(cloud.aws.corebackembeddedmetrics-production.identityReuseByAccountIdRegionService:sum:rate(1s):fold(avg))"
+      ]
+    },
+    {
+      "name": "Overall average journeys/s",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1368,
+        "left": 608,
+        "width": 608,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Maximum 5-min average",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.corebackembeddedmetrics-production.identityProvingByAccountIdRegionService:splitBy():sum:rate(s):fold(avg)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "MAX"
+      },
+      "metricExpressions": [
+        "resolution=1m&(cloud.aws.corebackembeddedmetrics-production.identityProvingByAccountIdRegionService:splitBy():sum:rate(1s):fold(avg)):limit(100):names:fold(max)",
+        "resolution=1m&(cloud.aws.corebackembeddedmetrics-production.identityProvingByAccountIdRegionService:splitBy():sum:rate(1s):fold(avg))"
+      ]
+    },
+    {
+      "name": "Overall average journeys/s",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2128,
+        "left": 608,
+        "width": 608,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Maximum 5-min average",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "((cloud.aws.corebackembeddedmetrics-production.identityProvingByAccountIdRegionService:splitBy():sum) + (cloud.aws.corebackembeddedmetrics-production.identityReuseByAccountIdRegionService:splitBy():sum)):rate(s):fold(avg)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "MAX"
+      },
+      "metricExpressions": [
+        "resolution=1m&(((cloud.aws.corebackembeddedmetrics-production.identityProvingByAccountIdRegionService:splitBy():sum)+(cloud.aws.corebackembeddedmetrics-production.identityReuseByAccountIdRegionService:splitBy():sum)):rate(1s):fold(avg)):limit(100):names:fold(max)",
+        "resolution=1m&(((cloud.aws.corebackembeddedmetrics-production.identityProvingByAccountIdRegionService:splitBy():sum)+(cloud.aws.corebackembeddedmetrics-production.identityReuseByAccountIdRegionService:splitBy():sum)):rate(1s):fold(avg))"
+      ]
+    },
+    {
+      "name": "Overall average journeys/s",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 494,
+        "left": 1938,
+        "width": 608,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Maximum 5-min average",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region",
+            "service"
+          ],
+          "metricSelector": "cloud.aws.corebackembeddedmetrics-integration.identityReuseByAccountIdRegionService:sum:rate(s):fold(avg)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "MAX"
+      },
+      "metricExpressions": [
+        "resolution=1m&(cloud.aws.corebackembeddedmetrics-integration.identityReuseByAccountIdRegionService:sum:rate(1s):fold(avg)):limit(100):names:fold(max)",
+        "resolution=1m&(cloud.aws.corebackembeddedmetrics-integration.identityReuseByAccountIdRegionService:sum:rate(1s):fold(avg))"
+      ]
+    },
+    {
+      "name": "Overall average journeys/s",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1254,
+        "left": 1938,
+        "width": 608,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Maximum 5-min average",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.corebackembeddedmetrics-integration.identityProvingByAccountIdRegionService:splitBy():sum:rate(s):fold(avg)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "MAX"
+      },
+      "metricExpressions": [
+        "resolution=1m&(cloud.aws.corebackembeddedmetrics-integration.identityProvingByAccountIdRegionService:splitBy():sum:rate(1s):fold(avg)):limit(100):names:fold(max)",
+        "resolution=1m&(cloud.aws.corebackembeddedmetrics-integration.identityProvingByAccountIdRegionService:splitBy():sum:rate(1s):fold(avg))"
+      ]
+    },
+    {
+      "name": "Overall average journeys/s",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2014,
+        "left": 1938,
+        "width": 608,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Maximum 5-min average",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "((cloud.aws.corebackembeddedmetrics-integration.identityProvingByAccountIdRegionService:splitBy():sum) + (cloud.aws.corebackembeddedmetrics-integration.identityReuseByAccountIdRegionService:splitBy():sum)):rate(s):fold(avg)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "MAX"
+      },
+      "metricExpressions": [
+        "resolution=1m&(((cloud.aws.corebackembeddedmetrics-integration.identityProvingByAccountIdRegionService:splitBy():sum)+(cloud.aws.corebackembeddedmetrics-integration.identityReuseByAccountIdRegionService:splitBy():sum)):rate(1s):fold(avg)):limit(100):names:fold(max)",
+        "resolution=1m&(((cloud.aws.corebackembeddedmetrics-integration.identityProvingByAccountIdRegionService:splitBy():sum)+(cloud.aws.corebackembeddedmetrics-integration.identityReuseByAccountIdRegionService:splitBy():sum)):rate(1s):fold(avg))"
+      ]
+    }
+  ]
+}
