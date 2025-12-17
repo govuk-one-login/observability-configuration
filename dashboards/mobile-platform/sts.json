@@ -3,12 +3,13 @@
     "configurationVersions": [
       7
     ],
-    "clusterVersion": "1.321.41.20250819-212053"
+    "clusterVersion": "1.329.36.20251208-142212"
   },
   "dashboardMetadata": {
     "name": "MOBILE - STS",
     "shared": true,
     "owner": "douglas.thomson@digital.cabinet-office.gov.uk",
+    "popularity": 1,
     "hasConsistentColors": false
   },
   "tiles": [
@@ -1189,7 +1190,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 190,
+        "top": 228,
         "left": 912,
         "width": 912,
         "height": 266
@@ -1689,7 +1690,7 @@
       "tileType": "MARKDOWN",
       "configured": true,
       "bounds": {
-        "top": 152,
+        "top": 190,
         "left": 0,
         "width": 1824,
         "height": 38
@@ -7854,11 +7855,11 @@
         "top": 0,
         "left": 608,
         "width": 342,
-        "height": 152
+        "height": 190
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "## Directions\nAPI Gateway: Down 👇\n\nLambda: Down, past API Gateway 👇👇"
+      "markdown": "## Directions\nAPI Gateway: Down 👇\n\nLambda: Down, past API Gateway 👇👇\n\nData Sheet: Right 👉"
     },
     {
       "name": "Markdown",
@@ -7868,11 +7869,11 @@
         "top": 0,
         "left": 950,
         "width": 380,
-        "height": 152
+        "height": 190
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "markdown": "## Directions\n\nData Sheet: Right 👉\n\nSQS: Right past Data Sheet 👉👉\n\nS3/KMS/CloudFront/DDB: Right and down: 👉👉👇 (TODO)"
+      "markdown": "## Directions\n\nSQS: Right past Data Sheet 👉👉\n\nS3/KMS/CloudFront/DDB: Right and down: 👉👉👇(TODO)\n\nTxMA Event Processor 👉👉👇👇"
     },
     {
       "name": "Markdown",
@@ -9634,7 +9635,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 190,
+        "top": 228,
         "left": 0,
         "width": 912,
         "height": 266
@@ -13675,6 +13676,547 @@
       },
       "metricExpressions": [
         "resolution=null&(cloud.aws.lambda.concurrentExecutionsByAccountIdExecutedVersionFunctionNameRegionResource:filter(and(eq(functionname,backend-api-app-check-authorizer),or(eq(\"aws.account.id\",\"671524980203\"),eq(\"aws.account.id\",\"497065468681\"),eq(\"aws.account.id\",\"921104553881\"),eq(\"aws.account.id\",\"677276120913\"),eq(\"aws.account.id\",\"605134434404\")))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"671524980203\")),dimension(\"2-build\",eq(\"aws.account.id\",\"497065468681\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"921104553881\")),dimension(\"4-int\",eq(\"aws.account.id\",\"677276120913\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"605134434404\")),otherwise(UNKNOWN)):splitBy(env,executedversion,functionname):max:sort(dimension(env,descending),dimension(functionname,ascending))):limit(100):names"
+      ]
+    },
+    {
+      "name": "Sessions Revoked by Event Name",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 3914,
+        "left": 2850,
+        "width": 342,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "env",
+            "eventname"
+          ],
+          "metricSelector": "cloud.aws.backend-api.txmaeventprocessor.sessionsRevokedByAccountIdEventNameNewSessionStateRegion:partition(\"env\",\n  dimension(\"1-dev\"   ,eq(\"aws.account.id\",\"538651416014\")),\n  dimension(\"2-build\" ,eq(\"aws.account.id\",\"626438094742\")),\n  dimension(\"3-stage\" ,eq(\"aws.account.id\",\"533896821921\")),\n  dimension(\"4-int\"   ,eq(\"aws.account.id\",\"398393945257\")),\n  dimension(\"5-prod\"  ,eq(\"aws.account.id\",\"888972758859\")),\n  otherwise(\"UNKNOWN\")\n)\n:splitBy(env,\"eventname\")\n:sum\n:sort(dimension(\"env\",ascending),dimension(\"eventname\",ascending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.backend-api.txmaeventprocessor.sessionsRevokedByAccountIdEventNameNewSessionStateRegion:partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"538651416014\")),dimension(\"2-build\",eq(\"aws.account.id\",\"626438094742\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"533896821921\")),dimension(\"4-int\",eq(\"aws.account.id\",\"398393945257\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"888972758859\")),otherwise(UNKNOWN)):splitBy(env,eventname):sum:sort(dimension(env,ascending),dimension(eventname,ascending))):limit(100):names"
+      ]
+    },
+    {
+      "name": "Sessions Revoked by New Session State",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 3914,
+        "left": 3724,
+        "width": 380,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "env",
+            "newsessionstate"
+          ],
+          "metricSelector": "cloud.aws.backend-api.txmaeventprocessor.sessionsRevokedByAccountIdEventNameNewSessionStateRegion:partition(\"env\",\n  dimension(\"1-dev\"   ,eq(\"aws.account.id\",\"538651416014\")),\n  dimension(\"2-build\" ,eq(\"aws.account.id\",\"626438094742\")),\n  dimension(\"3-stage\" ,eq(\"aws.account.id\",\"533896821921\")),\n  dimension(\"4-int\"   ,eq(\"aws.account.id\",\"398393945257\")),\n  dimension(\"5-prod\"  ,eq(\"aws.account.id\",\"888972758859\")),\n  otherwise(\"UNKNOWN\")\n)\n:splitBy(env,\"newsessionstate\")\n:sum\n:sort(dimension(\"env\",ascending),dimension(\"newsessionstate\",ascending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.backend-api.txmaeventprocessor.sessionsRevokedByAccountIdEventNameNewSessionStateRegion:partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"538651416014\")),dimension(\"2-build\",eq(\"aws.account.id\",\"626438094742\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"533896821921\")),dimension(\"4-int\",eq(\"aws.account.id\",\"398393945257\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"888972758859\")),otherwise(UNKNOWN)):splitBy(env,newsessionstate):sum:sort(dimension(env,ascending),dimension(newsessionstate,ascending))):limit(100):names"
+      ]
+    },
+    {
+      "name": "TxMA Event Processor Latency (min,avg,max)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 4218,
+        "left": 2850,
+        "width": 494,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "env"
+          ],
+          "metricSelector": "cloud.aws.backend-api.txmaeventprocessor.processingLatencyByAccountIdRegion:partition(\"env\",\n  dimension(\"1-dev\"   ,eq(\"aws.account.id\",\"538651416014\")),\n  dimension(\"2-build\" ,eq(\"aws.account.id\",\"626438094742\")),\n  dimension(\"3-stage\" ,eq(\"aws.account.id\",\"533896821921\")),\n  dimension(\"4-int\"   ,eq(\"aws.account.id\",\"398393945257\")),\n  dimension(\"5-prod\"  ,eq(\"aws.account.id\",\"888972758859\")),\n  otherwise(\"UNKNOWN\")\n)\n:splitBy(env)\n:min\n",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "env"
+          ],
+          "metricSelector": "cloud.aws.backend-api.txmaeventprocessor.processingLatencyByAccountIdRegion:partition(\"env\",\n  dimension(\"1-dev\"   ,eq(\"aws.account.id\",\"538651416014\")),\n  dimension(\"2-build\" ,eq(\"aws.account.id\",\"626438094742\")),\n  dimension(\"3-stage\" ,eq(\"aws.account.id\",\"533896821921\")),\n  dimension(\"4-int\"   ,eq(\"aws.account.id\",\"398393945257\")),\n  dimension(\"5-prod\"  ,eq(\"aws.account.id\",\"888972758859\")),\n  otherwise(\"UNKNOWN\")\n)\n:splitBy(env)\n:avg\n",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "env"
+          ],
+          "metricSelector": "cloud.aws.backend-api.txmaeventprocessor.processingLatencyByAccountIdRegion:partition(\"env\",\n  dimension(\"1-dev\"   ,eq(\"aws.account.id\",\"538651416014\")),\n  dimension(\"2-build\" ,eq(\"aws.account.id\",\"626438094742\")),\n  dimension(\"3-stage\" ,eq(\"aws.account.id\",\"533896821921\")),\n  dimension(\"4-int\"   ,eq(\"aws.account.id\",\"398393945257\")),\n  dimension(\"5-prod\"  ,eq(\"aws.account.id\",\"888972758859\")),\n  otherwise(\"UNKNOWN\")\n)\n:splitBy(env)\n:max\n",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "min"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "avg"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "max"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "milliseconds",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.backend-api.txmaeventprocessor.processingLatencyByAccountIdRegion:partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"538651416014\")),dimension(\"2-build\",eq(\"aws.account.id\",\"626438094742\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"533896821921\")),dimension(\"4-int\",eq(\"aws.account.id\",\"398393945257\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"888972758859\")),otherwise(UNKNOWN)):splitBy(env):min):limit(100):names,(cloud.aws.backend-api.txmaeventprocessor.processingLatencyByAccountIdRegion:partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"538651416014\")),dimension(\"2-build\",eq(\"aws.account.id\",\"626438094742\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"533896821921\")),dimension(\"4-int\",eq(\"aws.account.id\",\"398393945257\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"888972758859\")),otherwise(UNKNOWN)):splitBy(env):avg):limit(100):names,(cloud.aws.backend-api.txmaeventprocessor.processingLatencyByAccountIdRegion:partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"538651416014\")),dimension(\"2-build\",eq(\"aws.account.id\",\"626438094742\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"533896821921\")),dimension(\"4-int\",eq(\"aws.account.id\",\"398393945257\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"888972758859\")),otherwise(UNKNOWN)):splitBy(env):max):limit(100):names"
+      ]
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 3838,
+        "left": 2850,
+        "width": 342,
+        "height": 76
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "# TxMA Event Processor\n\n\n\n"
+    },
+    {
+      "name": "Sessions Revoked by Event Name",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 3914,
+        "left": 3192,
+        "width": 494,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "env",
+            "eventname"
+          ],
+          "metricSelector": "cloud.aws.backend-api.txmaeventprocessor.sessionsRevokedByAccountIdEventNameNewSessionStateRegion:partition(\"env\",\n  dimension(\"1-dev\"   ,eq(\"aws.account.id\",\"538651416014\")),\n  dimension(\"2-build\" ,eq(\"aws.account.id\",\"626438094742\")),\n  dimension(\"3-stage\" ,eq(\"aws.account.id\",\"533896821921\")),\n  dimension(\"4-int\"   ,eq(\"aws.account.id\",\"398393945257\")),\n  dimension(\"5-prod\"  ,eq(\"aws.account.id\",\"888972758859\")),\n  otherwise(\"UNKNOWN\")\n)\n:splitBy(env,\"eventname\")\n:sum\n:sort(dimension(\"env\",ascending),dimension(\"eventname\",ascending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "totalsessionsrevoked"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.backend-api.txmaeventprocessor.sessionsRevokedByAccountIdEventNameNewSessionStateRegion:partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"538651416014\")),dimension(\"2-build\",eq(\"aws.account.id\",\"626438094742\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"533896821921\")),dimension(\"4-int\",eq(\"aws.account.id\",\"398393945257\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"888972758859\")),otherwise(UNKNOWN)):splitBy(env,eventname):sum:sort(dimension(env,ascending),dimension(eventname,ascending))):names:fold(auto)"
+      ]
+    },
+    {
+      "name": "Sessions Revoked by New Session State",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 3914,
+        "left": 4104,
+        "width": 570,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "env",
+            "newsessionstate"
+          ],
+          "metricSelector": "cloud.aws.backend-api.txmaeventprocessor.sessionsRevokedByAccountIdEventNameNewSessionStateRegion:partition(\"env\",\n  dimension(\"1-dev\"   ,eq(\"aws.account.id\",\"538651416014\")),\n  dimension(\"2-build\" ,eq(\"aws.account.id\",\"626438094742\")),\n  dimension(\"3-stage\" ,eq(\"aws.account.id\",\"533896821921\")),\n  dimension(\"4-int\"   ,eq(\"aws.account.id\",\"398393945257\")),\n  dimension(\"5-prod\"  ,eq(\"aws.account.id\",\"888972758859\")),\n  otherwise(\"UNKNOWN\")\n)\n:splitBy(env,\"newsessionstate\")\n:sum\n:sort(dimension(\"env\",ascending),dimension(\"newsessionstate\",ascending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "totalsessionsrevoked"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:env.name",
+            "A:newsessionstate.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.backend-api.txmaeventprocessor.sessionsRevokedByAccountIdEventNameNewSessionStateRegion:partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"538651416014\")),dimension(\"2-build\",eq(\"aws.account.id\",\"626438094742\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"533896821921\")),dimension(\"4-int\",eq(\"aws.account.id\",\"398393945257\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"888972758859\")),otherwise(UNKNOWN)):splitBy(env,newsessionstate):sum:sort(dimension(env,ascending),dimension(newsessionstate,ascending))):names:fold(auto)"
       ]
     }
   ]
