@@ -400,7 +400,7 @@ resource "dynatrace_metric_events" "tgw_egress_errors" {
     metric_key  = "cloud.aws.networkfirewall.droppedPacketsByAccountIdAvailabilityZoneEngineFirewallNameRegion"
     dimension_filter {
       filter {
-        dimension_key = "aws.account.id"
+        dimension_key   = "aws.account.id"
         dimension_value = "510900712898"
       }
     }
