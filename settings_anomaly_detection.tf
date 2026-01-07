@@ -342,6 +342,73 @@ resource "dynatrace_metric_events" "aws_codebuild_memory_utilized_percent" {
   }
 }
 
+# Transit Gateway Metric Events
+## Send-Requests Lambda Errors
+resource "dynatrace_metric_events" "tgw_egress_errors" {
+  count                      = local.is_production ? 0 : 1
+  enabled                    = true
+  event_entity_dimension_key = "dt.entity.custom_device"
+  summary                    = "Transit Gateway Production Hub has Egress Errors"
+  event_template {
+    description = "The {metricname} value of {severity} was {alert_condition} your custom threshold of {threshold}."
+    davis_merge = true
+    event_type  = "RESOURCE"
+    title       = "Transit Gateway Production Hub has Egress Errors"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    alert_on_no_data   = false
+    dealerting_samples = 5
+    samples            = 5
+    threshold          = 0
+    violating_samples  = 3
+  }
+  query_definition {
+    type        = "METRIC_KEY"
+    aggregation = "SUM"
+    metric_key  = "cloud.aws.prod-hub-send-requests.prodhubsendrequestserrorsByAccountIdRegion"
+    entity_filter {
+    }
+  }
+}
+
+## TGW Production NFW is blocking traffic
+resource "dynatrace_metric_events" "tgw_egress_errors" {
+  count                      = local.is_production ? 0 : 1
+  enabled                    = true
+  event_entity_dimension_key = "dt.entity.custom_device"
+  summary                    = "Transit Gateway Production Hub Network Firewall is blocking traffic"
+  event_template {
+    description = "The {metricname} value of {severity} was {alert_condition} your custom threshold of {threshold}."
+    davis_merge = true
+    event_type  = "RESOURCE"
+    title       = "Transit Gateway Production Hub  Network Firewall is blocking traffic"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    alert_on_no_data   = false
+    dealerting_samples = 5
+    samples            = 5
+    threshold          = 0
+    violating_samples  = 3
+  }
+  query_definition {
+    type        = "METRIC_KEY"
+    aggregation = "SUM"
+    metric_key  = "cloud.aws.networkfirewall.droppedPacketsByAccountIdAvailabilityZoneEngineFirewallNameRegion"
+    dimension_filter {
+      filter {
+        dimension_key = "aws.account.id"
+        dimension_value = "510900712898"
+      }
+    }
+    entity_filter {
+    }
+  }
+}
+
 # Frequent issue detection
 resource "dynatrace_frequent_issues" "frequent_issue_detection" {
   detect_apps  = true
