@@ -374,7 +374,7 @@ resource "dynatrace_metric_events" "tgw_egress_errors" {
 }
 
 ## TGW Production NFW is blocking traffic
-resource "dynatrace_metric_events" "tgw_egress_errors" {
+resource "dynatrace_metric_events" "tgw_nfw_blocking_traffic" {
   count                      = local.is_production ? 0 : 1
   enabled                    = true
   event_entity_dimension_key = "dt.entity.custom_device"
