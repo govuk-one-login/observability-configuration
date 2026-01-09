@@ -352,7 +352,7 @@ resource "dynatrace_metric_events" "tgw_egress_errors" {
   event_template {
     description = "The {metricname} value of {severity} was {alert_condition} your custom threshold of {threshold}."
     davis_merge = true
-    event_type  = "CUSTOM_ALERT"
+    event_type  = "ERROR"
     title       = "Transit Gateway Production Hub has Egress Errors"
   }
   model_properties {
@@ -382,7 +382,7 @@ resource "dynatrace_metric_events" "tgw_nfw_blocking_traffic" {
   event_template {
     description = "The {metricname} value of {severity} was {alert_condition} your custom threshold of {threshold}."
     davis_merge = true
-    event_type  = "CUSTOM_ALERT"
+    event_type  = "ERROR"
     title       = "Transit Gateway Production Hub  Network Firewall is blocking traffic"
   }
   model_properties {
