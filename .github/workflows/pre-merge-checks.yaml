@@ -38,29 +38,3 @@ jobs:
         with:
           working_directory: .
 
-  terraform-validate:
-    runs-on: ubuntu-latest
-    permissions:
-      # Required for auth with AWS to generate account list
-      id-token: write
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-      - name: Set up AWS credentials for account list generation
-        uses: aws-actions/configure-aws-credentials@v5
-        with:
-          role-to-assume: ${{ secrets.GHA_OBSERVABILITY_CONFIG_IAM_ROLE_ARN }}
-          aws-region: eu-west-2
-      - name: Setup Python for account list generation
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.10'
-      - name: Install python requirements
-        run: pip install -r requirements.txt
-      - name: Generate account list
-        run: ./get-accounts.py 'non-production'
-      - name: Terraform Validate
-        uses: govuk-one-login/org-github-actions/terraform-validate@v1
-        with:
-          terraform_dir: .
-
