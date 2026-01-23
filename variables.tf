@@ -1,4 +1,5 @@
 variable "environment" {
+  type = string
 }
 
 variable "metrics_cost" {
@@ -26,5 +27,6 @@ variable "team_account_id" {
 }
 
 variable "key_requests_from_date" {
+  type    = string
   default = "now-1d"
 }
