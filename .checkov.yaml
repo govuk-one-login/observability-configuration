@@ -1,0 +1,38 @@
+# Checkov configuration file
+# Documentation: https://www.checkov.io/2.Basics/CLI%20Command%20Reference.html
+
+# Only run specific security checks - here for reference
+# it is better to stick to default and use a baseline
+# check:
+#   - CKV_AWS_40  # IAM policies should not allow "*" resource
+
+skip-check:
+  # Skip these because they're LOW severity and high effort to implement
+  # and also because our pipelines are required to manage IAM roles and policies
+
+  # Only enable these if the stack is managing IAM policies
+  # - CKV_AWS_111 # Ensure IAM policies does not allow write access without constraints
+  # - CKV_AWS_109 # Ensure IAM policies does not allow permissions management without constraints
+  # - CKV_AWS_108 # Ensure IAM policies does not allow data exfiltration
+  # - CKV_AWS_107 # Ensure IAM policies does not allow credentials exposure
+
+  # # Skip these because they're MEDIUM severity and not possible to implement
+  # # due to the nature of our pipelines having to manage IAM resources
+
+  # - CKV_AWS_110 # Ensure IAM policies does not allow privilege escalation
+
+# Include specific frameworks for scanning
+framework:
+  - terraform
+
+# Use baseline file to suppress known issues
+# Update this with: `checkov --create-baseline`
+# but better to fix findings instead
+#baseline: .checkov.baseline
+
+# Output format
+output: cli
+
+# Other useful settings
+evaluate-variables: true
+summary-position: top

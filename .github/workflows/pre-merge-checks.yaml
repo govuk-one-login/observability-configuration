@@ -18,20 +18,33 @@ defaults:
     shell: bash
 
 jobs:
+  tflint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout Repo"
+        uses: actions/checkout@v6
+      - name: Run "TF Lint"
+        uses: govuk-one-login/org-github-actions/tflint@v1
+        with:
+          terraform_dir: .
+
   checkov:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - name: Checkov Github Action
-        uses: bridgecrewio/checkov-action@v12
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Run Checkov
+        uses: govuk-one-login/org-github-actions/checkov@v1
         with:
-          output_format: cli,sarif
-          output_file_path: console,results.sarif
-          directory: .
-          soft_fail: true
-          quiet: true
-      - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v4
-        if: success() || failure()
+          working_directory: .
+
+  terraform-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Terraform Validate
+        uses: govuk-one-login/org-github-actions/terraform-validate@v1
         with:
-          sarif_file: results.sarif
+          terraform_dir: .
+
