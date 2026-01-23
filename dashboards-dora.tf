@@ -5,11 +5,11 @@
 
 locals {
   secure_pipelines_multiple_sam_stack_names = {
-    for f in csvdecode(file("./dashboards/dev-platform/pipelines-list-multi-sam-stack-names.csv")) : "${f.team}" => f...
+    for f in csvdecode(file("./dashboards/dev-platform/pipelines-list-multi-sam-stack-names.csv")) : f.team => f...
   }
 
   secure_pipelines_list = {
-    for f in csvdecode(file("./dashboards/dev-platform/pipelines-list.csv")) : "${f.team}" => f...
+    for f in csvdecode(file("./dashboards/dev-platform/pipelines-list.csv")) : f.team => f...
   }
 }
 

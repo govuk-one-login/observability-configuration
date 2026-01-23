@@ -3,9 +3,9 @@ variable "document_path" {
 }
 
 variable "document_name" {
-    description = "This is the name of the document, as seen within the Dynatrace UI"
+  description = "This is the name of the document, as seen within the Dynatrace UI"
 }
 
 variable "document_type" {
-    description = "Must be one of dashboard, launchpad or notebook"
+  description = "Must be one of dashboard, launchpad or notebook"
 }

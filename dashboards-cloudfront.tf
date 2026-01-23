@@ -1,5 +1,11 @@
 variable "teamscloudfront1" {
   description = "map"
+  type = map(object({
+    owneremail = string
+    teamname   = string
+    awsaccprod = string
+    awsaccint  = string
+  }))
   default = {
     "team-a" = {
       owneremail = "cri-kiwi-team@digital.cabinet-office.gov.uk"
