@@ -281,6 +281,10 @@ module "core_product_level_metrics_dashboard" {
   path   = "core/product-level-metrics.json"
 }
 
+module "core_journeys_per_second_dashboard" {
+  source = "./modules/dashboard"
+  path   = "core/journeys-per-second-metrics.json"
+}
 
 ### SPOT ###
 
