@@ -30,7 +30,7 @@
       "tileType": "HEADER",
       "configured": true,
       "bounds": {
-        "top": 2812,
+        "top": 2622,
         "left": 0,
         "width": 570,
         "height": 38
@@ -108,387 +108,11 @@
       "markdown": "*Messages that repeatedly fail to be processed by IPV Core are sent to the DLQ (Dead Letter Queue). Its SQS queue name is\n`mob-async-backend-ipv-core-outbound-dlq`.*"
     },
     {
-      "name": "Journey Completion Rate",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 456,
-        "left": 0,
-        "width": 456,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Single value",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum / cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum)*100",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "%",
-            "valueFormat": "0,0",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Number of aborted journeys"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": false
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum)*100):limit(100):names"
-      ]
-    },
-    {
-      "name": "Journeys Aborted",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 76,
-        "left": 912,
-        "width": 456,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Single value",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(and(or(eq(messagecode,\"MOBILE_ASYNC_ABORT_SESSION_COMPLETED\")))):splitBy():sum:sort(value(sum,descending))",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Number of aborted journeys"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(and(or(eq(messagecode,MOBILE_ASYNC_ABORT_SESSION_COMPLETED)))):splitBy():sum:sort(value(sum,descending))):limit(100):names"
-      ]
-    },
-    {
-      "name": "Journeys Started",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 76,
-        "left": 0,
-        "width": 456,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "B",
-          "metric": "cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion",
-          "spaceAggregation": "SUM",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Number of journeys started"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
-      "name": "VCs Issued",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 76,
-        "left": 456,
-        "width": 456,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "B",
-          "metric": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion",
-          "spaceAggregation": "SUM",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Number of credentials issued"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum:sort(value(sum,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
       "name": "Percentage of VCs Issued by Number of Invocations",
       "tileType": "HEADER",
       "configured": true,
       "bounds": {
-        "top": 1786,
+        "top": 1520,
         "left": 0,
         "width": 684,
         "height": 38
@@ -501,7 +125,7 @@
       "tileType": "HEADER",
       "configured": true,
       "bounds": {
-        "top": 2432,
+        "top": 2204,
         "left": 0,
         "width": 608,
         "height": 38
@@ -510,812 +134,11 @@
       "isAutoRefreshDisabled": false
     },
     {
-      "name": "1st",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1824,
-        "left": 684,
-        "width": 228,
-        "height": 190
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "(\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(receivecount,\"1\"))\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy()\n    :count\n  /\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy()\n    :count\n) * 100",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": false
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(receivecount,\"1\")):filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy():count/cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy():count)*100):limit(100):names"
-      ]
-    },
-    {
-      "name": "2nd",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1824,
-        "left": 912,
-        "width": 228,
-        "height": 190
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "(\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(receivecount,\"2\"))\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy()\n    :count\n  /\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy()\n    :count\n) * 100",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": false
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(receivecount,\"2\")):filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy():count/cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy():count)*100):limit(100):names"
-      ]
-    },
-    {
-      "name": "3rd",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1824,
-        "left": 1140,
-        "width": 228,
-        "height": 190
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "(\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(receivecount,\"3\"))\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy()\n    :count\n  /\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy()\n    :count\n) * 100",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": false
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(receivecount,\"3\")):filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy():count/cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy():count)*100):limit(100):names"
-      ]
-    },
-    {
-      "name": "4th",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2014,
-        "left": 684,
-        "width": 228,
-        "height": 190
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "(\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(receivecount,\"4\"))\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy()\n    :count\n  /\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy()\n    :count\n) * 100",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": false
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(receivecount,\"4\")):filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy():count/cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy():count)*100):limit(100):names"
-      ]
-    },
-    {
-      "name": "5th",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2014,
-        "left": 912,
-        "width": 228,
-        "height": 190
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "(\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(receivecount,\"5\"))\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy()\n    :count\n  /\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy()\n    :count\n) * 100",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": false
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(receivecount,\"5\")):filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy():count/cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy():count)*100):limit(100):names"
-      ]
-    },
-    {
-      "name": "6th",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2014,
-        "left": 1140,
-        "width": 228,
-        "height": 190
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "(\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(receivecount,\"6\"))\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy()\n    :count\n  /\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy()\n    :count\n) * 100",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": false
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(receivecount,\"6\")):filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy():count/cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy():count)*100):limit(100):names"
-      ]
-    },
-    {
-      "name": "7th",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2204,
-        "left": 684,
-        "width": 228,
-        "height": 190
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "(\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(receivecount,\"7\"))\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy()\n    :count\n  /\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy()\n    :count\n) * 100",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": false
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(receivecount,\"7\")):filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy():count/cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy():count)*100):limit(100):names"
-      ]
-    },
-    {
-      "name": "8th",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2204,
-        "left": 912,
-        "width": 228,
-        "height": 190
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "(\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(receivecount,\"8\"))\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy()\n    :count\n  /\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy()\n    :count\n) * 100",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": false
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(receivecount,\"8\")):filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy():count/cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy():count)*100):limit(100):names"
-      ]
-    },
-    {
-      "name": "9th",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2204,
-        "left": 1140,
-        "width": 228,
-        "height": 190
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "(\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(receivecount,\"9\"))\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy()\n    :count\n  /\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy()\n    :count\n) * 100",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": false
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(receivecount,\"9\")):filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy():count/cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy():count)*100):limit(100):names"
-      ]
-    },
-    {
       "name": "Avg time in ms",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2470,
+        "top": 2242,
         "left": 0,
         "width": 1368,
         "height": 304
@@ -1425,6 +248,1061 @@
       ]
     },
     {
+      "name": "Maximum No. of Messages on Queue at Once",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2660,
+        "left": 456,
+        "width": 456,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Unprocessed Messages",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():max",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():max):limit(100):names:last"
+      ]
+    },
+    {
+      "name": "Maximum No. of In-Flight Messages at Once",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2660,
+        "left": 912,
+        "width": 456,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "In-flight Messages",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():max",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():max):limit(100):names:last"
+      ]
+    },
+    {
+      "name": "VCs Issued By Document Type",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1140,
+        "left": 0,
+        "width": 456,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "VCs Issued By Document Type",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "documenttype"
+          ],
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy(documenttype):sum:sort(value(sum,descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "PIE_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy(documenttype):sum:sort(value(sum,descending))):limit(100):names"
+      ]
+    },
+    {
+      "name": "",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1558,
+        "left": 0,
+        "width": 684,
+        "height": 570
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Pie",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "receivecount"
+          ],
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n  :filter(eq(messagecode,\"MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED\"))\n  :splitBy(receivecount)\n  :count\n  :sort(dimension(\"receivecount\",ascending,natural))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "PIE_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "VCs issued",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "STACKED_AREA"
+            },
+            "seriesOverrides": [
+              {
+                "name": "1",
+                "color": "#7dc540"
+              },
+              {
+                "name": "2",
+                "color": "#ffe11c"
+              },
+              {
+                "name": "3",
+                "color": "#dc172a"
+              }
+            ]
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(receivecount):count:sort(dimension(receivecount,ascending,natural))):limit(100):names"
+      ]
+    },
+    {
+      "name": "Age of Oldest Message on DLQ",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 3268,
+        "left": 912,
+        "width": 456,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "In-flight Messages",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound-dlq)):splitBy():max:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "Hour",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "LAST_VALUE"
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound-dlq)):splitBy():max:default(0,always)):limit(100):names:last"
+      ]
+    },
+    {
+      "name": "Messages Visible on DLQ",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 3268,
+        "left": 0,
+        "width": 912,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(queuename,\"mob-async-backend-ipv-core-outbound-dlq\")):splitBy():max:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": true
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound-dlq)):splitBy():max:default(0,always)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Total Messages Processed Over Time",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2964,
+        "left": 0,
+        "width": 1368,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():sum:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": true
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():sum:default(0,always)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Journeys Started",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 76,
+        "left": 0,
+        "width": 456,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "metric": "cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion",
+          "spaceAggregation": "SUM",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": false
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:sum:splitBy(\"aws.account.id\")",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Number of journeys started"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:sum:splitBy(\"aws.account.id\")):limit(100):names"
+      ]
+    },
+    {
+      "name": "VCs Issued",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 76,
+        "left": 456,
+        "width": 456,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "metric": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion",
+          "spaceAggregation": "SUM",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": false
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\")",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Number of credentials issued"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\")):limit(100):names"
+      ]
+    },
+    {
+      "name": "Journeys Aborted",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 76,
+        "left": 912,
+        "width": 456,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(eq(messagecode,\"MOBILE_ASYNC_ABORT_SESSION_COMPLETED\")):sum:splitBy(\"aws.account.id\")",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Number of aborted journeys"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(eq(messagecode,MOBILE_ASYNC_ABORT_SESSION_COMPLETED)):sum:splitBy(\"aws.account.id\")):limit(100):names"
+      ]
+    },
+    {
+      "name": "Journey Completion Rate",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 456,
+        "left": 0,
+        "width": 456,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "(\ncloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy(\"aws.account.id\"):sum\n/\ncloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy(\"aws.account.id\"):sum\n) * 100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "%",
+            "valueFormat": "0,0",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Number of aborted journeys"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy(\"aws.account.id\"):sum/cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy(\"aws.account.id\"):sum)*100):limit(100):names"
+      ]
+    },
+    {
       "name": "Daily Journey Completion Rate Over Time",
       "tileType": "DATA_EXPLORER",
       "configured": true,
@@ -1447,7 +1325,7 @@
           "splitBy": [
             "aws.account.id"
           ],
-          "metricSelector": "(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\") / cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:sum:splitBy(\"aws.account.id\") ) * 100",
+          "metricSelector": "(\ncloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\")\n/\ncloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:sum:splitBy(\"aws.account.id\")\n) * 100",
           "rate": "NONE",
           "enabled": true
         }
@@ -1550,308 +1428,87 @@
       ]
     },
     {
-      "name": "Total Messages Processed",
+      "name": "Journeys and Outcomes Over Time",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2850,
-        "left": 0,
-        "width": 456,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Messaged Deleted from Outbound Queue",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():sum",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "SUM"
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():sum):limit(100):names:fold(sum)"
-      ]
-    },
-    {
-      "name": "Maximum No. of Messages on Queue at Once",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2850,
-        "left": 456,
-        "width": 456,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Unprocessed Messages",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():max",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "",
-        "foldTransformation": "LAST_VALUE"
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():max):limit(100):names:last"
-      ]
-    },
-    {
-      "name": "Maximum No. of In-Flight Messages at Once",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2850,
-        "left": 912,
-        "width": 456,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "In-flight Messages",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():max",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "",
-        "foldTransformation": "LAST_VALUE"
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():max):limit(100):names:last"
-      ]
-    },
-    {
-      "name": "VCs Issued Over Time",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1140,
+        "top": 760,
         "left": 0,
         "width": 1368,
         "height": 304
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "customName": "TPS comparison window",
+      "customName": "Data explorer results",
       "queries": [
         {
-          "id": "L",
+          "id": "E",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [
             "aws.account.id"
           ],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\")",
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy(\"aws.account.id\"):sum:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy(\"aws.account.id\"):sum:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(eq(messagecode,\"MOBILE_ASYNC_ABORT_SESSION_COMPLETED\")):splitBy(\"aws.account.id\"):sum:default(0, always)",
           "rate": "NONE",
           "enabled": true
         }
       ],
       "visualConfig": {
         "type": "GRAPH_CHART",
-        "global": {
-          "hideLegend": true
-        },
+        "global": {},
         "rules": [
           {
-            "matcher": "L:",
+            "matcher": "E:",
             "unitTransform": "auto",
             "valueFormat": "auto",
             "properties": {
               "color": "DEFAULT",
               "seriesType": "LINE",
-              "alias": "Week to Date"
+              "alias": "Journeys Started"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Credentials Issued"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Journeys Aborted"
             },
             "seriesOverrides": []
           }
@@ -1869,13 +1526,9 @@
               "max": "AUTO",
               "position": "LEFT",
               "queryIds": [
-                "L",
-                "M",
-                "N",
-                "O",
-                "P",
-                "Q",
-                "R"
+                "E",
+                "D",
+                "C"
               ],
               "defaultAxis": true
             }
@@ -1887,7 +1540,6 @@
         "thresholds": [
           {
             "axisTarget": "LEFT",
-            "columnId": "(1w) ",
             "rules": [
               {
                 "color": "#7dc540"
@@ -1899,77 +1551,14 @@
                 "color": "#dc172a"
               }
             ],
-            "queryId": "L",
             "visible": true
           }
         ],
         "tableSettings": {
-          "hiddenColumns": [
-            "A:env.name",
-            "A:projectname.name",
-            "A:aws.account.id.name",
-            "A:aws.region.name",
-            "B:env.name",
-            "B:apiname.name",
-            "B:resource.name",
-            "C:env.name",
-            "C:projectname.name",
-            "C:aws.account.id.name",
-            "C:aws.region.name",
-            "D:env.name",
-            "D:projectname.name",
-            "D:aws.account.id.name",
-            "D:aws.region.name",
-            "E:env.name",
-            "E:projectname.name",
-            "E:aws.account.id.name",
-            "E:aws.region.name",
-            "C:apiname.name",
-            "C:resource.name",
-            "D:apiname.name",
-            "D:resource.name",
-            "E:apiname.name",
-            "E:resource.name",
-            "F:env.name",
-            "F:apiname.name",
-            "F:resource.name",
-            "G:env.name",
-            "G:apiname.name",
-            "G:resource.name",
-            "H:env.name",
-            "H:apiname.name",
-            "H:resource.name",
-            "I:env.name",
-            "I:apiname.name",
-            "I:resource.name",
-            "J:env.name",
-            "J:apiname.name",
-            "J:resource.name",
-            "K:env.name",
-            "K:apiname.name",
-            "K:resource.name",
-            "L:env.name",
-            "L:apiname.name",
-            "L:resource.name",
-            "M:apiname.name",
-            "M:resource.name",
-            "L:aws.account.id.name",
-            "M:env.name",
-            "M:aws.account.id.name",
-            "N:env.name",
-            "N:aws.account.id.name",
-            "O:env.name",
-            "O:aws.account.id.name",
-            "P:env.name",
-            "P:aws.account.id.name",
-            "Q:env.name",
-            "Q:aws.account.id.name",
-            "R:env.name",
-            "R:aws.account.id.name"
-          ]
+          "hiddenColumns": []
         },
         "graphChartSettings": {
-          "connectNulls": true
+          "connectNulls": false
         },
         "honeycombSettings": {
           "showHive": true,
@@ -1978,12 +1567,10 @@
         }
       },
       "queriesSettings": {
-        "resolution": "",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "SUM"
+        "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:sum:splitBy(\"aws.account.id\")):limit(100):names"
+        "resolution=null&(cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy(\"aws.account.id\"):sum:default(0,always)):limit(100):names,(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy(\"aws.account.id\"):sum:default(0,always)):limit(100):names,(cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(eq(messagecode,MOBILE_ASYNC_ABORT_SESSION_COMPLETED)):splitBy(\"aws.account.id\"):sum:default(0,always)):limit(100):names"
       ]
     },
     {
@@ -1991,7 +1578,7 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1444,
+        "top": 1140,
         "left": 456,
         "width": 912,
         "height": 304
@@ -2013,7 +1600,7 @@
         }
       ],
       "visualConfig": {
-        "type": "GRAPH_CHART",
+        "type": "STACKED_AREA",
         "global": {},
         "rules": [
           {
@@ -2022,7 +1609,7 @@
             "valueFormat": "auto",
             "properties": {
               "color": "DEFAULT",
-              "seriesType": "LINE",
+              "seriesType": "STACKED_AREA",
               "alias": "Week to Date"
             },
             "seriesOverrides": []
@@ -2041,13 +1628,7 @@
               "max": "AUTO",
               "position": "LEFT",
               "queryIds": [
-                "L",
-                "M",
-                "N",
-                "O",
-                "P",
-                "Q",
-                "R"
+                "L"
               ],
               "defaultAxis": true
             }
@@ -2166,37 +1747,39 @@
       ]
     },
     {
-      "name": "VCs Issued By Document Type",
+      "name": "1st",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1444,
-        "left": 0,
-        "width": 456,
-        "height": 304
+        "top": 1558,
+        "left": 684,
+        "width": 228,
+        "height": 190
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "customName": "VCs Issued By Document Type",
+      "customName": "Data explorer results",
       "queries": [
         {
-          "id": "B",
+          "id": "A",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [
-            "documenttype"
+            "aws.account.id"
           ],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy(documenttype):sum:sort(value(sum,descending))",
+          "metricSelector": "(\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(receivecount,\"1\"))\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy(\"aws.account.id\")\n    :count\n  /\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy(\"aws.account.id\")\n    :count\n) * 100",
           "rate": "NONE",
           "enabled": true
         }
       ],
       "visualConfig": {
-        "type": "PIE_CHART",
+        "type": "SINGLE_VALUE",
         "global": {},
         "rules": [
           {
-            "matcher": "B:",
+            "matcher": "A:",
+            "unitTransform": "%",
+            "valueFormat": "auto",
             "properties": {
               "color": "DEFAULT",
               "seriesType": "LINE"
@@ -2213,104 +1796,10 @@
         "heatmapSettings": {
           "yAxis": "VALUE"
         },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": true
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy(documenttype):sum:sort(value(sum,descending))):limit(100):names"
-      ]
-    },
-    {
-      "name": "",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1824,
-        "left": 0,
-        "width": 684,
-        "height": 570
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Pie",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "receivecount"
-          ],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n  :filter(eq(messagecode,\"MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED\"))\n  :splitBy(receivecount)\n  :count\n  :sort(dimension(\"receivecount\",ascending,natural))",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "PIE_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "VCs issued",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "STACKED_AREA"
-            },
-            "seriesOverrides": [
-              {
-                "name": "1",
-                "color": "#7dc540"
-              },
-              {
-                "name": "2",
-                "color": "#ffe11c"
-              },
-              {
-                "name": "3",
-                "color": "#dc172a"
-              }
-            ]
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
         },
         "thresholds": [
           {
@@ -2345,29 +1834,31 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(receivecount):count:sort(dimension(receivecount,ascending,natural))):limit(100):names"
+        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(receivecount,\"1\")):filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(\"aws.account.id\"):count/cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(\"aws.account.id\"):count)*100):limit(100):names"
       ]
     },
     {
-      "name": "Age of Oldest Message on DLQ",
+      "name": "2nd",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 3458,
+        "top": 1558,
         "left": 912,
-        "width": 456,
-        "height": 304
+        "width": 228,
+        "height": 190
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "customName": "In-flight Messages",
+      "customName": "Data explorer results",
       "queries": [
         {
           "id": "A",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound-dlq)):splitBy():max:default(0, always)",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "(\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(receivecount,\"2\"))\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy(\"aws.account.id\")\n    :count\n  /\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy(\"aws.account.id\")\n    :count\n) * 100",
           "rate": "NONE",
           "enabled": true
         }
@@ -2378,11 +1869,736 @@
         "rules": [
           {
             "matcher": "A:",
-            "unitTransform": "Hour",
+            "unitTransform": "%",
             "valueFormat": "auto",
             "properties": {
               "color": "DEFAULT",
               "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(receivecount,\"2\")):filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(\"aws.account.id\"):count/cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(\"aws.account.id\"):count)*100):limit(100):names"
+      ]
+    },
+    {
+      "name": "3rd",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1558,
+        "left": 1140,
+        "width": 228,
+        "height": 190
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "(\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(receivecount,\"3\"))\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy(\"aws.account.id\")\n    :count\n  /\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy(\"aws.account.id\")\n    :count\n) * 100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "%",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(receivecount,\"3\")):filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(\"aws.account.id\"):count/cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(\"aws.account.id\"):count)*100):limit(100):names"
+      ]
+    },
+    {
+      "name": "4th",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1748,
+        "left": 684,
+        "width": 228,
+        "height": 190
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "(\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(receivecount,\"4\"))\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy(\"aws.account.id\")\n    :count\n  /\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy(\"aws.account.id\")\n    :count\n) * 100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "%",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(receivecount,\"4\")):filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(\"aws.account.id\"):count/cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(\"aws.account.id\"):count)*100):limit(100):names"
+      ]
+    },
+    {
+      "name": "5th",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1748,
+        "left": 912,
+        "width": 228,
+        "height": 190
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "(\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(receivecount,\"5\"))\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy(\"aws.account.id\")\n    :count\n  /\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy(\"aws.account.id\")\n    :count\n) * 100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "%",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(receivecount,\"5\")):filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(\"aws.account.id\"):count/cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(\"aws.account.id\"):count)*100):limit(100):names"
+      ]
+    },
+    {
+      "name": "6th",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1748,
+        "left": 1140,
+        "width": 228,
+        "height": 190
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "(\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(receivecount,\"6\"))\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy(\"aws.account.id\")\n    :count\n  /\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy(\"aws.account.id\")\n    :count\n) * 100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "%",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(receivecount,\"6\")):filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(\"aws.account.id\"):count/cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(\"aws.account.id\"):count)*100):limit(100):names"
+      ]
+    },
+    {
+      "name": "7th",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1938,
+        "left": 684,
+        "width": 228,
+        "height": 190
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "(\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(receivecount,\"7\"))\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy(\"aws.account.id\")\n    :count\n  /\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy(\"aws.account.id\")\n    :count\n) * 100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "%",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(receivecount,\"7\")):filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(\"aws.account.id\"):count/cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(\"aws.account.id\"):count)*100):limit(100):names"
+      ]
+    },
+    {
+      "name": "8th",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1938,
+        "left": 912,
+        "width": 228,
+        "height": 190
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "(\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(receivecount,\"8\"))\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy(\"aws.account.id\")\n    :count\n  /\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy(\"aws.account.id\")\n    :count\n) * 100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "%",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(receivecount,\"8\")):filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(\"aws.account.id\"):count/cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(\"aws.account.id\"):count)*100):limit(100):names"
+      ]
+    },
+    {
+      "name": "9th",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1938,
+        "left": 1140,
+        "width": 228,
+        "height": 190
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "(\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(receivecount,\"9\"))\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy(\"aws.account.id\")\n    :count\n  /\n  cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion\n    :filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED))\n    :splitBy(\"aws.account.id\")\n    :count\n) * 100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "%",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&((cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(receivecount,\"9\")):filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(\"aws.account.id\"):count/cloud.aws.mob-async-backend.logmessages.asyncIssueBiometricCredentialApproximateReceiveCountByAccountIdDocumentTypeMessageCodeReceiveCountRegion:filter(eq(messagecode,MOBILE_ASYNC_ISSUE_BIOMETRIC_CREDENTIAL_VC_ISSUED)):splitBy(\"aws.account.id\"):count)*100):limit(100):names"
+      ]
+    },
+    {
+      "name": "Total Messages Processed",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2660,
+        "left": 0,
+        "width": 456,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Messaged Deleted from Outbound Queue",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy(\"aws.account.id\"):sum",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
             },
             "seriesOverrides": []
           }
@@ -2415,6 +2631,7 @@
                 "color": "#dc172a"
               }
             ],
+            "queryId": "",
             "visible": true
           }
         ],
@@ -2432,342 +2649,11 @@
       },
       "queriesSettings": {
         "resolution": "",
-        "foldTransformation": "LAST_VALUE"
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound-dlq)):splitBy():max:default(0,always)):limit(100):names:last"
-      ]
-    },
-    {
-      "name": "Messages Visible on DLQ",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 3458,
-        "left": 0,
-        "width": 912,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(queuename,\"mob-async-backend-ipv-core-outbound-dlq\")):splitBy():max:default(0, always)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {
-          "hideLegend": true
-        },
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": true
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound-dlq)):splitBy():max:default(0,always)):limit(100):names"
-      ]
-    },
-    {
-      "name": "Total Messages Processed Over Time",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 3154,
-        "left": 0,
-        "width": 1368,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():sum:default(0, always)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {
-          "hideLegend": true
-        },
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": true
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy():sum:default(0,always)):limit(100):names"
-      ]
-    },
-    {
-      "name": "Journeys and Outcomes Over Time",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 760,
-        "left": 0,
-        "width": 1368,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "E",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum:default(0, always)",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "D",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum:default(0, always)",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(eq(messagecode,\"MOBILE_ASYNC_ABORT_SESSION_COMPLETED\")):splitBy():sum:default(0, always)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "E:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Journeys Started"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "D:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Credentials Issued"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "C:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Journeys Aborted"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "E",
-                "D",
-                "C"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.mob-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum:default(0,always)):limit(100):names,(cloud.aws.mob-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum:default(0,always)):limit(100):names,(cloud.aws.mob-async-backend.logmessages.asyncAbortSessionMessageCodeByAccountIdMessageCodeRegionVersion:filter(eq(messagecode,MOBILE_ASYNC_ABORT_SESSION_COMPLETED)):splitBy():sum:default(0,always)):limit(100):names"
+        "resolution=null&(cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(eq(queuename,mob-async-backend-ipv-core-outbound)):splitBy(\"aws.account.id\"):sum):limit(100):names:fold(sum)"
       ]
     }
   ]
