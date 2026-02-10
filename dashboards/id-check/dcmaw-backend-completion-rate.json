@@ -68,131 +68,6 @@
       "markdown": "*To see production-only data, use the filter in the top right to select the `dcmaw-gds-prod` management zone.*"
     },
     {
-      "name": "User Aborts",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 570,
-        "left": 684,
-        "width": 342,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Single value",
-      "queries": [
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "apiname",
-            "aws.account.id",
-            "aws.region",
-            "dt.entity.cloud:aws:account",
-            "dt.entity.cloud:aws:api_gateway:api",
-            "dt.entity.cloud:aws:region",
-            "method",
-            "resource",
-            "stage"
-          ],
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:sum:filter(eq(\"resource\", \"/userAbortCommand\")) - cloud.aws.apigateway.4xxErrorByAccountIdApiNameMethodRegionResourceStage:sum:filter(eq(\"resource\", \"/userAbortCommand\")) - cloud.aws.apigateway.5xxErrorByAccountIdApiNameMethodRegionResourceStage:sum:filter(eq(\"resource\", \"/userAbortCommand\"))",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "B:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "B",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "B:apiname.name",
-            "B:aws.account.id.name",
-            "B:aws.region.name",
-            "B:dt.entity.cloud:aws:account.name",
-            "B:dt.entity.cloud:aws:api_gateway:api.name",
-            "B:dt.entity.cloud:aws:region.name",
-            "B:method.name",
-            "B:resource.name",
-            "B:stage.name",
-            "C:apiname.name",
-            "C:aws.account.id.name",
-            "C:aws.region.name",
-            "C:dt.entity.cloud:aws:account.name",
-            "C:dt.entity.cloud:aws:api_gateway:api.name",
-            "C:dt.entity.cloud:aws:region.name",
-            "C:method.name",
-            "C:resource.name",
-            "C:stage.name",
-            "D:apiname.name",
-            "D:aws.account.id.name",
-            "D:aws.region.name",
-            "D:dt.entity.cloud:aws:account.name",
-            "D:dt.entity.cloud:aws:api_gateway:api.name",
-            "D:dt.entity.cloud:aws:region.name",
-            "D:method.name",
-            "D:resource.name",
-            "D:stage.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:sum:filter(eq(resource,\"/userAbortCommand\"))-cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":sum:filter(eq(resource,\"/userAbortCommand\"))-cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":sum:filter(eq(resource,\"/userAbortCommand\"))):limit(100):names"
-      ]
-    },
-    {
       "name": "VCs Issued",
       "tileType": "DATA_EXPLORER",
       "configured": true,
@@ -313,196 +188,43 @@
       ]
     },
     {
-      "name": "All VCs Issued",
+      "name": "Journeys Started",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 988,
+        "top": 114,
         "left": 0,
-        "width": 1026,
-        "height": 190
+        "width": 342,
+        "height": 304
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
-      "customName": "TPS comparison window",
+      "customName": "Data explorer results",
       "queries": [
         {
-          "id": "Z",
+          "id": "C",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [
             "aws.account.id",
             "aws.region",
             "dt.entity.cloud:aws:account",
-            "dt.entity.cloud:aws:region"
+            "dt.entity.cloud:aws:region",
+            "dt.source"
           ],
-          "metricSelector": "cloud.aws.userinfo.statuscodes.200SuccessByAccountIdRegion:sum:timeshift(1w)",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "AA",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id",
-            "aws.region",
-            "dt.entity.cloud:aws:account",
-            "dt.entity.cloud:aws:region"
-          ],
-          "metricSelector": "cloud.aws.userinfo.statuscodes.200SuccessByAccountIdRegion:sum:timeshift(-0w)",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "AC",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id",
-            "aws.region",
-            "dt.entity.cloud:aws:account",
-            "dt.entity.cloud:aws:region"
-          ],
-          "metricSelector": "cloud.aws.userinfo.statuscodes.200SuccessByAccountIdRegion:sum:timeshift(-1w)",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "AD",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id",
-            "aws.region",
-            "dt.entity.cloud:aws:account",
-            "dt.entity.cloud:aws:region"
-          ],
-          "metricSelector": "cloud.aws.userinfo.statuscodes.200SuccessByAccountIdRegion:sum:timeshift(-2w)",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "AE",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id",
-            "aws.region",
-            "dt.entity.cloud:aws:account",
-            "dt.entity.cloud:aws:region"
-          ],
-          "metricSelector": "cloud.aws.userinfo.statuscodes.200SuccessByAccountIdRegion:sum:timeshift(-3w)",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "AF",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id",
-            "aws.region",
-            "dt.entity.cloud:aws:account",
-            "dt.entity.cloud:aws:region"
-          ],
-          "metricSelector": "cloud.aws.userinfo.statuscodes.200SuccessByAccountIdRegion:sum:timeshift(-4w)",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "AG",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id",
-            "aws.region",
-            "dt.entity.cloud:aws:account",
-            "dt.entity.cloud:aws:region"
-          ],
-          "metricSelector": "cloud.aws.userinfo.statuscodes.200SuccessByAccountIdRegion:sum:timeshift(-5w)\n",
+          "metricSelector": "cloud.aws.privateapi.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum",
           "rate": "NONE",
           "enabled": true
         }
       ],
       "visualConfig": {
-        "type": "TABLE",
+        "type": "SINGLE_VALUE",
         "global": {},
         "rules": [
           {
-            "matcher": "Z:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
+            "matcher": "C:",
             "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Current Week"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "AA:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Last Week"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "AC:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "-2 Weeks"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "AD:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "-3 Weeks"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "AE:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "-4 Weeks"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "AF:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "-5 Weeks"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "AG:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "-6 Weeks"
+              "color": "DEFAULT"
             },
             "seriesOverrides": []
           }
@@ -516,10 +238,15 @@
         "heatmapSettings": {
           "yAxis": "VALUE"
         },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
         "thresholds": [
           {
             "axisTarget": "LEFT",
-            "columnId": "(1w) ",
+            "columnId": "",
             "rules": [
               {
                 "color": "#7dc540"
@@ -531,15 +258,39 @@
                 "color": "#dc172a"
               }
             ],
-            "queryId": "Z",
+            "queryId": "B",
             "visible": true
           }
         ],
         "tableSettings": {
           "hiddenColumns": [
-            "AA:aws.region",
-            "AA:AWS Account",
-            "AA:AWS Region"
+            "C:apiname.name",
+            "C:aws.account.id.name",
+            "C:aws.region.name",
+            "C:dt.entity.cloud:aws:account.name",
+            "C:dt.entity.cloud:aws:api_gateway:api.name",
+            "C:dt.entity.cloud:aws:region.name",
+            "C:method.name",
+            "C:resource.name",
+            "C:stage.name",
+            "D:apiname.name",
+            "D:aws.account.id.name",
+            "D:aws.region.name",
+            "D:dt.entity.cloud:aws:account.name",
+            "D:dt.entity.cloud:aws:api_gateway:api.name",
+            "D:dt.entity.cloud:aws:region.name",
+            "D:method.name",
+            "D:resource.name",
+            "D:stage.name",
+            "E:apiname.name",
+            "E:aws.account.id.name",
+            "E:aws.region.name",
+            "E:dt.entity.cloud:aws:account.name",
+            "E:dt.entity.cloud:aws:api_gateway:api.name",
+            "E:dt.entity.cloud:aws:region.name",
+            "E:method.name",
+            "E:resource.name",
+            "E:stage.name"
           ]
         },
         "graphChartSettings": {
@@ -555,157 +306,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:timeshift(1w)):names,(cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:timeshift(0w)):names,(cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:timeshift(-1w)):names,(cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:timeshift(-2w)):names,(cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:timeshift(-3w)):names,(cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:timeshift(-4w)):names,(cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:timeshift(-5w)):names"
-      ]
-    },
-    {
-      "name": "Journeys and Outcomes Over Time",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 570,
-        "left": 0,
-        "width": 684,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "G",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "cloud.aws.userinfo.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\")",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "H",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "cloud.aws.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\")",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "I",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "cloud.aws.privateapi.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\")",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "STACKED_AREA",
-        "global": {
-          "hideLegend": false
-        },
-        "rules": [
-          {
-            "matcher": "G:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "STACKED_AREA",
-              "alias": "VCs Issued"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "H:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "STACKED_AREA",
-              "alias": "Journey Starts"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "I:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "STACKED_AREA",
-              "alias": "Private Journey Starts"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "G",
-                "H",
-                "I"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "cloud.aws.jh-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.jh-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": true
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\")):limit(100):names,(cloud.aws.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\")):limit(100):names,(cloud.aws.privateapi.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\")):limit(100):names"
+        "resolution=Inf&(cloud.aws.privateapi.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum):limit(100):names"
       ]
     },
     {
@@ -730,9 +331,10 @@
             "aws.account.id",
             "aws.region",
             "dt.entity.cloud:aws:account",
-            "dt.entity.cloud:aws:region"
+            "dt.entity.cloud:aws:region",
+            "dt.source"
           ],
-          "metricSelector": "( \ncloud.aws.userinfo.statuscodes.200SuccessByAccountIdRegion:sum\n/ (\ncloud.aws.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum\n+\ncloud.aws.privateapi.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum\n)) * 100",
+          "metricSelector": "( \ncloud.aws.userinfo.statuscodes.200SuccessByAccountIdRegion:sum\n/\ncloud.aws.privateapi.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum\n) * 100",
           "rate": "NONE",
           "enabled": true
         }
@@ -842,17 +444,17 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&((cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum/(cloud.aws.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum+cloud.aws.privateapi.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum))*100):limit(100):names"
+        "resolution=Inf&((cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum/cloud.aws.privateapi.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum)*100):limit(100):names"
       ]
     },
     {
-      "name": "Journeys Started",
+      "name": "Journeys and Outcomes Over Time",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 114,
+        "top": 570,
         "left": 0,
-        "width": 342,
+        "width": 684,
         "height": 304
       },
       "tileFilter": {},
@@ -860,50 +462,85 @@
       "customName": "Data explorer results",
       "queries": [
         {
-          "id": "C",
+          "id": "G",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [
-            "aws.account.id",
-            "aws.region",
-            "dt.entity.cloud:aws:account",
-            "dt.entity.cloud:aws:region"
+            "aws.account.id"
           ],
-          "metricSelector": "cloud.aws.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum\n+\ncloud.aws.privateapi.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum",
+          "metricSelector": "cloud.aws.userinfo.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\")",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "I",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "cloud.aws.privateapi.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\")",
           "rate": "NONE",
           "enabled": true
         }
       ],
       "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
         "rules": [
           {
-            "matcher": "C:",
+            "matcher": "G:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
             "properties": {
-              "color": "DEFAULT"
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "VCs Issued"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "I:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Private Journey Starts"
             },
             "seriesOverrides": []
           }
         ],
         "axes": {
           "xAxis": {
+            "displayName": "",
             "visible": true
           },
-          "yAxes": []
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "G",
+                "H",
+                "I"
+              ],
+              "defaultAxis": true
+            }
+          ]
         },
         "heatmapSettings": {
           "yAxis": "VALUE"
         },
-        "singleValueSettings": {
-          "showTrend": false,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": true
-        },
         "thresholds": [
           {
             "axisTarget": "LEFT",
-            "columnId": "",
+            "columnId": "cloud.aws.jh-async-backend.logmessages.credentialsIssuedByAccountIdDocumentTypeRegion:splitBy():sum/cloud.aws.jh-async-backend.logmessages.journeysStartedByAccountIdRegion:splitBy():sum",
             "rules": [
               {
                 "color": "#7dc540"
@@ -915,40 +552,12 @@
                 "color": "#dc172a"
               }
             ],
-            "queryId": "B",
+            "queryId": "A",
             "visible": true
           }
         ],
         "tableSettings": {
-          "hiddenColumns": [
-            "C:apiname.name",
-            "C:aws.account.id.name",
-            "C:aws.region.name",
-            "C:dt.entity.cloud:aws:account.name",
-            "C:dt.entity.cloud:aws:api_gateway:api.name",
-            "C:dt.entity.cloud:aws:region.name",
-            "C:method.name",
-            "C:resource.name",
-            "C:stage.name",
-            "D:apiname.name",
-            "D:aws.account.id.name",
-            "D:aws.region.name",
-            "D:dt.entity.cloud:aws:account.name",
-            "D:dt.entity.cloud:aws:api_gateway:api.name",
-            "D:dt.entity.cloud:aws:region.name",
-            "D:method.name",
-            "D:resource.name",
-            "D:stage.name",
-            "E:apiname.name",
-            "E:aws.account.id.name",
-            "E:aws.region.name",
-            "E:dt.entity.cloud:aws:account.name",
-            "E:dt.entity.cloud:aws:api_gateway:api.name",
-            "E:dt.entity.cloud:aws:region.name",
-            "E:method.name",
-            "E:resource.name",
-            "E:stage.name"
-          ]
+          "hiddenColumns": []
         },
         "graphChartSettings": {
           "connectNulls": false
@@ -963,7 +572,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=Inf&(cloud.aws.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum+cloud.aws.privateapi.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum):limit(100):names"
+        "resolution=null&(cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\")):limit(100):names,(cloud.aws.privateapi.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\")):limit(100):names"
       ]
     },
     {
@@ -977,7 +586,7 @@
         "height": 152
       },
       "tileFilter": {
-        "timeframe": "yesterday"
+        "timeframe": "-30d to now"
       },
       "isAutoRefreshDisabled": false,
       "customName": "Data explorer results",
@@ -989,79 +598,13 @@
           "splitBy": [
             "aws.account.id"
           ],
-          "metricSelector": "(\ncloud.aws.userinfo.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(0d):default(0,always)\n/ ( cloud.aws.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(0d):default(0,always)\n+\ncloud.aws.privateapi.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(0d):default(0,always)\n)) * 100",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "(\ncloud.aws.userinfo.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-1d):default(0,always)\n/ ( cloud.aws.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-1d):default(0,always)\n+\ncloud.aws.privateapi.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-1d):default(0,always)\n)) * 100",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "(\ncloud.aws.userinfo.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-2d):default(0,always)\n/ ( cloud.aws.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-2d):default(0,always)\n+\ncloud.aws.privateapi.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-2d):default(0,always)\n)) * 100",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "D",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "(\ncloud.aws.userinfo.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-3d):default(0,always)\n/ ( cloud.aws.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-3d):default(0,always)\n+\ncloud.aws.privateapi.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-3d):default(0,always)\n)) * 100",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "E",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "(\ncloud.aws.userinfo.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-4d):default(0,always)\n/ ( cloud.aws.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-4d):default(0,always)\n+\ncloud.aws.privateapi.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-4d):default(0,always)\n)) * 100",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "F",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "(\ncloud.aws.userinfo.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-5d):default(0,always)\n/ ( cloud.aws.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-5d):default(0,always)\n+\ncloud.aws.privateapi.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-5d):default(0,always)\n)) * 100",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "G",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "(\ncloud.aws.userinfo.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-6d):default(0,always)\n/ ( cloud.aws.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-6d):default(0,always)\n+\ncloud.aws.privateapi.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):timeshift(-6d):default(0,always)\n)) * 100",
+          "metricSelector": "(\ncloud.aws.userinfo.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\"):default(0,always)\n/ \ncloud.aws.privateapi.verifyauthorizerequest.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\")\n) * 100",
           "rate": "NONE",
           "enabled": true
         }
       ],
       "visualConfig": {
-        "type": "TABLE",
+        "type": "GRAPH_CHART",
         "global": {
           "hideLegend": true
         },
@@ -1076,79 +619,26 @@
               "alias": "Yesterday"
             },
             "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "2 days ago"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "C:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "3 days ago"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "D:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "4 days ago"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "E:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "5 days ago"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "F:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "6 days ago"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "G:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "7 days ago"
-            },
-            "seriesOverrides": []
           }
         ],
         "axes": {
           "xAxis": {
+            "displayName": "",
             "visible": true
           },
-          "yAxes": []
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
         },
         "heatmapSettings": {
           "yAxis": "VALUE"
@@ -1192,10 +682,399 @@
         }
       },
       "queriesSettings": {
+        "resolution": "1d"
+      },
+      "metricExpressions": [
+        "resolution=1d&((cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):default(0,always)/cloud.aws.privateapi.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"))*100):limit(100):names"
+      ]
+    },
+    {
+      "name": "User Aborts",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 722,
+        "left": 684,
+        "width": 342,
+        "height": 152
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiname",
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:api_gateway:api",
+            "dt.entity.cloud:aws:region",
+            "dt.source",
+            "method",
+            "resource",
+            "stage"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:sum:filter(and(eq(\"resource\", \"/userAbortCommand\"), eq(\"apiname\",\"id-check-cri-backend-api\"))) \n- cloud.aws.apigateway.4xxErrorByAccountIdApiNameMethodRegionResourceStage:sum:filter(and(eq(\"resource\", \"/userAbortCommand\"), eq(\"apiname\",\"id-check-cri-backend-api\"))) \n- cloud.aws.apigateway.5xxErrorByAccountIdApiNameMethodRegionResourceStage:sum:filter(and(eq(\"resource\", \"/userAbortCommand\"), eq(\"apiname\",\"id-check-cri-backend-api\")))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "B",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "B:apiname.name",
+            "B:aws.account.id.name",
+            "B:aws.region.name",
+            "B:dt.entity.cloud:aws:account.name",
+            "B:dt.entity.cloud:aws:api_gateway:api.name",
+            "B:dt.entity.cloud:aws:region.name",
+            "B:method.name",
+            "B:resource.name",
+            "B:stage.name",
+            "C:apiname.name",
+            "C:aws.account.id.name",
+            "C:aws.region.name",
+            "C:dt.entity.cloud:aws:account.name",
+            "C:dt.entity.cloud:aws:api_gateway:api.name",
+            "C:dt.entity.cloud:aws:region.name",
+            "C:method.name",
+            "C:resource.name",
+            "C:stage.name",
+            "D:apiname.name",
+            "D:aws.account.id.name",
+            "D:aws.region.name",
+            "D:dt.entity.cloud:aws:account.name",
+            "D:dt.entity.cloud:aws:api_gateway:api.name",
+            "D:dt.entity.cloud:aws:region.name",
+            "D:method.name",
+            "D:resource.name",
+            "D:stage.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&((cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):timeshift(0d):default(0,always)/(cloud.aws.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):timeshift(0d):default(0,always)+cloud.aws.privateapi.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):timeshift(0d):default(0,always)))*100):names:fold(auto),((cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):timeshift(-1d):default(0,always)/(cloud.aws.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):timeshift(-1d):default(0,always)+cloud.aws.privateapi.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):timeshift(-1d):default(0,always)))*100):names:fold(auto),((cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):timeshift(-2d):default(0,always)/(cloud.aws.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):timeshift(-2d):default(0,always)+cloud.aws.privateapi.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):timeshift(-2d):default(0,always)))*100):names:fold(auto),((cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):timeshift(-3d):default(0,always)/(cloud.aws.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):timeshift(-3d):default(0,always)+cloud.aws.privateapi.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):timeshift(-3d):default(0,always)))*100):names:fold(auto),((cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):timeshift(-4d):default(0,always)/(cloud.aws.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):timeshift(-4d):default(0,always)+cloud.aws.privateapi.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):timeshift(-4d):default(0,always)))*100):names:fold(auto),((cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):timeshift(-5d):default(0,always)/(cloud.aws.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):timeshift(-5d):default(0,always)+cloud.aws.privateapi.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):timeshift(-5d):default(0,always)))*100):names:fold(auto),((cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):timeshift(-6d):default(0,always)/(cloud.aws.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):timeshift(-6d):default(0,always)+cloud.aws.privateapi.verifyauthorizerequest.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\"):timeshift(-6d):default(0,always)))*100):names:fold(auto)"
+        "resolution=Inf&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:sum:filter(and(eq(resource,\"/userAbortCommand\"),eq(apiname,id-check-cri-backend-api)))-cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":sum:filter(and(eq(resource,\"/userAbortCommand\"),eq(apiname,id-check-cri-backend-api)))-cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":sum:filter(and(eq(resource,\"/userAbortCommand\"),eq(apiname,id-check-cri-backend-api)))):limit(100):names"
+      ]
+    },
+    {
+      "name": "Private User Aborts",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 570,
+        "left": 684,
+        "width": 342,
+        "height": 152
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiname",
+            "aws.account.id",
+            "aws.region",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:api_gateway:api",
+            "dt.entity.cloud:aws:region",
+            "dt.source",
+            "method",
+            "resource",
+            "stage"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:sum:filter(and(eq(\"resource\", \"/userAbortCommand\"),eq(\"apiname\",\"private-id-check-cri-backend-api\"))) \n- cloud.aws.apigateway.4xxErrorByAccountIdApiNameMethodRegionResourceStage:sum:filter(and(eq(\"resource\", \"/userAbortCommand\"),eq(\"apiname\",\"private-id-check-cri-backend-api\"))) \n- cloud.aws.apigateway.5xxErrorByAccountIdApiNameMethodRegionResourceStage:sum:filter(and(eq(\"resource\", \"/userAbortCommand\"),eq(\"apiname\",\"private-id-check-cri-backend-api\")))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "B",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "B:apiname.name",
+            "B:aws.account.id.name",
+            "B:aws.region.name",
+            "B:dt.entity.cloud:aws:account.name",
+            "B:dt.entity.cloud:aws:api_gateway:api.name",
+            "B:dt.entity.cloud:aws:region.name",
+            "B:method.name",
+            "B:resource.name",
+            "B:stage.name",
+            "C:apiname.name",
+            "C:aws.account.id.name",
+            "C:aws.region.name",
+            "C:dt.entity.cloud:aws:account.name",
+            "C:dt.entity.cloud:aws:api_gateway:api.name",
+            "C:dt.entity.cloud:aws:region.name",
+            "C:method.name",
+            "C:resource.name",
+            "C:stage.name",
+            "D:apiname.name",
+            "D:aws.account.id.name",
+            "D:aws.region.name",
+            "D:dt.entity.cloud:aws:account.name",
+            "D:dt.entity.cloud:aws:api_gateway:api.name",
+            "D:dt.entity.cloud:aws:region.name",
+            "D:method.name",
+            "D:resource.name",
+            "D:stage.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:sum:filter(and(eq(resource,\"/userAbortCommand\"),eq(apiname,private-id-check-cri-backend-api)))-cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":sum:filter(and(eq(resource,\"/userAbortCommand\"),eq(apiname,private-id-check-cri-backend-api)))-cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":sum:filter(and(eq(resource,\"/userAbortCommand\"),eq(apiname,private-id-check-cri-backend-api)))):limit(100):names"
+      ]
+    },
+    {
+      "name": "All VCs Issued",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 988,
+        "left": 0,
+        "width": 1026,
+        "height": 190
+      },
+      "tileFilter": {
+        "timeframe": "-90d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "TPS comparison window",
+      "queries": [
+        {
+          "id": "Z",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "cloud.aws.userinfo.statuscodes.200SuccessByAccountIdRegion:sum:splitBy(\"aws.account.id\")",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "Z:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Current Week"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "Z"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "Z",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "AA:aws.region",
+            "AA:AWS Account",
+            "AA:AWS Region",
+            "Z:aws.account.id.name",
+            "Z:aws.region.name",
+            "Z:dt.entity.cloud:aws:account.name",
+            "Z:dt.entity.cloud:aws:region.name",
+            "AA:aws.account.id.name",
+            "AA:aws.region.name",
+            "AA:dt.entity.cloud:aws:account.name",
+            "AA:dt.entity.cloud:aws:region.name",
+            "AC:aws.account.id.name",
+            "AC:aws.region.name",
+            "AC:dt.entity.cloud:aws:account.name",
+            "AC:dt.entity.cloud:aws:region.name",
+            "AD:aws.account.id.name",
+            "AD:aws.region.name",
+            "AD:dt.entity.cloud:aws:account.name",
+            "AD:dt.entity.cloud:aws:region.name",
+            "AE:aws.account.id.name",
+            "AE:aws.region.name",
+            "AE:dt.entity.cloud:aws:account.name",
+            "AE:dt.entity.cloud:aws:region.name",
+            "AF:aws.account.id.name",
+            "AF:aws.region.name",
+            "AF:dt.entity.cloud:aws:account.name",
+            "AF:dt.entity.cloud:aws:region.name",
+            "AG:aws.account.id.name",
+            "AG:aws.region.name",
+            "AG:dt.entity.cloud:aws:account.name",
+            "AG:dt.entity.cloud:aws:region.name",
+            "Z:dt.source.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.userinfo.statuscodes.\"200SuccessByAccountIdRegion\":sum:splitBy(\"aws.account.id\")):limit(100):names"
       ]
     }
   ]

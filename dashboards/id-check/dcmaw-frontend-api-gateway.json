@@ -53,2039 +53,6 @@
       "isAutoRefreshDisabled": false
     },
     {
-      "name": "2: Request Count Frontend API - PERF006",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 266,
-        "left": 0,
-        "width": 760,
-        "height": 494
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Table",
-      "queries": [
-        {
-          "id": "G",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "resource"
-          ],
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(\"apiid\",\"3z5tk8fll1\")))):splitBy(resource):sum:sort(value(sum,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "G:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "G"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "Count",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "F",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1001,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1001,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1001,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1001,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "isThresholdBackgroundAppliedToCell": true,
-          "hiddenColumns": [
-            "A:resource.name",
-            "B:resource.name",
-            "C:resource.name",
-            "D:resource.name",
-            "E:resource.name",
-            "F:resource.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": true
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\")))):splitBy(resource):sum:sort(value(sum,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
-      "name": "14: Average Transactions per Second - last 30 days - PERF006",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2470,
-        "left": 0,
-        "width": 760,
-        "height": 456
-      },
-      "tileFilter": {
-        "timeframe": "-30d to now"
-      },
-      "isAutoRefreshDisabled": false,
-      "customName": "Table",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:splitBy(apiname):filter(eq(\"apiname\",\"id-check-cri-backend-api\")):sum:rate(1s):setUnit(PerSecond):limit(20)",
-          "rate": "NONE",
-          "enabled": false
-        },
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "metricSelector": "builtin:service.requestCount.total:filter(in(\"dt.entity.service\",entitySelector(\"type(service),entityName.equals(~\"id~\")\"))):splitBy():avg:rate(1s):setUnit(PerSecond)",
-          "rate": "NONE",
-          "enabled": false
-        },
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(\"apiid\",\"3z5tk8fll1\")))):splitBy(apiid):sum:rate(1s):setUnit(PerSecond):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "C:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "C"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "Count",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 200,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "A:apiname.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "1h"
-      },
-      "metricExpressions": [
-        "resolution=1h&(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\")))):splitBy(apiid):sum:rate(1s):setUnit(PerSecond):limit(20)):limit(100):names"
-      ]
-    },
-    {
-      "name": "17: Usage of Burst Rate - PERF006",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2128,
-        "left": 760,
-        "width": 760,
-        "height": 608
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Table",
-      "queries": [
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "apiid"
-          ],
-          "metricSelector": "(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(\"apiid\",\"3z5tk8fll1\")))):splitBy(apiid):sum:rate(1s):setUnit(PerSecond):limit(20) / 400 ) * 100",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "C:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "C"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 200,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "A:apiname.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "1h"
-      },
-      "metricExpressions": [
-        "resolution=1h&((cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\")))):splitBy(apiid):sum:rate(1s):setUnit(PerSecond):limit(20)/400)*100):limit(100):names"
-      ]
-    },
-    {
-      "name": "1: Request Count Frontend API",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 114,
-        "left": 0,
-        "width": 570,
-        "height": 152
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Table",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(\"apiid\",\"3z5tk8fll1\"))):splitBy(apiid):sum:sort(value(sum,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(eq(\"apiid\",\"3z5tk8fll1\"),eq(\"apiid\",\"3z5tk8fll1\")):splitBy(apiid):sum:sort(value(sum,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "TABLE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "0",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Sum"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "A:apiname.name",
-            "A:dt.entity.cloud:aws:api_gateway:api.name",
-            "A:resource.name",
-            "A:aws.account.id.name",
-            "A:method.name",
-            "A:apiid.name",
-            "B:apiid.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):sum:sort(value(sum,descending)):limit(20)):names,(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(eq(apiid,\"3z5tk8fll1\"),eq(apiid,\"3z5tk8fll1\")):splitBy(apiid):sum:sort(value(sum,descending)):limit(20)):names"
-      ]
-    },
-    {
-      "name": "3: 2XX Responses",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 266,
-        "left": 760,
-        "width": 760,
-        "height": 494
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "2XX Responses",
-      "queries": [
-        {
-          "id": "L",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(\"apiid\",\"3z5tk8fll1\")))):splitBy(apiid):sum:sort(value(sum,descending)):limit(20)\n-\n(cloud.aws.apigateway.\"5xxByAccountIdApiIdMethodRegionResourceStage\":filter(and(or(eq(apiid,u8oen6k124),eq(\"apiid\",\"3z5tk8fll1\")))):splitBy(apiid):sum:sort(value(sum,descending)):limit(20)\n+\ncloud.aws.apigateway.\"4xxByAccountIdApiIdMethodRegionResourceStage\":filter(and(or(eq(apiid,u8oen6k124),eq(\"apiid\",\"3z5tk8fll1\")))):splitBy(apiid):sum:sort(value(sum,descending)):limit(20))",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "L:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "L"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "A:resource.name",
-            "B:resource.name",
-            "C:resource.name",
-            "D:resource.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": true
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\")))):splitBy(apiid):sum:sort(value(sum,descending)):limit(20)-(cloud.aws.apigateway.\"5xxByAccountIdApiIdMethodRegionResourceStage\":filter(and(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\")))):splitBy(apiid):sum:sort(value(sum,descending)):limit(20)+cloud.aws.apigateway.\"4xxByAccountIdApiIdMethodRegionResourceStage\":filter(and(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\")))):splitBy(apiid):sum:sort(value(sum,descending)):limit(20))):limit(100):names"
-      ]
-    },
-    {
-      "name": "7: Frontend API - Max Latency - PERF001",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 988,
-        "left": 760,
-        "width": 760,
-        "height": 418
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Table",
-      "queries": [
-        {
-          "id": "K",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(\"apiid\",\"3z5tk8fll1\")))):splitBy(apiid):max:sort(value(max,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "K:",
-            "unitTransform": "ms",
-            "valueFormat": "0",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Max"
-            },
-            "seriesOverrides": [
-              {
-                "name": "Select series",
-                "color": "#471e64"
-              }
-            ]
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "K"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "Latency",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1001,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "columnId": "Latency",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1001,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "columnId": "Latency",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1001,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "columnId": "Latency",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1001,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "columnId": "Latency",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1001,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "isThresholdBackgroundAppliedToCell": true,
-          "hiddenColumns": [
-            "A:resource.name",
-            "B:resource.name",
-            "C:resource.name",
-            "D:resource.name",
-            "E:resource.name",
-            "F:apiname.name",
-            "G:apiname.name",
-            "H:apiname.name",
-            "I:apiname.name",
-            "J:apiname.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.apigateway.latencyByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\")))):splitBy(apiid):max:sort(value(max,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
-      "name": "8: Frontend API - Average Latency - PERF001",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 988,
-        "left": 1520,
-        "width": 760,
-        "height": 418
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Table",
-      "queries": [
-        {
-          "id": "K",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(\"apiid\",\"3z5tk8fll1\")))):splitBy(apiid):avg:sort(value(avg,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {
-          "hideLegend": false
-        },
-        "rules": [
-          {
-            "matcher": "K:",
-            "unitTransform": "ms",
-            "valueFormat": "0",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": [
-              {
-                "name": "Select series",
-                "color": "#471e64"
-              }
-            ]
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "0",
-              "max": "2000",
-              "position": "LEFT",
-              "queryIds": [
-                "K"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "Latency",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1001,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "columnId": "Latency",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1001,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "columnId": "Latency",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1001,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "columnId": "Latency",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1001,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "columnId": "Latency",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1001,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "isThresholdBackgroundAppliedToCell": true,
-          "hiddenColumns": [
-            "A:resource.name",
-            "B:resource.name",
-            "C:resource.name",
-            "D:resource.name",
-            "E:resource.name",
-            "F:apiname.name",
-            "G:apiname.name",
-            "H:apiname.name",
-            "I:apiname.name",
-            "J:apiname.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.apigateway.latencyByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\")))):splitBy(apiid):avg:sort(value(avg,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
-      "name": "4: Request Count Frontend API - Weekly Breakdown",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 760,
-        "left": 0,
-        "width": 1520,
-        "height": 152
-      },
-      "tileFilter": {
-        "timeframe": "now\\0w-1w to now\\0w-0w"
-      },
-      "isAutoRefreshDisabled": false,
-      "customName": "TPS comparison window",
-      "queries": [
-        {
-          "id": "N",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage\n:filter(or(eq(\"aws.account.id\",\"709132032242\"),\n    eq(\"aws.account.id\",\"074090241447\"),\n    eq(\"aws.account.id\",\"153011173686\"),\n    eq(\"aws.account.id\",\"110965769736\"),\n    eq(\"aws.account.id\",\"671922655609\")))\n:filter(or(eq(\"apiid\",\"u8oen6k124\"),eq(\"apiid\",\"3z5tk8fll1\")))\n:partition(\"env\",dimension(\"1-dev\",eq(\"aws.account.id\",\"709132032242\")),dimension(\"2-build\",eq(\"aws.account.id\",\"074090241447\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"153011173686\")),dimension(\"4-int\",eq(\"aws.account.id\",\"110965769736\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"671922655609\")),otherwise(\"UNKNOWN\"))\n:timeshift(1w)\n:sum\n:splitBy(env,\"apiid\")\n:sort(dimension(\"env\",ascending),dimension(\"resource\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "O",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage\n:filter(or(eq(\"aws.account.id\",\"709132032242\"),\n    eq(\"aws.account.id\",\"074090241447\"),\n    eq(\"aws.account.id\",\"153011173686\"),\n    eq(\"aws.account.id\",\"110965769736\"),\n    eq(\"aws.account.id\",\"671922655609\")))\n:filter(or(eq(\"apiid\",\"u8oen6k124\"),eq(\"apiid\",\"3z5tk8fll1\")))\n:partition(\"env\",dimension(\"1-dev\",eq(\"aws.account.id\",\"709132032242\")),dimension(\"2-build\",eq(\"aws.account.id\",\"074090241447\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"153011173686\")),dimension(\"4-int\",eq(\"aws.account.id\",\"110965769736\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"671922655609\")),otherwise(\"UNKNOWN\"))\n:timeshift(-0w)\n:sum\n:splitBy(env,\"apiid\")\n:sort(dimension(\"env\",ascending),dimension(\"resource\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "P",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.\"countByAccountIdApiIdMethodRegionResourceStage\"\n:filter(or(eq(\"aws.account.id\",\"709132032242\"),\n    eq(\"aws.account.id\",\"074090241447\"),\n    eq(\"aws.account.id\",\"153011173686\"),\n    eq(\"aws.account.id\",\"110965769736\"),\n    eq(\"aws.account.id\",\"671922655609\")))\n:filter(or(eq(\"apiid\",\"u8oen6k124\"),eq(\"apiid\",\"3z5tk8fll1\")))\n:partition(\"env\",dimension(\"1-dev\",eq(\"aws.account.id\",\"709132032242\")),dimension(\"2-build\",eq(\"aws.account.id\",\"074090241447\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"153011173686\")),dimension(\"4-int\",eq(\"aws.account.id\",\"110965769736\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"671922655609\")),otherwise(\"UNKNOWN\"))\n:timeshift(-1w)\n:sum\n:splitBy(env,\"apiid\")\n:sort(dimension(\"env\",ascending),dimension(\"resource\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "Q",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.\"countByAccountIdApiIdMethodRegionResourceStage\"\n:filter(or(eq(\"aws.account.id\",\"709132032242\"),\n    eq(\"aws.account.id\",\"074090241447\"),\n    eq(\"aws.account.id\",\"153011173686\"),\n    eq(\"aws.account.id\",\"110965769736\"),\n    eq(\"aws.account.id\",\"671922655609\")))\n:filter(or(eq(\"apiid\",\"u8oen6k124\"),eq(\"apiid\",\"3z5tk8fll1\")))\n:partition(\"env\",dimension(\"1-dev\",eq(\"aws.account.id\",\"709132032242\")),dimension(\"2-build\",eq(\"aws.account.id\",\"074090241447\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"153011173686\")),dimension(\"4-int\",eq(\"aws.account.id\",\"110965769736\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"671922655609\")),otherwise(\"UNKNOWN\"))\n:timeshift(-2w)\n:sum\n:splitBy(env,\"apiid\")\n:sort(dimension(\"env\",ascending),dimension(\"resource\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "R",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.\"countByAccountIdApiIdMethodRegionResourceStage\"\n:filter(or(eq(\"aws.account.id\",\"709132032242\"),\n    eq(\"aws.account.id\",\"074090241447\"),\n    eq(\"aws.account.id\",\"153011173686\"),\n    eq(\"aws.account.id\",\"110965769736\"),\n    eq(\"aws.account.id\",\"671922655609\")))\n:filter(or(eq(\"apiid\",\"u8oen6k124\"),eq(\"apiid\",\"3z5tk8fll1\")))\n:partition(\"env\",dimension(\"1-dev\",eq(\"aws.account.id\",\"709132032242\")),dimension(\"2-build\",eq(\"aws.account.id\",\"074090241447\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"153011173686\")),dimension(\"4-int\",eq(\"aws.account.id\",\"110965769736\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"671922655609\")),otherwise(\"UNKNOWN\"))\n:timeshift(-3w)\n:sum\n:splitBy(env,\"apiid\")\n:sort(dimension(\"env\",ascending),dimension(\"resource\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "S",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.\"countByAccountIdApiIdMethodRegionResourceStage\"\n:filter(or(eq(\"aws.account.id\",\"709132032242\"),\n    eq(\"aws.account.id\",\"074090241447\"),\n    eq(\"aws.account.id\",\"153011173686\"),\n    eq(\"aws.account.id\",\"110965769736\"),\n    eq(\"aws.account.id\",\"671922655609\")))\n:filter(or(eq(\"apiid\",\"u8oen6k124\"),eq(\"apiid\",\"3z5tk8fll1\")))\n:partition(\"env\",dimension(\"1-dev\",eq(\"aws.account.id\",\"709132032242\")),dimension(\"2-build\",eq(\"aws.account.id\",\"074090241447\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"153011173686\")),dimension(\"4-int\",eq(\"aws.account.id\",\"110965769736\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"671922655609\")),otherwise(\"UNKNOWN\"))\n:timeshift(-4w)\n:sum\n:splitBy(env,\"apiid\")\n:sort(dimension(\"env\",ascending),dimension(\"resource\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "T",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "env",
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.\"countByAccountIdApiIdMethodRegionResourceStage\"\n:filter(or(eq(\"aws.account.id\",\"709132032242\"),\n    eq(\"aws.account.id\",\"074090241447\"),\n    eq(\"aws.account.id\",\"153011173686\"),\n    eq(\"aws.account.id\",\"110965769736\"),\n    eq(\"aws.account.id\",\"671922655609\")))\n:filter(or(eq(\"apiid\",\"u8oen6k124\"),eq(\"apiid\",\"3z5tk8fll1\")))\n:partition(\"env\",dimension(\"1-dev\",eq(\"aws.account.id\",\"709132032242\")),dimension(\"2-build\",eq(\"aws.account.id\",\"074090241447\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"153011173686\")),dimension(\"4-int\",eq(\"aws.account.id\",\"110965769736\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"671922655609\")),otherwise(\"UNKNOWN\"))\n:timeshift(-5w)\n:sum\n:splitBy(env,\"apiid\")\n:sort(dimension(\"env\",ascending),dimension(\"resource\",ascending))",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "TABLE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "N:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Week To Date"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "O:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Last Week"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "P:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "-2 Weeks"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "Q:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "-3 Weeks"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "R:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "-4 Weeks"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "S:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "-5 Weeks"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "T:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "-6 Weeks"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "(1w) ",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "N",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "A:env.name",
-            "A:projectname.name",
-            "A:aws.account.id.name",
-            "A:aws.region.name",
-            "B:env.name",
-            "B:apiname.name",
-            "B:resource.name",
-            "C:env.name",
-            "C:projectname.name",
-            "C:aws.account.id.name",
-            "C:aws.region.name",
-            "D:env.name",
-            "D:projectname.name",
-            "D:aws.account.id.name",
-            "D:aws.region.name",
-            "E:env.name",
-            "E:projectname.name",
-            "E:aws.account.id.name",
-            "E:aws.region.name",
-            "C:apiname.name",
-            "C:resource.name",
-            "D:apiname.name",
-            "D:resource.name",
-            "E:apiname.name",
-            "E:resource.name",
-            "F:env.name",
-            "F:apiname.name",
-            "F:resource.name",
-            "G:env.name",
-            "G:apiname.name",
-            "G:resource.name",
-            "H:env.name",
-            "H:apiname.name",
-            "H:resource.name",
-            "I:env.name",
-            "I:apiname.name",
-            "I:resource.name",
-            "J:env.name",
-            "J:apiname.name",
-            "J:resource.name",
-            "K:env.name",
-            "K:apiname.name",
-            "K:resource.name",
-            "L:env.name",
-            "L:apiname.name",
-            "L:resource.name",
-            "M:apiname.name",
-            "M:resource.name",
-            "N:env.name",
-            "N:apiid.name",
-            "O:env.name",
-            "O:apiid.name",
-            "P:env.name",
-            "P:apiid.name",
-            "Q:env.name",
-            "Q:apiid.name",
-            "R:env.name",
-            "R:apiid.name",
-            "S:env.name",
-            "S:apiid.name",
-            "T:env.name",
-            "T:apiid.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "SUM"
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(\"aws.account.id\",\"709132032242\"),eq(\"aws.account.id\",\"074090241447\"),eq(\"aws.account.id\",\"153011173686\"),eq(\"aws.account.id\",\"110965769736\"),eq(\"aws.account.id\",\"671922655609\"))):filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"709132032242\")),dimension(\"2-build\",eq(\"aws.account.id\",\"074090241447\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"153011173686\")),dimension(\"4-int\",eq(\"aws.account.id\",\"110965769736\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"671922655609\")),otherwise(UNKNOWN)):timeshift(1w):sum:splitBy(env,apiid):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(\"aws.account.id\",\"709132032242\"),eq(\"aws.account.id\",\"074090241447\"),eq(\"aws.account.id\",\"153011173686\"),eq(\"aws.account.id\",\"110965769736\"),eq(\"aws.account.id\",\"671922655609\"))):filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"709132032242\")),dimension(\"2-build\",eq(\"aws.account.id\",\"074090241447\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"153011173686\")),dimension(\"4-int\",eq(\"aws.account.id\",\"110965769736\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"671922655609\")),otherwise(UNKNOWN)):timeshift(0w):sum:splitBy(env,apiid):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(\"aws.account.id\",\"709132032242\"),eq(\"aws.account.id\",\"074090241447\"),eq(\"aws.account.id\",\"153011173686\"),eq(\"aws.account.id\",\"110965769736\"),eq(\"aws.account.id\",\"671922655609\"))):filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"709132032242\")),dimension(\"2-build\",eq(\"aws.account.id\",\"074090241447\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"153011173686\")),dimension(\"4-int\",eq(\"aws.account.id\",\"110965769736\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"671922655609\")),otherwise(UNKNOWN)):timeshift(-1w):sum:splitBy(env,apiid):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(\"aws.account.id\",\"709132032242\"),eq(\"aws.account.id\",\"074090241447\"),eq(\"aws.account.id\",\"153011173686\"),eq(\"aws.account.id\",\"110965769736\"),eq(\"aws.account.id\",\"671922655609\"))):filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"709132032242\")),dimension(\"2-build\",eq(\"aws.account.id\",\"074090241447\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"153011173686\")),dimension(\"4-int\",eq(\"aws.account.id\",\"110965769736\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"671922655609\")),otherwise(UNKNOWN)):timeshift(-2w):sum:splitBy(env,apiid):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(\"aws.account.id\",\"709132032242\"),eq(\"aws.account.id\",\"074090241447\"),eq(\"aws.account.id\",\"153011173686\"),eq(\"aws.account.id\",\"110965769736\"),eq(\"aws.account.id\",\"671922655609\"))):filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"709132032242\")),dimension(\"2-build\",eq(\"aws.account.id\",\"074090241447\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"153011173686\")),dimension(\"4-int\",eq(\"aws.account.id\",\"110965769736\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"671922655609\")),otherwise(UNKNOWN)):timeshift(-3w):sum:splitBy(env,apiid):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(\"aws.account.id\",\"709132032242\"),eq(\"aws.account.id\",\"074090241447\"),eq(\"aws.account.id\",\"153011173686\"),eq(\"aws.account.id\",\"110965769736\"),eq(\"aws.account.id\",\"671922655609\"))):filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"709132032242\")),dimension(\"2-build\",eq(\"aws.account.id\",\"074090241447\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"153011173686\")),dimension(\"4-int\",eq(\"aws.account.id\",\"110965769736\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"671922655609\")),otherwise(UNKNOWN)):timeshift(-4w):sum:splitBy(env,apiid):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum),(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(\"aws.account.id\",\"709132032242\"),eq(\"aws.account.id\",\"074090241447\"),eq(\"aws.account.id\",\"153011173686\"),eq(\"aws.account.id\",\"110965769736\"),eq(\"aws.account.id\",\"671922655609\"))):filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):partition(env,dimension(\"1-dev\",eq(\"aws.account.id\",\"709132032242\")),dimension(\"2-build\",eq(\"aws.account.id\",\"074090241447\")),dimension(\"3-stage\",eq(\"aws.account.id\",\"153011173686\")),dimension(\"4-int\",eq(\"aws.account.id\",\"110965769736\")),dimension(\"5-prod\",eq(\"aws.account.id\",\"671922655609\")),otherwise(UNKNOWN)):timeshift(-5w):sum:splitBy(env,apiid):sort(dimension(env,ascending),dimension(resource,ascending))):names:fold(sum)"
-      ]
-    },
-    {
-      "name": "6: Frontend API - Latency - PERF001",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1026,
-        "left": 0,
-        "width": 760,
-        "height": 380
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Table",
-      "queries": [
-        {
-          "id": "K",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(\"apiid\",\"3z5tk8fll1\")))):splitBy(apiid):avg:sort(value(avg,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "L",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(\"apiid\",\"3z5tk8fll1\")))):splitBy(apiid):min:sort(value(min,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": false
-        },
-        {
-          "id": "M",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(\"apiid\",\"3z5tk8fll1\")))):splitBy(apiid):max:sort(value(max,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "TABLE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "K:",
-            "unitTransform": "ms",
-            "valueFormat": "0",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Average"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "L:",
-            "unitTransform": "ms",
-            "valueFormat": "0",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Min"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "M:",
-            "unitTransform": "ms",
-            "valueFormat": "0",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Max"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1001,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "K",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "columnId": "",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1001,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "L",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "columnId": "",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1001,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "M",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1001,
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1001,
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "isThresholdBackgroundAppliedToCell": true,
-          "hiddenColumns": [
-            "A:resource.name",
-            "B:resource.name",
-            "C:resource.name",
-            "D:resource.name",
-            "E:resource.name",
-            "F:apiname.name",
-            "G:apiname.name",
-            "H:apiname.name",
-            "I:apiname.name",
-            "J:apiname.name",
-            "K:apiid.name",
-            "L:apiid.name",
-            "M:apiid.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.apigateway.latencyByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\")))):splitBy(apiid):avg:sort(value(avg,descending)):limit(20)):names,(cloud.aws.apigateway.latencyByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\")))):splitBy(apiid):max:sort(value(max,descending)):limit(20)):names"
-      ]
-    },
-    {
-      "name": "20: Task Count by Service",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1976,
-        "left": 1520,
-        "width": 760,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Frontend ECS Service",
-      "queries": [
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "servicename"
-          ],
-          "metricSelector": "cloud.aws.ecs.containerinsights.runningTaskCountByAccountIdClusterNameRegionServiceName:filter(or(eq(\"aws.account.id\",\"074090241447\"),or(eq(\"aws.account.id\",\"671922655609\")))):splitBy(servicename):max",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "servicename"
-          ],
-          "metricSelector": "cloud.aws.ecs.containerinsights.pendingTaskCountByAccountIdClusterNameRegionServiceName:filter(or(eq(\"aws.account.id\",\"074090241447\"),or(eq(\"aws.account.id\",\"671922655609\")))):splitBy(servicename):max",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "D",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "servicename"
-          ],
-          "metricSelector": "cloud.aws.ecs.containerinsights.desiredTaskCountByAccountIdClusterNameRegionServiceName:filter(or(eq(\"aws.account.id\",\"074090241447\"),or(eq(\"aws.account.id\",\"671922655609\")))):splitBy(servicename):max",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "E",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "targetgroup"
-          ],
-          "metricSelector": "cloud.aws.applicationelb.unHealthyHostCountByAccountIdLoadBalancerRegionTargetGroup:filter(or(eq(\"aws.account.id\",\"074090241447\"),or(eq(\"aws.account.id\",\"671922655609\")))):splitBy(targetgroup):max",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "B:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "C:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "D:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "E:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "B",
-                "C",
-                "D",
-                "E"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.ecs.containerinsights.runningTaskCountByAccountIdClusterNameRegionServiceName:filter(or(eq(\"aws.account.id\",\"074090241447\"),or(eq(\"aws.account.id\",\"671922655609\")))):splitBy(servicename):max):limit(100):names,(cloud.aws.ecs.containerinsights.pendingTaskCountByAccountIdClusterNameRegionServiceName:filter(or(eq(\"aws.account.id\",\"074090241447\"),or(eq(\"aws.account.id\",\"671922655609\")))):splitBy(servicename):max):limit(100):names,(cloud.aws.ecs.containerinsights.desiredTaskCountByAccountIdClusterNameRegionServiceName:filter(or(eq(\"aws.account.id\",\"074090241447\"),or(eq(\"aws.account.id\",\"671922655609\")))):splitBy(servicename):max):limit(100):names,(cloud.aws.applicationelb.unHealthyHostCountByAccountIdLoadBalancerRegionTargetGroup:filter(or(eq(\"aws.account.id\",\"074090241447\"),or(eq(\"aws.account.id\",\"671922655609\")))):splitBy(targetgroup):max):limit(100):names"
-      ]
-    },
-    {
-      "name": "5: Frontend API Requests/Responses",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 114,
-        "left": 570,
-        "width": 950,
-        "height": 152
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "API Responses",
-      "queries": [
-        {
-          "id": "O",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),or(eq(\"apiid\",\"3z5tk8fll1\"))))):splitBy(\"apiid\"):sum:sort(value(avg,descending)):limit(20)\n-\ncloud.aws.apigateway.\"5xxByAccountIdApiIdMethodRegionResourceStage\":filter(and(or(eq(apiid,u8oen6k124),or(eq(\"apiid\",\"3z5tk8fll1\"))))):splitBy(\"apiid\"):sum:sort(value(sum,descending)):limit(20)\n-\ncloud.aws.apigateway.\"4xxByAccountIdApiIdMethodRegionResourceStage\":filter(and(or(eq(apiid,u8oen6k124),or(eq(\"apiid\",\"3z5tk8fll1\"))))):splitBy(\"apiid\"):sum:sort(value(sum,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "M",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.\"4xxByAccountIdApiIdMethodRegionResourceStage\":filter(and(or(eq(apiid,u8oen6k124),or(eq(\"apiid\",\"3z5tk8fll1\"))))):splitBy(\"apiid\"):sum:sort(value(sum,descending)):limit(20)",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "N",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.\"5xxByAccountIdApiIdMethodRegionResourceStage\":filter(and(or(eq(apiid,u8oen6k124),or(eq(\"apiid\",\"3z5tk8fll1\"))))):splitBy(\"apiid\"):sum:sort(value(sum,descending)):limit(20)\n",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "TABLE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "O:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "2XX Response"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "M:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "4XX Error"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "N:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "5XX Error"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "O",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "columnId": "",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "M",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "columnId": "",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "N",
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1,
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          },
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1,
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "isThresholdBackgroundAppliedToCell": true,
-          "hiddenColumns": [
-            "H:resource.name",
-            "I:resource.name",
-            "J:resource.name",
-            "K:dt.entity.service.name",
-            "L:resource.name",
-            "M:resource.name",
-            "N:resource.name",
-            "O:resource.name",
-            "O:apiid.name",
-            "M:apiid.name",
-            "N:apiid.name",
-            "N:aws.account.id.name",
-            "N:aws.region.name",
-            "N:dt.entity.cloud:aws:account.name",
-            "N:dt.entity.cloud:aws:region.name",
-            "N:method.name",
-            "N:stage.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),or(eq(apiid,\"3z5tk8fll1\"))))):splitBy(apiid):sum:sort(value(avg,descending)):limit(20)-cloud.aws.apigateway.\"5xxByAccountIdApiIdMethodRegionResourceStage\":filter(and(or(eq(apiid,u8oen6k124),or(eq(apiid,\"3z5tk8fll1\"))))):splitBy(apiid):sum:sort(value(sum,descending)):limit(20)-cloud.aws.apigateway.\"4xxByAccountIdApiIdMethodRegionResourceStage\":filter(and(or(eq(apiid,u8oen6k124),or(eq(apiid,\"3z5tk8fll1\"))))):splitBy(apiid):sum:sort(value(sum,descending)):limit(20)):names,(cloud.aws.apigateway.\"4xxByAccountIdApiIdMethodRegionResourceStage\":filter(and(or(eq(apiid,u8oen6k124),or(eq(apiid,\"3z5tk8fll1\"))))):splitBy(apiid):sum:sort(value(sum,descending)):limit(20)):names,(cloud.aws.apigateway.\"5xxByAccountIdApiIdMethodRegionResourceStage\":filter(and(or(eq(apiid,u8oen6k124),or(eq(apiid,\"3z5tk8fll1\"))))):splitBy(apiid):sum:sort(value(sum,descending)):limit(20)):names"
-      ]
-    },
-    {
-      "name": "18: Usage of Burst Rate - PERF006",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2736,
-        "left": 760,
-        "width": 760,
-        "height": 190
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Table",
-      "queries": [
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "apiid"
-          ],
-          "metricSelector": "(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(\"apiid\",\"3z5tk8fll1\")))):splitBy(apiid):sum:rate(1s):setUnit(PerSecond):limit(20) /400 ) * 100",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "TABLE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "C:",
-            "unitTransform": "%",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Throttling Rate Limit Usage"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "C",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "A:apiname.name",
-            "C:apiid.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "1h",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "MAX"
-      },
-      "metricExpressions": [
-        "resolution=1h&((cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\")))):splitBy(apiid):sum:rate(1s):setUnit(PerSecond):limit(20)/400)*100):names:fold(max)"
-      ]
-    },
-    {
       "name": "Markdown",
       "tileType": "MARKDOWN",
       "configured": true,
@@ -2098,353 +65,6 @@
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
       "markdown": "This dashboard can be filtered to the appropriate non production dcmaw-gds-${environment} using the filter icon at the top of the dashboard.\n"
-    },
-    {
-      "name": "21: CPU Utilization - ECS",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2280,
-        "left": 1520,
-        "width": 760,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Frontend ECS Service",
-      "queries": [
-        {
-          "id": "D",
-          "metric": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName",
-          "spaceAggregation": "MAX",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "servicename"
-          ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "E",
-          "metric": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName",
-          "spaceAggregation": "AVG",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "servicename"
-          ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "D:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Max CPU Utilization"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "E:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Average CPU Utilization"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "D",
-                "E"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:splitBy(servicename):max:sort(value(max,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:splitBy(servicename):avg:sort(value(avg,descending)):limit(20)):limit(100):names"
-      ]
-    },
-    {
-      "name": "22: Memory Utilisation",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2584,
-        "left": 1520,
-        "width": 760,
-        "height": 342
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Frontend ECS Service",
-      "queries": [
-        {
-          "id": "C",
-          "metric": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName",
-          "spaceAggregation": "MAX",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [
-              {
-                "filter": "servicename",
-                "filterType": "DIMENSION",
-                "filterOperator": "OR",
-                "nestedFilters": [],
-                "criteria": [
-                  {
-                    "value": "frontend-DCAFrontEcsServiceV2-X9qe5o2Pv2pM",
-                    "evaluator": "EQ"
-                  }
-                ]
-              }
-            ],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": false
-        },
-        {
-          "id": "E",
-          "metric": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName",
-          "spaceAggregation": "MAX",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "servicename"
-          ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": false
-        },
-        {
-          "id": "F",
-          "metric": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName",
-          "spaceAggregation": "MAX",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "servicename"
-          ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "D",
-          "metric": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName",
-          "spaceAggregation": "AVG",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "servicename"
-          ],
-          "sortBy": "DESC",
-          "sortByDimension": "",
-          "filterBy": {
-            "filterOperator": "AND",
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "limit": 20,
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "C:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "D:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Average Memory Utilization"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "E:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "F:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Max Memory Utilization"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "D",
-                "F"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:splitBy(servicename):max:sort(value(max,descending)):limit(20)):limit(100):names,(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:splitBy(servicename):avg:sort(value(avg,descending)):limit(20)):limit(100):names"
-      ]
     },
     {
       "name": "Latency",
@@ -2460,568 +80,14 @@
       "isAutoRefreshDisabled": false
     },
     {
-      "name": "13: Average Transactions per Second - PERF006",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2014,
-        "left": 0,
-        "width": 760,
-        "height": 456
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Table",
-      "queries": [
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(\"apiid\",\"3z5tk8fll1\")))):splitBy(apiid):sum:rate(1s):setUnit(PerSecond)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "C:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "C"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "Count",
-            "rules": [
-              {
-                "value": 0,
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "value": 200,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "A",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "A:apiname.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\")))):splitBy(apiid):sum:rate(1s):setUnit(PerSecond)):limit(100):names"
-      ]
-    },
-    {
-      "name": "15: Transactions per Second",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1976,
-        "left": 760,
-        "width": 760,
-        "height": 152
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Table",
-      "queries": [
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(\"apiid\",\"3z5tk8fll1\")))):splitBy(apiid):sum:rate(1s):setUnit(PerSecond):fold(max)",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(\"apiid\",\"3z5tk8fll1\")))):splitBy(apiid):sum:rate(1s):setUnit(PerSecond):fold(avg)",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "TABLE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Maximum"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "C:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Average"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "B",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "A:apiname.name",
-            "B:apiid.name",
-            "C:apiid.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\")))):splitBy(apiid):sum:rate(1s):setUnit(PerSecond):fold(max)):names:fold(auto),(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(and(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\")))):splitBy(apiid):sum:rate(1s):setUnit(PerSecond):fold(avg)):names:fold(auto)"
-      ]
-    },
-    {
-      "name": "23: Average Event Loop Tick Duration",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 3002,
-        "left": 0,
-        "width": 760,
-        "height": 456
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "rx_pid"
-          ],
-          "metricSelector": "builtin:tech.nodejs.uvLoop.totalTime:splitBy(\"rx_pid\"):avg",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "B:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "B"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(builtin:tech.nodejs.uvLoop.totalTime:splitBy(rx_pid):avg):limit(100):names"
-      ]
-    },
-    {
-      "name": "24: Maximum Event Loop Tick. Duration",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 3002,
-        "left": 760,
-        "width": 760,
-        "height": 456
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "rx_pid"
-          ],
-          "metricSelector": "builtin:tech.nodejs.uvLoop.totalTime:splitBy(\"rx_pid\"):max",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "C:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "C"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": true
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(builtin:tech.nodejs.uvLoop.totalTime:splitBy(rx_pid):max):limit(100):names"
-      ]
-    },
-    {
-      "name": "12: Frontend API - Requests and Errors - AVBL002",
+      "name": "11: Frontend API - Error Rate - AVBL002",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
         "top": 1520,
         "left": 0,
         "width": 760,
-        "height": 152
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Top list",
-      "queries": [
-        {
-          "id": "H",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):sum",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "I",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.4xxByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):sum",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "J",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "apiid"
-          ],
-          "metricSelector": "cloud.aws.apigateway.5xxByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):sum",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "TABLE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "H:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Request Count"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "I:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "4XX Errors"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "J:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "5XX Errors"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "columnId": "",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "H",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "E:apiname.name",
-            "F:apiname.name",
-            "G:apiname.name",
-            "H:apiid.name",
-            "I:apiid.name",
-            "J:apiid.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):sum):names,(cloud.aws.apigateway.\"4xxByAccountIdApiIdMethodRegionResourceStage\":filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):sum):names,(cloud.aws.apigateway.\"5xxByAccountIdApiIdMethodRegionResourceStage\":filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):sum):names"
-      ]
-    },
-    {
-      "name": "11: Frontend API - Error Rate - AVBL002",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1672,
-        "left": 0,
-        "width": 760,
-        "height": 228
+        "height": 380
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
@@ -3324,6 +390,2347 @@
       },
       "metricExpressions": [
         "resolution=null&(cloud.aws.apigateway.\"5xxByAccountIdApiIdMethodRegionResourceStage\":filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):sum:splitBy(apiid)):limit(100):names"
+      ]
+    },
+    {
+      "name": "1: Request Count Frontend API",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 114,
+        "left": 0,
+        "width": 570,
+        "height": 152
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Table",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):sum:sort(value(sum,descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "0",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Sum"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:apiname.name",
+            "A:dt.entity.cloud:aws:api_gateway:api.name",
+            "A:resource.name",
+            "A:aws.account.id.name",
+            "A:method.name",
+            "A:apiid.name",
+            "B:apiid.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):sum:sort(value(sum,descending))):names"
+      ]
+    },
+    {
+      "name": "5: Frontend API Requests/Responses",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 114,
+        "left": 570,
+        "width": 950,
+        "height": 152
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "API Responses",
+      "queries": [
+        {
+          "id": "P",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):sum",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "O",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):sum\n-\ncloud.aws.apigateway.5xxByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):sum\n-\ncloud.aws.apigateway.4xxByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):sum",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "M",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.4xxByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(\"apiid\"):sum",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "N",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.5xxByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(\"apiid\"):sum",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "P:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Count"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "O:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "2XX Response"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "M:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "4XX Error"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "N:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "5XX Error"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "O",
+            "visible": false
+          }
+        ],
+        "tableSettings": {
+          "isThresholdBackgroundAppliedToCell": true,
+          "hiddenColumns": [
+            "H:resource.name",
+            "I:resource.name",
+            "J:resource.name",
+            "K:dt.entity.service.name",
+            "L:resource.name",
+            "M:resource.name",
+            "N:resource.name",
+            "O:resource.name",
+            "O:apiid.name",
+            "M:apiid.name",
+            "N:apiid.name",
+            "N:aws.account.id.name",
+            "N:aws.region.name",
+            "N:dt.entity.cloud:aws:account.name",
+            "N:dt.entity.cloud:aws:region.name",
+            "N:method.name",
+            "N:stage.name",
+            "P:apiid.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):sum):names,(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):sum - cloud.aws.apigateway.\"5xxByAccountIdApiIdMethodRegionResourceStage\":filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):sum - cloud.aws.apigateway.\"4xxByAccountIdApiIdMethodRegionResourceStage\":filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):sum):names,(cloud.aws.apigateway.\"4xxByAccountIdApiIdMethodRegionResourceStage\":filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):sum):names,(cloud.aws.apigateway.\"5xxByAccountIdApiIdMethodRegionResourceStage\":filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):sum):names"
+      ]
+    },
+    {
+      "name": "2: Request Count Frontend API - PERF006",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 266,
+        "left": 0,
+        "width": 760,
+        "height": 494
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Table",
+      "queries": [
+        {
+          "id": "G",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "resource"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(resource):sum",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "G:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "G"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "Count",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "F",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "value": 1001,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "value": 1001,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "value": 1001,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "value": 1001,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "isThresholdBackgroundAppliedToCell": true,
+          "hiddenColumns": [
+            "A:resource.name",
+            "B:resource.name",
+            "C:resource.name",
+            "D:resource.name",
+            "E:resource.name",
+            "F:resource.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(resource):sum):limit(100):names"
+      ]
+    },
+    {
+      "name": "3: 2XX Responses",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 266,
+        "left": 760,
+        "width": 760,
+        "height": 494
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "2XX Responses",
+      "queries": [
+        {
+          "id": "L",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):sum\n-\ncloud.aws.apigateway.5xxByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):sum\n-\ncloud.aws.apigateway.4xxByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):sum",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "L:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "L"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:resource.name",
+            "B:resource.name",
+            "C:resource.name",
+            "D:resource.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):sum - cloud.aws.apigateway.\"5xxByAccountIdApiIdMethodRegionResourceStage\":filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):sum - cloud.aws.apigateway.\"4xxByAccountIdApiIdMethodRegionResourceStage\":filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):sum):limit(100):names"
+      ]
+    },
+    {
+      "name": "4: Request Count Frontend API - Weekly Breakdown",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 760,
+        "left": 0,
+        "width": 1520,
+        "height": 152
+      },
+      "tileFilter": {
+        "timeframe": "-7d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "TPS comparison window",
+      "queries": [
+        {
+          "id": "N",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):timeshift(1w):sum:splitBy(apiid)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "O",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):timeshift(0w):sum:splitBy(apiid)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "P",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):timeshift(-1w):sum:splitBy(apiid)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "Q",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):timeshift(-2w):sum:splitBy(apiid)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "R",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):timeshift(-3w):sum:splitBy(apiid)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "S",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):timeshift(-4w):sum:splitBy(apiid)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "T",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):timeshift(-5w):sum:splitBy(apiid)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "N:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Week To Date"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "O:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Last Week"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "P:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "-2 Weeks"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "Q:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "-3 Weeks"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "R:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "-4 Weeks"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "S:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "-5 Weeks"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "T:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "-6 Weeks"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "(1w) ",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "N",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:env.name",
+            "A:projectname.name",
+            "A:aws.account.id.name",
+            "A:aws.region.name",
+            "B:env.name",
+            "B:apiname.name",
+            "B:resource.name",
+            "C:env.name",
+            "C:projectname.name",
+            "C:aws.account.id.name",
+            "C:aws.region.name",
+            "D:env.name",
+            "D:projectname.name",
+            "D:aws.account.id.name",
+            "D:aws.region.name",
+            "E:env.name",
+            "E:projectname.name",
+            "E:aws.account.id.name",
+            "E:aws.region.name",
+            "C:apiname.name",
+            "C:resource.name",
+            "D:apiname.name",
+            "D:resource.name",
+            "E:apiname.name",
+            "E:resource.name",
+            "F:env.name",
+            "F:apiname.name",
+            "F:resource.name",
+            "G:env.name",
+            "G:apiname.name",
+            "G:resource.name",
+            "H:env.name",
+            "H:apiname.name",
+            "H:resource.name",
+            "I:env.name",
+            "I:apiname.name",
+            "I:resource.name",
+            "J:env.name",
+            "J:apiname.name",
+            "J:resource.name",
+            "K:env.name",
+            "K:apiname.name",
+            "K:resource.name",
+            "L:env.name",
+            "L:apiname.name",
+            "L:resource.name",
+            "M:apiname.name",
+            "M:resource.name",
+            "N:env.name",
+            "N:apiid.name",
+            "O:env.name",
+            "O:apiid.name",
+            "P:env.name",
+            "P:apiid.name",
+            "Q:env.name",
+            "Q:apiid.name",
+            "R:env.name",
+            "R:apiid.name",
+            "S:env.name",
+            "S:apiid.name",
+            "T:env.name",
+            "T:apiid.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1w",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      },
+      "metricExpressions": [
+        "resolution=1w&(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):timeshift(1w):sum:splitBy(apiid)):names:fold(sum),(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):timeshift(0w):sum:splitBy(apiid)):names:fold(sum),(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):timeshift(-1w):sum:splitBy(apiid)):names:fold(sum),(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):timeshift(-2w):sum:splitBy(apiid)):names:fold(sum),(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):timeshift(-3w):sum:splitBy(apiid)):names:fold(sum),(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):timeshift(-4w):sum:splitBy(apiid)):names:fold(sum),(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):timeshift(-5w):sum:splitBy(apiid)):names:fold(sum)"
+      ]
+    },
+    {
+      "name": "6: Frontend API - Latency - PERF001",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1026,
+        "left": 0,
+        "width": 760,
+        "height": 380
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Table",
+      "queries": [
+        {
+          "id": "K",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):avg",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "L",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):min",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "M",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):max",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "K:",
+            "unitTransform": "ms",
+            "valueFormat": "0",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Average"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "L:",
+            "unitTransform": "ms",
+            "valueFormat": "0",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Min"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "M:",
+            "unitTransform": "ms",
+            "valueFormat": "0",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Max"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "value": 1001,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "K",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "value": 1001,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "L",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "value": 1001,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "M",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "isThresholdBackgroundAppliedToCell": true,
+          "hiddenColumns": [
+            "A:resource.name",
+            "B:resource.name",
+            "C:resource.name",
+            "D:resource.name",
+            "E:resource.name",
+            "F:apiname.name",
+            "G:apiname.name",
+            "H:apiname.name",
+            "I:apiname.name",
+            "J:apiname.name",
+            "K:apiid.name",
+            "L:apiid.name",
+            "M:apiid.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.apigateway.latencyByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):avg):names,(cloud.aws.apigateway.latencyByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):min):names,(cloud.aws.apigateway.latencyByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):max):names"
+      ]
+    },
+    {
+      "name": "7: Frontend API - Max Latency - PERF001",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 988,
+        "left": 760,
+        "width": 760,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Table",
+      "queries": [
+        {
+          "id": "K",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):max",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "K:",
+            "unitTransform": "ms",
+            "valueFormat": "0",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Max"
+            },
+            "seriesOverrides": [
+              {
+                "name": "Select series",
+                "color": "#471e64"
+              }
+            ]
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "K"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "Latency",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "value": 1001,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "Latency",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "value": 1001,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "Latency",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "value": 1001,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "Latency",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "value": 1001,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "Latency",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "value": 1001,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "isThresholdBackgroundAppliedToCell": true,
+          "hiddenColumns": [
+            "A:resource.name",
+            "B:resource.name",
+            "C:resource.name",
+            "D:resource.name",
+            "E:resource.name",
+            "F:apiname.name",
+            "G:apiname.name",
+            "H:apiname.name",
+            "I:apiname.name",
+            "J:apiname.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.latencyByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):max):limit(100):names"
+      ]
+    },
+    {
+      "name": "8: Frontend API - Average Latency - PERF001",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 988,
+        "left": 1520,
+        "width": 760,
+        "height": 418
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Table",
+      "queries": [
+        {
+          "id": "K",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):avg",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "K:",
+            "unitTransform": "ms",
+            "valueFormat": "0",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": [
+              {
+                "name": "Select series",
+                "color": "#471e64"
+              }
+            ]
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "K"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "Latency",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "value": 1001,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "Latency",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "value": 1001,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "Latency",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "value": 1001,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "Latency",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "value": 1001,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          },
+          {
+            "axisTarget": "LEFT",
+            "columnId": "Latency",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "value": 1001,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "isThresholdBackgroundAppliedToCell": true,
+          "hiddenColumns": [
+            "A:resource.name",
+            "B:resource.name",
+            "C:resource.name",
+            "D:resource.name",
+            "E:resource.name",
+            "F:apiname.name",
+            "G:apiname.name",
+            "H:apiname.name",
+            "I:apiname.name",
+            "J:apiname.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.latencyByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):avg):limit(100):names"
+      ]
+    },
+    {
+      "name": "13: Average Transactions per Second - PERF006",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2014,
+        "left": 0,
+        "width": 760,
+        "height": 456
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Table",
+      "queries": [
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):sum:rate(1s):setUnit(PerSecond)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "C:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "Count",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "value": 200,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:apiname.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):sum:rate(1s):setUnit(PerSecond)):limit(100):names"
+      ]
+    },
+    {
+      "name": "14: Average Transactions per Second - last 30 days - PERF006",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2470,
+        "left": 0,
+        "width": 760,
+        "height": 456
+      },
+      "tileFilter": {
+        "timeframe": "-30d to now"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Table",
+      "queries": [
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):sum:rate(1s):setUnit(PerSecond)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "D:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "C",
+                "D"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "Count",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "value": 200,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:apiname.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1d"
+      },
+      "metricExpressions": [
+        "resolution=1d&(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):sum:rate(1s):setUnit(PerSecond)):limit(100):names"
+      ]
+    },
+    {
+      "name": "15: Transactions per Second",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1976,
+        "left": 760,
+        "width": 760,
+        "height": 152
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Table",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):sum:rate(1s):setUnit(PerSecond):fold(max)",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):sum:rate(1s):setUnit(PerSecond):fold(avg)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Maximum"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Average"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "B",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:apiname.name",
+            "B:apiid.name",
+            "C:apiid.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):sum:rate(1s):setUnit(PerSecond):fold(max)):names:fold(auto),(cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):sum:rate(1s):setUnit(PerSecond):fold(avg)):names:fold(auto)"
+      ]
+    },
+    {
+      "name": "17: Usage of Burst Rate - PERF006",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2128,
+        "left": 760,
+        "width": 760,
+        "height": 608
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Table",
+      "queries": [
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "( cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):sum:rate(1s) / 400\n) * 100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "C:",
+            "unitTransform": "%",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "value": 200,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:apiname.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&((cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):sum:rate(1s)/400)*100):limit(100):names"
+      ]
+    },
+    {
+      "name": "18: Usage of Burst Rate - PERF006",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2736,
+        "left": 760,
+        "width": 760,
+        "height": 190
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Table",
+      "queries": [
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "apiid"
+          ],
+          "metricSelector": "(\ncloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,3z5tk8fll1))):splitBy(apiid):sum:rate(1s):fold(max) / 400\n) * 100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "C:",
+            "unitTransform": "%",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Throttling Rate Limit Usage"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "C",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:apiname.name",
+            "C:apiid.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "MAX"
+      },
+      "metricExpressions": [
+        "resolution=null&((cloud.aws.apigateway.countByAccountIdApiIdMethodRegionResourceStage:filter(or(eq(apiid,u8oen6k124),eq(apiid,\"3z5tk8fll1\"))):splitBy(apiid):sum:rate(1s):fold(max)/400)*100):names:fold(max)"
+      ]
+    },
+    {
+      "name": "20: Task Count by Service",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1976,
+        "left": 1520,
+        "width": 760,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Frontend ECS Service",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "servicename"
+          ],
+          "metricSelector": "cloud.aws.ecs.containerinsights.runningTaskCountByAccountIdClusterNameRegionServiceName:splitBy(servicename):max",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "servicename"
+          ],
+          "metricSelector": "cloud.aws.ecs.containerinsights.pendingTaskCountByAccountIdClusterNameRegionServiceName:splitBy(servicename):max",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "servicename"
+          ],
+          "metricSelector": "cloud.aws.ecs.containerinsights.desiredTaskCountByAccountIdClusterNameRegionServiceName:splitBy(servicename):max",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "E",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "targetgroup"
+          ],
+          "metricSelector": "cloud.aws.applicationelb.unHealthyHostCountByAccountIdLoadBalancerRegionTargetGroup:splitBy(targetgroup):max",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "D:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "E:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "B",
+                "C",
+                "D",
+                "E"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.ecs.containerinsights.runningTaskCountByAccountIdClusterNameRegionServiceName:splitBy(servicename):max):limit(100):names,(cloud.aws.ecs.containerinsights.pendingTaskCountByAccountIdClusterNameRegionServiceName:splitBy(servicename):max):limit(100):names,(cloud.aws.ecs.containerinsights.desiredTaskCountByAccountIdClusterNameRegionServiceName:splitBy(servicename):max):limit(100):names,(cloud.aws.applicationelb.unHealthyHostCountByAccountIdLoadBalancerRegionTargetGroup:splitBy(targetgroup):max):limit(100):names"
+      ]
+    },
+    {
+      "name": "21: CPU Utilization - ECS",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2280,
+        "left": 1520,
+        "width": 760,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Frontend ECS Service",
+      "queries": [
+        {
+          "id": "D",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "servicename"
+          ],
+          "metricSelector": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:splitBy(servicename):max",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "E",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "servicename"
+          ],
+          "metricSelector": "cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:splitBy(servicename):avg",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "D:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Max CPU Utilization"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "E:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Average CPU Utilization"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "D",
+                "E"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:splitBy(servicename):max):limit(100):names,(cloud.aws.ecs.cpuUtilizationByAccountIdClusterNameRegionServiceName:splitBy(servicename):avg):limit(100):names"
+      ]
+    },
+    {
+      "name": "22: Memory Utilisation",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2584,
+        "left": 1520,
+        "width": 760,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Frontend ECS Service",
+      "queries": [
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "servicename"
+          ],
+          "metricSelector": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:splitBy(servicename):max",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "E",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "servicename"
+          ],
+          "metricSelector": "cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:splitBy(servicename):avg",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "E:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "F",
+                "D",
+                "C",
+                "E"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:splitBy(servicename):max):limit(100):names,(cloud.aws.ecs.memoryUtilizationByAccountIdClusterNameRegionServiceName:splitBy(servicename):avg):limit(100):names"
       ]
     }
   ]
