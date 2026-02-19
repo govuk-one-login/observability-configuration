@@ -31,7 +31,7 @@ resource "dynatrace_metric_events" "team_amplify_5xx_errors" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.amplifyhosting.5xxErrorsByAccountIdRegion:filter(and(or(eq(\"aws.account.id\",${var.team_account_id})))):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.amplifyhosting.5xxErrorsByAccountIdRegion:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}))):splitBy(\"aws.account.id\")"
   }
 }
 
@@ -63,7 +63,7 @@ resource "dynatrace_metric_events" "team_amplify_high_latency" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.amplifyhosting.latencyByAccountIdRegion:filter(and(or(eq(\"aws.account.id\",${var.team_account_id})))):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.amplifyhosting.latencyByAccountIdRegion:filter(and(eq(\"aws.account.id\",${var.team_account_id}))):splitBy(\"aws.account.id\")"
   }
 }
 
