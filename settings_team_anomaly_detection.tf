@@ -406,11 +406,11 @@ resource "dynatrace_metric_events" "team_policy_lambda_error" {
     description = <<-EOT
     The {metricname} value was {alert_condition} {threshold}.
 
-    Dead-letter queue details: {dims}.
+    Lambda function details: {dims}.
 
-    If assistance is needed, please reach out to #di-aws-control-tower or follow
-    the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync
-    EOT
+    Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
+
+    If assistance is needed, please reach out to #di-aws-control-tower.
 
     davis_merge = true
     event_type  = "ERROR"
@@ -441,6 +441,8 @@ resource "dynatrace_metric_events" "team_policy_lambda_throttles" {
     
     Lambda function details: {dims}.
     
+    Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
+
     If assistance is needed, please reach out to #di-aws-control-tower.
     EOT
 
@@ -474,8 +476,9 @@ resource "dynatrace_metric_events" "team_policy_dlq_messages" {
 
     Dead-letter queue details: {dims}.
 
-    If assistance is needed, please reach out to #di-aws-control-tower or follow
-    the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync
+    Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
+
+    If assistance is needed, please reach out to #di-aws-control-tower.
     EOT
 
     davis_merge = true
@@ -508,6 +511,8 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_approvers_server_error"
 
     DynamoDB details: {dims}.
     
+    Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
+
     If assistance is needed, please reach out to #di-aws-control-tower.
     EOT
 
@@ -540,6 +545,8 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_eligibility_server_erro
     
     DynamoDB details: {dims}.
     
+    Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
+
     If assistance is needed, please reach out to #di-aws-control-tower.
     EOT
 
@@ -572,6 +579,8 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_approvers_throttles" {
     
     DynamoDB details: {dims}.
     
+    Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
+
     If assistance is needed, please reach out to #di-aws-control-tower.
     EOT
 
@@ -604,6 +613,8 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_eligibility_throttles" 
     
     DynamoDB details: {dims}.
     
+    Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
+
     If assistance is needed, please reach out to #di-aws-control-tower.
     EOT
 
