@@ -357,7 +357,7 @@ resource "dynatrace_metric_events" "team_step_functions_execution_aborted" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.states.executionsAbortedByAccountIdRegionStateMachineArn:filter(and(or(eq(\"aws.account.id\",${var.team_account_id})))):splitBy(statemachinearn):sum:sort(value(sum,descending)):limit(20)"
+    metric_selector = "cloud.aws.states.executionsAbortedByAccountIdRegionStateMachineArn:sum:filter(and(or(eq(\"aws.account.id\",${var.team_account_id}):splitBy(statemachinearn)"
   }
 }
 
@@ -389,7 +389,7 @@ resource "dynatrace_metric_events" "team_step_functions_execution_failed" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.states.executionsFailedByAccountIdRegionStateMachineArn:filter(and(or(eq(\"aws.account.id\",${var.team_account_id})))):splitBy(statemachinearn):sum:sort(value(sum,descending)):limit(20)"
+    metric_selector = "cloud.aws.states.executionsFailedByAccountIdRegionStateMachineArn:sum:filter(and(or(eq(\"aws.account.id\",${var.team_account_id})))):splitBy(statemachinearn)"
   }
 }
 
