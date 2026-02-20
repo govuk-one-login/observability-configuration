@@ -96,7 +96,7 @@ resource "dynatrace_metric_events" "team_dynamodb_read_throttles" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.readThrottleEventsByAccountIdRegionTableName:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\", ${var.team_account_id}))):splitBy(\"tablename\"):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.readThrottleEventsByAccountIdRegionTableName:sum:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\",${var.team_account_id}):splitBy(\"tablename\")"
   }
 }
 
@@ -128,7 +128,7 @@ resource "dynatrace_metric_events" "team_dynamodb_user_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.userErrorsByAccountIdRegion:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\", ${var.team_account_id}))):splitBy(\"tablename\"):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.userErrorsByAccountIdRegion:sum:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\",${var.team_account_id}):splitBy(\"tablename\")"
   }
 }
 
@@ -160,7 +160,7 @@ resource "dynatrace_metric_events" "team_dynamodb_write_throttles" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.writeThrottleEventsByAccountIdRegionTableName:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\", ${var.team_account_id}))):splitBy(\"tablename\"):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.writeThrottleEventsByAccountIdRegionTableName:sum:filter(and(or(eq(\"aws.account.id\",${var.team_account_id}),contains(\"tablename\",\"-main\")))):splitBy(\"tablename\")"
   }
 }
 
@@ -192,7 +192,7 @@ resource "dynatrace_metric_events" "team_dynamodb_server_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:filter(and(or(eq(\"aws.account.id\", ${var.team_account_id}))),contains(\"tablename\",\"-main\")):splitBy(aws.region):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:sum:filter(and(or(eq(\"aws.account.id\",${var.team_account_id}),contains(\"tablename\",\"-main\")):splitBy(\"tablename\")"
   }
 }
 
