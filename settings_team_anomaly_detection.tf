@@ -311,7 +311,7 @@ resource "dynatrace_metric_events" "team_step_functions_execution_duration_excee
     EOT
 
     davis_merge = true
-    event_type  = "SLOWDOWN"
+    event_type  = "ERROR" # Set to error as this Step Function should not exceed 9.1 hours
     title       = "TEAM Step Functions Execution Duration Exceeded 9 Hours Alert"
   }
   model_properties {
