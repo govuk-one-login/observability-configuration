@@ -31,7 +31,7 @@ resource "dynatrace_metric_events" "team_amplify_5xx_errors" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.amplifyhosting.5xxErrorsByAccountIdRegion:filter(and(or(eq(\"aws.account.id\",${var.team_account_id})))):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.amplifyhosting.5xxErrorsByAccountIdRegion:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}))):splitBy(\"aws.account.id\")"
   }
 }
 
@@ -63,264 +63,7 @@ resource "dynatrace_metric_events" "team_amplify_high_latency" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.amplifyhosting.latencyByAccountIdRegion:filter(and(or(eq(\"aws.account.id\",${var.team_account_id})))):sort(value(auto,descending)):limit(20)"
-  }
-}
-
-# Appsync
-resource "dynatrace_metric_events" "team_appsync_connect_client_error" {
-  count   = local.is_production ? 1 : 0
-  enabled = true
-  summary = "TEAM Appsync Connect Client Error Alert"
-  event_template {
-    description = <<-EOT
-    The {metricname} value was {alert_condition} {threshold}.
-
-    Appsync details: {dims}.
-
-    If assistance is needed, please reach out to #di-aws-control-tower.
-    EOT
-
-    davis_merge = true
-    event_type  = "ERROR"
-    title       = "TEAM Appsync Connect Client Error Alert"
-  }
-  model_properties {
-    type               = "STATIC_THRESHOLD"
-    alert_condition    = "ABOVE"
-    threshold          = 0
-    alert_on_no_data   = false
-    violating_samples  = 1
-    samples            = 3
-    dealerting_samples = 3
-  }
-  query_definition {
-    type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.appsync.connectClientErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",${var.team_account_id}))))"
-  }
-}
-
-resource "dynatrace_metric_events" "team_appsync_connect_server_error" {
-  count   = local.is_production ? 1 : 0
-  enabled = true
-  summary = "TEAM Appsync Connect Server Error Alert"
-  event_template {
-    description = <<-EOT
-    The {metricname} value was {alert_condition} {threshold}.
-
-    Appsync details: {dims}.
-
-    If assistance is needed, please reach out to #di-aws-control-tower.
-    EOT
-
-    davis_merge = true
-    event_type  = "ERROR"
-    title       = "TEAM Appsync Connect Client Server Alert"
-  }
-  model_properties {
-    type               = "STATIC_THRESHOLD"
-    alert_condition    = "ABOVE"
-    threshold          = 0
-    alert_on_no_data   = false
-    violating_samples  = 1
-    samples            = 3
-    dealerting_samples = 3
-  }
-  query_definition {
-    type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.appsync.connectServerErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",${var.team_account_id}))))"
-  }
-}
-
-resource "dynatrace_metric_events" "team_appsync_disconnect_client_error" {
-  count   = local.is_production ? 1 : 0
-  enabled = false
-  summary = "TEAM Appsync Disconnect Client Error Alert"
-  event_template {
-    description = <<-EOT
-    The {metricname} value was {alert_condition} {threshold}.
-
-    Appsync details: {dims}.
-
-    If assistance is needed, please reach out to #di-aws-control-tower.
-    EOT
-
-    davis_merge = true
-    event_type  = "ERROR"
-    title       = "TEAM Appsync Disconnect Client Error Alert"
-  }
-  model_properties {
-    type               = "STATIC_THRESHOLD"
-    alert_condition    = "ABOVE"
-    threshold          = 0
-    alert_on_no_data   = false
-    violating_samples  = 1
-    samples            = 3
-    dealerting_samples = 3
-  }
-  query_definition {
-    type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.appsync.disconnectClientErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",${var.team_account_id}))))"
-  }
-}
-
-resource "dynatrace_metric_events" "team_appsync_disconnect_server_error" {
-  count   = local.is_production ? 1 : 0
-  enabled = true
-  summary = "TEAM Appsync Disconnect Server Error Alert"
-  event_template {
-    description = <<-EOT
-    The {metricname} value was {alert_condition} {threshold}.
-    
-    Appsync details: {dims}.
-    
-    If assistance is needed, please reach out to #di-aws-control-tower.
-    EOT
-
-    davis_merge = true
-    event_type  = "ERROR"
-    title       = "TEAM Appsync Disconnect Client Server Alert"
-  }
-  model_properties {
-    type               = "STATIC_THRESHOLD"
-    alert_condition    = "ABOVE"
-    threshold          = 0
-    alert_on_no_data   = false
-    violating_samples  = 1
-    samples            = 3
-    dealerting_samples = 3
-  }
-  query_definition {
-    type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.appsync.disconnectServerErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",${var.team_account_id}))))"
-  }
-}
-
-resource "dynatrace_metric_events" "team_appsync_subscribe_client_error" {
-  count   = local.is_production ? 1 : 0
-  enabled = true
-  summary = "TEAM Appsync Subscribe Client Error Alert"
-  event_template {
-    description = <<-EOT
-    The {metricname} value was {alert_condition} {threshold}.
-
-    Appsync details: {dims}.
-    
-    If assistance is needed, please reach out to #di-aws-control-tower.
-    EOT
-
-    davis_merge = true
-    event_type  = "ERROR"
-    title       = "TEAM Appsync Subscribe Client Error Alert"
-  }
-  model_properties {
-    type               = "STATIC_THRESHOLD"
-    alert_condition    = "ABOVE"
-    threshold          = 0
-    alert_on_no_data   = false
-    violating_samples  = 1
-    samples            = 3
-    dealerting_samples = 3
-  }
-  query_definition {
-    type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.appsync.subscribeClientErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",${var.team_account_id}))))"
-  }
-}
-
-resource "dynatrace_metric_events" "team_appsync_subscribe_server_error" {
-  count   = local.is_production ? 1 : 0
-  enabled = true
-  summary = "TEAM Appsync Subscribe Server Error Alert"
-  event_template {
-    description = <<-EOT
-    The {metricname} value was {alert_condition} {threshold}.
-
-    Appsync details: {dims}.
-
-    If assistance is needed, please reach out to #di-aws-control-tower.
-    EOT
-
-    davis_merge = true
-    event_type  = "ERROR"
-    title       = "TEAM Appsync Subscribe Server Error Alert"
-  }
-  model_properties {
-    type               = "STATIC_THRESHOLD"
-    alert_condition    = "ABOVE"
-    threshold          = 0
-    alert_on_no_data   = false
-    violating_samples  = 1
-    samples            = 3
-    dealerting_samples = 3
-  }
-  query_definition {
-    type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.appsync.subscribeServerErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",${var.team_account_id}))))"
-  }
-}
-
-resource "dynatrace_metric_events" "team_appsync_unsubscribe_client_error" {
-  count   = local.is_production ? 1 : 0
-  enabled = true
-  summary = "TEAM Appsync Unsubscribe Client Error Alert"
-  event_template {
-    description = <<-EOT
-    The {metricname} value was {alert_condition} {threshold}.
-
-    Appsync details: {dims}.
-
-    If assistance is needed, please reach out to #di-aws-control-tower.
-    EOT
-
-    davis_merge = true
-    event_type  = "ERROR"
-    title       = "TEAM Appsync Unsubscribe Client Error Alert"
-  }
-  model_properties {
-    type               = "STATIC_THRESHOLD"
-    alert_condition    = "ABOVE"
-    threshold          = 0
-    alert_on_no_data   = false
-    violating_samples  = 1
-    samples            = 3
-    dealerting_samples = 3
-  }
-  query_definition {
-    type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.appsync.unsubscribeClientErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",${var.team_account_id}))))"
-  }
-}
-
-resource "dynatrace_metric_events" "team_appsync_unsubscribe_server_error" {
-  count   = local.is_production ? 1 : 0
-  enabled = true
-  summary = "TEAM Appsync Unsubscribe Sever Error Alert"
-  event_template {
-    description = <<-EOT
-    The {metricname} value was {alert_condition} {threshold}.
-    
-    Appsync details: {dims}.
-    
-    If assistance is needed, please reach out to #di-aws-control-tower.
-    EOT
-
-    davis_merge = true
-    event_type  = "ERROR"
-    title       = "TEAM Appsync Unsubscribe Sever Error Alert"
-  }
-  model_properties {
-    type               = "STATIC_THRESHOLD"
-    alert_condition    = "ABOVE"
-    threshold          = 0
-    alert_on_no_data   = false
-    violating_samples  = 1
-    samples            = 3
-    dealerting_samples = 3
-  }
-  query_definition {
-    type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.appsync.unsubscribeServerErrorByAccountIdGraphQLAPIIdRegion:sort(value(auto,descending)):limit(20):filter(and(or(eq(\"aws.account.id\",${var.team_account_id}))))"
+    metric_selector = "cloud.aws.amplifyhosting.latencyByAccountIdRegion:filter(and(eq(\"aws.account.id\",${var.team_account_id}))):splitBy(\"aws.account.id\")"
   }
 }
 
@@ -353,7 +96,7 @@ resource "dynatrace_metric_events" "team_dynamodb_read_throttles" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.readThrottleEventsByAccountIdRegionTableName:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\", ${var.team_account_id}))):splitBy(\"tablename\"):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.readThrottleEventsByAccountIdRegionTableName:sum:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\",${var.team_account_id}):splitBy(\"tablename\")"
   }
 }
 
@@ -385,7 +128,7 @@ resource "dynatrace_metric_events" "team_dynamodb_user_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.userErrorsByAccountIdRegion:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\", ${var.team_account_id}))):splitBy(\"tablename\"):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.userErrorsByAccountIdRegion:sum:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\",${var.team_account_id}):splitBy(\"tablename\")"
   }
 }
 
@@ -417,7 +160,7 @@ resource "dynatrace_metric_events" "team_dynamodb_write_throttles" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.writeThrottleEventsByAccountIdRegionTableName:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\", ${var.team_account_id}))):splitBy(\"tablename\"):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.writeThrottleEventsByAccountIdRegionTableName:sum:filter(and(or(eq(\"aws.account.id\",${var.team_account_id}),contains(\"tablename\",\"-main\")))):splitBy(\"tablename\")"
   }
 }
 
@@ -449,7 +192,7 @@ resource "dynatrace_metric_events" "team_dynamodb_server_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:filter(and(or(eq(\"aws.account.id\", ${var.team_account_id}))),contains(\"tablename\",\"-main\")):splitBy(aws.region):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:sum:filter(and(or(eq(\"aws.account.id\",${var.team_account_id}),contains(\"tablename\",\"-main\")):splitBy(\"tablename\")"
   }
 }
 
@@ -482,7 +225,7 @@ resource "dynatrace_metric_events" "team_lambda_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(eq(\"aws.account.id\", ${var.team_account_id}), contains(\"functionname\", \"-main\"))):splitBy(\"functionname\"):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}), contains(\"functionname\", \"-main\"))):splitBy(\"functionname\")"
   }
 }
 
@@ -514,7 +257,7 @@ resource "dynatrace_metric_events" "team_lambda_throttles" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion:filter(and(eq(\"aws.account.id\", ${var.team_account_id}), contains(\"functionname\", \"-main\"))):splitBy(\"functionname\"):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}), contains(\"functionname\", \"-main\"))):splitBy(\"functionname\")"
   }
 }
 
@@ -551,6 +294,41 @@ resource "dynatrace_metric_events" "team_step_functions_execution_duration" {
   }
 }
 
+resource "dynatrace_metric_events" "team_step_functions_execution_duration_exceed" {
+  count   = local.is_production ? 1 : 0
+  enabled = true
+  summary = "TEAM Step Functions Execution Duration Exceeded 9 Hours Alert"
+  event_template {
+    description = <<-EOT
+    The {metricname} value was {alert_condition} the allowed TEAM session duration of 9.1 hours.
+
+    Step function details: {dims}.
+
+    Follow the steps outlined in the official TEAM documentation to revoke the session that has exceeded 9 hours:
+    https://aws-samples.github.io/iam-identity-center-team/docs/guides/approver.html#revoke-elevated-access
+
+    If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
+
+    davis_merge = true
+    event_type  = "ERROR" # Set to error as this Step Function should not exceed 9.1 hours
+    title       = "TEAM Step Functions Execution Duration Exceeded 9 Hours Alert"
+  }
+  model_properties {
+    type               = "STATIC_THRESHOLD"
+    alert_condition    = "ABOVE"
+    threshold          = 32760000 # 9.1 hours in milliseconds
+    alert_on_no_data   = false
+    violating_samples  = 1
+    samples            = 3
+    dealerting_samples = 3
+  }
+  query_definition {
+    type            = "METRIC_SELECTOR"
+    metric_selector = "cloud.aws.states.executionTimeByAccountIdRegionStateMachineArn:max:filter(and(eq(\"aws.account.id\", ${var.team_account_id}),contains(\"statemachinearn\",\"TEAM-Grant-SM-main\"))):splitBy(statemachinearn)"
+  }
+}
+
 resource "dynatrace_metric_events" "team_step_functions_execution_aborted" {
   count   = local.is_production ? 1 : 0
   enabled = true
@@ -579,7 +357,7 @@ resource "dynatrace_metric_events" "team_step_functions_execution_aborted" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.states.executionsAbortedByAccountIdRegionStateMachineArn:filter(and(or(eq(\"aws.account.id\",${var.team_account_id})))):splitBy(statemachinearn):sum:sort(value(sum,descending)):limit(20)"
+    metric_selector = "cloud.aws.states.executionsAbortedByAccountIdRegionStateMachineArn:sum:filter(and(or(eq(\"aws.account.id\",${var.team_account_id}):splitBy(statemachinearn)"
   }
 }
 
@@ -611,7 +389,7 @@ resource "dynatrace_metric_events" "team_step_functions_execution_failed" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.states.executionsFailedByAccountIdRegionStateMachineArn:filter(and(or(eq(\"aws.account.id\",${var.team_account_id})))):splitBy(statemachinearn):sum:sort(value(sum,descending)):limit(20)"
+    metric_selector = "cloud.aws.states.executionsFailedByAccountIdRegionStateMachineArn:sum:filter(and(or(eq(\"aws.account.id\",${var.team_account_id})))):splitBy(statemachinearn)"
   }
 }
 
@@ -628,10 +406,11 @@ resource "dynatrace_metric_events" "team_policy_lambda_error" {
     description = <<-EOT
     The {metricname} value was {alert_condition} {threshold}.
 
-    Dead-letter queue details: {dims}.
+    Lambda function details: {dims}.
 
-    If assistance is needed, please reach out to #di-aws-control-tower or follow
-    the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync
+    Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
+
+    If assistance is needed, please reach out to #di-aws-control-tower.
     EOT
 
     davis_merge = true
@@ -649,7 +428,7 @@ resource "dynatrace_metric_events" "team_policy_lambda_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.lambda.errorsByAccountIdFunctionNameRegion:filter(prefix(\"functionname\",\"TEAMPolicyLambda-PolicyPublishingFunction\"))"
+    metric_selector = "cloud.aws.lambda.errorsByAccountIdFunctionNameRegion:sum:filter(prefix(\"functionname\",\"TEAMPolicyLambda-PolicyPublishingFunction\")):splitBy(\"functionname\")"
   }
 }
 
@@ -663,6 +442,8 @@ resource "dynatrace_metric_events" "team_policy_lambda_throttles" {
     
     Lambda function details: {dims}.
     
+    Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
+
     If assistance is needed, please reach out to #di-aws-control-tower.
     EOT
 
@@ -681,7 +462,7 @@ resource "dynatrace_metric_events" "team_policy_lambda_throttles" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion:filter(prefix(\"functionname\",\"TEAMPolicyLambda-PolicyPublishingFunction\"))"
+    metric_selector = "cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion:sum:filter(prefix(\"functionname\",\"TEAMPolicyLambda-PolicyPublishingFunction\")):splitBy(\"functionname\")"
   }
 }
 
@@ -696,8 +477,9 @@ resource "dynatrace_metric_events" "team_policy_dlq_messages" {
 
     Dead-letter queue details: {dims}.
 
-    If assistance is needed, please reach out to #di-aws-control-tower or follow
-    the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync
+    Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
+
+    If assistance is needed, please reach out to #di-aws-control-tower.
     EOT
 
     davis_merge = true
@@ -715,7 +497,7 @@ resource "dynatrace_metric_events" "team_policy_dlq_messages" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(and(eq(\"aws.account.id\",${var.team_account_id}),eq(\"queuename\",\"TEAMPolicyPublishingFunctionDLQ\")))"
+    metric_selector = "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(\"queuename\",\"TEAMPolicyPublishingFunctionDLQ\")):splitBy(\"queuename\")"
   }
 }
 
@@ -730,6 +512,8 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_approvers_server_error"
 
     DynamoDB details: {dims}.
     
+    Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
+
     If assistance is needed, please reach out to #di-aws-control-tower.
     EOT
 
@@ -748,7 +532,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_approvers_server_error"
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:filter(and(eq(\"aws.account.id\",${var.team_account_id}),prefix(\"tablename\",\"Approvers\"))):splitBy(\"aws.account.id\",tablename):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}),prefix(\"tablename\",\"Approvers\"))):splitBy(tablename)"
   }
 }
 
@@ -762,6 +546,8 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_eligibility_server_erro
     
     DynamoDB details: {dims}.
     
+    Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
+
     If assistance is needed, please reach out to #di-aws-control-tower.
     EOT
 
@@ -780,7 +566,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_eligibility_server_erro
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:filter(and(eq(\"aws.account.id\",${var.team_account_id}),prefix(\"tablename\",\"Eligibility\"))):splitBy(\"aws.account.id\",tablename):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}),prefix(\"tablename\",\"Eligibility\"))):splitBy(tablename)"
   }
 }
 
@@ -794,6 +580,8 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_approvers_throttles" {
     
     DynamoDB details: {dims}.
     
+    Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
+
     If assistance is needed, please reach out to #di-aws-control-tower.
     EOT
 
@@ -812,7 +600,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_approvers_throttles" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.throttledRequestsByAccountIdOperationRegionTableName:filter(and(eq(\"aws.account.id\",${var.team_account_id}),prefix(\"tablename\",\"Approvers\"))):splitBy(\"aws.account.id\",tablename):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.throttledRequestsByAccountIdOperationRegionTableName:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}),prefix(\"tablename\",\"Approvers\"))):splitBy(tablename)"
   }
 }
 
@@ -826,6 +614,8 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_eligibility_throttles" 
     
     DynamoDB details: {dims}.
     
+    Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
+
     If assistance is needed, please reach out to #di-aws-control-tower.
     EOT
 
@@ -844,6 +634,6 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_eligibility_throttles" 
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.throttledRequestsByAccountIdOperationRegionTableName:filter(and(eq(\"aws.account.id\",${var.team_account_id}),prefix(\"tablename\",\"Eligibility\"))):splitBy(\"aws.account.id\",tablename):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.throttledRequestsByAccountIdOperationRegionTableName:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}),prefix(\"tablename\",\"Eligibility\"))):splitBy(tablename)"
   }
 }
