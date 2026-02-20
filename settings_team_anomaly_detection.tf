@@ -225,7 +225,7 @@ resource "dynatrace_metric_events" "team_lambda_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}, contains(\"functionname\", \"-main\"))):splitBy(\"functionname\")"
+    metric_selector = "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}), contains(\"functionname\", \"-main\"))):splitBy(\"functionname\")"
   }
 }
 
@@ -257,7 +257,7 @@ resource "dynatrace_metric_events" "team_lambda_throttles" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}, contains(\"functionname\", \"-main\"))):splitBy(\"functionname\")"
+    metric_selector = "cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}), contains(\"functionname\", \"-main\"))):splitBy(\"functionname\")"
   }
 }
 
@@ -411,6 +411,7 @@ resource "dynatrace_metric_events" "team_policy_lambda_error" {
     Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
 
     If assistance is needed, please reach out to #di-aws-control-tower.
+    EOT
 
     davis_merge = true
     event_type  = "ERROR"
@@ -427,7 +428,7 @@ resource "dynatrace_metric_events" "team_policy_lambda_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.lambda.errorsByAccountIdFunctionNameRegion:filter(prefix(\"functionname\",\"TEAMPolicyLambda-PolicyPublishingFunction\"))"
+    metric_selector = "cloud.aws.lambda.errorsByAccountIdFunctionNameRegion:sum:filter(prefix(\"functionname\",\"TEAMPolicyLambda-PolicyPublishingFunction\")):splitBy(\"functionname\")"
   }
 }
 
@@ -461,7 +462,7 @@ resource "dynatrace_metric_events" "team_policy_lambda_throttles" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion:filter(prefix(\"functionname\",\"TEAMPolicyLambda-PolicyPublishingFunction\"))"
+    metric_selector = "cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion:sum:filter(prefix(\"functionname\",\"TEAMPolicyLambda-PolicyPublishingFunction\")):splitBy(\"functionname\")"
   }
 }
 
@@ -496,7 +497,7 @@ resource "dynatrace_metric_events" "team_policy_dlq_messages" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(and(eq(\"aws.account.id\",${var.team_account_id}),eq(\"queuename\",\"TEAMPolicyPublishingFunctionDLQ\")))"
+    metric_selector = "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(\"queuename\",\"TEAMPolicyPublishingFunctionDLQ\")):splitBy(\"queuename\")"
   }
 }
 
@@ -531,7 +532,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_approvers_server_error"
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:filter(and(eq(\"aws.account.id\",${var.team_account_id}),prefix(\"tablename\",\"Approvers\"))):splitBy(\"aws.account.id\",tablename):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}),prefix(\"tablename\",\"Approvers\"))):splitBy(tablename)"
   }
 }
 
@@ -565,7 +566,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_eligibility_server_erro
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:filter(and(eq(\"aws.account.id\",${var.team_account_id}),prefix(\"tablename\",\"Eligibility\"))):splitBy(\"aws.account.id\",tablename):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}),prefix(\"tablename\",\"Eligibility\"))):splitBy(tablename)"
   }
 }
 
@@ -599,7 +600,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_approvers_throttles" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.throttledRequestsByAccountIdOperationRegionTableName:filter(and(eq(\"aws.account.id\",${var.team_account_id}),prefix(\"tablename\",\"Approvers\"))):splitBy(\"aws.account.id\",tablename):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.throttledRequestsByAccountIdOperationRegionTableName:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}),prefix(\"tablename\",\"Approvers\"))):splitBy(tablename)"
   }
 }
 
@@ -633,6 +634,6 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_eligibility_throttles" 
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.throttledRequestsByAccountIdOperationRegionTableName:filter(and(eq(\"aws.account.id\",${var.team_account_id}),prefix(\"tablename\",\"Eligibility\"))):splitBy(\"aws.account.id\",tablename):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.dynamodb.throttledRequestsByAccountIdOperationRegionTableName:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}),prefix(\"tablename\",\"Eligibility\"))):splitBy(tablename)"
   }
 }
