@@ -225,7 +225,7 @@ resource "dynatrace_metric_events" "team_lambda_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:filter(and(eq(\"aws.account.id\", ${var.team_account_id}), contains(\"functionname\", \"-main\"))):splitBy(\"functionname\"):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}, contains(\"functionname\", \"-main\"))):splitBy(\"functionname\")"
   }
 }
 
@@ -257,7 +257,7 @@ resource "dynatrace_metric_events" "team_lambda_throttles" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion:filter(and(eq(\"aws.account.id\", ${var.team_account_id}), contains(\"functionname\", \"-main\"))):splitBy(\"functionname\"):sort(value(auto,descending)):limit(20)"
+    metric_selector = "cloud.aws.lambda.throttlesByAccountIdFunctionNameRegion:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}, contains(\"functionname\", \"-main\"))):splitBy(\"functionname\")"
   }
 }
 
