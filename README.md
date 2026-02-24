@@ -82,6 +82,6 @@ module "mydashboard_dashboard" {
 
 ### Dashboard review and deployment process
 
-Commit these files on a new branch, push and open a pull request. A member of the Observability team will be able to review and merge. Send a message on the [#di-observability-team](https://gds.slack.com/archives/C04UF0B02NR) channel on Slack about your PR.
+Commit these files on a new branch, push and open a pull request. A member of the Observability team will be able to review and merge. Send a message on the [#di-platform-fog-support](https://gds.slack.com/archives/C04UJ0F91QA) channel on Slack about your PR.
 
 Once merged, the workflow will apply the Terraform and create the dashboard in all Dynatrace environments. This will not overwrite the dashboard you initially created, you can delete that dashboard after you've exported it and the new dashboard has been created.
