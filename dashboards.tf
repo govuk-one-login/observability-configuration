@@ -216,7 +216,15 @@ module "authentication_services" {
   path   = "authentication/authentication_services.json"
 }
 
+### Authentication - Phone Number Aggregate Statistics ###
 
+module "di_auth_phone_numbers_production_dashboard" {
+  count  = local.is_production ? 1 : 0
+  source = "./dashboards/authentication/di-auth-phone-numbers"
+
+  application_environment = "production"
+  account_id              = "172348255554"
+}
 
 ### Authentication - Account Management ###
 
