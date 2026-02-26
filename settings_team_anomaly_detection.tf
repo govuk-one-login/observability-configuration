@@ -128,7 +128,7 @@ resource "dynatrace_metric_events" "team_dynamodb_user_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.userErrorsByAccountIdRegion:sum:filter(and(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\",${var.team_account_id}:splitBy(\"tablename\")"
+    metric_selector = "cloud.aws.dynamodb.userErrorsByAccountIdRegion:sum:filter(and(contains(\"tablename\",\"-main\"),eq(\"aws.account.id\",${var.team_account_id}))):splitBy(\"tablename\")"
   }
 }
 
