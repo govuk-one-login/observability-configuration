@@ -96,7 +96,7 @@ resource "dynatrace_metric_events" "team_dynamodb_read_throttles" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.readThrottleEventsByAccountIdRegionTableName:sum:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\",${var.team_account_id}):splitBy(\"tablename\")"
+    metric_selector = "cloud.aws.dynamodb.readThrottleEventsByAccountIdRegionTableName:sum:filter(and(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\",${var.team_account_id})):splitBy(\"tablename\")"
   }
 }
 
@@ -128,7 +128,7 @@ resource "dynatrace_metric_events" "team_dynamodb_user_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.userErrorsByAccountIdRegion:sum:filter(and(or(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\",${var.team_account_id}):splitBy(\"tablename\")"
+    metric_selector = "cloud.aws.dynamodb.userErrorsByAccountIdRegion:sum:filter(and(contains(\"tablename\",\"-main\")),eq(\"aws.account.id\",${var.team_account_id}:splitBy(\"tablename\")"
   }
 }
 
@@ -192,7 +192,7 @@ resource "dynatrace_metric_events" "team_dynamodb_server_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:sum:filter(and(or(eq(\"aws.account.id\",${var.team_account_id}),contains(\"tablename\",\"-main\")):splitBy(\"tablename\")"
+    metric_selector = "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}),contains(\"tablename\",\"-main\"))):splitBy(\"tablename\")"
   }
 }
 
@@ -357,7 +357,7 @@ resource "dynatrace_metric_events" "team_step_functions_execution_aborted" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.states.executionsAbortedByAccountIdRegionStateMachineArn:sum:filter(and(or(eq(\"aws.account.id\",${var.team_account_id}):splitBy(statemachinearn)"
+    metric_selector = "cloud.aws.states.executionsAbortedByAccountIdRegionStateMachineArn:sum:filter(eq(\"aws.account.id\",${var.team_account_id})):splitBy(\"statemachinearn\")"
   }
 }
 
