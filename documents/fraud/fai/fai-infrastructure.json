@@ -1,5 +1,5 @@
 {
-  "version": 20,
+  "version": 21,
   "variables": [
     {
       "version": 2,
@@ -1409,42 +1409,496 @@
         "tileTimeframe": { "from": "now()-2h", "to": "now()" },
         "tileTimeframeEnabled": false
       }
+    },
+    "76": {
+      "title": "Lambda Response Latency",
+      "type": "data",
+      "query": "timeseries latency = avg(cloud.aws.lambda.durationByAccountIdFunctionNameRegion),\n  by: { functionname },\n  filter: { aws.account.id == $SelectedAWSAccount }\n| filter functionname ~ \"-fa-\"\n| fieldsRename `Function Name` = functionname\n| fieldsAdd\n  Min = arrayMin(latency),\n  Avg = arrayAvg(latency),\n  P95 = arrayPercentile(latency, 95),\n  P99 = arrayPercentile(latency, 99),\n  Max = arrayMax(latency)\n| fields `Function Name`, Min, Avg, P95, P99, Max",
+      "visualization": "table",
+      "visualizationSettings": {
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "Min",
+            "unitCategory": "time",
+            "baseUnit": "millisecond",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1772813591470
+          },
+          {
+            "identifier": "Avg",
+            "unitCategory": "time",
+            "baseUnit": "millisecond",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1772813657191
+          },
+          {
+            "identifier": "P95",
+            "unitCategory": "time",
+            "baseUnit": "millisecond",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1772813657610
+          },
+          {
+            "identifier": "P99",
+            "unitCategory": "time",
+            "baseUnit": "millisecond",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1772813657990
+          },
+          {
+            "identifier": "Max",
+            "unitCategory": "time",
+            "baseUnit": "millisecond",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1772813658329
+          }
+        ],
+        "thresholds": [
+          {
+            "id": 1,
+            "field": "Min",
+            "title": "",
+            "isEnabled": true,
+            "rules": [
+              {
+                "id": 0,
+                "color": "#7DC540",
+                "comparator": "≥",
+                "label": "",
+                "value": 0
+              },
+              {
+                "id": 1,
+                "color": "#F5D30F",
+                "comparator": "≥",
+                "label": "",
+                "value": 200
+              },
+              {
+                "id": 2,
+                "color": "#DC172A",
+                "comparator": "≥",
+                "label": "",
+                "value": 500
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "field": "Avg",
+            "title": "",
+            "isEnabled": true,
+            "rules": [
+              {
+                "id": 0,
+                "color": "#7DC540",
+                "comparator": "≥",
+                "label": "",
+                "value": 0
+              },
+              {
+                "id": 1,
+                "color": "#F5D30F",
+                "comparator": "≥",
+                "label": "",
+                "value": 500
+              },
+              {
+                "id": 2,
+                "color": "#DC172A",
+                "comparator": "≥",
+                "label": "",
+                "value": 1000
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "field": "P95",
+            "title": "",
+            "isEnabled": true,
+            "rules": [
+              {
+                "id": 0,
+                "color": "#7DC540",
+                "comparator": "≥",
+                "label": "",
+                "value": 0
+              },
+              {
+                "id": 1,
+                "color": "#F5D30F",
+                "comparator": "≥",
+                "label": "",
+                "value": 500
+              },
+              {
+                "id": 2,
+                "color": "#DC172A",
+                "comparator": "≥",
+                "label": "",
+                "value": 1000
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "field": "P99",
+            "title": "",
+            "isEnabled": true,
+            "rules": [
+              {
+                "id": 0,
+                "color": "#7DC540",
+                "comparator": "≥",
+                "label": "",
+                "value": 0
+              },
+              {
+                "id": 1,
+                "color": "#F5D30F",
+                "comparator": "≥",
+                "label": "",
+                "value": 1250
+              },
+              {
+                "id": 2,
+                "color": "#DC172A",
+                "comparator": "≥",
+                "label": "",
+                "value": 2500
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "field": "Max",
+            "title": "",
+            "isEnabled": true,
+            "rules": [
+              {
+                "id": 0,
+                "color": "#7DC540",
+                "comparator": "≥",
+                "label": "",
+                "value": 0
+              },
+              {
+                "id": 1,
+                "color": "#F5D30F",
+                "comparator": "≥",
+                "label": "",
+                "value": 1000
+              },
+              {
+                "id": 2,
+                "color": "#DC172A",
+                "comparator": "≥",
+                "label": "",
+                "value": 2000
+              }
+            ]
+          }
+        ],
+        "table": {
+          "colorThresholdTarget": "background",
+          "hideColumnsForLargeResults": true,
+          "rowDensity": "comfortable",
+          "sortBy": [{ "columnId": "[\"Avg\"]", "direction": "ascending" }],
+          "selectedColumnForRowThreshold": "Min"
+        }
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "77": {
+      "title": "Gateway Response Latency",
+      "type": "data",
+      "query": "timeseries latency = avg(cloud.aws.apigateway.latencyByAccountIdApiNameRegion),\n  by: { apiname },\n  filter: { aws.account.id == $SelectedAWSAccount }\n| fieldsRename `API Name` = apiname\n| fieldsAdd\n  Min = arrayMin(latency),\n  Avg = arrayAvg(latency),\n  P95 = arrayPercentile(latency, 95),\n  P99 = arrayPercentile(latency, 99),\n  Max = arrayMax(latency)\n| fields `API Name`, Min, Avg, P95, P99, Max",
+      "visualization": "table",
+      "visualizationSettings": {
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "Min",
+            "unitCategory": "time",
+            "baseUnit": "millisecond",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1772813591470
+          },
+          {
+            "identifier": "Avg",
+            "unitCategory": "time",
+            "baseUnit": "millisecond",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1772813657191
+          },
+          {
+            "identifier": "P95",
+            "unitCategory": "time",
+            "baseUnit": "millisecond",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1772813657610
+          },
+          {
+            "identifier": "P99",
+            "unitCategory": "time",
+            "baseUnit": "millisecond",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1772813657990
+          },
+          {
+            "identifier": "Max",
+            "unitCategory": "time",
+            "baseUnit": "millisecond",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1772813658329
+          }
+        ],
+        "thresholds": [
+          {
+            "id": 1,
+            "field": "Min",
+            "title": "",
+            "isEnabled": true,
+            "rules": [
+              {
+                "id": 0,
+                "color": "#7DC540",
+                "comparator": "≥",
+                "label": "",
+                "value": 0
+              },
+              {
+                "id": 1,
+                "color": "#F5D30F",
+                "comparator": "≥",
+                "label": "",
+                "value": 200
+              },
+              {
+                "id": 2,
+                "color": "#DC172A",
+                "comparator": "≥",
+                "label": "",
+                "value": 500
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "field": "Avg",
+            "title": "",
+            "isEnabled": true,
+            "rules": [
+              {
+                "id": 0,
+                "color": "#7DC540",
+                "comparator": "≥",
+                "label": "",
+                "value": 0
+              },
+              {
+                "id": 1,
+                "color": "#F5D30F",
+                "comparator": "≥",
+                "label": "",
+                "value": 500
+              },
+              {
+                "id": 2,
+                "color": "#DC172A",
+                "comparator": "≥",
+                "label": "",
+                "value": 1000
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "field": "P95",
+            "title": "",
+            "isEnabled": true,
+            "rules": [
+              {
+                "id": 0,
+                "color": "#7DC540",
+                "comparator": "≥",
+                "label": "",
+                "value": 0
+              },
+              {
+                "id": 1,
+                "color": "#F5D30F",
+                "comparator": "≥",
+                "label": "",
+                "value": 500
+              },
+              {
+                "id": 2,
+                "color": "#DC172A",
+                "comparator": "≥",
+                "label": "",
+                "value": 1000
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "field": "P99",
+            "title": "",
+            "isEnabled": true,
+            "rules": [
+              {
+                "id": 0,
+                "color": "#7DC540",
+                "comparator": "≥",
+                "label": "",
+                "value": 0
+              },
+              {
+                "id": 1,
+                "color": "#F5D30F",
+                "comparator": "≥",
+                "label": "",
+                "value": 1250
+              },
+              {
+                "id": 2,
+                "color": "#DC172A",
+                "comparator": "≥",
+                "label": "",
+                "value": 2500
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "field": "Max",
+            "title": "",
+            "isEnabled": true,
+            "rules": [
+              {
+                "id": 0,
+                "color": "#7DC540",
+                "comparator": "≥",
+                "label": "",
+                "value": 0
+              },
+              {
+                "id": 1,
+                "color": "#F5D30F",
+                "comparator": "≥",
+                "label": "",
+                "value": 1000
+              },
+              {
+                "id": 2,
+                "color": "#DC172A",
+                "comparator": "≥",
+                "label": "",
+                "value": 2000
+              }
+            ]
+          }
+        ],
+        "table": {
+          "colorThresholdTarget": "background",
+          "hideColumnsForLargeResults": true,
+          "rowDensity": "comfortable",
+          "sortBy": [{ "columnId": "[\"Avg\"]", "direction": "ascending" }],
+          "selectedColumnForRowThreshold": "Min"
+        }
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
     }
   },
   "layouts": {
     "0": { "x": 0, "y": 0, "w": 36, "h": 2 },
     "1": { "x": 0, "y": 2, "w": 36, "h": 1 },
-    "2": { "x": 18, "y": 3, "w": 18, "h": 10 },
-    "3": { "x": 0, "y": 13, "w": 18, "h": 10 },
-    "4": { "x": 18, "y": 19, "w": 18, "h": 4 },
-    "5": { "x": 18, "y": 13, "w": 18, "h": 3 },
-    "6": { "x": 18, "y": 16, "w": 18, "h": 3 },
-    "7": { "x": 0, "y": 23, "w": 36, "h": 4 },
-    "8": { "x": 0, "y": 27, "w": 36, "h": 1 },
-    "25": { "x": 0, "y": 28, "w": 18, "h": 9 },
-    "26": { "x": 18, "y": 28, "w": 18, "h": 9 },
-    "27": { "x": 0, "y": 37, "w": 18, "h": 9 },
-    "28": { "x": 18, "y": 37, "w": 18, "h": 9 },
-    "29": { "x": 0, "y": 46, "w": 18, "h": 9 },
-    "30": { "x": 18, "y": 46, "w": 18, "h": 9 },
-    "31": { "x": 18, "y": 55, "w": 18, "h": 9 },
-    "34": { "x": 0, "y": 3, "w": 18, "h": 10 },
-    "37": { "x": 0, "y": 55, "w": 18, "h": 9 },
-    "51": { "x": 0, "y": 64, "w": 36, "h": 1 },
-    "55": { "x": 0, "y": 65, "w": 18, "h": 9 },
-    "56": { "x": 18, "y": 65, "w": 18, "h": 9 },
-    "57": { "x": 0, "y": 74, "w": 36, "h": 1 },
-    "62": { "x": 0, "y": 75, "w": 18, "h": 7 },
-    "63": { "x": 18, "y": 75, "w": 18, "h": 7 },
-    "64": { "x": 0, "y": 82, "w": 18, "h": 8 },
-    "65": { "x": 18, "y": 82, "w": 18, "h": 8 },
-    "67": { "x": 0, "y": 90, "w": 18, "h": 8 },
-    "68": { "x": 0, "y": 98, "w": 36, "h": 2 },
-    "69": { "x": 0, "y": 100, "w": 18, "h": 7 },
-    "70": { "x": 18, "y": 100, "w": 18, "h": 7 },
-    "71": { "x": 0, "y": 107, "w": 18, "h": 8 },
-    "72": { "x": 18, "y": 107, "w": 18, "h": 8 },
-    "73": { "x": 0, "y": 115, "w": 18, "h": 7 }
+    "2": { "x": 18, "y": 6, "w": 18, "h": 10 },
+    "3": { "x": 0, "y": 16, "w": 18, "h": 10 },
+    "4": { "x": 18, "y": 22, "w": 18, "h": 4 },
+    "5": { "x": 18, "y": 16, "w": 18, "h": 3 },
+    "6": { "x": 18, "y": 19, "w": 18, "h": 3 },
+    "7": { "x": 0, "y": 26, "w": 36, "h": 4 },
+    "8": { "x": 0, "y": 30, "w": 36, "h": 1 },
+    "25": { "x": 0, "y": 35, "w": 18, "h": 9 },
+    "26": { "x": 18, "y": 35, "w": 18, "h": 9 },
+    "27": { "x": 0, "y": 44, "w": 18, "h": 9 },
+    "28": { "x": 18, "y": 44, "w": 18, "h": 9 },
+    "29": { "x": 0, "y": 53, "w": 18, "h": 9 },
+    "30": { "x": 18, "y": 53, "w": 18, "h": 9 },
+    "31": { "x": 18, "y": 62, "w": 18, "h": 9 },
+    "34": { "x": 0, "y": 6, "w": 18, "h": 10 },
+    "37": { "x": 0, "y": 62, "w": 18, "h": 9 },
+    "51": { "x": 0, "y": 71, "w": 36, "h": 1 },
+    "55": { "x": 0, "y": 72, "w": 18, "h": 9 },
+    "56": { "x": 18, "y": 72, "w": 18, "h": 9 },
+    "57": { "x": 0, "y": 81, "w": 36, "h": 1 },
+    "62": { "x": 0, "y": 82, "w": 18, "h": 7 },
+    "63": { "x": 18, "y": 82, "w": 18, "h": 7 },
+    "64": { "x": 0, "y": 89, "w": 18, "h": 8 },
+    "65": { "x": 18, "y": 89, "w": 18, "h": 8 },
+    "67": { "x": 0, "y": 97, "w": 18, "h": 8 },
+    "68": { "x": 0, "y": 105, "w": 36, "h": 2 },
+    "69": { "x": 0, "y": 107, "w": 18, "h": 7 },
+    "70": { "x": 18, "y": 107, "w": 18, "h": 7 },
+    "71": { "x": 0, "y": 114, "w": 18, "h": 8 },
+    "72": { "x": 18, "y": 114, "w": 18, "h": 8 },
+    "73": { "x": 0, "y": 122, "w": 18, "h": 7 },
+    "76": { "x": 0, "y": 31, "w": 36, "h": 4 },
+    "77": { "x": 0, "y": 3, "w": 36, "h": 3 }
   },
   "importedWithCode": true,
   "settings": {
@@ -1454,5 +1908,6 @@
       "enabled": false
     },
     "defaultSegments": { "value": [], "enabled": false }
-  }
+  },
+  "annotations": []
 }
