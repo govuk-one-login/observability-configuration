@@ -783,10 +783,10 @@ module "wallet" {
 
 ### STS ###
 
-module "sts_behaviours" {
+module "sts_metrics" {
   count  = local.is_production ? 1 : 0
   source = "./modules/dashboard"
-  path   = "mobile-platform/sts/sts-behaviours.json"
+  path   = "mobile-platform/sts/sts-metrics.json"
 }
 
 module "sts_standard_metrics_prod" {
