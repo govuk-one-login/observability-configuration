@@ -130,11 +130,7 @@
       "visualizationSettings": {
         "chartSettings": {
           "truncationMode": "middle",
-          "leftYAxisSettings": {
-            "label": "Errors",
-            "isLabelVisible": true,
-            "max": null
-          },
+          "leftYAxisSettings": { "label": "Errors", "isLabelVisible": true },
           "xAxisLabel": "timeframe",
           "xAxisScaling": "analyzedTimeframe",
           "fieldMapping": {
@@ -142,6 +138,9 @@
             "timestamp": "timeframe"
           },
           "gapPolicy": { "threshold": "1h" }
+        },
+        "dataMapping": {
+          "displayedFields": ["apiname", "Errors4xx", "Errors5xx"]
         },
         "legend": { "ratio": 26 },
         "thresholds": [
@@ -157,10 +156,7 @@
             "isEnabled": true
           }
         ],
-        "unitsOverrides": [],
-        "dataMapping": {
-          "displayedFields": ["apiname", "Errors4xx", "Errors5xx"]
-        }
+        "unitsOverrides": []
       },
       "querySettings": {
         "maxResultRecords": 1000,
@@ -181,16 +177,6 @@
       "visualization": "table",
       "visualizationSettings": {
         "table": {
-          "columnTypeOverrides": [
-            {
-              "fields": [
-                "countByAccountIdApiNameRegion",
-                "latencyByAccountIdApiNameRegion"
-              ],
-              "value": "sparkline",
-              "id": 1741626519288
-            }
-          ],
           "hiddenColumns": [
             ["timeframe"],
             ["interval"],
@@ -202,7 +188,17 @@
             "[\"countByAccountIdApiNameRegion\"]": 112.14236450195312,
             "[\"API Name\"]": 336.9600830078125,
             "[\"Count\"]": 153.50868225097656
-          }
+          },
+          "columnTypeOverrides": [
+            {
+              "fields": [
+                "countByAccountIdApiNameRegion",
+                "latencyByAccountIdApiNameRegion"
+              ],
+              "value": "sparkline",
+              "id": 1741626519288
+            }
+          ]
         },
         "thresholds": [
           {
@@ -264,14 +260,16 @@
             ["interval"],
             ["4xxErrorByAccountIdApiNameRegionStage"]
           ],
+          "sortBy": [
+            { "columnId": "[\"API Name\"]", "direction": "ascending" }
+          ],
           "columnTypeOverrides": [
             {
               "fields": ["4xxErrorByAccountIdApiNameRegionStage"],
               "value": "sparkline",
               "id": 1741626519495
             }
-          ],
-          "sortBy": [{ "columnId": "[\"API Name\"]", "direction": "ascending" }]
+          ]
         },
         "thresholds": [
           {
@@ -323,14 +321,16 @@
             ["interval"],
             ["5xxErrorByAccountIdApiNameRegionStage"]
           ],
+          "sortBy": [
+            { "columnId": "[\"API Name\"]", "direction": "ascending" }
+          ],
           "columnTypeOverrides": [
             {
               "fields": ["5xxErrorByAccountIdApiNameRegionStage"],
               "value": "sparkline",
               "id": 1741626519500
             }
-          ],
-          "sortBy": [{ "columnId": "[\"API Name\"]", "direction": "ascending" }]
+          ]
         },
         "thresholds": [
           {
@@ -900,8 +900,8 @@
         "davisVisualization": { "isAvailable": true }
       },
       "timeframe": {
-        "tileTimeframeEnabled": false,
-        "tileTimeframe": { "from": "now()-365d", "to": "now()" }
+        "tileTimeframe": { "from": "now()-365d", "to": "now()" },
+        "tileTimeframeEnabled": false
       }
     },
     "56": {
@@ -948,8 +948,8 @@
         "davisVisualization": { "isAvailable": true }
       },
       "timeframe": {
-        "tileTimeframeEnabled": false,
-        "tileTimeframe": { "from": "now()-365d", "to": "now()" }
+        "tileTimeframe": { "from": "now()-365d", "to": "now()" },
+        "tileTimeframeEnabled": false
       }
     },
     "57": { "type": "markdown", "content": "## SQS Metrics" },
@@ -1604,7 +1604,7 @@
                 "color": "#F5D30F",
                 "comparator": "≥",
                 "label": "",
-                "value": 1000
+                "value": 2500
               },
               {
                 "id": 2,
@@ -1639,7 +1639,7 @@
     "77": {
       "title": "Gateway Response Latency",
       "type": "data",
-      "query": "timeseries latency = avg(cloud.aws.apigateway.latencyByAccountIdApiNameRegion),\n  by: { apiname },\n  filter: { aws.account.id == $SelectedAWSAccount }\n| fieldsRename `API Name` = apiname\n| fieldsAdd\n  Min = arrayMin(latency),\n  Avg = arrayAvg(latency),\n  P95 = arrayPercentile(latency, 95),\n  P99 = arrayPercentile(latency, 99),\n  Max = arrayMax(latency)\n| fields `API Name`, Min, Avg, P95, P99, Max",
+      "query": "timeseries \n  latency_avg = avg(cloud.aws.apigateway.latencyByAccountIdApiNameRegion),\n  latency_max = max(cloud.aws.apigateway.latencyByAccountIdApiNameRegion),\n  latency_min = min(cloud.aws.apigateway.latencyByAccountIdApiNameRegion),\n  by: { apiname },\n  filter: { aws.account.id == $SelectedAWSAccount }\n| fieldsRename `API Name` = apiname\n| fieldsAdd\n  Min = arrayMin(latency_min),\n  Avg = arrayAvg(latency_avg),\n  P95 = arrayPercentile(latency_avg, 95),\n  P99 = arrayPercentile(latency_avg, 99),\n  Max = arrayMax(latency_max)\n| fields `API Name`, Min, Avg, P95, P99, Max",
       "visualization": "table",
       "visualizationSettings": {
         "autoSelectVisualization": false,
@@ -1830,14 +1830,14 @@
                 "color": "#F5D30F",
                 "comparator": "≥",
                 "label": "",
-                "value": 1000
+                "value": 2500
               },
               {
                 "id": 2,
                 "color": "#DC172A",
                 "comparator": "≥",
                 "label": "",
-                "value": 2000
+                "value": 5000
               }
             ]
           }
@@ -1846,7 +1846,7 @@
           "colorThresholdTarget": "background",
           "hideColumnsForLargeResults": true,
           "rowDensity": "comfortable",
-          "sortBy": [{ "columnId": "[\"Avg\"]", "direction": "ascending" }],
+          "sortBy": [{ "columnId": "[\"P99\"]", "direction": "ascending" }],
           "selectedColumnForRowThreshold": "Min"
         }
       },
