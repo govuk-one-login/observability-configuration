@@ -1411,9 +1411,9 @@
       }
     },
     "76": {
-      "title": "Lambda Response Latency",
+      "title": "Lambda Frontend Response Latency",
       "type": "data",
-      "query": "timeseries latency = avg(cloud.aws.lambda.durationByAccountIdFunctionNameRegion),\n  by: { functionname },\n  filter: { aws.account.id == $SelectedAWSAccount }\n| filter functionname ~ \"-fa-\"\n| fieldsRename `Function Name` = functionname\n| fieldsAdd\n  Min = arrayMin(latency),\n  Avg = arrayAvg(latency),\n  P95 = arrayPercentile(latency, 95),\n  P99 = arrayPercentile(latency, 99),\n  Max = arrayMax(latency)\n| fields `Function Name`, Min, Avg, P95, P99, Max",
+      "query": "timeseries latency = avg(cloud.aws.lambda.durationByAccountIdFunctionNameRegion),\n  by: { functionname },\n  filter: { aws.account.id == $SelectedAWSAccount }\n| filter functionname ~ \"-fa-frontend\" or functionname ~ \"-fa-auth\"\n| fieldsRename `Function Name` = functionname\n| fieldsAdd\n  Min = arrayMin(latency),\n  Avg = arrayAvg(latency),\n  P95 = arrayPercentile(latency, 95),\n  P99 = arrayPercentile(latency, 99),\n  Max = arrayMax(latency)\n| fields `Function Name`, Min, Avg, P95, P99, Max",
       "visualization": "table",
       "visualizationSettings": {
         "autoSelectVisualization": false,
@@ -1619,7 +1619,6 @@
         "table": {
           "colorThresholdTarget": "background",
           "hideColumnsForLargeResults": true,
-          "rowDensity": "comfortable",
           "sortBy": [{ "columnId": "[\"Avg\"]", "direction": "ascending" }],
           "selectedColumnForRowThreshold": "Min"
         }
@@ -1861,6 +1860,85 @@
         "enabled": false,
         "davisVisualization": { "isAvailable": true }
       }
+    },
+    "78": {
+      "title": "Lambda Backend Response Latency",
+      "type": "data",
+      "query": "timeseries latency = avg(cloud.aws.lambda.durationByAccountIdFunctionNameRegion),\n  by: { functionname },\n  filter: { aws.account.id == $SelectedAWSAccount }\n| filter functionname ~ \"-fa-\"\n| filterOut functionname ~ \"-fa-frontend\" or functionname ~ \"-fa-auth\"\n| fieldsRename `Function Name` = functionname\n| fieldsAdd\n  Min = arrayMin(latency),\n  Avg = arrayAvg(latency),\n  P95 = arrayPercentile(latency, 95),\n  P99 = arrayPercentile(latency, 99),\n  Max = arrayMax(latency)\n| fields `Function Name`, Min, Avg, P95, P99, Max",
+      "visualization": "table",
+      "visualizationSettings": {
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "Min",
+            "unitCategory": "time",
+            "baseUnit": "millisecond",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1772813591470
+          },
+          {
+            "identifier": "Avg",
+            "unitCategory": "time",
+            "baseUnit": "millisecond",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1772813657191
+          },
+          {
+            "identifier": "P95",
+            "unitCategory": "time",
+            "baseUnit": "millisecond",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1772813657610
+          },
+          {
+            "identifier": "P99",
+            "unitCategory": "time",
+            "baseUnit": "millisecond",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1772813657990
+          },
+          {
+            "identifier": "Max",
+            "unitCategory": "time",
+            "baseUnit": "millisecond",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1772813658329
+          }
+        ],
+        "thresholds": [],
+        "table": {
+          "colorThresholdTarget": "background",
+          "hideColumnsForLargeResults": true,
+          "sortBy": [{ "columnId": "[\"Avg\"]", "direction": "ascending" }],
+          "selectedColumnForRowThreshold": "Min"
+        }
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
     }
   },
   "layouts": {
@@ -1873,32 +1951,33 @@
     "6": { "x": 18, "y": 19, "w": 18, "h": 3 },
     "7": { "x": 0, "y": 26, "w": 36, "h": 4 },
     "8": { "x": 0, "y": 30, "w": 36, "h": 1 },
-    "25": { "x": 0, "y": 37, "w": 18, "h": 9 },
-    "26": { "x": 18, "y": 37, "w": 18, "h": 9 },
-    "27": { "x": 0, "y": 46, "w": 18, "h": 9 },
-    "28": { "x": 18, "y": 46, "w": 18, "h": 9 },
-    "29": { "x": 0, "y": 55, "w": 18, "h": 9 },
-    "30": { "x": 18, "y": 55, "w": 18, "h": 9 },
-    "31": { "x": 18, "y": 64, "w": 18, "h": 9 },
+    "25": { "x": 0, "y": 34, "w": 18, "h": 9 },
+    "26": { "x": 18, "y": 34, "w": 18, "h": 9 },
+    "27": { "x": 0, "y": 43, "w": 18, "h": 9 },
+    "28": { "x": 18, "y": 43, "w": 18, "h": 9 },
+    "29": { "x": 0, "y": 52, "w": 18, "h": 9 },
+    "30": { "x": 18, "y": 52, "w": 18, "h": 9 },
+    "31": { "x": 18, "y": 61, "w": 18, "h": 9 },
     "34": { "x": 0, "y": 6, "w": 18, "h": 10 },
-    "37": { "x": 0, "y": 64, "w": 18, "h": 9 },
-    "51": { "x": 0, "y": 73, "w": 36, "h": 1 },
-    "55": { "x": 0, "y": 74, "w": 18, "h": 9 },
-    "56": { "x": 18, "y": 74, "w": 18, "h": 9 },
-    "57": { "x": 0, "y": 83, "w": 36, "h": 1 },
-    "62": { "x": 0, "y": 84, "w": 18, "h": 7 },
-    "63": { "x": 18, "y": 84, "w": 18, "h": 7 },
-    "64": { "x": 0, "y": 91, "w": 18, "h": 8 },
-    "65": { "x": 18, "y": 91, "w": 18, "h": 8 },
-    "67": { "x": 0, "y": 99, "w": 18, "h": 8 },
-    "68": { "x": 0, "y": 107, "w": 36, "h": 2 },
-    "69": { "x": 0, "y": 109, "w": 18, "h": 7 },
-    "70": { "x": 18, "y": 109, "w": 18, "h": 7 },
-    "71": { "x": 0, "y": 116, "w": 18, "h": 8 },
-    "72": { "x": 18, "y": 116, "w": 18, "h": 8 },
-    "73": { "x": 0, "y": 124, "w": 18, "h": 7 },
-    "76": { "x": 0, "y": 31, "w": 36, "h": 6 },
-    "77": { "x": 0, "y": 3, "w": 36, "h": 3 }
+    "37": { "x": 0, "y": 61, "w": 18, "h": 9 },
+    "51": { "x": 0, "y": 70, "w": 36, "h": 1 },
+    "55": { "x": 0, "y": 71, "w": 18, "h": 9 },
+    "56": { "x": 18, "y": 71, "w": 18, "h": 9 },
+    "57": { "x": 0, "y": 80, "w": 36, "h": 1 },
+    "62": { "x": 0, "y": 81, "w": 18, "h": 7 },
+    "63": { "x": 18, "y": 81, "w": 18, "h": 7 },
+    "64": { "x": 0, "y": 88, "w": 18, "h": 8 },
+    "65": { "x": 18, "y": 88, "w": 18, "h": 8 },
+    "67": { "x": 0, "y": 96, "w": 18, "h": 8 },
+    "68": { "x": 0, "y": 104, "w": 36, "h": 2 },
+    "69": { "x": 0, "y": 106, "w": 18, "h": 7 },
+    "70": { "x": 18, "y": 106, "w": 18, "h": 7 },
+    "71": { "x": 0, "y": 113, "w": 18, "h": 8 },
+    "72": { "x": 18, "y": 113, "w": 18, "h": 8 },
+    "73": { "x": 0, "y": 121, "w": 18, "h": 7 },
+    "76": { "x": 0, "y": 31, "w": 18, "h": 3 },
+    "77": { "x": 0, "y": 3, "w": 36, "h": 3 },
+    "78": { "x": 18, "y": 31, "w": 18, "h": 3 }
   },
   "importedWithCode": true,
   "settings": {
