@@ -198,7 +198,8 @@
               "value": "sparkline",
               "id": 1741626519288
             }
-          ]
+          ],
+          "sortBy": [{ "columnId": "[\"API Name\"]", "direction": "ascending" }]
         },
         "thresholds": [
           {
@@ -577,6 +578,7 @@
           },
           "gapPolicy": "connect"
         },
+        "dataMapping": { "displayedFields": ["functionname"] },
         "autoSelectVisualization": false,
         "thresholds": [],
         "unitsOverrides": [
@@ -590,8 +592,7 @@
             "delimiter": false,
             "added": 1740155455179
           }
-        ],
-        "dataMapping": { "displayedFields": ["functionname"] }
+        ]
       }
     },
     "30": {
@@ -1939,45 +1940,96 @@
         "enabled": false,
         "davisVisualization": { "isAvailable": true }
       }
+    },
+    "79": {
+      "title": "Gateway Availability",
+      "description": "A percentage of success responses to 5xx responses. 4xx errors are not included.",
+      "type": "data",
+      "query": "timeseries { `5xxErrorByAccountIdApiNameRegionStage` = sum(cloud.aws.apigateway.5xxErrorByAccountIdApiNameRegionStage), countByAccountIdApiNameRegion = sum(cloud.aws.apigateway.countByAccountIdApiNameRegion)}, \nby: { apiname }, \nfilter: { aws.account.id == $SelectedAWSAccount }\n| fieldsAdd ErrorCount = arraySum(`5xxErrorByAccountIdApiNameRegionStage`)\n| fieldsAdd TotalCount = arraySum(`countByAccountIdApiNameRegion`)\n| fieldsAdd `Success %` = ((TotalCount - ErrorCount) / TotalCount) * 100.0\n| fields `Success %`",
+      "visualization": "gauge",
+      "visualizationSettings": {
+        "unitsOverrides": [
+          {
+            "identifier": "Success %",
+            "unitCategory": "percentage",
+            "baseUnit": "percent",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1773144594244
+          }
+        ],
+        "colorModeType": {
+          "color": "#DC172A",
+          "customNumericColors": [
+            {
+              "id": 6243788.5,
+              "value": 100,
+              "color": "#7DC540",
+              "comparator": "≥"
+            },
+            {
+              "id": 6308367.900000006,
+              "value": 99.5,
+              "color": "#F5D30F",
+              "comparator": "≥"
+            }
+          ]
+        },
+        "autoSelectVisualization": false
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
     }
   },
   "layouts": {
     "0": { "x": 0, "y": 0, "w": 36, "h": 2 },
     "1": { "x": 0, "y": 2, "w": 36, "h": 1 },
-    "2": { "x": 18, "y": 6, "w": 18, "h": 10 },
-    "3": { "x": 0, "y": 16, "w": 18, "h": 10 },
-    "4": { "x": 18, "y": 22, "w": 18, "h": 4 },
-    "5": { "x": 18, "y": 16, "w": 18, "h": 3 },
-    "6": { "x": 18, "y": 19, "w": 18, "h": 3 },
-    "7": { "x": 0, "y": 26, "w": 36, "h": 4 },
-    "8": { "x": 0, "y": 30, "w": 36, "h": 1 },
-    "25": { "x": 0, "y": 34, "w": 18, "h": 9 },
-    "26": { "x": 18, "y": 34, "w": 18, "h": 9 },
-    "27": { "x": 0, "y": 43, "w": 18, "h": 9 },
-    "28": { "x": 18, "y": 43, "w": 18, "h": 9 },
-    "29": { "x": 0, "y": 52, "w": 18, "h": 9 },
-    "30": { "x": 18, "y": 52, "w": 18, "h": 9 },
-    "31": { "x": 18, "y": 61, "w": 18, "h": 9 },
-    "34": { "x": 0, "y": 6, "w": 18, "h": 10 },
-    "37": { "x": 0, "y": 61, "w": 18, "h": 9 },
-    "51": { "x": 0, "y": 70, "w": 36, "h": 1 },
-    "55": { "x": 0, "y": 71, "w": 18, "h": 9 },
-    "56": { "x": 18, "y": 71, "w": 18, "h": 9 },
-    "57": { "x": 0, "y": 80, "w": 36, "h": 1 },
-    "62": { "x": 0, "y": 81, "w": 18, "h": 7 },
-    "63": { "x": 18, "y": 81, "w": 18, "h": 7 },
-    "64": { "x": 0, "y": 88, "w": 18, "h": 8 },
-    "65": { "x": 18, "y": 88, "w": 18, "h": 8 },
-    "67": { "x": 0, "y": 96, "w": 18, "h": 8 },
-    "68": { "x": 0, "y": 104, "w": 36, "h": 2 },
-    "69": { "x": 0, "y": 106, "w": 18, "h": 7 },
-    "70": { "x": 18, "y": 106, "w": 18, "h": 7 },
-    "71": { "x": 0, "y": 113, "w": 18, "h": 8 },
-    "72": { "x": 18, "y": 113, "w": 18, "h": 8 },
-    "73": { "x": 0, "y": 121, "w": 18, "h": 7 },
-    "76": { "x": 0, "y": 31, "w": 18, "h": 3 },
-    "77": { "x": 0, "y": 3, "w": 36, "h": 3 },
-    "78": { "x": 18, "y": 31, "w": 18, "h": 3 }
+    "2": { "x": 18, "y": 7, "w": 18, "h": 10 },
+    "3": { "x": 0, "y": 17, "w": 18, "h": 10 },
+    "4": { "x": 18, "y": 23, "w": 18, "h": 4 },
+    "5": { "x": 18, "y": 17, "w": 18, "h": 3 },
+    "6": { "x": 18, "y": 20, "w": 18, "h": 3 },
+    "7": { "x": 0, "y": 27, "w": 36, "h": 4 },
+    "8": { "x": 0, "y": 31, "w": 36, "h": 1 },
+    "25": { "x": 0, "y": 35, "w": 18, "h": 9 },
+    "26": { "x": 18, "y": 35, "w": 18, "h": 9 },
+    "27": { "x": 0, "y": 44, "w": 18, "h": 9 },
+    "28": { "x": 18, "y": 44, "w": 18, "h": 9 },
+    "29": { "x": 0, "y": 53, "w": 18, "h": 9 },
+    "30": { "x": 18, "y": 53, "w": 18, "h": 9 },
+    "31": { "x": 18, "y": 62, "w": 18, "h": 9 },
+    "34": { "x": 0, "y": 7, "w": 18, "h": 10 },
+    "37": { "x": 0, "y": 62, "w": 18, "h": 9 },
+    "51": { "x": 0, "y": 71, "w": 36, "h": 1 },
+    "55": { "x": 0, "y": 72, "w": 18, "h": 9 },
+    "56": { "x": 18, "y": 72, "w": 18, "h": 9 },
+    "57": { "x": 0, "y": 81, "w": 36, "h": 1 },
+    "62": { "x": 0, "y": 82, "w": 18, "h": 7 },
+    "63": { "x": 18, "y": 82, "w": 18, "h": 7 },
+    "64": { "x": 0, "y": 89, "w": 18, "h": 8 },
+    "65": { "x": 18, "y": 89, "w": 18, "h": 8 },
+    "67": { "x": 0, "y": 97, "w": 18, "h": 8 },
+    "68": { "x": 0, "y": 105, "w": 36, "h": 2 },
+    "69": { "x": 0, "y": 107, "w": 18, "h": 7 },
+    "70": { "x": 18, "y": 107, "w": 18, "h": 7 },
+    "71": { "x": 0, "y": 114, "w": 18, "h": 8 },
+    "72": { "x": 18, "y": 114, "w": 18, "h": 8 },
+    "73": { "x": 0, "y": 122, "w": 18, "h": 7 },
+    "76": { "x": 0, "y": 32, "w": 18, "h": 3 },
+    "77": { "x": 12, "y": 3, "w": 24, "h": 4 },
+    "78": { "x": 18, "y": 32, "w": 18, "h": 3 },
+    "79": { "x": 0, "y": 3, "w": 12, "h": 4 }
   },
   "importedWithCode": true,
   "settings": {
