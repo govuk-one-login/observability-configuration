@@ -1849,8 +1849,8 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 1406,
-        "left": 1178,
+        "top": 1710,
+        "left": 1824,
         "width": 646,
         "height": 304
       },
@@ -2100,7 +2100,7 @@
             "dt.entity.cloud:aws:account",
             "dt.entity.cloud:aws:region"
           ],
-          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(\"queuename\", \"production-spot-request-dlq\"))",
+          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(or(eq(\"queuename\", \"production-spot-request-dlq\"), eq(\"queuename\", \"integration-spot-request-dlq\")))",
           "rate": "NONE",
           "enabled": true
         }
@@ -2187,7 +2187,109 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(queuename,production-spot-request-dlq))):limit(100):names"
+        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(or(eq(queuename,production-spot-request-dlq),eq(queuename,integration-spot-request-dlq)))):limit(100):names"
+      ]
+    },
+    {
+      "name": "Number of Messages Visible (SPOT Request)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1406,
+        "left": 1178,
+        "width": 646,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename",
+            "aws.region",
+            "dt.entity.cloud:aws:sqs:queue",
+            "aws.account.id",
+            "dt.source",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region"
+          ],
+          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(or(eq(\"queuename\", \"production-spot-request-queue\"), eq(\"queuename\", \"integration-spot-request-queue\")))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(or(eq(queuename,production-spot-request-queue),eq(queuename,integration-spot-request-queue)))):limit(100):names"
       ]
     }
   ]
