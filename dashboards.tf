@@ -229,6 +229,17 @@ module "di_auth_phone_numbers_production_dashboard" {
   account_id              = "172348255554"
 }
 
+### Authentication - International Phone Number Aggregate Statistics ###
+
+module "di_auth_international_phone_numbers_production_dashboard" {
+  count  = local.is_production ? 1 : 0
+  source = "./dashboards/authentication/di-auth-international-phone-numbers"
+
+  application_environment = "production"
+  old_account_id          = "172348255554"
+  account_id              = "211125303002"
+}
+
 ### Authentication - Account Management ###
 
 module "di_auth_account_management_staging_dashboard" {
