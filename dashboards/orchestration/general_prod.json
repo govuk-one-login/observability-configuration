@@ -1115,8 +1115,8 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 76,
-        "left": 1900,
+        "top": 1102,
+        "left": 1178,
         "width": 646,
         "height": 304
       },
@@ -1207,7 +1207,11 @@
               "min": "AUTO",
               "max": "AUTO",
               "position": "LEFT",
-              "queryIds": ["A", "B", "C"],
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
               "defaultAxis": true
             }
           ]
@@ -1729,7 +1733,9 @@
           "id": "A",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
-          "splitBy": ["stage"],
+          "splitBy": [
+            "stage"
+          ],
           "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,production)),and(eq(apiname,\"production-di-authentication-api\")),and(eq(resource,\"/doc-app-callback\"))):splitBy(\"stage\"):count:sort(value(avg,descending))",
           "rate": "NONE",
           "enabled": true
@@ -1738,7 +1744,9 @@
           "id": "B",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
-          "splitBy": ["stage"],
+          "splitBy": [
+            "stage"
+          ],
           "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(and(eq(stage,integration)),and(eq(apiname,\"integration-di-authentication-api\")),and(eq(resource,\"/doc-app-callback\"))):splitBy(\"stage\"):count:sort(value(avg,descending))",
           "rate": "NONE",
           "enabled": true
@@ -1775,7 +1783,10 @@
               "min": "AUTO",
               "max": "AUTO",
               "position": "LEFT",
-              "queryIds": ["A", "B"],
+              "queryIds": [
+                "A",
+                "B"
+              ],
               "defaultAxis": true
             }
           ]
@@ -1832,6 +1843,556 @@
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
       "markdown": "## API Gateway requests\nThe graphs below show the number of requests to each orchestration endpoint. Note that since this is taken from API gateway metrics, it can include potentially invalid requests"
+    },
+    {
+      "name": "Number of messages received (SPOT request)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1710,
+        "left": 1824,
+        "width": 608,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename",
+            "aws.region",
+            "dt.entity.cloud:aws:sqs:queue",
+            "aws.account.id",
+            "dt.source",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region"
+          ],
+          "metricSelector": "cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion:filter(or(eq(\"queuename\", \"production-spot-request-queue\"), eq(\"queuename\", \"integration-spot-request-queue\")))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            },
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "RIGHT",
+              "queryIds": [
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion:filter(or(eq(queuename,production-spot-request-queue),eq(queuename,integration-spot-request-queue)))):limit(100):names"
+      ]
+    },
+    {
+      "name": "Age Of Oldest Message (SPOT request)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1102,
+        "left": 1824,
+        "width": 608,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename",
+            "aws.region",
+            "dt.entity.cloud:aws:sqs:queue",
+            "aws.account.id",
+            "dt.source",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region"
+          ],
+          "metricSelector": "cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(or(eq(\"queuename\", \"production-spot-request-queue\"), eq(\"queuename\", \"integration-spot-request-queue\")))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1m"
+      },
+      "metricExpressions": [
+        "resolution=1m&(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(or(eq(queuename,production-spot-request-queue),eq(queuename,integration-spot-request-queue)))):limit(100):names"
+      ]
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 988,
+        "left": 1178,
+        "width": 532,
+        "height": 114
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## SPOT Metrics\n\nNote there the queues are still in the auth account, so there are metrics for both"
+    },
+    {
+      "name": "Number of messages visible on SPOT request DLQ",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1406,
+        "left": 1824,
+        "width": 608,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename",
+            "aws.region",
+            "dt.entity.cloud:aws:sqs:queue",
+            "aws.account.id",
+            "dt.source",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region"
+          ],
+          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(or(eq(\"queuename\", \"production-spot-request-dlq\"), eq(\"queuename\", \"integration-spot-request-dlq\")))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "ApproximateNumberOfMessagesVisible",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "A:aws.account.id.name",
+            "A:queuename.name",
+            "A:aws.region.name",
+            "A:dt.entity.cloud:aws:sqs:queue.name",
+            "A:dt.source.name",
+            "A:dt.entity.cloud:aws:account.name",
+            "A:dt.entity.cloud:aws:region.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(or(eq(queuename,production-spot-request-dlq),eq(queuename,integration-spot-request-dlq)))):limit(100):names"
+      ]
+    },
+    {
+      "name": "Number of Messages Visible (SPOT Request)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1406,
+        "left": 1178,
+        "width": 646,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename",
+            "aws.region",
+            "dt.entity.cloud:aws:sqs:queue",
+            "aws.account.id",
+            "dt.source",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region"
+          ],
+          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(or(eq(\"queuename\", \"production-spot-request-queue\"), eq(\"queuename\", \"integration-spot-request-queue\")))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(or(eq(queuename,production-spot-request-queue),eq(queuename,integration-spot-request-queue)))):limit(100):names"
+      ]
+    },
+    {
+      "name": "Number of Messages Deleted (SPOT Request)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1710,
+        "left": 1178,
+        "width": 646,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename",
+            "aws.region",
+            "dt.entity.cloud:aws:sqs:queue",
+            "aws.account.id",
+            "dt.source",
+            "dt.entity.cloud:aws:account",
+            "dt.entity.cloud:aws:region"
+          ],
+          "metricSelector": "cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(or(eq(\"queuename\", \"production-spot-request-queue\"), eq(\"queuename\", \"integration-spot-request-queue\")))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.numberOfMessagesDeletedByAccountIdQueueNameRegion:filter(or(eq(queuename,production-spot-request-queue),eq(queuename,integration-spot-request-queue)))):limit(100):names"
+      ]
     }
   ]
 }
