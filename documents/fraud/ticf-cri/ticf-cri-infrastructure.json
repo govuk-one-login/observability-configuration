@@ -183,8 +183,7 @@
                 "latencyByAccountIdApiNameRegion"
               ],
               "value": "sparkline",
-              "id": 1741626519288,
-              "disableRemoval": false
+              "id": 1741626519288
             }
           ],
           "hiddenColumns": [
@@ -246,8 +245,7 @@
             {
               "fields": ["4xxErrorByAccountIdApiNameRegionStage"],
               "value": "sparkline",
-              "id": 1741626519495,
-              "disableRemoval": false
+              "id": 1741626519495
             }
           ],
           "hiddenColumns": [
@@ -292,8 +290,7 @@
             {
               "fields": ["5xxErrorByAccountIdApiNameRegionStage"],
               "value": "sparkline",
-              "id": 1741626519500,
-              "disableRemoval": false
+              "id": 1741626519500
             }
           ],
           "hiddenColumns": [
@@ -338,8 +335,7 @@
             {
               "fields": ["blockedRequestsByAccountIdRegionRuleWebACL"],
               "value": "sparkline",
-              "id": 1741626519436,
-              "disableRemoval": false
+              "id": 1741626519436
             }
           ],
           "hiddenColumns": [
@@ -944,9 +940,13 @@
           "truncationMode": "middle",
           "xAxisLabel": "timeframe",
           "xAxisScaling": "analyzedTimeframe",
+          "hiddenLegendFields": [
+            "interval",
+            "errorCount",
+            "errorsByAccountIdFunctionNameRegion"
+          ],
           "fieldMapping": { "leftAxisValues": ["a"], "timestamp": "timeframe" }
         },
-        "dataMapping": { "displayedFields": ["statuscode", "service"] },
         "autoSelectVisualization": false
       }
     },
@@ -982,8 +982,8 @@
         "davisVisualization": { "isAvailable": true }
       },
       "timeframe": {
-        "tileTimeframe": { "from": "now()-365d", "to": "now()" },
-        "tileTimeframeEnabled": true
+        "tileTimeframeEnabled": true,
+        "tileTimeframe": { "from": "now()-365d", "to": "now()" }
       }
     },
     "53": {
@@ -996,12 +996,17 @@
           "truncationMode": "middle",
           "xAxisLabel": "timeframe",
           "xAxisScaling": "analyzedTimeframe",
+          "hiddenLegendFields": [
+            "successfulRequestLatencyByAccountIdOperationRegionTableName",
+            "successfulRequestLatencyByAccountIdOperationRegionTableName.0",
+            "successfulRequestLatencyByAccountIdOperationRegionTableName.1",
+            "interval"
+          ],
           "fieldMapping": {
             "leftAxisValues": ["writeThrottleEvents"],
             "timestamp": "timeframe"
           }
         },
-        "dataMapping": { "displayedFields": ["tablename"] },
         "autoSelectVisualization": false,
         "unitsOverrides": []
       },
@@ -1017,8 +1022,8 @@
         "davisVisualization": { "isAvailable": true }
       },
       "timeframe": {
-        "tileTimeframe": { "from": "now()-365d", "to": "now()" },
-        "tileTimeframeEnabled": true
+        "tileTimeframeEnabled": true,
+        "tileTimeframe": { "from": "now()-365d", "to": "now()" }
       }
     },
     "54": {
@@ -1052,8 +1057,8 @@
         "davisVisualization": { "isAvailable": true }
       },
       "timeframe": {
-        "tileTimeframe": { "from": "now()-365d", "to": "now()" },
-        "tileTimeframeEnabled": true
+        "tileTimeframeEnabled": true,
+        "tileTimeframe": { "from": "now()-365d", "to": "now()" }
       }
     },
     "55": {
@@ -1087,8 +1092,8 @@
         "davisVisualization": { "isAvailable": true }
       },
       "timeframe": {
-        "tileTimeframe": { "from": "now()-365d", "to": "now()" },
-        "tileTimeframeEnabled": true
+        "tileTimeframeEnabled": true,
+        "tileTimeframe": { "from": "now()-365d", "to": "now()" }
       }
     },
     "56": {
@@ -1122,8 +1127,8 @@
         "davisVisualization": { "isAvailable": true }
       },
       "timeframe": {
-        "tileTimeframe": { "from": "now()-365d", "to": "now()" },
-        "tileTimeframeEnabled": true
+        "tileTimeframeEnabled": true,
+        "tileTimeframe": { "from": "now()-365d", "to": "now()" }
       }
     },
     "57": { "type": "markdown", "content": "## SQS Metrics" },
@@ -1902,6 +1907,81 @@
       }
     },
     "81": {
+      "title": "Gateway Other Availability",
+      "description": "A percentage of success responses to 5xx responses. 4xx errors are not included.",
+      "type": "data",
+      "query": "timeseries { `5xxErrorByAccountIdApiNameRegionStage` = sum(cloud.aws.apigateway.5xxErrorByAccountIdApiNameRegionStage), countByAccountIdApiNameRegion = sum(cloud.aws.apigateway.countByAccountIdApiNameRegion)}, \nby: { apiname },\nfilter: { aws.account.id == $SelectedAWSAccount }\n| filterOut apiname ~ \"-auth-gateway\" or apiname ~ \"-ipvcore-gateway\"\n| fieldsAdd ErrorCount = arraySum(`5xxErrorByAccountIdApiNameRegionStage`)\n| fieldsAdd TotalCount = arraySum(`countByAccountIdApiNameRegion`)\n| summarize\n    ErrorCount = sum(ErrorCount),\n    TotalCount = sum(TotalCount)\n| fieldsAdd `Success %` = ((TotalCount - ErrorCount) / TotalCount) * 100.0\n| fields `Success %`",
+      "visualization": "gauge",
+      "visualizationSettings": {
+        "unitsOverrides": [
+          {
+            "identifier": "Success %",
+            "unitCategory": "percentage",
+            "baseUnit": "percent",
+            "displayUnit": null,
+            "decimals": 3,
+            "suffix": "",
+            "delimiter": true,
+            "added": 1773144594244
+          }
+        ],
+        "coloring": {
+          "colorRules": [
+            {
+              "colorMode": "custom-color",
+              "comparator": "≥",
+              "customColor": "#DC172A",
+              "field": "",
+              "value": null
+            },
+            {
+              "colorMode": "custom-color",
+              "comparator": "≥",
+              "customColor": "#F5D30F",
+              "field": "",
+              "value": 99.5
+            },
+            {
+              "colorMode": "custom-color",
+              "comparator": "≥",
+              "customColor": "#7DC540",
+              "field": "",
+              "value": 100
+            }
+          ]
+        },
+        "colorModeType": {
+          "color": "#DC172A",
+          "customNumericColors": [
+            {
+              "id": 2161353.200000018,
+              "value": 100,
+              "color": "#7DC540",
+              "comparator": "≥"
+            },
+            {
+              "id": 2162052.600000024,
+              "value": 99.5,
+              "color": "#F5D30F",
+              "comparator": "≥"
+            }
+          ]
+        },
+        "autoSelectVisualization": false
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "82": {
       "title": "Gateway Other Response Latency",
       "type": "data",
       "query": "timeseries \n  latency_avg = avg(cloud.aws.apigateway.latencyByAccountIdApiNameRegion),\n  latency_max = max(cloud.aws.apigateway.latencyByAccountIdApiNameRegion),\n  latency_min = min(cloud.aws.apigateway.latencyByAccountIdApiNameRegion),\n  by: { apiname },\n  filter: { aws.account.id == $SelectedAWSAccount }\n| filterOut apiname ~ \"-auth-gateway\" or apiname ~ \"-ipvcore-gateway\"\n| fieldsRename `API Name` = apiname\n| fieldsAdd\n  Min = arrayMin(latency_min),\n  Avg = arrayAvg(latency_avg),\n  P95 = arrayPercentile(latency_avg, 95),\n  P99 = arrayPercentile(latency_avg, 99),\n  Max = arrayMax(latency_max)\n| fields `API Name`, Min, Avg, P95, P99, Max",
@@ -1979,81 +2059,6 @@
         "enabled": false,
         "davisVisualization": { "isAvailable": true }
       }
-    },
-    "82": {
-      "title": "Gateway Other Availability",
-      "description": "A percentage of success responses to 5xx responses. 4xx errors are not included.",
-      "type": "data",
-      "query": "timeseries { `5xxErrorByAccountIdApiNameRegionStage` = sum(cloud.aws.apigateway.5xxErrorByAccountIdApiNameRegionStage), countByAccountIdApiNameRegion = sum(cloud.aws.apigateway.countByAccountIdApiNameRegion)}, \nby: { apiname },\nfilter: { aws.account.id == $SelectedAWSAccount }\n| filterOut apiname ~ \"-auth-gateway\" or apiname ~ \"-ipvcore-gateway\"\n| fieldsAdd ErrorCount = arraySum(`5xxErrorByAccountIdApiNameRegionStage`)\n| fieldsAdd TotalCount = arraySum(`countByAccountIdApiNameRegion`)\n| summarize\n    ErrorCount = sum(ErrorCount),\n    TotalCount = sum(TotalCount)\n| fieldsAdd `Success %` = ((TotalCount - ErrorCount) / TotalCount) * 100.0\n| fields `Success %`",
-      "visualization": "gauge",
-      "visualizationSettings": {
-        "unitsOverrides": [
-          {
-            "identifier": "Success %",
-            "unitCategory": "percentage",
-            "baseUnit": "percent",
-            "displayUnit": null,
-            "decimals": 3,
-            "suffix": "",
-            "delimiter": true,
-            "added": 1773144594244
-          }
-        ],
-        "coloring": {
-          "colorRules": [
-            {
-              "colorMode": "custom-color",
-              "comparator": "≥",
-              "customColor": "#DC172A",
-              "field": "",
-              "value": null
-            },
-            {
-              "colorMode": "custom-color",
-              "comparator": "≥",
-              "customColor": "#F5D30F",
-              "field": "",
-              "value": 99.5
-            },
-            {
-              "colorMode": "custom-color",
-              "comparator": "≥",
-              "customColor": "#7DC540",
-              "field": "",
-              "value": 100
-            }
-          ]
-        },
-        "colorModeType": {
-          "color": "#DC172A",
-          "customNumericColors": [
-            {
-              "id": 2161353.200000018,
-              "value": 100,
-              "color": "#7DC540",
-              "comparator": "≥"
-            },
-            {
-              "id": 2162052.600000024,
-              "value": 99.5,
-              "color": "#F5D30F",
-              "comparator": "≥"
-            }
-          ]
-        },
-        "autoSelectVisualization": false
-      },
-      "querySettings": {
-        "maxResultRecords": 1000,
-        "defaultScanLimitGbytes": 500,
-        "maxResultMegaBytes": 1,
-        "defaultSamplingRatio": 10,
-        "enableSampling": false
-      },
-      "davis": {
-        "enabled": false,
-        "davisVisualization": { "isAvailable": true }
-      }
     }
   },
   "layouts": {
@@ -2106,8 +2111,8 @@
     "78": { "x": 0, "y": 189, "w": 18, "h": 6 },
     "79": { "x": 0, "y": 3, "w": 12, "h": 4 },
     "80": { "x": 12, "y": 3, "w": 24, "h": 4 },
-    "81": { "x": 12, "y": 7, "w": 24, "h": 4 },
-    "82": { "x": 0, "y": 7, "w": 12, "h": 4 }
+    "81": { "x": 0, "y": 7, "w": 12, "h": 4 },
+    "82": { "x": 12, "y": 7, "w": 24, "h": 4 }
   },
   "importedWithCode": true,
   "settings": {
