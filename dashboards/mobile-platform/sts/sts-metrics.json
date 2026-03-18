@@ -2044,154 +2044,6 @@
       ]
     },
     {
-      "name": "Number of Auth requests, Auth Codes issued, Initial Access Tokens Issued",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 760,
-        "left": 38,
-        "width": 798,
-        "height": 342
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "cloud.aws.backend-api.logmessages.authorizeFunctionMessageCodeByAccountIdLevelMessageCodeRegionVersion:count:filter(eq(\"messagecode\",\"STS_AUTHORIZE_STARTED\"))\n:splitBy(\"aws.account.id\")",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "cloud.aws.backend-api.logmessages.redirectFunctionMessageCodeByAccountIdLevelMessageCodeRegionVersion:count:filter(eq(\"messagecode\",\"STS_REDIRECT_COMPLETED\"))\n:splitBy(\"aws.account.id\")",
-          "rate": "NONE",
-          "enabled": true
-        },
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "cloud.aws.backend-api.logmessages.tokenFunctionMessageCodeByAccountIdLevelMessageCodeRegionRequestType:count:filter(eq(\"messagecode\",\"STS_ACCESS_TOKEN_COMPLETED\"))\n:splitBy(\"aws.account.id\")",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {
-          "hideLegend": false
-        },
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "STS_AUTHORIZE_STARTED"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "C:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "STS_REDIRECT_COMPLETED"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "STS_ACCESS_TOKEN_COMPLETED"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A",
-                "C",
-                "B"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": true
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.backend-api.logmessages.authorizeFunctionMessageCodeByAccountIdLevelMessageCodeRegionVersion:count:filter(eq(messagecode,STS_AUTHORIZE_STARTED)):splitBy(\"aws.account.id\")):limit(100):names,(cloud.aws.backend-api.logmessages.redirectFunctionMessageCodeByAccountIdLevelMessageCodeRegionVersion:count:filter(eq(messagecode,STS_REDIRECT_COMPLETED)):splitBy(\"aws.account.id\")):limit(100):names,(cloud.aws.backend-api.logmessages.tokenFunctionMessageCodeByAccountIdLevelMessageCodeRegionRequestType:count:filter(eq(messagecode,STS_ACCESS_TOKEN_COMPLETED)):splitBy(\"aws.account.id\")):limit(100):names"
-      ]
-    },
-    {
       "name": "Auth Code Exchange Rate",
       "tileType": "DATA_EXPLORER",
       "configured": true,
@@ -2500,6 +2352,154 @@
       "metricExpressions": [
         "resolution=Inf&(cloud.aws.backend-api.logmessages.redirectFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(and(eq(messagecode,STS_REDIRECT_STARTED))):sum:splitBy(\"aws.account.id\")/cloud.aws.backend-api.logmessages.authorizeFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(and(eq(messagecode,STS_AUTHORIZE_COMPLETED))):sum:splitBy(\"aws.account.id\")*100):limit(100):names",
         "resolution=null&(cloud.aws.backend-api.logmessages.redirectFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(and(eq(messagecode,STS_REDIRECT_STARTED))):sum:splitBy(\"aws.account.id\")/cloud.aws.backend-api.logmessages.authorizeFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(and(eq(messagecode,STS_AUTHORIZE_COMPLETED))):sum:splitBy(\"aws.account.id\")*100)"
+      ]
+    },
+    {
+      "name": "Number of Auth requests, Auth Codes issued, Initial Access Tokens Issued",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 760,
+        "left": 38,
+        "width": 798,
+        "height": 342
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "cloud.aws.backend-api.logmessages.authorizeFunctionMessageCodeByAccountIdLevelMessageCodeRegionVersion:count:filter(eq(\"messagecode\",\"STS_AUTHORIZE_STARTED\"))\n:splitBy(\"aws.account.id\")",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "cloud.aws.backend-api.logmessages.redirectFunctionMessageCodeByAccountIdLevelMessageCodeRegionVersion:count:filter(eq(\"messagecode\",\"STS_REDIRECT_COMPLETED\"))\n:splitBy(\"aws.account.id\")",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "cloud.aws.backend-api.logmessages.tokenFunctionMessageCodeByAccountIdLevelMessageCodeRegionRequestType:count:filter(eq(\"messagecode\",\"STS_ACCESS_TOKEN_COMPLETED\"))\n:splitBy(\"aws.account.id\")",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Auth requests"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Auth codes issued"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Access tokens issued"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "C",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.backend-api.logmessages.authorizeFunctionMessageCodeByAccountIdLevelMessageCodeRegionVersion:count:filter(eq(messagecode,STS_AUTHORIZE_STARTED)):splitBy(\"aws.account.id\")):limit(100):names,(cloud.aws.backend-api.logmessages.redirectFunctionMessageCodeByAccountIdLevelMessageCodeRegionVersion:count:filter(eq(messagecode,STS_REDIRECT_COMPLETED)):splitBy(\"aws.account.id\")):limit(100):names,(cloud.aws.backend-api.logmessages.tokenFunctionMessageCodeByAccountIdLevelMessageCodeRegionRequestType:count:filter(eq(messagecode,STS_ACCESS_TOKEN_COMPLETED)):splitBy(\"aws.account.id\")):limit(100):names"
       ]
     }
   ]
