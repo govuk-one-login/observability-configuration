@@ -330,6 +330,10 @@ module "cimit_performance_metrics_dashboard" {
   source = "./modules/dashboard"
   path   = "spot/cimit-performance-metrics.json"
 }
+module "cimit_ci_metrics_dashboard" {
+  source = "./modules/dashboard"
+  path   = "spot/cimit-ci-metrics.json"
+}
 module "sis_performance_metrics_dashboard" {
   source = "./modules/dashboard"
   path   = "spot/sis-performance-metrics.json"
