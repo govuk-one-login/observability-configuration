@@ -2,20 +2,20 @@
   "version": 21,
   "variables": [
     {
-      "key": "Environment",
-      "visible": true,
-      "type": "csv",
       "version": 2,
+      "key": "Environment",
+      "type": "csv",
+      "visible": true,
       "editable": true,
       "input": "BREC - Build - 693388806234,BREC - Staging - 393786338175,BREC - Integration - 162026158693,BREC - Production - 542892327706",
       "multiple": false,
       "defaultValue": "BREC - Production - 542892327706"
     },
     {
-      "key": "SelectedAWSAccount",
-      "visible": false,
-      "type": "code",
       "version": 2,
+      "key": "SelectedAWSAccount",
+      "type": "code",
+      "visible": false,
       "editable": true,
       "input": "export default async function () {\n  const AWSAccountID = $Environment.replaceAll(\" \", \"\").split(\"-\")[2]\n  return [AWSAccountID]\n}",
       "multiple": false
@@ -94,52 +94,81 @@
       }
     },
     "86": {
+      "title": "Workspace Active",
       "type": "data",
-      "title": "Up Time",
-      "query": "timeseries stopped = avg(cloud.aws.workspaces.stoppedByAccountIdRegionUserName),\n    by:{username},\n    filter: { aws.account.id == $SelectedAWSAccount }\n| fieldsAdd stopped = coalesce(stopped, array(0))\n| fieldsAdd active = 1-stopped[]\n// | fields username, active",
-      "davis": {
-        "enabled": false,
-        "davisVisualization": { "isAvailable": true }
-      },
-      "visualizationSettings": {
-        "autoSelectVisualization": false,
-        "chartSettings": {
-          "fieldMapping": { "leftAxisValues": ["active"] },
-          "leftYAxisSettings": { "min": { "mode": "custom" }, "scale": "log" },
-          "gapPolicy": "connect",
-          "valueRepresentation": "absolute",
-          "pointsDisplay": "auto",
-          "legend": { "hidden": false }
-        },
-        "table": {
-          "hideColumnsForLargeResults": true,
-          "columnTypeOverrides": [
-            {
-              "fields": ["stopped", "1 - stopped[]"],
-              "value": "sparkline",
-              "id": 1774012622496,
-              "disableRemoval": false
-            }
-          ]
-        },
-        "dataMapping": { "displayedFields": ["username"] }
-      },
+      "query": "timeseries stopped = avg(cloud.aws.workspaces.stoppedByAccountIdRegionUserName),\n    by:{username},\n    filter: { aws.account.id == $SelectedAWSAccount }\n| fieldsAdd stopped = coalesce(stopped, array(0))\n| fieldsAdd active = 1-stopped[]",
       "visualization": "lineChart",
+      "visualizationSettings": {
+        "chartSettings": {
+          "leftYAxisSettings": { "scale": "log" },
+          "fieldMapping": { "leftAxisValues": ["active"] },
+          "gapPolicy": "connect"
+        },
+        "dataMapping": { "displayedFields": ["username"] },
+        "autoSelectVisualization": false
+      },
       "querySettings": {
         "maxResultRecords": 1000,
         "defaultScanLimitGbytes": 500,
         "maxResultMegaBytes": 1,
         "defaultSamplingRatio": 10,
         "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
       }
     },
-    "88": { "type": "markdown", "content": "## User Metrics" }
+    "88": { "type": "markdown", "content": "## User Metrics" },
+    "89": {
+      "title": "User Connected",
+      "type": "data",
+      "subType": "dql-builder-metrics",
+      "query": "timeseries { max(cloud.aws.workspaces.userConnectedByAccountIdRegionUserName), value.B = avg(cloud.aws.workspaces.userConnectedByAccountIdRegionUserName, scalar: true) }, by: { username }",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "chartSettings": {
+          "leftYAxisSettings": { "scale": "log" },
+          "gapPolicy": "connect"
+        },
+        "autoSelectVisualization": false
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "queryConfig": {
+        "version": 20,
+        "subQueries": [
+          {
+            "id": "B",
+            "isEnabled": true,
+            "datatype": "metrics",
+            "metric": {
+              "key": "cloud.aws.workspaces.userConnectedByAccountIdRegionUserName",
+              "aggregation": "max"
+            },
+            "by": ["username"],
+            "convertToValue": "Avg",
+            "filter": ""
+          }
+        ]
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    }
   },
   "layouts": {
     "0": { "x": 0, "y": 0, "w": 36, "h": 2 },
     "82": { "x": 0, "y": 3, "w": 36, "h": 6 },
     "86": { "x": 0, "y": 9, "w": 36, "h": 6 },
-    "88": { "x": 0, "y": 2, "w": 36, "h": 1 }
+    "88": { "x": 0, "y": 2, "w": 36, "h": 1 },
+    "89": { "x": 0, "y": 15, "w": 36, "h": 6 }
   },
   "importedWithCode": true,
   "settings": {
