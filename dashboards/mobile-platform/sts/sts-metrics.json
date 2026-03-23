@@ -3,7 +3,7 @@
     "configurationVersions": [
       7
     ],
-    "clusterVersion": "1.333.55.20260304-203337"
+    "clusterVersion": "1.334.44.20260317-201835"
   },
   "dashboardMetadata": {
     "name": "Mobile - STS Metrics",
@@ -576,206 +576,6 @@
       "markdown": "### Return to STS from Orchestration success rate (% of redirections back to STS from Auth)"
     },
     {
-      "name": "Return to STS from Orchestration",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1482,
-        "left": 38,
-        "width": 608,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "cloud.aws.backend-api.logmessages.redirectFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(\n  and(\n    eq(\"messagecode\",\"STS_REDIRECT_COMPLETED\")\n  )\n)\n:sum:splitBy(\"aws.account.id\")\n/ \ncloud.aws.backend-api.logmessages.authorizeFunctionMessageCodeByAccountIdLevelMessageCodeRegion\n:filter(\n  and(\n    eq(\"messagecode\",\"STS_AUTHORIZE_COMPLETED\")\n  )\n)\n:sum:splitBy(\"aws.account.id\")\n*100",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Session Creation Rate"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "B"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "B",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "C:messagecode.name",
-            "C:aws.account.id.name",
-            "D:messagecode.name",
-            "D:aws.account.id.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": true
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(cloud.aws.backend-api.logmessages.redirectFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(and(eq(messagecode,STS_REDIRECT_COMPLETED))):sum:splitBy(\"aws.account.id\")/cloud.aws.backend-api.logmessages.authorizeFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(and(eq(messagecode,STS_AUTHORIZE_COMPLETED))):sum:splitBy(\"aws.account.id\")*100):limit(100):names"
-      ]
-    },
-    {
-      "name": "Return to STS from Orchestration",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 1482,
-        "left": 646,
-        "width": 190,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Single value",
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "cloud.aws.backend-api.logmessages.redirectFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(\n  and(\n    eq(\"messagecode\",\"STS_REDIRECT_COMPLETED\")\n  )\n)\n:sum:splitBy(\"aws.account.id\")\n/ \ncloud.aws.backend-api.logmessages.authorizeFunctionMessageCodeByAccountIdLevelMessageCodeRegion\n:filter(\n  and(\n    eq(\"messagecode\",\"STS_AUTHORIZE_COMPLETED\")\n  )\n)\n:sum:splitBy(\"aws.account.id\")\n*100",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": false,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=Inf&(cloud.aws.backend-api.logmessages.redirectFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(and(eq(messagecode,STS_REDIRECT_COMPLETED))):sum:splitBy(\"aws.account.id\")/cloud.aws.backend-api.logmessages.authorizeFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(and(eq(messagecode,STS_AUTHORIZE_COMPLETED))):sum:splitBy(\"aws.account.id\")*100):limit(100):names",
-        "resolution=null&(cloud.aws.backend-api.logmessages.redirectFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(and(eq(messagecode,STS_REDIRECT_COMPLETED))):sum:splitBy(\"aws.account.id\")/cloud.aws.backend-api.logmessages.authorizeFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(and(eq(messagecode,STS_AUTHORIZE_COMPLETED))):sum:splitBy(\"aws.account.id\")*100)"
-      ]
-    },
-    {
       "name": "Authorize Success Rate",
       "tileType": "DATA_EXPLORER",
       "configured": true,
@@ -982,14 +782,14 @@
       "markdown": "### Auth Code Exchange Rate (% of STS auth codes that are exchanged for an access token)"
     },
     {
-      "name": "Auth Code Exchange Rate",
+      "name": "Login Success Rate",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2166,
-        "left": 646,
-        "width": 190,
-        "height": 304
+        "top": 0,
+        "left": 608,
+        "width": 228,
+        "height": 190
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
@@ -1320,14 +1120,14 @@
       ]
     },
     {
-      "name": "Login Success Rate",
+      "name": "Auth Code Exchange Rate",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 0,
+        "top": 2166,
         "left": 646,
         "width": 190,
-        "height": 190
+        "height": 304
       },
       "tileFilter": {},
       "isAutoRefreshDisabled": false,
@@ -1830,117 +1630,6 @@
       ]
     },
     {
-      "name": "Auth Code Exchange Rate",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 2166,
-        "left": 38,
-        "width": 608,
-        "height": 304
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "aws.account.id"
-          ],
-          "metricSelector": "100*cloud.aws.backend-api.logmessages.tokenFunctionMessageCodeByAccountIdLevelMessageCodeRegionVersion:filter(\n  and(\n    eq(\"messagecode\",\"STS_ACCESS_TOKEN_COMPLETED\")\n  )\n)\n:sum:splitBy(\"aws.account.id\")\n/\ncloud.aws.backend-api.logmessages.authorizeFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(\n  and(\n    eq(\"messagecode\",\"STS_AUTHORIZE_COMPLETED\")\n  )\n)\n:sum:splitBy(\"aws.account.id\")",
-          "rate": "NONE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "GRAPH_CHART",
-        "global": {},
-        "rules": [
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE",
-              "alias": "Redirect Completion"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "B"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "B",
-            "visible": true
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": [
-            "C:messagecode.name",
-            "C:aws.account.id.name",
-            "D:messagecode.name",
-            "D:aws.account.id.name"
-          ]
-        },
-        "graphChartSettings": {
-          "connectNulls": true
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": ""
-      },
-      "metricExpressions": [
-        "resolution=null&(100*cloud.aws.backend-api.logmessages.tokenFunctionMessageCodeByAccountIdLevelMessageCodeRegionVersion:filter(and(eq(messagecode,STS_ACCESS_TOKEN_COMPLETED))):sum:splitBy(\"aws.account.id\")/cloud.aws.backend-api.logmessages.authorizeFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(and(eq(messagecode,STS_AUTHORIZE_COMPLETED))):sum:splitBy(\"aws.account.id\")):limit(100):names"
-      ]
-    },
-    {
       "name": "Session Not Found",
       "tileType": "DATA_EXPLORER",
       "configured": true,
@@ -2355,6 +2044,317 @@
       ]
     },
     {
+      "name": "Auth Code Exchange Rate",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2166,
+        "left": 38,
+        "width": 608,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "100*cloud.aws.backend-api.logmessages.tokenFunctionMessageCodeByAccountIdLevelMessageCodeRegionVersion:filter(\n  and(\n    eq(\"messagecode\",\"STS_ACCESS_TOKEN_COMPLETED\")\n  )\n)\n:sum:splitBy(\"aws.account.id\")\n/\ncloud.aws.backend-api.logmessages.redirectFunctionMessageCodeByAccountIdLevelMessageCodeRegionVersion:filter(\n  and(\n    eq(\"messagecode\",\"STS_REDIRECT_COMPLETED\")\n  )\n)\n:sum:splitBy(\"aws.account.id\")",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Redirect Completion"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "B",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "C:messagecode.name",
+            "C:aws.account.id.name",
+            "D:messagecode.name",
+            "D:aws.account.id.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(100*cloud.aws.backend-api.logmessages.tokenFunctionMessageCodeByAccountIdLevelMessageCodeRegionVersion:filter(and(eq(messagecode,STS_ACCESS_TOKEN_COMPLETED))):sum:splitBy(\"aws.account.id\")/cloud.aws.backend-api.logmessages.redirectFunctionMessageCodeByAccountIdLevelMessageCodeRegionVersion:filter(and(eq(messagecode,STS_REDIRECT_COMPLETED))):sum:splitBy(\"aws.account.id\")):limit(100):names"
+      ]
+    },
+    {
+      "name": "Return to STS from Orchestration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1482,
+        "left": 38,
+        "width": 608,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "cloud.aws.backend-api.logmessages.redirectFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(\n  and(\n    eq(\"messagecode\",\"STS_REDIRECT_STARTED\")\n  )\n)\n:sum:splitBy(\"aws.account.id\")\n/ \ncloud.aws.backend-api.logmessages.authorizeFunctionMessageCodeByAccountIdLevelMessageCodeRegion\n:filter(\n  and(\n    eq(\"messagecode\",\"STS_AUTHORIZE_COMPLETED\")\n  )\n)\n:sum:splitBy(\"aws.account.id\")\n*100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Session Creation Rate"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "B",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": [
+            "C:messagecode.name",
+            "C:aws.account.id.name",
+            "D:messagecode.name",
+            "D:aws.account.id.name"
+          ]
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.backend-api.logmessages.redirectFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(and(eq(messagecode,STS_REDIRECT_STARTED))):sum:splitBy(\"aws.account.id\")/cloud.aws.backend-api.logmessages.authorizeFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(and(eq(messagecode,STS_AUTHORIZE_COMPLETED))):sum:splitBy(\"aws.account.id\")*100):limit(100):names"
+      ]
+    },
+    {
+      "name": "Return to STS from Orchestration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1482,
+        "left": 646,
+        "width": 190,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.account.id"
+          ],
+          "metricSelector": "cloud.aws.backend-api.logmessages.redirectFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(\n  and(\n    eq(\"messagecode\",\"STS_REDIRECT_STARTED\")\n  )\n)\n:sum:splitBy(\"aws.account.id\")\n/ \ncloud.aws.backend-api.logmessages.authorizeFunctionMessageCodeByAccountIdLevelMessageCodeRegion\n:filter(\n  and(\n    eq(\"messagecode\",\"STS_AUTHORIZE_COMPLETED\")\n  )\n)\n:sum:splitBy(\"aws.account.id\")\n*100",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(cloud.aws.backend-api.logmessages.redirectFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(and(eq(messagecode,STS_REDIRECT_STARTED))):sum:splitBy(\"aws.account.id\")/cloud.aws.backend-api.logmessages.authorizeFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(and(eq(messagecode,STS_AUTHORIZE_COMPLETED))):sum:splitBy(\"aws.account.id\")*100):limit(100):names",
+        "resolution=null&(cloud.aws.backend-api.logmessages.redirectFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(and(eq(messagecode,STS_REDIRECT_STARTED))):sum:splitBy(\"aws.account.id\")/cloud.aws.backend-api.logmessages.authorizeFunctionMessageCodeByAccountIdLevelMessageCodeRegion:filter(and(eq(messagecode,STS_AUTHORIZE_COMPLETED))):sum:splitBy(\"aws.account.id\")*100)"
+      ]
+    },
+    {
       "name": "Number of Auth requests, Auth Codes issued, Initial Access Tokens Issued",
       "tileType": "DATA_EXPLORER",
       "configured": true,
@@ -2395,36 +2395,49 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [
-            "messagecode",
             "aws.account.id"
           ],
-          "metricSelector": "cloud.aws.backend-api.logmessages.tokenFunctionMessageCodeByAccountIdLevelMessageCodeRegionRequestType:count:filter(eq(\"messagecode\",\"STS_ACCESS_TOKEN_COMPLETED\"))\n:splitBy(\"messagecode\",\"aws.account.id\")",
+          "metricSelector": "cloud.aws.backend-api.logmessages.tokenFunctionMessageCodeByAccountIdLevelMessageCodeRegionRequestType:count:filter(eq(\"messagecode\",\"STS_ACCESS_TOKEN_COMPLETED\"))\n:splitBy(\"aws.account.id\")",
           "rate": "NONE",
           "enabled": true
         }
       ],
       "visualConfig": {
         "type": "GRAPH_CHART",
-        "global": {},
+        "global": {
+          "hideLegend": false
+        },
         "rules": [
           {
             "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
             "properties": {
-              "color": "DEFAULT"
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Auth requests"
             },
             "seriesOverrides": []
           },
           {
             "matcher": "C:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
             "properties": {
-              "color": "DEFAULT"
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Auth codes issued"
             },
             "seriesOverrides": []
           },
           {
             "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
             "properties": {
-              "color": "DEFAULT"
+              "color": "DEFAULT",
+              "seriesType": "LINE",
+              "alias": "Access tokens issued"
             },
             "seriesOverrides": []
           }
@@ -2442,9 +2455,9 @@
               "max": "AUTO",
               "position": "LEFT",
               "queryIds": [
-                "B",
+                "A",
                 "C",
-                "A"
+                "B"
               ],
               "defaultAxis": true
             }
@@ -2486,7 +2499,7 @@
         "resolution": ""
       },
       "metricExpressions": [
-        "resolution=null&(cloud.aws.backend-api.logmessages.authorizeFunctionMessageCodeByAccountIdLevelMessageCodeRegionVersion:count:filter(eq(messagecode,STS_AUTHORIZE_STARTED)):splitBy(\"aws.account.id\")):limit(100):names,(cloud.aws.backend-api.logmessages.redirectFunctionMessageCodeByAccountIdLevelMessageCodeRegionVersion:count:filter(eq(messagecode,STS_REDIRECT_COMPLETED)):splitBy(\"aws.account.id\")):limit(100):names,(cloud.aws.backend-api.logmessages.tokenFunctionMessageCodeByAccountIdLevelMessageCodeRegionRequestType:count:filter(eq(messagecode,STS_ACCESS_TOKEN_COMPLETED)):splitBy(messagecode,\"aws.account.id\")):limit(100):names"
+        "resolution=null&(cloud.aws.backend-api.logmessages.authorizeFunctionMessageCodeByAccountIdLevelMessageCodeRegionVersion:count:filter(eq(messagecode,STS_AUTHORIZE_STARTED)):splitBy(\"aws.account.id\")):limit(100):names,(cloud.aws.backend-api.logmessages.redirectFunctionMessageCodeByAccountIdLevelMessageCodeRegionVersion:count:filter(eq(messagecode,STS_REDIRECT_COMPLETED)):splitBy(\"aws.account.id\")):limit(100):names,(cloud.aws.backend-api.logmessages.tokenFunctionMessageCodeByAccountIdLevelMessageCodeRegionRequestType:count:filter(eq(messagecode,STS_ACCESS_TOKEN_COMPLETED)):splitBy(\"aws.account.id\")):limit(100):names"
       ]
     }
   ]
