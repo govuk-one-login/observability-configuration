@@ -34,11 +34,11 @@
       "visualization": "lineChart",
       "visualizationSettings": {
         "chartSettings": {
-          "gapPolicy": "connect",
           "leftYAxisSettings": {
             "label": "Total seconds",
             "isLabelVisible": true
-          }
+          },
+          "gapPolicy": "connect"
         },
         "autoSelectVisualization": false,
         "unitsOverrides": [
@@ -93,45 +93,31 @@
         "davisVisualization": { "isAvailable": true }
       }
     },
-    "86": {
-      "title": "Workspace Active",
-      "type": "data",
-      "query": "timeseries stopped = avg(cloud.aws.workspaces.stoppedByAccountIdRegionUserName),\n    by:{username},\n    filter: { aws.account.id == $SelectedAWSAccount }\n| fieldsAdd stopped = coalesce(stopped, array(0))\n| fieldsAdd active = 1-stopped[]",
-      "visualization": "lineChart",
-      "visualizationSettings": {
-        "chartSettings": {
-          "leftYAxisSettings": { "scale": "log" },
-          "fieldMapping": { "leftAxisValues": ["active"] },
-          "gapPolicy": "connect"
-        },
-        "dataMapping": { "displayedFields": ["username"] },
-        "autoSelectVisualization": false
-      },
-      "querySettings": {
-        "maxResultRecords": 1000,
-        "defaultScanLimitGbytes": 500,
-        "maxResultMegaBytes": 1,
-        "defaultSamplingRatio": 10,
-        "enableSampling": false
-      },
-      "davis": {
-        "enabled": false,
-        "davisVisualization": { "isAvailable": true }
-      }
-    },
     "88": { "type": "markdown", "content": "## User Metrics" },
     "89": {
-      "title": "User Connected",
+      "title": "Users Connected",
       "type": "data",
       "subType": "dql-builder-metrics",
-      "query": "timeseries { max(cloud.aws.workspaces.userConnectedByAccountIdRegionUserName), value.B = avg(cloud.aws.workspaces.userConnectedByAccountIdRegionUserName, scalar: true) }, by: { username }",
-      "visualization": "lineChart",
+      "query": "timeseries { max(cloud.aws.workspaces.userConnectedByAccountIdRegionUserName), value.B = avg(cloud.aws.workspaces.userConnectedByAccountIdRegionUserName, scalar: true) }, by: { username }, filter: { matchesValue(aws.account.id, $SelectedAWSAccount) }",
+      "visualization": "areaChart",
       "visualizationSettings": {
+        "autoSelectVisualization": false,
         "chartSettings": {
-          "leftYAxisSettings": { "scale": "log" },
+          "leftYAxisSettings": { "scale": "linear" },
           "gapPolicy": "connect"
         },
-        "autoSelectVisualization": false
+        "unitsOverrides": [
+          {
+            "identifier": "value.B",
+            "unitCategory": "unspecified",
+            "baseUnit": "count",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774372996443
+          }
+        ]
       },
       "querySettings": {
         "maxResultRecords": 1000,
@@ -153,9 +139,46 @@
             },
             "by": ["username"],
             "convertToValue": "Avg",
-            "filter": ""
+            "filter": "aws.account.id = $SelectedAWSAccount "
           }
         ]
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "93": {
+      "title": "WorkSpaces Active",
+      "type": "data",
+      "query": "timeseries stopped = max(cloud.aws.workspaces.stoppedByAccountIdRegionUserName),\n    by:{username},\n    filter: { aws.account.id == $SelectedAWSAccount }\n| fieldsAdd stopped = coalesce(stopped, array(0))\n| fieldsAdd active = 1 - stopped[]",
+      "visualization": "areaChart",
+      "visualizationSettings": {
+        "chartSettings": {
+          "fieldMapping": { "leftAxisValues": ["active"] },
+          "gapPolicy": "connect"
+        },
+        "dataMapping": { "displayedFields": ["workspaceid", "username"] },
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "stopped",
+            "unitCategory": "unspecified",
+            "baseUnit": "count",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774366032684
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
       },
       "davis": {
         "enabled": false,
@@ -166,9 +189,9 @@
   "layouts": {
     "0": { "x": 0, "y": 0, "w": 36, "h": 2 },
     "82": { "x": 0, "y": 3, "w": 36, "h": 6 },
-    "86": { "x": 0, "y": 9, "w": 36, "h": 6 },
     "88": { "x": 0, "y": 2, "w": 36, "h": 1 },
-    "89": { "x": 0, "y": 15, "w": 36, "h": 6 }
+    "89": { "x": 0, "y": 15, "w": 36, "h": 6 },
+    "93": { "x": 0, "y": 9, "w": 36, "h": 6 }
   },
   "importedWithCode": true,
   "settings": {
