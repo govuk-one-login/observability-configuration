@@ -27,7 +27,7 @@
       "content": "## Fraud FAI BREC Isolated Environment Dashboard\n\nThis dashboard displays metrics for the Fraud Admin Interface (FAI) isolated environment application for Staging, Integration and Production environment. For further information on FAI see [here](https://govukverify.atlassian.net/wiki/x/sgE55Q)."
     },
     "82": {
-      "title": "Total time By User",
+      "title": "Total time",
       "type": "data",
       "subType": "dql-builder-metrics",
       "query": "timeseries { avg(cloud.aws.workspaces.upTimeByAccountIdRegionUserName), value.C = sum(cloud.aws.workspaces.upTimeByAccountIdRegionUserName, scalar: true) }, by: { username }, filter: { matchesValue(aws.account.id, $SelectedAWSAccount) }",
@@ -93,7 +93,7 @@
         "davisVisualization": { "isAvailable": true }
       }
     },
-    "88": { "type": "markdown", "content": "## WorkSpace Usage \nMetrics" },
+    "88": { "type": "markdown", "content": "## WorkSpace Metrics" },
     "89": {
       "title": "Users Connected",
       "type": "data",
@@ -146,7 +146,7 @@
       }
     },
     "93": {
-      "title": "WorkSpaces Active",
+      "title": "WorkSpace Active - By User",
       "type": "data",
       "query": "timeseries stopped = max(cloud.aws.workspaces.stoppedByAccountIdRegionUserName),\n    by:{username},\n    filter: { aws.account.id == $SelectedAWSAccount }\n| fieldsAdd stopped = coalesce(stopped, array(0))\n| fieldsAdd active = 1 - stopped[]",
       "visualization": "areaChart",
@@ -220,7 +220,7 @@
       }
     },
     "95": {
-      "title": "Total time By WorkSpace",
+      "title": "Total time",
       "type": "data",
       "subType": "dql-builder-metrics",
       "query": "timeseries { avg(cloud.aws.workspaces.upTimeByAccountIdRegionWorkspaceId), value.C = sum(cloud.aws.workspaces.upTimeByAccountIdRegionWorkspaceId, scalar: true) }, by: { workspaceid }, filter: { matchesValue(aws.account.id, $SelectedAWSAccount) }",
@@ -275,16 +275,56 @@
         "enabled": false,
         "davisVisualization": { "isAvailable": true }
       }
-    }
+    },
+    "96": {
+      "title": "WorkSpace Active - By WorkSpace",
+      "type": "data",
+      "query": "timeseries stopped = max(cloud.aws.workspaces.stoppedByAccountIdRegionWorkspaceId),\n    by:{workspaceid},\n    filter: { aws.account.id == $SelectedAWSAccount }\n| fieldsAdd stopped = coalesce(stopped, array(0))\n| fieldsAdd active = 1 - stopped[]",
+      "visualization": "areaChart",
+      "visualizationSettings": {
+        "chartSettings": {
+          "fieldMapping": { "leftAxisValues": ["active"] },
+          "gapPolicy": "connect"
+        },
+        "dataMapping": { "displayedFields": ["workspaceid"] },
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "stopped",
+            "unitCategory": "unspecified",
+            "baseUnit": "count",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774366032684
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "98": { "type": "markdown", "content": "## User Metrics" }
   },
   "layouts": {
     "0": { "x": 0, "y": 0, "w": 36, "h": 2 },
     "82": { "x": 0, "y": 3, "w": 36, "h": 6 },
-    "88": { "x": 0, "y": 2, "w": 36, "h": 1 },
-    "89": { "x": 0, "y": 21, "w": 36, "h": 6 },
-    "93": { "x": 0, "y": 15, "w": 36, "h": 6 },
-    "94": { "x": 0, "y": 27, "w": 36, "h": 6 },
-    "95": { "x": 0, "y": 9, "w": 36, "h": 6 }
+    "88": { "x": 0, "y": 15, "w": 36, "h": 1 },
+    "89": { "x": 0, "y": 9, "w": 36, "h": 6 },
+    "93": { "x": 0, "y": 22, "w": 36, "h": 6 },
+    "94": { "x": 0, "y": 34, "w": 36, "h": 6 },
+    "95": { "x": 0, "y": 16, "w": 36, "h": 6 },
+    "96": { "x": 0, "y": 28, "w": 36, "h": 6 },
+    "98": { "x": 0, "y": 2, "w": 36, "h": 1 }
   },
   "importedWithCode": true,
   "settings": {
