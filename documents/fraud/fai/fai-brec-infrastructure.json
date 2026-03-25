@@ -93,7 +93,7 @@
         "davisVisualization": { "isAvailable": true }
       }
     },
-    "88": { "type": "markdown", "content": "## WorkSpace Metrics" },
+    "88": { "type": "markdown", "content": "## WorkSpace Metrics\n" },
     "89": {
       "title": "Users Connected",
       "type": "data",
@@ -153,8 +153,7 @@
       "visualizationSettings": {
         "chartSettings": {
           "fieldMapping": { "leftAxisValues": ["active"] },
-          "gapPolicy": "connect",
-          "pointsDisplay": "auto"
+          "gapPolicy": "connect"
         },
         "dataMapping": { "displayedFields": ["workspaceid", "username"] },
         "autoSelectVisualization": false,
@@ -316,9 +315,19 @@
     },
     "98": { "type": "markdown", "content": "## User Metrics" },
     "99": {
-      "type": "data",
       "title": "Unhealthy WorkSpaces",
-      "query": "timeseries { avg(cloud.aws.workspaces.unhealthyByAccountIdRegionWorkspaceId), value.A = avg(cloud.aws.workspaces.unhealthyByAccountIdRegionWorkspaceId, scalar: true) }, by: { workspaceid }",
+      "type": "data",
+      "subType": "dql-builder-metrics",
+      "query": "timeseries { avg(cloud.aws.workspaces.unhealthyByAccountIdRegionWorkspaceId), value.A = avg(cloud.aws.workspaces.unhealthyByAccountIdRegionWorkspaceId, scalar: true) }, by: { workspaceid }, filter: { matchesValue(aws.account.id, $SelectedAWSAccount) }",
+      "visualization": "lineChart",
+      "visualizationSettings": { "autoSelectVisualization": false },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
       "queryConfig": {
         "version": 20,
         "subQueries": [
@@ -332,38 +341,24 @@
             },
             "by": ["workspaceid"],
             "convertToValue": "Avg",
-            "filter": ""
+            "filter": "aws.account.id = $SelectedAWSAccount "
           }
         ]
       },
-      "subType": "dql-builder-metrics",
-      "visualization": "lineChart",
       "davis": {
         "enabled": false,
         "davisVisualization": { "isAvailable": true }
-      },
-      "visualizationSettings": {
-        "autoSelectVisualization": false,
-        "table": { "hideColumnsForLargeResults": true }
-      },
-      "querySettings": {
-        "maxResultRecords": 1000,
-        "defaultScanLimitGbytes": 500,
-        "maxResultMegaBytes": 1,
-        "defaultSamplingRatio": 10,
-        "enableSampling": false
       }
     },
     "100": {
       "title": "Memory Usage",
       "type": "data",
       "subType": "dql-builder-metrics",
-      "query": "timeseries { avg(cloud.aws.workspaces.memoryUsageByAccountIdRegionWorkspaceId), value.A = avg(cloud.aws.workspaces.memoryUsageByAccountIdRegionWorkspaceId, scalar: true) }, by: { workspaceid }",
+      "query": "timeseries { avg(cloud.aws.workspaces.memoryUsageByAccountIdRegionWorkspaceId), value.A = avg(cloud.aws.workspaces.memoryUsageByAccountIdRegionWorkspaceId, scalar: true) }, by: { workspaceid }, filter: { matchesValue(aws.account.id, $SelectedAWSAccount) }",
       "visualization": "lineChart",
       "visualizationSettings": {
-        "autoSelectVisualization": false,
-        "table": { "hideColumnsForLargeResults": true },
         "chartSettings": { "gapPolicy": "connect" },
+        "autoSelectVisualization": false,
         "unitsOverrides": [
           {
             "identifier": "avg(cloud.aws.workspaces.memoryUsageByAccountIdRegionWorkspaceId)",
@@ -397,7 +392,7 @@
             },
             "by": ["workspaceid"],
             "convertToValue": "Avg",
-            "filter": ""
+            "filter": "aws.account.id = $SelectedAWSAccount "
           }
         ]
       },
@@ -410,12 +405,11 @@
       "title": "CPU Usage",
       "type": "data",
       "subType": "dql-builder-metrics",
-      "query": "timeseries { avg(cloud.aws.workspaces.cpuUsageByAccountIdRegionWorkspaceId), value.A = avg(cloud.aws.workspaces.cpuUsageByAccountIdRegionWorkspaceId, scalar: true) }, by: { workspaceid }",
+      "query": "timeseries { avg(cloud.aws.workspaces.cpuUsageByAccountIdRegionWorkspaceId), value.A = avg(cloud.aws.workspaces.cpuUsageByAccountIdRegionWorkspaceId, scalar: true) }, by: { workspaceid }, filter: { matchesValue(aws.account.id, $SelectedAWSAccount) }",
       "visualization": "lineChart",
       "visualizationSettings": {
-        "autoSelectVisualization": false,
-        "table": { "hideColumnsForLargeResults": true },
         "chartSettings": { "gapPolicy": "connect" },
+        "autoSelectVisualization": false,
         "unitsOverrides": [
           {
             "identifier": "avg(cloud.aws.workspaces.cpuUsageByAccountIdRegionWorkspaceId)",
@@ -449,7 +443,7 @@
             },
             "by": ["workspaceid"],
             "convertToValue": "Avg",
-            "filter": ""
+            "filter": "aws.account.id = $SelectedAWSAccount "
           }
         ]
       },
@@ -457,21 +451,272 @@
         "enabled": false,
         "davisVisualization": { "isAvailable": true }
       }
-    }
+    },
+    "104": {
+      "title": "",
+      "type": "data",
+      "query": "timeseries \n  users_connected = sum(cloud.aws.workspaces.userConnectedByAccountIdRegionUserName),\n  workspaces_stopped = sum(cloud.aws.workspaces.stoppedByAccountIdRegionUserName),\n  workspaces_unhealthy = sum(cloud.aws.workspaces.unhealthyByAccountIdRegionUserName),\n  by: { username },\n  filter: { aws.account.id == $SelectedAWSAccount }\n| fieldsAdd logged_in = if(arrayMax(users_connected) > 0, 1, else: 0)\n| fieldsAdd active = if(coalesce(arrayMin(workspaces_stopped), 0) == 0, 1, else: 0)\n| fieldsAdd stopped = if(arrayMin(workspaces_stopped) > 0, 1, else: 0)\n| fieldsAdd unhealthy = if(arrayMax(workspaces_unhealthy) > 0, 1, else: 0)\n| summarize\n  `Users connected count` = sum(logged_in),\n  `Active WorkSpace count` = sum(active),\n  `Stopped WorkSpace count` = sum(stopped),\n  `Unhealthy WorkSpace count` = sum(unhealthy)",
+      "visualization": "table",
+      "visualizationSettings": {
+        "autoSelectVisualization": false,
+        "coloring": {
+          "colorRules": [
+            {
+              "colorMode": "custom-color",
+              "comparator": ">",
+              "field": "Unhealthy WorkSpace count",
+              "value": 0,
+              "type": "double",
+              "customColor": "#DC172A"
+            },
+            {
+              "colorMode": "custom-color",
+              "comparator": "=",
+              "field": "Unhealthy WorkSpace count",
+              "value": 0,
+              "type": "double",
+              "customColor": "#7DC540"
+            }
+          ]
+        },
+        "unitsOverrides": [
+          {
+            "identifier": "Users connected count",
+            "unitCategory": "unspecified",
+            "baseUnit": "none",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774457543664
+          },
+          {
+            "identifier": "Active WorkSpace count",
+            "unitCategory": "unspecified",
+            "baseUnit": "none",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774457551137
+          },
+          {
+            "identifier": "Unhealthy WorkSpace count",
+            "unitCategory": "unspecified",
+            "baseUnit": "none",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774457559202
+          },
+          {
+            "identifier": "Stopped WorkSpace count",
+            "unitCategory": "unspecified",
+            "baseUnit": "none",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774458584452
+          }
+        ],
+        "table": {
+          "colorThresholdTarget": "background",
+          "hideColumnsForLargeResults": false,
+          "rowDensity": "comfortable",
+          "selectedColumnForRowThreshold": "Unhealthy WorkSpace count",
+          "hiddenColumns": [],
+          "sortBy": [
+            {
+              "columnId": "[\"Unhealthy WorkSpace count\"]",
+              "direction": "ascending"
+            }
+          ]
+        }
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      },
+      "description": ""
+    },
+    "105": {
+      "title": "User volume disk usage",
+      "type": "data",
+      "subType": "dql-builder-metrics",
+      "query": "timeseries { avg(cloud.aws.workspaces.userVolumeDiskUsageByAccountIdRegionWorkspaceId), value.A = avg(cloud.aws.workspaces.userVolumeDiskUsageByAccountIdRegionWorkspaceId, scalar: true) }, by: { workspaceid }, filter: { matchesValue(aws.account.id, $SelectedAWSAccount) }",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "chartSettings": { "gapPolicy": "connect" },
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "avg(cloud.aws.workspaces.userVolumeDiskUsageByAccountIdRegionWorkspaceId)",
+            "unitCategory": "percentage",
+            "baseUnit": "percent",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774459026105
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "queryConfig": {
+        "version": 20,
+        "subQueries": [
+          {
+            "id": "A",
+            "isEnabled": true,
+            "datatype": "metrics",
+            "metric": {
+              "key": "cloud.aws.workspaces.userVolumeDiskUsageByAccountIdRegionWorkspaceId",
+              "aggregation": "avg"
+            },
+            "by": ["workspaceid"],
+            "convertToValue": "Avg",
+            "filter": "aws.account.id = $SelectedAWSAccount "
+          }
+        ]
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "106": {
+      "title": "Root volume disk usage",
+      "type": "data",
+      "subType": "dql-builder-metrics",
+      "query": "timeseries { avg(cloud.aws.workspaces.rootVolumeDiskUsageByAccountIdRegionWorkspaceId), value.A = avg(cloud.aws.workspaces.rootVolumeDiskUsageByAccountIdRegionWorkspaceId, scalar: true) }, by: { workspaceid }, filter: { matchesValue(aws.account.id, $SelectedAWSAccount) }",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "chartSettings": { "gapPolicy": "connect" },
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "avg(cloud.aws.workspaces.rootVolumeDiskUsageByAccountIdRegionWorkspaceId)",
+            "unitCategory": "percentage",
+            "baseUnit": "percent",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774459214750
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "queryConfig": {
+        "version": 20,
+        "subQueries": [
+          {
+            "id": "A",
+            "isEnabled": true,
+            "datatype": "metrics",
+            "metric": {
+              "key": "cloud.aws.workspaces.rootVolumeDiskUsageByAccountIdRegionWorkspaceId",
+              "aggregation": "avg"
+            },
+            "by": ["workspaceid"],
+            "convertToValue": "Avg",
+            "filter": "aws.account.id = $SelectedAWSAccount "
+          }
+        ]
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "107": { "type": "markdown", "content": "### WorkSpace System Metrics" },
+    "108": {
+      "type": "data",
+      "title": "WorkSpace count by image",
+      "query": "timeseries workspaces_stopped = min(cloud.aws.workspaces.stoppedByAccountIdBundleIdComputeTypeProtocolRegionRunningModeWorkspaceId),\n    by: {bundleid, workspaceid},\n    filter: { aws.account.id == $SelectedAWSAccount }\n| fieldsAdd workspaces_active = if(coalesce(arrayMin(workspaces_stopped), 0) == 0, 1, else: 0)\n| summarize active_count = sum(workspaces_active), by:{bundleid}",
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      },
+      "visualizationSettings": {
+        "autoSelectVisualization": false,
+        "table": { "hideColumnsForLargeResults": true },
+        "coloring": {
+          "colorRules": [
+            {
+              "colorMode": "color-palette",
+              "colorPalette": "blue-moss",
+              "comparator": "= *value*",
+              "field": "DT.name",
+              "type": "string",
+              "value": ""
+            }
+          ]
+        },
+        "unitsOverrides": [
+          {
+            "identifier": "active_count",
+            "unitCategory": "unspecified",
+            "baseUnit": "count",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774460641156
+          }
+        ]
+      },
+      "visualization": "pieChart",
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      }
+    },
+    "109": { "type": "markdown", "content": "### Summary" }
   },
   "layouts": {
     "0": { "x": 0, "y": 0, "w": 36, "h": 2 },
-    "82": { "x": 0, "y": 3, "w": 36, "h": 6 },
-    "88": { "x": 0, "y": 15, "w": 36, "h": 1 },
-    "89": { "x": 0, "y": 9, "w": 36, "h": 6 },
-    "93": { "x": 0, "y": 22, "w": 36, "h": 6 },
-    "94": { "x": 0, "y": 34, "w": 36, "h": 6 },
-    "95": { "x": 0, "y": 16, "w": 36, "h": 6 },
-    "96": { "x": 0, "y": 28, "w": 36, "h": 6 },
-    "98": { "x": 0, "y": 2, "w": 36, "h": 1 },
-    "99": { "x": 0, "y": 40, "w": 36, "h": 6 },
-    "100": { "x": 0, "y": 46, "w": 36, "h": 6 },
-    "101": { "x": 0, "y": 52, "w": 36, "h": 6 }
+    "82": { "x": 0, "y": 13, "w": 36, "h": 6 },
+    "88": { "x": 0, "y": 25, "w": 36, "h": 1 },
+    "89": { "x": 0, "y": 19, "w": 36, "h": 6 },
+    "93": { "x": 0, "y": 32, "w": 36, "h": 6 },
+    "94": { "x": 0, "y": 44, "w": 36, "h": 6 },
+    "95": { "x": 0, "y": 26, "w": 36, "h": 6 },
+    "96": { "x": 0, "y": 38, "w": 36, "h": 6 },
+    "98": { "x": 0, "y": 12, "w": 36, "h": 1 },
+    "99": { "x": 0, "y": 50, "w": 36, "h": 6 },
+    "100": { "x": 0, "y": 57, "w": 36, "h": 6 },
+    "101": { "x": 0, "y": 63, "w": 36, "h": 6 },
+    "104": { "x": 0, "y": 3, "w": 36, "h": 3 },
+    "105": { "x": 0, "y": 69, "w": 36, "h": 6 },
+    "106": { "x": 0, "y": 75, "w": 36, "h": 6 },
+    "107": { "x": 0, "y": 56, "w": 36, "h": 1 },
+    "108": { "x": 0, "y": 6, "w": 18, "h": 6 },
+    "109": { "x": 0, "y": 2, "w": 36, "h": 1 }
   },
   "importedWithCode": true,
   "settings": {
