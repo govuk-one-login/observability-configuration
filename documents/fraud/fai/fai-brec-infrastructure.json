@@ -153,7 +153,8 @@
       "visualizationSettings": {
         "chartSettings": {
           "fieldMapping": { "leftAxisValues": ["active"] },
-          "gapPolicy": "connect"
+          "gapPolicy": "connect",
+          "pointsDisplay": "auto"
         },
         "dataMapping": { "displayedFields": ["workspaceid", "username"] },
         "autoSelectVisualization": false,
@@ -313,7 +314,150 @@
         "davisVisualization": { "isAvailable": true }
       }
     },
-    "98": { "type": "markdown", "content": "## User Metrics" }
+    "98": { "type": "markdown", "content": "## User Metrics" },
+    "99": {
+      "type": "data",
+      "title": "Unhealthy WorkSpaces",
+      "query": "timeseries { avg(cloud.aws.workspaces.unhealthyByAccountIdRegionWorkspaceId), value.A = avg(cloud.aws.workspaces.unhealthyByAccountIdRegionWorkspaceId, scalar: true) }, by: { workspaceid }",
+      "queryConfig": {
+        "version": 20,
+        "subQueries": [
+          {
+            "id": "A",
+            "isEnabled": true,
+            "datatype": "metrics",
+            "metric": {
+              "key": "cloud.aws.workspaces.unhealthyByAccountIdRegionWorkspaceId",
+              "aggregation": "avg"
+            },
+            "by": ["workspaceid"],
+            "convertToValue": "Avg",
+            "filter": ""
+          }
+        ]
+      },
+      "subType": "dql-builder-metrics",
+      "visualization": "lineChart",
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      },
+      "visualizationSettings": {
+        "autoSelectVisualization": false,
+        "table": { "hideColumnsForLargeResults": true }
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      }
+    },
+    "100": {
+      "title": "Memory Usage",
+      "type": "data",
+      "subType": "dql-builder-metrics",
+      "query": "timeseries { avg(cloud.aws.workspaces.memoryUsageByAccountIdRegionWorkspaceId), value.A = avg(cloud.aws.workspaces.memoryUsageByAccountIdRegionWorkspaceId, scalar: true) }, by: { workspaceid }",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "autoSelectVisualization": false,
+        "table": { "hideColumnsForLargeResults": true },
+        "chartSettings": { "gapPolicy": "connect" },
+        "unitsOverrides": [
+          {
+            "identifier": "avg(cloud.aws.workspaces.memoryUsageByAccountIdRegionWorkspaceId)",
+            "unitCategory": "percentage",
+            "baseUnit": "percent",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774437134125
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "queryConfig": {
+        "version": 20,
+        "subQueries": [
+          {
+            "id": "A",
+            "isEnabled": true,
+            "datatype": "metrics",
+            "metric": {
+              "key": "cloud.aws.workspaces.memoryUsageByAccountIdRegionWorkspaceId",
+              "aggregation": "avg"
+            },
+            "by": ["workspaceid"],
+            "convertToValue": "Avg",
+            "filter": ""
+          }
+        ]
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "101": {
+      "title": "CPU Usage",
+      "type": "data",
+      "subType": "dql-builder-metrics",
+      "query": "timeseries { avg(cloud.aws.workspaces.cpuUsageByAccountIdRegionWorkspaceId), value.A = avg(cloud.aws.workspaces.cpuUsageByAccountIdRegionWorkspaceId, scalar: true) }, by: { workspaceid }",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "autoSelectVisualization": false,
+        "table": { "hideColumnsForLargeResults": true },
+        "chartSettings": { "gapPolicy": "connect" },
+        "unitsOverrides": [
+          {
+            "identifier": "avg(cloud.aws.workspaces.cpuUsageByAccountIdRegionWorkspaceId)",
+            "unitCategory": "percentage",
+            "baseUnit": "percent",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774437197784
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "queryConfig": {
+        "version": 20,
+        "subQueries": [
+          {
+            "id": "A",
+            "isEnabled": true,
+            "datatype": "metrics",
+            "metric": {
+              "key": "cloud.aws.workspaces.cpuUsageByAccountIdRegionWorkspaceId",
+              "aggregation": "avg"
+            },
+            "by": ["workspaceid"],
+            "convertToValue": "Avg",
+            "filter": ""
+          }
+        ]
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    }
   },
   "layouts": {
     "0": { "x": 0, "y": 0, "w": 36, "h": 2 },
@@ -324,7 +468,10 @@
     "94": { "x": 0, "y": 34, "w": 36, "h": 6 },
     "95": { "x": 0, "y": 16, "w": 36, "h": 6 },
     "96": { "x": 0, "y": 28, "w": 36, "h": 6 },
-    "98": { "x": 0, "y": 2, "w": 36, "h": 1 }
+    "98": { "x": 0, "y": 2, "w": 36, "h": 1 },
+    "99": { "x": 0, "y": 40, "w": 36, "h": 6 },
+    "100": { "x": 0, "y": 46, "w": 36, "h": 6 },
+    "101": { "x": 0, "y": 52, "w": 36, "h": 6 }
   },
   "importedWithCode": true,
   "settings": {
