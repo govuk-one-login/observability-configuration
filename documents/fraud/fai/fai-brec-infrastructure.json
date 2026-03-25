@@ -27,7 +27,7 @@
       "content": "## Fraud FAI BREC Isolated Environment Dashboard\n\nThis dashboard displays metrics for the Fraud Admin Interface (FAI) isolated environment application for Staging, Integration and Production environment. For further information on FAI see [here](https://govukverify.atlassian.net/wiki/x/sgE55Q)."
     },
     "82": {
-      "title": "Total time",
+      "title": "Total time By User",
       "type": "data",
       "subType": "dql-builder-metrics",
       "query": "timeseries { avg(cloud.aws.workspaces.upTimeByAccountIdRegionUserName), value.C = sum(cloud.aws.workspaces.upTimeByAccountIdRegionUserName, scalar: true) }, by: { username }, filter: { matchesValue(aws.account.id, $SelectedAWSAccount) }",
@@ -35,7 +35,7 @@
       "visualizationSettings": {
         "chartSettings": {
           "leftYAxisSettings": {
-            "label": "Total seconds",
+            "label": "Total time",
             "isLabelVisible": true
           },
           "gapPolicy": "connect"
@@ -93,7 +93,7 @@
         "davisVisualization": { "isAvailable": true }
       }
     },
-    "88": { "type": "markdown", "content": "## User Metrics" },
+    "88": { "type": "markdown", "content": "## WorkSpace Usage \nMetrics" },
     "89": {
       "title": "Users Connected",
       "type": "data",
@@ -101,11 +101,8 @@
       "query": "timeseries { max(cloud.aws.workspaces.userConnectedByAccountIdRegionUserName), value.B = avg(cloud.aws.workspaces.userConnectedByAccountIdRegionUserName, scalar: true) }, by: { username }, filter: { matchesValue(aws.account.id, $SelectedAWSAccount) }",
       "visualization": "areaChart",
       "visualizationSettings": {
+        "chartSettings": { "gapPolicy": "connect" },
         "autoSelectVisualization": false,
-        "chartSettings": {
-          "leftYAxisSettings": { "scale": "linear" },
-          "gapPolicy": "connect"
-        },
         "unitsOverrides": [
           {
             "identifier": "value.B",
@@ -184,14 +181,110 @@
         "enabled": false,
         "davisVisualization": { "isAvailable": true }
       }
+    },
+    "94": {
+      "title": "Connection Failure",
+      "type": "data",
+      "query": "timeseries stopped = max(cloud.aws.workspaces.connectionFailureByAccountIdRegionWorkspaceId),\n    by:{workspaceid},\n    filter: { aws.account.id == $SelectedAWSAccount }\n",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "autoSelectVisualization": false,
+        "chartSettings": {
+          "fieldMapping": { "leftAxisValues": ["stopped"] },
+          "gapPolicy": "connect"
+        },
+        "dataMapping": { "displayedFields": ["workspaceid", "username"] },
+        "unitsOverrides": [
+          {
+            "identifier": "stopped",
+            "unitCategory": "unspecified",
+            "baseUnit": "count",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774366032684
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "95": {
+      "title": "Total time By WorkSpace",
+      "type": "data",
+      "subType": "dql-builder-metrics",
+      "query": "timeseries { avg(cloud.aws.workspaces.upTimeByAccountIdRegionWorkspaceId), value.C = sum(cloud.aws.workspaces.upTimeByAccountIdRegionWorkspaceId, scalar: true) }, by: { workspaceid }, filter: { matchesValue(aws.account.id, $SelectedAWSAccount) }",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "chartSettings": {
+          "leftYAxisSettings": {
+            "label": "Total time",
+            "isLabelVisible": true
+          },
+          "gapPolicy": "connect"
+        },
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "avg(cloud.aws.workspaces.upTimeByAccountIdRegionWorkspaceId)",
+            "unitCategory": "time",
+            "baseUnit": "second",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774426539268
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "queryConfig": {
+        "version": 20,
+        "subQueries": [
+          {
+            "id": "C",
+            "isEnabled": true,
+            "datatype": "metrics",
+            "metric": {
+              "key": "cloud.aws.workspaces.upTimeByAccountIdRegionWorkspaceId",
+              "aggregation": "avg"
+            },
+            "by": ["workspaceid"],
+            "convertToValue": "Sum",
+            "filter": "aws.account.id = $SelectedAWSAccount "
+          }
+        ]
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
     }
   },
   "layouts": {
     "0": { "x": 0, "y": 0, "w": 36, "h": 2 },
     "82": { "x": 0, "y": 3, "w": 36, "h": 6 },
     "88": { "x": 0, "y": 2, "w": 36, "h": 1 },
-    "89": { "x": 0, "y": 15, "w": 36, "h": 6 },
-    "93": { "x": 0, "y": 9, "w": 36, "h": 6 }
+    "89": { "x": 0, "y": 21, "w": 36, "h": 6 },
+    "93": { "x": 0, "y": 15, "w": 36, "h": 6 },
+    "94": { "x": 0, "y": 27, "w": 36, "h": 6 },
+    "95": { "x": 0, "y": 9, "w": 36, "h": 6 }
   },
   "importedWithCode": true,
   "settings": {

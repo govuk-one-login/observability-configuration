@@ -7,13 +7,6 @@ module "apigw_metrics" {
 
 ### Fraud Pod ###
 
-module "ssf-infrastructure" {
-  source        = "./modules/documents"
-  document_path = "fraud/ssf/ssf-infrastructure.json"
-  document_name = "Shared Signals Infrastructure Dashboard"
-  document_type = "dashboard"
-}
-
 module "ticf-cri-infrastructure" {
   source        = "./modules/documents"
   document_path = "fraud/ticf-cri/ticf-cri-infrastructure.json"
@@ -28,11 +21,25 @@ module "fai-infrastructure" {
   document_type = "dashboard"
 }
 
+module "fai-brec-infrastructure" {
+  source        = "./modules/documents"
+  document_path = "fraud/fai/fai-brec-infrastructure.json"
+  document_name = "FAI BREC Isolated Environment Dashboard"
+  document_type = "dashboard"
+}
+
 ### Data Pod ###
 
 module "signal-exchange-production-dashboard" {
   source        = "./modules/documents"
   document_path = "signal-exchange/signal-exchange-production-dashboard.json"
   document_name = "Signal Exchange Production Dashboard"
+  document_type = "dashboard"
+}
+
+module "ssf-infrastructure" {
+  source        = "./modules/documents"
+  document_path = "fraud/ssf/ssf-infrastructure.json"
+  document_name = "Shared Signals Infrastructure Dashboard"
   document_type = "dashboard"
 }
