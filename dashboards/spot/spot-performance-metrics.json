@@ -3,7 +3,7 @@
     "configurationVersions": [
       7
     ],
-    "clusterVersion": "1.311.48.20250402-142519"
+    "clusterVersion": "1.335.57.20260401-210643"
   },
   "dashboardMetadata": {
     "name": "spot-performance-metrics",
@@ -1196,8 +1196,8 @@
       },
       "tileFilter": {
         "managementZone": {
-          "id": "4772377103048064055",
-          "name": "[AWS] gds-di-production"
+          "id": "-8637275031561162687",
+          "name": "[AWS] di-orchestration-production"
         }
       },
       "isAutoRefreshDisabled": false,
@@ -1758,6 +1758,98 @@
       },
       "metricExpressions": [
         "resolution=1h&(cloud.aws.spot.coldstarts.identityCreationInitializationDurationByAccountIdRegion:splitBy():max):limit(100):names,(cloud.aws.spot.coldstarts.identitySigningInitializationDurationByAccountIdRegion:splitBy():max):limit(100):names,(cloud.aws.spot.coldstarts.validationInitializationDurationByAccountIdRegion:splitBy():max):limit(100):names,(cloud.aws.spot.coldstarts.validationNodeInitializationDurationByAccountIdRegion:splitBy():max):limit(100):names,(cloud.aws.spot.coldstarts.validationCompareInitializationDurationByAccountIdRegion:splitBy():max):limit(100):names,(cloud.aws.spot.coldstarts.triggerInitializationDurationByAccountIdRegion:splitBy():max):limit(100):names"
+      ]
+    },
+    {
+      "name": "Identities Signed",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 608,
+        "left": 304,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.spot.identitySignedByAccountIdRegionkidkmsId\n:splitBy()\n:sum\n:sort(value(sum,descending))\n:default(0, always) + cloud.aws.spot.identitySignedByAccountIdLogGroupRegionServiceNameServiceTypekidkmsId\n:splitBy()\n:sum\n:sort(value(sum,descending))\n:default(0, always)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "none",
+            "valueFormat": "none",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.spot.identitySignedByAccountIdRegionkidkmsId:splitBy():sum:sort(value(sum,descending)):default(0,always)+cloud.aws.spot.identitySignedByAccountIdLogGroupRegionServiceNameServiceTypekidkmsId:splitBy():sum:sort(value(sum,descending)):default(0,always)):limit(100):names:fold(sum)",
+        "resolution=null&(cloud.aws.spot.identitySignedByAccountIdRegionkidkmsId:splitBy():sum:sort(value(sum,descending)):default(0,always)+cloud.aws.spot.identitySignedByAccountIdLogGroupRegionServiceNameServiceTypekidkmsId:splitBy():sum:sort(value(sum,descending)):default(0,always))"
       ]
     }
   ]
