@@ -1,0 +1,988 @@
+{
+  "version": 21,
+  "variables": [
+    {
+      "version": 2,
+      "key": "Environment",
+      "type": "csv",
+      "visible": true,
+      "editable": true,
+      "input": "BREC - Build - 693388806234,BREC - Staging - 393786338175,BREC - Integration - 162026158693,BREC - Production - 542892327706",
+      "multiple": false,
+      "defaultValue": "BREC - Production - 542892327706"
+    },
+    {
+      "version": 2,
+      "key": "SelectedAWSAccount",
+      "type": "code",
+      "visible": false,
+      "editable": true,
+      "input": "export default async function () {\n  const AWSAccountID = $Environment.replaceAll(\" \", \"\").split(\"-\")[2]\n  return [AWSAccountID]\n}",
+      "multiple": false
+    }
+  ],
+  "tiles": {
+    "0": {
+      "type": "markdown",
+      "content": "## Fraud FAI BREC Isolated Environment Dashboard\n\nThis dashboard displays metrics for the Fraud Admin Interface (FAI) isolated environment application for Build, Staging, Integration and Production environment. For further information on FAI see [here](https://govukverify.atlassian.net/wiki/x/sgE55Q)."
+    },
+    "82": {
+      "title": "Total time",
+      "type": "data",
+      "subType": "dql-builder-metrics",
+      "query": "timeseries { avg(cloud.aws.workspaces.upTimeByAccountIdRegionUserName), value.C = sum(cloud.aws.workspaces.upTimeByAccountIdRegionUserName, scalar: true) }, by: { username }, filter: { matchesValue(aws.account.id, $SelectedAWSAccount) }",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "chartSettings": {
+          "leftYAxisSettings": {
+            "label": "Total time",
+            "isLabelVisible": true
+          },
+          "gapPolicy": "connect"
+        },
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "value.C",
+            "unitCategory": "time",
+            "baseUnit": "second",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1773829693713
+          },
+          {
+            "identifier": "avg(cloud.aws.workspaces.upTimeByAccountIdRegionUserName)",
+            "unitCategory": "time",
+            "baseUnit": "second",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774007401163
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "queryConfig": {
+        "version": 20,
+        "subQueries": [
+          {
+            "id": "C",
+            "isEnabled": true,
+            "datatype": "metrics",
+            "metric": {
+              "key": "cloud.aws.workspaces.upTimeByAccountIdRegionUserName",
+              "aggregation": "avg"
+            },
+            "by": ["username"],
+            "convertToValue": "Sum",
+            "filter": "aws.account.id = $SelectedAWSAccount "
+          }
+        ]
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "88": { "type": "markdown", "content": "## WorkSpace Metrics\n" },
+    "89": {
+      "title": "Users Connected",
+      "type": "data",
+      "subType": "dql-builder-metrics",
+      "query": "timeseries { max(cloud.aws.workspaces.userConnectedByAccountIdRegionUserName), value.B = avg(cloud.aws.workspaces.userConnectedByAccountIdRegionUserName, scalar: true) }, by: { username }, filter: { matchesValue(aws.account.id, $SelectedAWSAccount) }",
+      "visualization": "areaChart",
+      "visualizationSettings": {
+        "chartSettings": { "gapPolicy": "connect" },
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "value.B",
+            "unitCategory": "unspecified",
+            "baseUnit": "count",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774372996443
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "queryConfig": {
+        "version": 20,
+        "subQueries": [
+          {
+            "id": "B",
+            "isEnabled": true,
+            "datatype": "metrics",
+            "metric": {
+              "key": "cloud.aws.workspaces.userConnectedByAccountIdRegionUserName",
+              "aggregation": "max"
+            },
+            "by": ["username"],
+            "convertToValue": "Avg",
+            "filter": "aws.account.id = $SelectedAWSAccount "
+          }
+        ]
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "93": {
+      "title": "WorkSpace Active - By User",
+      "type": "data",
+      "query": "timeseries stopped = max(cloud.aws.workspaces.stoppedByAccountIdRegionUserName),\n    by:{username},\n    filter: { aws.account.id == $SelectedAWSAccount }\n| fieldsAdd stopped = coalesce(stopped, array(0))\n| fieldsAdd active = 1 - stopped[]",
+      "visualization": "areaChart",
+      "visualizationSettings": {
+        "chartSettings": {
+          "fieldMapping": { "leftAxisValues": ["active"] },
+          "gapPolicy": "connect"
+        },
+        "dataMapping": { "displayedFields": ["workspaceid", "username"] },
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "stopped",
+            "unitCategory": "unspecified",
+            "baseUnit": "count",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774366032684
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "94": {
+      "title": "Connection Failure",
+      "type": "data",
+      "query": "timeseries stopped = max(cloud.aws.workspaces.connectionFailureByAccountIdRegionWorkspaceId),\n    by:{workspaceid},\n    filter: { aws.account.id == $SelectedAWSAccount }\n",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "chartSettings": {
+          "leftYAxisSettings": { "scale": "log" },
+          "fieldMapping": { "leftAxisValues": ["stopped"] }
+        },
+        "dataMapping": { "displayedFields": ["workspaceid", "username"] },
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "stopped",
+            "unitCategory": "unspecified",
+            "baseUnit": "count",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774366032684
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "95": {
+      "title": "Total time",
+      "type": "data",
+      "subType": "dql-builder-metrics",
+      "query": "timeseries { avg(cloud.aws.workspaces.upTimeByAccountIdRegionWorkspaceId), value.C = sum(cloud.aws.workspaces.upTimeByAccountIdRegionWorkspaceId, scalar: true) }, by: { workspaceid }, filter: { matchesValue(aws.account.id, $SelectedAWSAccount) }",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "chartSettings": {
+          "leftYAxisSettings": {
+            "label": "Total time",
+            "isLabelVisible": true
+          },
+          "gapPolicy": "connect"
+        },
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "avg(cloud.aws.workspaces.upTimeByAccountIdRegionWorkspaceId)",
+            "unitCategory": "time",
+            "baseUnit": "second",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774426539268
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "queryConfig": {
+        "version": 20,
+        "subQueries": [
+          {
+            "id": "C",
+            "isEnabled": true,
+            "datatype": "metrics",
+            "metric": {
+              "key": "cloud.aws.workspaces.upTimeByAccountIdRegionWorkspaceId",
+              "aggregation": "avg"
+            },
+            "by": ["workspaceid"],
+            "convertToValue": "Sum",
+            "filter": "aws.account.id = $SelectedAWSAccount "
+          }
+        ]
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "96": {
+      "title": "WorkSpace Active - By WorkSpace",
+      "type": "data",
+      "query": "timeseries stopped = max(cloud.aws.workspaces.stoppedByAccountIdRegionWorkspaceId),\n    by:{workspaceid},\n    filter: { aws.account.id == $SelectedAWSAccount }\n| fieldsAdd stopped = coalesce(stopped, array(0))\n| fieldsAdd active = 1 - stopped[]",
+      "visualization": "areaChart",
+      "visualizationSettings": {
+        "chartSettings": {
+          "fieldMapping": { "leftAxisValues": ["active"] },
+          "gapPolicy": "connect"
+        },
+        "dataMapping": { "displayedFields": ["workspaceid"] },
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "stopped",
+            "unitCategory": "unspecified",
+            "baseUnit": "count",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774366032684
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "98": { "type": "markdown", "content": "## User Metrics" },
+    "99": {
+      "title": "Unhealthy WorkSpaces",
+      "type": "data",
+      "subType": "dql-builder-metrics",
+      "query": "timeseries { avg(cloud.aws.workspaces.unhealthyByAccountIdRegionWorkspaceId), value.A = avg(cloud.aws.workspaces.unhealthyByAccountIdRegionWorkspaceId, scalar: true) }, by: { workspaceid }, filter: { matchesValue(aws.account.id, $SelectedAWSAccount) }",
+      "visualization": "lineChart",
+      "visualizationSettings": { "autoSelectVisualization": false },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "queryConfig": {
+        "version": 20,
+        "subQueries": [
+          {
+            "id": "A",
+            "isEnabled": true,
+            "datatype": "metrics",
+            "metric": {
+              "key": "cloud.aws.workspaces.unhealthyByAccountIdRegionWorkspaceId",
+              "aggregation": "avg"
+            },
+            "by": ["workspaceid"],
+            "convertToValue": "Avg",
+            "filter": "aws.account.id = $SelectedAWSAccount "
+          }
+        ]
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "100": {
+      "title": "Memory Usage",
+      "type": "data",
+      "subType": "dql-builder-metrics",
+      "query": "timeseries { avg(cloud.aws.workspaces.memoryUsageByAccountIdRegionWorkspaceId), value.A = avg(cloud.aws.workspaces.memoryUsageByAccountIdRegionWorkspaceId, scalar: true) }, by: { workspaceid }, filter: { matchesValue(aws.account.id, $SelectedAWSAccount) }",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "chartSettings": { "gapPolicy": "connect" },
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "avg(cloud.aws.workspaces.memoryUsageByAccountIdRegionWorkspaceId)",
+            "unitCategory": "percentage",
+            "baseUnit": "percent",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774437134125
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "queryConfig": {
+        "version": 20,
+        "subQueries": [
+          {
+            "id": "A",
+            "isEnabled": true,
+            "datatype": "metrics",
+            "metric": {
+              "key": "cloud.aws.workspaces.memoryUsageByAccountIdRegionWorkspaceId",
+              "aggregation": "avg"
+            },
+            "by": ["workspaceid"],
+            "convertToValue": "Avg",
+            "filter": "aws.account.id = $SelectedAWSAccount "
+          }
+        ]
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "101": {
+      "title": "CPU Usage",
+      "type": "data",
+      "subType": "dql-builder-metrics",
+      "query": "timeseries { avg(cloud.aws.workspaces.cpuUsageByAccountIdRegionWorkspaceId), value.A = avg(cloud.aws.workspaces.cpuUsageByAccountIdRegionWorkspaceId, scalar: true) }, by: { workspaceid }, filter: { matchesValue(aws.account.id, $SelectedAWSAccount) }",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "chartSettings": { "gapPolicy": "connect" },
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "avg(cloud.aws.workspaces.cpuUsageByAccountIdRegionWorkspaceId)",
+            "unitCategory": "percentage",
+            "baseUnit": "percent",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774437197784
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "queryConfig": {
+        "version": 20,
+        "subQueries": [
+          {
+            "id": "A",
+            "isEnabled": true,
+            "datatype": "metrics",
+            "metric": {
+              "key": "cloud.aws.workspaces.cpuUsageByAccountIdRegionWorkspaceId",
+              "aggregation": "avg"
+            },
+            "by": ["workspaceid"],
+            "convertToValue": "Avg",
+            "filter": "aws.account.id = $SelectedAWSAccount "
+          }
+        ]
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "107": { "type": "markdown", "content": "### WorkSpace System Metrics" },
+    "108": {
+      "title": "WorkSpace count by image",
+      "type": "data",
+      "query": "timeseries workspaces_stopped = min(cloud.aws.workspaces.stoppedByAccountIdBundleIdComputeTypeProtocolRegionRunningModeWorkspaceId),\n    by: {bundleid, workspaceid},\n    filter: { aws.account.id == $SelectedAWSAccount }\n| fieldsAdd workspaces_all = 1\n| summarize active_count = sum(workspaces_all), by:{bundleid}",
+      "visualization": "pieChart",
+      "visualizationSettings": {
+        "coloring": {
+          "colorRules": [
+            {
+              "colorMode": "color-palette",
+              "colorPalette": "blue-moss",
+              "comparator": "= *value*",
+              "field": "DT.name",
+              "type": "string",
+              "value": ""
+            }
+          ]
+        },
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "active_count",
+            "unitCategory": "unspecified",
+            "baseUnit": "count",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774460641156
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "109": { "type": "markdown", "content": "### Summary" },
+    "110": {
+      "title": "WorkSpace images",
+      "type": "data",
+      "query": "timeseries workspaces_stopped = min(cloud.aws.workspaces.stoppedByAccountIdBundleIdComputeTypeProtocolRegionRunningModeWorkspaceId),\n    by: {bundleid, workspaceid},\n    filter: { aws.account.id == $SelectedAWSAccount }\n| fieldsAdd workspaces_active = if(coalesce(arrayMin(workspaces_stopped), 0) == 0, 1, else: 0)\n| fields bundleid, workspaceid",
+      "visualization": "table",
+      "visualizationSettings": {
+        "autoSelectVisualization": false,
+        "coloring": {
+          "colorRules": [
+            {
+              "colorMode": "color-palette",
+              "comparator": "= *value*",
+              "field": "bundleid",
+              "type": "string",
+              "value": "",
+              "colorPalette": "categorical"
+            }
+          ]
+        },
+        "unitsOverrides": [
+          {
+            "identifier": "active_count",
+            "unitCategory": "unspecified",
+            "baseUnit": "count",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774460641156
+          }
+        ],
+        "table": {
+          "sortBy": [{ "columnId": "[\"bundleid\"]", "direction": "ascending" }]
+        }
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "111": {
+      "title": "User volume disk usage (10GB)",
+      "type": "data",
+      "query": "timeseries size_percent = max(cloud.aws.workspaces.userVolumeDiskUsageByAccountIdRegionWorkspaceId),\n    by:{workspaceid},\n    filter: { aws.account.id == $SelectedAWSAccount }\n| fieldsAdd size_in_gb = 10 * (size_percent[] / 100)",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "chartSettings": {
+          "fieldMapping": { "leftAxisValues": ["size_in_gb"] },
+          "gapPolicy": "connect"
+        },
+        "dataMapping": { "displayedFields": ["workspaceid"] },
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "size_in_gb",
+            "unitCategory": "data",
+            "baseUnit": "gibibyte",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774518673584
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "112": {
+      "title": "Root volume disk usage (80GB)",
+      "type": "data",
+      "query": "timeseries size_percent = max(cloud.aws.workspaces.rootVolumeDiskUsageByAccountIdRegionWorkspaceId),\n    by:{workspaceid},\n    filter: { aws.account.id == $SelectedAWSAccount }\n| fieldsAdd size_in_gb = 80 * (size_percent[]/100)",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "autoSelectVisualization": false,
+        "chartSettings": {
+          "fieldMapping": { "leftAxisValues": ["size_in_gb"] },
+          "gapPolicy": "connect"
+        },
+        "dataMapping": { "displayedFields": ["workspaceid"] },
+        "unitsOverrides": [
+          {
+            "identifier": "size_in_gb",
+            "unitCategory": "data",
+            "baseUnit": "gibibyte",
+            "displayUnit": null,
+            "decimals": null,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774518673584
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "113": {
+      "type": "data",
+      "title": "Connection attempt",
+      "query": "timeseries { max(cloud.aws.workspaces.connectionAttemptByAccountIdBundleIdComputeTypeProtocolRegionRunningModeWorkspaceId), value.A = max(cloud.aws.workspaces.connectionAttemptByAccountIdBundleIdComputeTypeProtocolRegionRunningModeWorkspaceId, scalar: true) }, by: { workspaceid }, filter: { matchesValue(aws.account.id, $SelectedAWSAccount) }",
+      "queryConfig": {
+        "version": 20,
+        "subQueries": [
+          {
+            "id": "A",
+            "isEnabled": true,
+            "datatype": "metrics",
+            "metric": {
+              "key": "cloud.aws.workspaces.connectionAttemptByAccountIdBundleIdComputeTypeProtocolRegionRunningModeWorkspaceId",
+              "aggregation": "max"
+            },
+            "by": ["workspaceid"],
+            "convertToValue": "Max",
+            "filter": "aws.account.id = $SelectedAWSAccount "
+          }
+        ]
+      },
+      "subType": "dql-builder-metrics",
+      "visualization": "lineChart",
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      },
+      "visualizationSettings": {
+        "chartSettings": {
+          "leftYAxisSettings": {
+            "scale": "log",
+            "min": { "mode": "custom", "value": 0 },
+            "max": { "mode": "data-max" }
+          }
+        },
+        "legend": { "ratio": 20 },
+        "autoSelectVisualization": true,
+        "unitsOverrides": [
+          {
+            "identifier": "avg(cloud.aws.workspaces.connectionAttemptByAccountIdBundleIdComputeTypeProtocolRegionRunningModeWorkspaceId)",
+            "unitCategory": "unspecified",
+            "baseUnit": "count",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774543728918
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      }
+    },
+    "114": {
+      "title": "",
+      "description": "",
+      "type": "data",
+      "query": "timeseries users_connected = sum(cloud.aws.workspaces.userConnectedByAccountIdRegionUserName),\n  by: { username },\n  filter: { aws.account.id == $SelectedAWSAccount }\n| fieldsAdd logged_in = if(arrayMax(users_connected) > 0, 1, else: 0)\n| summarize `Users connected count` = sum(logged_in)",
+      "visualization": "singleValue",
+      "visualizationSettings": {
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "Users connected count",
+            "unitCategory": "unspecified",
+            "baseUnit": "none",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774457543664
+          },
+          {
+            "identifier": "Active WorkSpace count",
+            "unitCategory": "unspecified",
+            "baseUnit": "none",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774457551137
+          },
+          {
+            "identifier": "Unhealthy WorkSpace count",
+            "unitCategory": "unspecified",
+            "baseUnit": "none",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774457559202
+          },
+          {
+            "identifier": "Stopped WorkSpace count",
+            "unitCategory": "unspecified",
+            "baseUnit": "none",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774458584452
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "115": {
+      "title": "",
+      "description": "",
+      "type": "data",
+      "query": "timeseries workspaces_stopped = sum(cloud.aws.workspaces.stoppedByAccountIdRegionUserName),\n  by: { username },\n  filter: { aws.account.id == $SelectedAWSAccount }\n| fieldsAdd active = if(coalesce(arrayMin(workspaces_stopped), 0) == 0, 1, else: 0)\n| summarize `Active WorkSpace count` = sum(active)",
+      "visualization": "singleValue",
+      "visualizationSettings": {
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "Users connected count",
+            "unitCategory": "unspecified",
+            "baseUnit": "none",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774457543664
+          },
+          {
+            "identifier": "Active WorkSpace count",
+            "unitCategory": "unspecified",
+            "baseUnit": "none",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774457551137
+          },
+          {
+            "identifier": "Unhealthy WorkSpace count",
+            "unitCategory": "unspecified",
+            "baseUnit": "none",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774457559202
+          },
+          {
+            "identifier": "Stopped WorkSpace count",
+            "unitCategory": "unspecified",
+            "baseUnit": "none",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774458584452
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "116": {
+      "title": "",
+      "description": "",
+      "type": "data",
+      "query": "timeseries workspaces_stopped = sum(cloud.aws.workspaces.stoppedByAccountIdRegionUserName),\n  by: { username },\n  filter: { aws.account.id == $SelectedAWSAccount }\n| fieldsAdd stopped = if(arrayMin(workspaces_stopped) > 0, 1, else: 0)\n| summarize `Stopped WorkSpace count` = sum(stopped)",
+      "visualization": "singleValue",
+      "visualizationSettings": {
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "Users connected count",
+            "unitCategory": "unspecified",
+            "baseUnit": "none",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774457543664
+          },
+          {
+            "identifier": "Active WorkSpace count",
+            "unitCategory": "unspecified",
+            "baseUnit": "none",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774457551137
+          },
+          {
+            "identifier": "Unhealthy WorkSpace count",
+            "unitCategory": "unspecified",
+            "baseUnit": "none",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774457559202
+          },
+          {
+            "identifier": "Stopped WorkSpace count",
+            "unitCategory": "unspecified",
+            "baseUnit": "none",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774458584452
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    },
+    "117": {
+      "title": "",
+      "description": "",
+      "type": "data",
+      "query": "timeseries workspaces_unhealthy = sum(cloud.aws.workspaces.unhealthyByAccountIdRegionUserName),\n  by: { username },\n  filter: { aws.account.id == $SelectedAWSAccount }\n| fieldsAdd unhealthy = if(arrayMax(workspaces_unhealthy) > 0, 1, else: 0)\n| summarize `Unhealthy WorkSpace count` = sum(unhealthy)",
+      "visualization": "singleValue",
+      "visualizationSettings": {
+        "coloring": {
+          "colorRules": [
+            {
+              "colorMode": "custom-color",
+              "comparator": ">",
+              "field": "Unhealthy WorkSpace count",
+              "value": 0,
+              "type": "double",
+              "customColor": "#DC172A"
+            },
+            {
+              "colorMode": "custom-color",
+              "comparator": "=",
+              "field": "Unhealthy WorkSpace count",
+              "value": 0,
+              "type": "double",
+              "customColor": "#7DC540"
+            }
+          ]
+        },
+        "autoSelectVisualization": false,
+        "unitsOverrides": [
+          {
+            "identifier": "Users connected count",
+            "unitCategory": "unspecified",
+            "baseUnit": "none",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774457543664
+          },
+          {
+            "identifier": "Active WorkSpace count",
+            "unitCategory": "unspecified",
+            "baseUnit": "none",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774457551137
+          },
+          {
+            "identifier": "Unhealthy WorkSpace count",
+            "unitCategory": "unspecified",
+            "baseUnit": "none",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774457559202
+          },
+          {
+            "identifier": "Stopped WorkSpace count",
+            "unitCategory": "unspecified",
+            "baseUnit": "none",
+            "displayUnit": null,
+            "decimals": 0,
+            "suffix": "",
+            "delimiter": false,
+            "added": 1774458584452
+          }
+        ]
+      },
+      "querySettings": {
+        "maxResultRecords": 1000,
+        "defaultScanLimitGbytes": 500,
+        "maxResultMegaBytes": 1,
+        "defaultSamplingRatio": 10,
+        "enableSampling": false
+      },
+      "davis": {
+        "enabled": false,
+        "davisVisualization": { "isAvailable": true }
+      }
+    }
+  },
+  "layouts": {
+    "0": { "x": 0, "y": 0, "w": 36, "h": 2 },
+    "82": { "x": 0, "y": 13, "w": 36, "h": 6 },
+    "88": { "x": 0, "y": 25, "w": 36, "h": 1 },
+    "89": { "x": 0, "y": 19, "w": 36, "h": 6 },
+    "93": { "x": 0, "y": 32, "w": 36, "h": 6 },
+    "94": { "x": 0, "y": 44, "w": 36, "h": 6 },
+    "95": { "x": 0, "y": 26, "w": 36, "h": 6 },
+    "96": { "x": 0, "y": 38, "w": 36, "h": 6 },
+    "98": { "x": 0, "y": 12, "w": 36, "h": 1 },
+    "99": { "x": 0, "y": 56, "w": 36, "h": 6 },
+    "100": { "x": 0, "y": 63, "w": 36, "h": 6 },
+    "101": { "x": 0, "y": 69, "w": 36, "h": 6 },
+    "107": { "x": 0, "y": 62, "w": 36, "h": 1 },
+    "108": { "x": 0, "y": 6, "w": 18, "h": 6 },
+    "109": { "x": 0, "y": 2, "w": 36, "h": 1 },
+    "110": { "x": 18, "y": 6, "w": 18, "h": 6 },
+    "111": { "x": 0, "y": 75, "w": 36, "h": 6 },
+    "112": { "x": 0, "y": 81, "w": 36, "h": 6 },
+    "113": { "x": 0, "y": 50, "w": 36, "h": 6 },
+    "114": { "x": 0, "y": 3, "w": 9, "h": 3 },
+    "115": { "x": 9, "y": 3, "w": 9, "h": 3 },
+    "116": { "x": 18, "y": 3, "w": 9, "h": 3 },
+    "117": { "x": 27, "y": 3, "w": 9, "h": 3 }
+  },
+  "importedWithCode": true,
+  "settings": {
+    "gridLayout": { "mode": "responsive", "columnsCount": 36 },
+    "defaultTimeframe": {
+      "value": { "from": "now()-2h", "to": "now()" },
+      "enabled": false
+    },
+    "defaultSegments": { "value": [], "enabled": false }
+  },
+  "annotations": []
+}
