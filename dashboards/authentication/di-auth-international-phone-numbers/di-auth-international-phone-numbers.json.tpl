@@ -1170,6 +1170,245 @@
       "queriesSettings": {
         "resolution": ""
       }
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 2964,
+        "left": 0,
+        "width": 1520,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## Bulk email impact"
+    },
+    {
+      "name": "Cumulative International Number Removals Over Time Since Bulk Email Started (Updates Daily)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 3002,
+        "left": 0,
+        "width": 1102,
+        "height": 456
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "clamp"
+          ],
+          "metricSelector": "(336050 - (cloud.aws.authentication.phoneDestinationCountByAccountIdCountryCodeEnvironmentLogGroupRegionServiceNameServiceType:filter(and(eq(\"aws.account.id\",\"${old_account_id}\"),eq(\"environment\",\"${application_environment}\"),ne(countrycode, 44))):splitBy():sum):timeshift(1d)):partition(\"clamp\",value(\"sum\",ge(0)))",
+          "rate": "NONE",
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "clamp"
+          ],
+          "metricSelector": "(336050 - (cloud.aws.authentication.phoneDestinationCountByAccountIdCountryCodeEnvironmentLogGroupRegionServiceNameServiceType:filter(and(eq(\"aws.account.id\",\"${old_account_id}\"),eq(\"environment\",\"${application_environment}\"),ne(countrycode, 44))):splitBy():sum):timeshift(1d)):partition(\"clamp\",value(\"sum\",ge(0))) - (336050 - (cloud.aws.authentication.phoneDestinationCountByAccountIdCountryCodeEnvironmentLogGroupRegionServiceNameServiceType:filter(and(eq(\"aws.account.id\",\"${old_account_id}\"),eq(\"environment\",\"${application_environment}\"),ne(countrycode, 44))):splitBy():sum)):partition(\"clamp\",value(\"sum\",ge(0)))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": true
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "0",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "COLUMN",
+              "alias": "Cumulative numbers removed"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "LINE",
+              "alias": "Difference in removals from previous day"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#ffee7c"
+              },
+              {
+                "color": "#97a9ff"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "1d"
+      }
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 3002,
+        "left": 1102,
+        "width": 418,
+        "height": 532
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "This is the cumulative international numbers removed from our user-profile table every day since the start of the bulk email campaign.\n\nThe blue line represents average weekend removals before bulk emails started (124 per day)\n\nThe yellow line represents average weekday removals before bulk email started (320 per day)\n\n### Percentage converted\n\nWe don't have a good way to track how many of the users that received the email removed an international number from their account.\n\nIn lieu of finding a good way to approximate this in Dynatrace, here's there equation.\n\n```\n(\n  [total numbers removed since start of campaign] \n  - ([number of weekdays] * 320) \n  - ([number of weekend days] * 124) \n)\n/ [total emails delivered]\n```\n\n"
+    },
+    {
+      "name": "Total bulk emails delivered (not including today)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 3458,
+        "left": 0,
+        "width": 1102,
+        "height": 380
+      },
+      "tileFilter": {
+        "timeframe": "2026-03-30T00:00:00+01:00 to now\\0d"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.authentication.emailSentByAccountIdEmailNameEnvironmentLogGroupNotifyStatusRegionServiceNameServiceType:filter(and(or(eq(emailname,INTERNATIONAL_NUMBERS_FORCED_MFA_RESET_BULK_EMAIL)),or(eq(notifystatus,delivered)),or(eq(environment,${application_environment})),or(eq(\"aws.account.id\",\"${old_account_id}\"),eq(\"aws.account.id\",\"${account_id}\")))):splitBy():count:sort(value(avg,descending))",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "none",
+            "valueFormat": "none",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": false,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      }
     }
   ]
 }
