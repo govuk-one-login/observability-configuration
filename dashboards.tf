@@ -695,6 +695,13 @@ module "kbv_stub_prod" {
 
 
 
+### Signal Exchange ###
+
+module "signal_exchange_production_dashboard" {
+  source = "./modules/dashboard"
+  path   = "signal-exchange/signal-exchange-production-dashboard.json"
+}
+
 ### DAP ###
 
 module "dap_dashboard" {
