@@ -13,7 +13,7 @@ resource "dynatrace_metric_events" "team_amplify_5xx_errors" {
 
     Amplify details: {dims}.
 
-    If assistance is needed, please reach out to #di-aws-control-tower.
+    If assistance is needed, please reach out to #di-platform-fog-support.
     EOT
 
     davis_merge = true
@@ -45,7 +45,7 @@ resource "dynatrace_metric_events" "team_amplify_high_latency" {
 
     Amplify details: {dims}.
     
-    If assistance is needed, please reach out to #di-aws-control-tower.
+    If assistance is needed, please reach out to #di-platform-fog-support.
     EOT
 
     davis_merge = true
@@ -78,7 +78,7 @@ resource "dynatrace_metric_events" "team_dynamodb_read_throttles" {
     
     DynamoDB details: {dims}.
     
-    If assistance is needed, please reach out to #di-aws-control-tower.
+    If assistance is needed, please reach out to #di-platform-fog-support.
     EOT
 
     davis_merge = true
@@ -110,7 +110,7 @@ resource "dynatrace_metric_events" "team_dynamodb_user_error" {
 
     DynamoDB details: {dims}.
     
-    If assistance is needed, please reach out to #di-aws-control-tower.
+    If assistance is needed, please reach out to #di-platform-fog-support.
     EOT
 
     davis_merge = true
@@ -142,7 +142,7 @@ resource "dynatrace_metric_events" "team_dynamodb_write_throttles" {
     
     DynamoDB details: {dims}.
     
-    If assistance is needed, please reach out to #di-aws-control-tower.
+    If assistance is needed, please reach out to #di-platform-fog-support.
     EOT
 
     davis_merge = true
@@ -174,7 +174,7 @@ resource "dynatrace_metric_events" "team_dynamodb_server_error" {
     
     DynamoDB details: {dims}.
     
-    If assistance is needed, please reach out to #di-aws-control-tower.
+    If assistance is needed, please reach out to #di-platform-fog-support.
     EOT
 
     davis_merge = true
@@ -207,7 +207,7 @@ resource "dynatrace_metric_events" "team_lambda_error" {
     
     Lambda function details: {dims}.
     
-    If assistance is needed, please reach out to #di-aws-control-tower.
+    If assistance is needed, please reach out to #di-platform-fog-support.
     EOT
 
     davis_merge = true
@@ -239,7 +239,7 @@ resource "dynatrace_metric_events" "team_lambda_throttles" {
     
     Lambda function details: {dims}.
     
-    If assistance is needed, please reach out to #di-aws-control-tower.
+    If assistance is needed, please reach out to #di-platform-fog-support.
     EOT
 
     davis_merge = true
@@ -272,7 +272,7 @@ resource "dynatrace_metric_events" "team_step_functions_execution_duration" {
 
     Step function details: {dims}.
 
-    If assistance is needed, please reach out to #di-aws-control-tower.
+    If assistance is needed, please reach out to #di-platform-fog-support.
     EOT
 
     davis_merge = true
@@ -307,7 +307,7 @@ resource "dynatrace_metric_events" "team_step_functions_execution_duration_excee
     Follow the steps outlined in the official TEAM documentation to revoke the session that has exceeded 9 hours:
     https://aws-samples.github.io/iam-identity-center-team/docs/guides/approver.html#revoke-elevated-access
 
-    If assistance is needed, please reach out to #di-aws-control-tower.
+    If assistance is needed, please reach out to #di-platform-fog-support.
     EOT
 
     davis_merge = true
@@ -339,7 +339,7 @@ resource "dynatrace_metric_events" "team_step_functions_execution_aborted" {
     
     Step function details: {dims}.
     
-    If assistance is needed, please reach out to #di-aws-control-tower.
+    If assistance is needed, please reach out to #di-platform-fog-support.
     EOT
 
     davis_merge = true
@@ -371,7 +371,7 @@ resource "dynatrace_metric_events" "team_step_functions_execution_failed" {
 
     Step function details: {dims}.
 
-    If assistance is needed, please reach out to #di-aws-control-tower.
+    If assistance is needed, please reach out to #di-platform-fog-support.
     EOT
 
     davis_merge = true
@@ -410,7 +410,7 @@ resource "dynatrace_metric_events" "team_policy_lambda_error" {
 
     Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
 
-    If assistance is needed, please reach out to #di-aws-control-tower.
+    If assistance is needed, please reach out to #di-platform-fog-support.
     EOT
 
     davis_merge = true
@@ -444,7 +444,7 @@ resource "dynatrace_metric_events" "team_policy_lambda_throttles" {
     
     Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
 
-    If assistance is needed, please reach out to #di-aws-control-tower.
+    If assistance is needed, please reach out to #di-platform-fog-support.
     EOT
 
     davis_merge = true
@@ -479,7 +479,7 @@ resource "dynatrace_metric_events" "team_policy_dlq_messages" {
 
     Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
 
-    If assistance is needed, please reach out to #di-aws-control-tower.
+    If assistance is needed, please reach out to #di-platform-fog-support.
     EOT
 
     davis_merge = true
@@ -514,7 +514,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_approvers_server_error"
     
     Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
 
-    If assistance is needed, please reach out to #di-aws-control-tower.
+    If assistance is needed, please reach out to #di-platform-fog-support.
     EOT
 
     davis_merge = true
@@ -548,7 +548,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_eligibility_server_erro
     
     Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
 
-    If assistance is needed, please reach out to #di-aws-control-tower.
+    If assistance is needed, please reach out to #di-platform-fog-support.
     EOT
 
     davis_merge = true
@@ -582,7 +582,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_approvers_throttles" {
     
     Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
 
-    If assistance is needed, please reach out to #di-aws-control-tower.
+    If assistance is needed, please reach out to #di-platform-fog-support.
     EOT
 
     davis_merge = true
@@ -616,7 +616,7 @@ resource "dynatrace_metric_events" "team_policy_dynamodb_eligibility_throttles" 
     
     Follow the runbook at https://govukverify.atlassian.net/wiki/spaces/PLAT/pages/5286527019/T.E.A.M+Policy+resync to resync the TEAM policies.
 
-    If assistance is needed, please reach out to #di-aws-control-tower.
+    If assistance is needed, please reach out to #di-platform-fog-support.
     EOT
 
     davis_merge = true
