@@ -262,38 +262,6 @@ resource "dynatrace_metric_events" "team_lambda_throttles" {
 }
 
 # Step Functions
-resource "dynatrace_metric_events" "team_step_functions_execution_duration" {
-  count   = local.is_production ? 1 : 0
-  enabled = true
-  summary = "TEAM Step Functions Execution Duration Alert"
-  event_template {
-    description = <<-EOT
-    The {metricname} value was {alert_condition} normal behavior.
-
-    Step function details: {dims}.
-
-    If assistance is needed, please reach out to #di-platform-fog-support.
-    EOT
-
-    davis_merge = true
-    event_type  = "SLOWDOWN"
-    title       = "TEAM Step Functions Execution Duration Alert"
-  }
-  model_properties {
-    type               = "AUTO_ADAPTIVE_THRESHOLD"
-    alert_condition    = "ABOVE"
-    alert_on_no_data   = false
-    violating_samples  = 1
-    samples            = 3
-    dealerting_samples = 3
-    signal_fluctuation = 1
-  }
-  query_definition {
-    type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.states.executionTimeByAccountIdRegionStateMachineArn:sort(value(auto,descending)):filter(eq(\"aws.account.id\", ${var.team_account_id})):splitBy(statemachinearn)"
-  }
-}
-
 resource "dynatrace_metric_events" "team_step_functions_execution_duration_exceed" {
   count   = local.is_production ? 1 : 0
   enabled = true
