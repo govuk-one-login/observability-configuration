@@ -160,7 +160,7 @@ resource "dynatrace_metric_events" "team_dynamodb_write_throttles" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.dynamodb.writeThrottleEventsByAccountIdRegionTableName:sum:filter(and(or(eq(\"aws.account.id\",${var.team_account_id}),contains(\"tablename\",\"-main\")))):splitBy(\"tablename\")"
+    metric_selector = "cloud.aws.dynamodb.writeThrottleEventsByAccountIdRegionTableName:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}),contains(\"tablename\",\"-main\"))):splitBy(\"tablename\")"
   }
 }
 
@@ -290,7 +290,7 @@ resource "dynatrace_metric_events" "team_step_functions_execution_duration" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.states.executionTimeByAccountIdRegionStateMachineArn:sort(value(auto,descending)):filter(and(or(eq(\"aws.account.id\", ${var.team_account_id})))):splitBy(statemachinearn)"
+    metric_selector = "cloud.aws.states.executionTimeByAccountIdRegionStateMachineArn:sort(value(auto,descending)):filter(eq(\"aws.account.id\", ${var.team_account_id})):splitBy(statemachinearn)"
   }
 }
 
@@ -389,7 +389,7 @@ resource "dynatrace_metric_events" "team_step_functions_execution_failed" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.states.executionsFailedByAccountIdRegionStateMachineArn:sum:filter(and(or(eq(\"aws.account.id\",${var.team_account_id})))):splitBy(statemachinearn)"
+    metric_selector = "cloud.aws.states.executionsFailedByAccountIdRegionStateMachineArn:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}))):splitBy(statemachinearn)"
   }
 }
 
