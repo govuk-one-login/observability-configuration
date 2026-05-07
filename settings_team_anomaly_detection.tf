@@ -35,37 +35,40 @@ resource "dynatrace_metric_events" "team_amplify_5xx_errors" {
   }
 }
 
-resource "dynatrace_metric_events" "team_amplify_high_latency" {
-  count   = local.is_production ? 1 : 0
-  enabled = true
-  summary = "TEAM Amplify High Latency Alert"
-  event_template {
-    description = <<-EOT
-    The {metricname} value was {alert_condition} normal behavior.
+## We currently do not have a response action to this alert,
+## which tends to fire semi-regularly with no impact on the application
+## therefore disabling to avoid alert fatigue
+# resource "dynatrace_metric_events" "team_amplify_high_latency" {
+#   count   = local.is_production ? 1 : 0
+#   enabled = true
+#   summary = "TEAM Amplify High Latency Alert"
+#   event_template {
+#     description = <<-EOT
+#     The {metricname} value was {alert_condition} normal behavior.
 
-    Amplify details: {dims}.
-    
-    If assistance is needed, please reach out to #di-platform-fog-support.
-    EOT
+#     Amplify details: {dims}.
 
-    davis_merge = true
-    event_type  = "SLOWDOWN"
-    title       = "TEAM Amplify High Latency Alert"
-  }
-  model_properties {
-    type               = "AUTO_ADAPTIVE_THRESHOLD"
-    alert_condition    = "ABOVE"
-    alert_on_no_data   = false
-    violating_samples  = 1
-    samples            = 3
-    dealerting_samples = 3
-    signal_fluctuation = 1
-  }
-  query_definition {
-    type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.amplifyhosting.latencyByAccountIdRegion:filter(and(eq(\"aws.account.id\",${var.team_account_id}))):splitBy(\"aws.account.id\")"
-  }
-}
+#     If assistance is needed, please reach out to #di-platform-fog-support.
+#     EOT
+
+#     davis_merge = true
+#     event_type  = "SLOWDOWN"
+#     title       = "TEAM Amplify High Latency Alert"
+#   }
+#   model_properties {
+#     type               = "AUTO_ADAPTIVE_THRESHOLD"
+#     alert_condition    = "ABOVE"
+#     alert_on_no_data   = false
+#     violating_samples  = 1
+#     samples            = 3
+#     dealerting_samples = 3
+#     signal_fluctuation = 1
+#   }
+#   query_definition {
+#     type            = "METRIC_SELECTOR"
+#     metric_selector = "cloud.aws.amplifyhosting.latencyByAccountIdRegion:filter(and(eq(\"aws.account.id\",${var.team_account_id}))):splitBy(\"aws.account.id\")"
+#   }
+# }
 
 # DynamoDB
 resource "dynatrace_metric_events" "team_dynamodb_read_throttles" {
@@ -197,22 +200,58 @@ resource "dynatrace_metric_events" "team_dynamodb_server_error" {
 }
 
 # Lambda
-resource "dynatrace_metric_events" "team_lambda_error" {
+## Replacing this generic Lambda Function alert in deference to
+## the ones specific to teamRouter and PolicyPublishing Functions
+## which link directly to agreed critical user journeys
+# resource "dynatrace_metric_events" "team_lambda_error" {
+#   count   = local.is_production ? 1 : 0
+#   enabled = true
+#   summary = "TEAM Lambda Error Alert"
+#   event_template {
+#     description = <<-EOT
+#     The {metricname} value was {alert_condition} {threshold}.
+
+#     Lambda function details: {dims}.
+
+#     If assistance is needed, please reach out to #di-platform-fog-support.
+#     EOT
+
+#     davis_merge = true
+#     event_type  = "ERROR"
+#     title       = "TEAM Lambda Error Alert"
+#   }
+#   model_properties {
+#     type               = "STATIC_THRESHOLD"
+#     alert_condition    = "ABOVE"
+#     threshold          = 0
+#     alert_on_no_data   = false
+#     violating_samples  = 1
+#     samples            = 3
+#     dealerting_samples = 3
+#   }
+#   query_definition {
+#     type            = "METRIC_SELECTOR"
+#     metric_selector = "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}), contains(\"functionname\", \"-main\"))):splitBy(\"functionname\")"
+#   }
+# }
+
+# teamRouter Lambda Function errors
+resource "dynatrace_metric_events" "team_router_lambda_error" {
   count   = local.is_production ? 1 : 0
   enabled = true
-  summary = "TEAM Lambda Error Alert"
+  summary = "TEAM teamRouter Lambda Error Alert"
   event_template {
     description = <<-EOT
     The {metricname} value was {alert_condition} {threshold}.
-    
+
     Lambda function details: {dims}.
-    
+
     If assistance is needed, please reach out to #di-platform-fog-support.
     EOT
 
     davis_merge = true
     event_type  = "ERROR"
-    title       = "TEAM Lambda Error Alert"
+    title       = "TEAM teamRouter Lambda Error Alert"
   }
   model_properties {
     type               = "STATIC_THRESHOLD"
@@ -225,7 +264,7 @@ resource "dynatrace_metric_events" "team_lambda_error" {
   }
   query_definition {
     type            = "METRIC_SELECTOR"
-    metric_selector = "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}), contains(\"functionname\", \"-main\"))):splitBy(\"functionname\")"
+    metric_selector = "cloud.aws.lambda.errorsByAccountIdFunctionNameRegionResource:sum:filter(and(eq(\"aws.account.id\",${var.team_account_id}), contains(\"functionname\", \"teamRouter-main\"))):splitBy(\"functionname\")"
   }
 }
 
