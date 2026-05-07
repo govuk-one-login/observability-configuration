@@ -3,7 +3,7 @@ locals {
     signin = {
       hostname                = "signin"
       name                    = "Authentication"
-      user_session_percentage = 50
+      user_session_percentage = 10
       injection_rule          = "AUTOMATIC_INJECTION"
       injection_operator      = "ALL_PAGES"
     },
@@ -17,7 +17,7 @@ locals {
     identity = {
       hostname                = "identity"
       name                    = "IPV Core"
-      user_session_percentage = 50
+      user_session_percentage = 25
       injection_rule          = "DO_NOT_INJECT"
       injection_operator      = "ALL_PAGES"
     },
