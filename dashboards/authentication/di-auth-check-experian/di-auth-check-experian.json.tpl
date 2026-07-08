@@ -650,7 +650,7 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "metricSelector": "cloud.aws.authentication.phoneCheckResultByAccountIdLogGroupRegionServiceNameServiceTypeconfidencecountrydisposablenetwork_statusoperatortype:filter(and(eq(\"aws.account.id\",\"${api_account_id}\"), or(eq(country,GBR),eq(country,IMN),eq(country,GGY)))):splitBy():count:sort(value(avg,descending)):limit(20)",
+          "metricSelector": "cloud.aws.authentication.phoneCheckResultByAccountIdLogGroupRegionServiceNameServiceTypeconfidencecountrydisposablenetwork_statusoperatortype:filter(and(eq(\"aws.account.id\",\"${check_account_id}\"), or(eq(country,GBR),eq(country,IMN),eq(country,GGY)))):splitBy():count:sort(value(avg,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         }
@@ -737,7 +737,7 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "metricSelector": "cloud.aws.authentication.phoneCheckResultByAccountIdLogGroupRegionServiceNameServiceTypeconfidencecountrydisposablenetwork_statusoperatortype:filter(and(eq(\"aws.account.id\",\"${api_account_id}\"), not(or(eq(country,GBR),eq(country,IMN),eq(country,GGY))))):splitBy():count:sort(value(avg,descending)):limit(20)",
+          "metricSelector": "cloud.aws.authentication.phoneCheckResultByAccountIdLogGroupRegionServiceNameServiceTypeconfidencecountrydisposablenetwork_statusoperatortype:filter(and(eq(\"aws.account.id\",\"${check_account_id}\"), not(or(eq(country,GBR),eq(country,IMN),eq(country,GGY))))):splitBy():count:sort(value(avg,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         }
@@ -824,7 +824,7 @@
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
           "splitBy": [],
-          "metricSelector": "cloud.aws.authentication.phoneCheckResultByAccountIdLogGroupRegionServiceNameServiceTypeconfidencecountrydisposablenetwork_statusoperatortype:filter(and(eq(\"aws.account.id\",\"${api_account_id}\"), or(not(eq(type,\"Bad format\")),not(and(eq(type,\"Mobile\"),eq(\"confidence\",\"No Coverage\")))))):splitBy():count:sort(value(avg,descending)):limit(20)",
+          "metricSelector": "cloud.aws.authentication.phoneCheckResultByAccountIdLogGroupRegionServiceNameServiceTypeconfidencecountrydisposablenetwork_statusoperatortype:filter(and(eq(\"aws.account.id\",\"${check_account_id}\"), or(not(eq(type,\"Bad format\")),not(and(eq(type,\"Mobile\"),eq(\"confidence\",\"No Coverage\")))))):splitBy():count:sort(value(avg,descending)):limit(20)",
           "rate": "NONE",
           "enabled": true
         }
