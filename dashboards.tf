@@ -845,3 +845,9 @@ module "home_summary_dahsboard" {
   source = "./modules/dashboard"
   path   = "home/home-summary-dashboard.json"
 }
+
+module "amc_dashboard" {
+  count  = local.is_production ? 1 : 0 # Only create in production
+  source = "./modules/dashboard"
+  path   = "home/amc-dashboard.json"
+}
