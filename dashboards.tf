@@ -260,6 +260,31 @@ module "di_auth_account_management_production_dashboard" {
   path   = "authentication/account-management/authentication-account-management-production.json"
 }
 
+### Authentication - Passkeys ###
+
+module "di_auth_passkeys_staging_dashboard" {
+  count  = local.is_production ? 0 : 1
+  source = "./dashboards/authentication/di-auth-passkeys"
+
+  application_environment = "staging"
+  account_id              = "851725205974"
+}
+
+module "di_auth_passkeys_integration_dashboard" {
+  count  = local.is_production ? 0 : 1
+  source = "./dashboards/authentication/di-auth-passkeys"
+
+  application_environment = "integration"
+  account_id              = "211125600642"
+}
+
+module "di_auth_passkeys_production_dashboard" {
+  count  = local.is_production ? 1 : 0
+  source = "./dashboards/authentication/di-auth-passkeys"
+
+  application_environment = "production"
+  account_id              = "211125303002"
+}
 
 
 ### Core ###
