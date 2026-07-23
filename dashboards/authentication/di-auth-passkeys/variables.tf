@@ -1,9 +1,9 @@
 variable "application_environment" {
-  type = string
+  type        = string
   description = "Environment of the application"
 }
 
 variable "account_id" {
-  type = string
+  type        = string
   description = "AWS Account ID"
 }
