@@ -3,7 +3,7 @@
     "configurationVersions": [
       7
     ],
-    "clusterVersion": "1.340.46.20260609-124236"
+    "clusterVersion": "1.344.71.20260803-100634"
   },
   "dashboardMetadata": {
     "name": "Orange Account Management SLAs",
@@ -7426,271 +7426,7 @@
       ]
     },
     {
-      "name": "PERF006 - Peak transaction rate",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 266,
-        "left": 342,
-        "width": 342,
-        "height": 114
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "metricSelector": "builtin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"Address CRI Production~\")\"))):splitBy():sum:rate(1s):setUnit(PerSecond)",
-          "rate": "NONE",
-          "enabled": false,
-          "histogram": false
-        },
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,\"address-cri-api-v1-PrivateAddressApi\"),eq(apiname,\"address-cri-api-v1-PublicAddressApi\"))):splitBy():sum:rate(1s):setUnit(PerSecond)",
-          "rate": "NONE",
-          "enabled": false,
-          "histogram": false
-        },
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "(\nbuiltin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"Address CRI Production~\")\"))):splitBy():sum:rate(1s)\n  +\ncloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,\"address-cri-api-v1-PrivateAddressApi\"),eq(apiname,\"address-cri-api-v1-PublicAddressApi\"))):splitBy():sum:rate(1s)\n):setUnit(PerSecond)",
-          "rate": "NONE",
-          "enabled": true,
-          "histogram": false
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {
-          "hideLegend": false
-        },
-        "rules": [
-          {
-            "matcher": "A:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "BLUE",
-              "seriesType": "LINE",
-              "alias": "average"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "C:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "value": 100000,
-                "color": "#7dc540"
-              },
-              {
-                "value": 10000,
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "",
-            "visible": false
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "MAX"
-      },
-      "metricExpressions": [
-        "resolution=null&((builtin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"Address CRI Production~\")\"))):splitBy():sum:rate(1s)+cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,address-cri-api-v1-PrivateAddressApi),eq(apiname,address-cri-api-v1-PublicAddressApi))):splitBy():sum:rate(1s)):setUnit(PerSecond)):limit(100):names:fold(max)",
-        "resolution=null&((builtin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"Address CRI Production~\")\"))):splitBy():sum:rate(1s)+cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,address-cri-api-v1-PrivateAddressApi),eq(apiname,address-cri-api-v1-PublicAddressApi))):splitBy():sum:rate(1s)):setUnit(PerSecond))"
-      ]
-    },
-    {
-      "name": "PERF006 - Avg transaction rate",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 152,
-        "left": 342,
-        "width": 342,
-        "height": 114
-      },
-      "tileFilter": {},
-      "isAutoRefreshDisabled": false,
-      "queries": [
-        {
-          "id": "A",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "metricSelector": "builtin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"Address CRI Production~\")\"))):splitBy():sum:rate(1s):setUnit(PerSecond)",
-          "rate": "NONE",
-          "enabled": false,
-          "histogram": false
-        },
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,\"address-cri-api-v1-PrivateAddressApi\"),eq(apiname,\"address-cri-api-v1-PublicAddressApi\"))):splitBy():sum:rate(1s):setUnit(PerSecond)",
-          "rate": "NONE",
-          "enabled": false,
-          "histogram": false
-        },
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "(\nbuiltin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"Address CRI Production~\")\"))):splitBy():sum:rate(1s)\n  +\ncloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,\"address-cri-api-v1-PrivateAddressApi\"),eq(apiname,\"address-cri-api-v1-PublicAddressApi\"))):splitBy():sum:rate(1s)\n):setUnit(PerSecond)",
-          "rate": "NONE",
-          "enabled": true,
-          "histogram": false
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {
-          "hideLegend": false
-        },
-        "rules": [
-          {
-            "matcher": "C:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "A:",
-            "properties": {
-              "color": "DEFAULT"
-            },
-            "seriesOverrides": []
-          }
-        ],
-        "axes": {
-          "xAxis": {
-            "visible": true
-          },
-          "yAxes": []
-        },
-        "heatmapSettings": {
-          "yAxis": "VALUE"
-        },
-        "singleValueSettings": {
-          "showTrend": true,
-          "showSparkLine": true,
-          "linkTileColorToThreshold": true
-        },
-        "thresholds": [
-          {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "value": 100000,
-                "color": "#7dc540"
-              },
-              {
-                "value": 10000,
-                "color": "#f5d30f"
-              },
-              {
-                "value": 1,
-                "color": "#dc172a"
-              }
-            ],
-            "queryId": "",
-            "visible": false
-          }
-        ],
-        "tableSettings": {
-          "hiddenColumns": []
-        },
-        "graphChartSettings": {
-          "connectNulls": false
-        },
-        "honeycombSettings": {
-          "showHive": true,
-          "showLegend": true,
-          "showLabels": false
-        }
-      },
-      "queriesSettings": {
-        "resolution": "",
-        "foldTransformation": "TOTAL",
-        "foldAggregation": "AVG"
-      },
-      "metricExpressions": [
-        "resolution=null&((builtin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"Address CRI Production~\")\"))):splitBy():sum:rate(1s)+cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,address-cri-api-v1-PrivateAddressApi),eq(apiname,address-cri-api-v1-PublicAddressApi))):splitBy():sum:rate(1s)):setUnit(PerSecond)):limit(100):names:fold(avg)",
-        "resolution=null&((builtin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"Address CRI Production~\")\"))):splitBy():sum:rate(1s)+cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,address-cri-api-v1-PrivateAddressApi),eq(apiname,address-cri-api-v1-PublicAddressApi))):splitBy():sum:rate(1s)):setUnit(PerSecond))"
-      ]
-    },
-    {
-      "name": "PERF006 - Avg transaction rate",
+      "name": "PERF006 - Avg sessions/second",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
@@ -7706,26 +7442,10 @@
           "id": "A",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
-          "metricSelector": "builtin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"Experian KBV CRI Production~\")\"))):splitBy():sum:rate(1s):setUnit(PerSecond)",
-          "rate": "NONE",
-          "enabled": false,
-          "histogram": false
-        },
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,\"kbv-cri-private-kbv-cri-api-v1\"),eq(apiname,\"kbv-cri-kbv-cri-api-v1\"))):splitBy():sum:rate(1s):setUnit(PerSecond)",
-          "rate": "NONE",
-          "enabled": false,
-          "histogram": false
-        },
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "(\nbuiltin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"Experian KBV CRI Production~\")\"))):splitBy():sum:rate(1s)\n  +\ncloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,\"kbv-cri-private-kbv-cri-api-v1\"),eq(apiname,\"kbv-cri-kbv-cri-api-v1\"))):splitBy():sum:rate(1s)\n):setUnit(PerSecond)",
+          "splitBy": [
+            "service"
+          ],
+          "metricSelector": "cloud.aws.di-ipv-cri-kbv-api.session_createdByAccountIdRegionissuerservice:splitBy(service):count:rate(1s)",
           "rate": "NONE",
           "enabled": true,
           "histogram": false
@@ -7738,29 +7458,12 @@
         },
         "rules": [
           {
-            "matcher": "C:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          },
-          {
             "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "0,000",
             "properties": {
-              "color": "DEFAULT"
+              "color": "DEFAULT",
+              "seriesType": "LINE"
             },
             "seriesOverrides": []
           }
@@ -7818,12 +7521,12 @@
         "foldAggregation": "AVG"
       },
       "metricExpressions": [
-        "resolution=null&((builtin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"Experian KBV CRI Production~\")\"))):splitBy():sum:rate(1s)+cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,kbv-cri-private-kbv-cri-api-v1),eq(apiname,kbv-cri-kbv-cri-api-v1))):splitBy():sum:rate(1s)):setUnit(PerSecond)):limit(100):names:fold(avg)",
-        "resolution=null&((builtin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"Experian KBV CRI Production~\")\"))):splitBy():sum:rate(1s)+cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,kbv-cri-private-kbv-cri-api-v1),eq(apiname,kbv-cri-kbv-cri-api-v1))):splitBy():sum:rate(1s)):setUnit(PerSecond))"
+        "resolution=null&(cloud.aws.di-ipv-cri-kbv-api.session_createdByAccountIdRegionissuerservice:splitBy(service):count:rate(1s)):limit(100):names:fold(avg)",
+        "resolution=null&(cloud.aws.di-ipv-cri-kbv-api.session_createdByAccountIdRegionissuerservice:splitBy(service):count:rate(1s))"
       ]
     },
     {
-      "name": "PERF006 - Peak transaction rate",
+      "name": "PERF006 - Peak sessions/second",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
@@ -7839,26 +7542,10 @@
           "id": "A",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
-          "metricSelector": "builtin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"Experian KBV CRI Production~\")\"))):splitBy():sum:rate(1s):setUnit(PerSecond)",
-          "rate": "NONE",
-          "enabled": false,
-          "histogram": false
-        },
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,\"kbv-cri-private-kbv-cri-api-v1\"),eq(apiname,\"kbv-cri-kbv-cri-api-v1\"))):splitBy():sum:rate(1s):setUnit(PerSecond)",
-          "rate": "NONE",
-          "enabled": false,
-          "histogram": false
-        },
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "(\nbuiltin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"Experian KBV CRI Production~\")\"))):splitBy():sum:rate(1s)\n  +\ncloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,\"kbv-cri-private-kbv-cri-api-v1\"),eq(apiname,\"kbv-cri-kbv-cri-api-v1\"))):splitBy():sum:rate(1s)\n):setUnit(PerSecond)",
+          "splitBy": [
+            "service"
+          ],
+          "metricSelector": "cloud.aws.di-ipv-cri-kbv-api.session_createdByAccountIdRegionissuerservice:splitBy(service):count:rate(1s)",
           "rate": "NONE",
           "enabled": true,
           "histogram": false
@@ -7871,29 +7558,12 @@
         },
         "rules": [
           {
-            "matcher": "C:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          },
-          {
             "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "0,000",
             "properties": {
-              "color": "DEFAULT"
+              "color": "DEFAULT",
+              "seriesType": "LINE"
             },
             "seriesOverrides": []
           }
@@ -7951,16 +7621,16 @@
         "foldAggregation": "MAX"
       },
       "metricExpressions": [
-        "resolution=null&((builtin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"Experian KBV CRI Production~\")\"))):splitBy():sum:rate(1s)+cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,kbv-cri-private-kbv-cri-api-v1),eq(apiname,kbv-cri-kbv-cri-api-v1))):splitBy():sum:rate(1s)):setUnit(PerSecond)):limit(100):names:fold(max)",
-        "resolution=null&((builtin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"Experian KBV CRI Production~\")\"))):splitBy():sum:rate(1s)+cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,kbv-cri-private-kbv-cri-api-v1),eq(apiname,kbv-cri-kbv-cri-api-v1))):splitBy():sum:rate(1s)):setUnit(PerSecond))"
+        "resolution=null&(cloud.aws.di-ipv-cri-kbv-api.session_createdByAccountIdRegionissuerservice:splitBy(service):count:rate(1s)):limit(100):names:fold(max)",
+        "resolution=null&(cloud.aws.di-ipv-cri-kbv-api.session_createdByAccountIdRegionissuerservice:splitBy(service):count:rate(1s))"
       ]
     },
     {
-      "name": "PERF006 - Avg transaction rate",
+      "name": "PERF006 - Avg sessions/second",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2812,
+        "top": 152,
         "left": 342,
         "width": 342,
         "height": 114
@@ -7972,26 +7642,10 @@
           "id": "A",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
-          "metricSelector": "builtin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"HMRC NINO Check CRI Production~\")\"))):splitBy():sum:rate(1s):setUnit(PerSecond)",
-          "rate": "NONE",
-          "enabled": false,
-          "histogram": false
-        },
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,\"check-hmrc-cri-api-private\"),eq(apiname,\"check-hmrc-cri-api-public\"))):splitBy():sum:rate(1s):setUnit(PerSecond)",
-          "rate": "NONE",
-          "enabled": false,
-          "histogram": false
-        },
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "(\nbuiltin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"HMRC NINO Check CRI Production~\")\"))):splitBy():sum:rate(1s)\n  +\ncloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,\"check-hmrc-cri-api-private\"),eq(apiname,\"check-hmrc-cri-api-public\"))):splitBy():sum:rate(1s)\n):setUnit(PerSecond)",
+          "splitBy": [
+            "service"
+          ],
+          "metricSelector": "cloud.aws.di-ipv-cri-address-api.session_createdByAccountIdRegionissuerservice:splitBy(service):count:rate(1s)",
           "rate": "NONE",
           "enabled": true,
           "histogram": false
@@ -8004,29 +7658,12 @@
         },
         "rules": [
           {
-            "matcher": "C:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          },
-          {
             "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "0,000",
             "properties": {
-              "color": "DEFAULT"
+              "color": "DEFAULT",
+              "seriesType": "LINE"
             },
             "seriesOverrides": []
           }
@@ -8084,16 +7721,16 @@
         "foldAggregation": "AVG"
       },
       "metricExpressions": [
-        "resolution=null&((builtin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"HMRC NINO Check CRI Production~\")\"))):splitBy():sum:rate(1s)+cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,check-hmrc-cri-api-private),eq(apiname,check-hmrc-cri-api-public))):splitBy():sum:rate(1s)):setUnit(PerSecond)):limit(100):names:fold(avg)",
-        "resolution=null&((builtin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"HMRC NINO Check CRI Production~\")\"))):splitBy():sum:rate(1s)+cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,check-hmrc-cri-api-private),eq(apiname,check-hmrc-cri-api-public))):splitBy():sum:rate(1s)):setUnit(PerSecond))"
+        "resolution=null&(cloud.aws.di-ipv-cri-address-api.session_createdByAccountIdRegionissuerservice:splitBy(service):count:rate(1s)):limit(100):names:fold(avg)",
+        "resolution=null&(cloud.aws.di-ipv-cri-address-api.session_createdByAccountIdRegionissuerservice:splitBy(service):count:rate(1s))"
       ]
     },
     {
-      "name": "PERF006 - Avg transaction rate",
+      "name": "PERF006 - Peak sessions/second",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 2926,
+        "top": 266,
         "left": 342,
         "width": 342,
         "height": 114
@@ -8105,26 +7742,10 @@
           "id": "A",
           "spaceAggregation": "AUTO",
           "timeAggregation": "DEFAULT",
-          "metricSelector": "builtin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"HMRC NINO Check CRI Production~\")\"))):splitBy():sum:rate(1s):setUnit(PerSecond)",
-          "rate": "NONE",
-          "enabled": false,
-          "histogram": false
-        },
-        {
-          "id": "C",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,\"check-hmrc-cri-api-private\"),eq(apiname,\"check-hmrc-cri-api-public\"))):splitBy():sum:rate(1s):setUnit(PerSecond)",
-          "rate": "NONE",
-          "enabled": false,
-          "histogram": false
-        },
-        {
-          "id": "B",
-          "spaceAggregation": "AUTO",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "metricSelector": "(\nbuiltin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"HMRC NINO Check CRI Production~\")\"))):splitBy():sum:rate(1s)\n  +\ncloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,\"check-hmrc-cri-api-private\"),eq(apiname,\"check-hmrc-cri-api-public\"))):splitBy():sum:rate(1s)\n):setUnit(PerSecond)",
+          "splitBy": [
+            "service"
+          ],
+          "metricSelector": "cloud.aws.di-ipv-cri-address-api.session_createdByAccountIdRegionissuerservice:splitBy(service):count:rate(1s)",
           "rate": "NONE",
           "enabled": true,
           "histogram": false
@@ -8137,29 +7758,13 @@
         },
         "rules": [
           {
-            "matcher": "C:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          },
-          {
-            "matcher": "B:",
-            "unitTransform": "auto",
-            "valueFormat": "auto",
-            "properties": {
-              "color": "DEFAULT",
-              "seriesType": "LINE"
-            },
-            "seriesOverrides": []
-          },
-          {
             "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "0,000",
             "properties": {
-              "color": "DEFAULT"
+              "color": "BLUE",
+              "seriesType": "LINE",
+              "alias": "average"
             },
             "seriesOverrides": []
           }
@@ -8217,8 +7822,208 @@
         "foldAggregation": "MAX"
       },
       "metricExpressions": [
-        "resolution=null&((builtin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"HMRC NINO Check CRI Production~\")\"))):splitBy():sum:rate(1s)+cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,check-hmrc-cri-api-private),eq(apiname,check-hmrc-cri-api-public))):splitBy():sum:rate(1s)):setUnit(PerSecond)):limit(100):names:fold(max)",
-        "resolution=null&((builtin:apps.web.actionCount.load.browser:filter(in(\"dt.entity.application\",entitySelector(\"type(application),entityName.equals(~\"HMRC NINO Check CRI Production~\")\"))):splitBy():sum:rate(1s)+cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(or(eq(apiname,check-hmrc-cri-api-private),eq(apiname,check-hmrc-cri-api-public))):splitBy():sum:rate(1s)):setUnit(PerSecond))"
+        "resolution=null&(cloud.aws.di-ipv-cri-address-api.session_createdByAccountIdRegionissuerservice:splitBy(service):count:rate(1s)):limit(100):names:fold(max)",
+        "resolution=null&(cloud.aws.di-ipv-cri-address-api.session_createdByAccountIdRegionissuerservice:splitBy(service):count:rate(1s))"
+      ]
+    },
+    {
+      "name": "PERF006 - Avg sessions/second",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2812,
+        "left": 342,
+        "width": 342,
+        "height": 114
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "service"
+          ],
+          "metricSelector": "cloud.aws.di-ipv-cri-check-hmrc-api.session_createdByAccountIdRegionissuerservice:splitBy(service):count:rate(1s)",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "0,000",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 100000,
+                "color": "#7dc540"
+              },
+              {
+                "value": 10000,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 1,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": false
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "AVG"
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.di-ipv-cri-check-hmrc-api.session_createdByAccountIdRegionissuerservice:splitBy(service):count:rate(1s)):limit(100):names:fold(avg)",
+        "resolution=null&(cloud.aws.di-ipv-cri-check-hmrc-api.session_createdByAccountIdRegionissuerservice:splitBy(service):count:rate(1s))"
+      ]
+    },
+    {
+      "name": "PERF006 - Peak sessions/second",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 2926,
+        "left": 342,
+        "width": 342,
+        "height": 114
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "service"
+          ],
+          "metricSelector": "cloud.aws.di-ipv-cri-check-hmrc-api.session_createdByAccountIdRegionissuerservice:splitBy(service):count:rate(1s)",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "0,000",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "LINE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 100000,
+                "color": "#7dc540"
+              },
+              {
+                "value": 10000,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 1,
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": false
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "MAX"
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.di-ipv-cri-check-hmrc-api.session_createdByAccountIdRegionissuerservice:splitBy(service):count:rate(1s)):limit(100):names:fold(max)",
+        "resolution=null&(cloud.aws.di-ipv-cri-check-hmrc-api.session_createdByAccountIdRegionissuerservice:splitBy(service):count:rate(1s))"
       ]
     }
   ]
