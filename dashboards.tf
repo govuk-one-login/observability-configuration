@@ -144,36 +144,40 @@ module "di_auth_check_experian_build_dashboard" {
   count  = local.is_production ? 0 : 1
   source = "./dashboards/authentication/di-auth-check-experian"
 
-  api_account_id          = "761723964695"
-  check_account_id        = "851725166715"
-  application_environment = "build"
+  authentication_account_id = "058264536367"
+  api_account_id            = "761723964695"
+  check_account_id          = "851725166715"
+  application_environment   = "build"
 }
 
 module "di_auth_check_experian_staging_dashboard" {
   count  = local.is_production ? 0 : 1
   source = "./dashboards/authentication/di-auth-check-experian"
 
-  api_account_id          = "758531536632"
-  check_account_id        = "891377189576"
-  application_environment = "staging"
+  authentication_account_id = "851725205974"
+  api_account_id            = "758531536632"
+  check_account_id          = "891377189576"
+  application_environment   = "staging"
 }
 
 module "di_auth_check_experian_integration_dashboard" {
   count  = local.is_production ? 0 : 1
   source = "./dashboards/authentication/di-auth-check-experian"
 
-  api_account_id          = "761723964695"
-  check_account_id        = "211125427676"
-  application_environment = "integration"
+  authentication_account_id = "211125600642"
+  api_account_id            = "761723964695"
+  check_account_id          = "211125427676"
+  application_environment   = "integration"
 }
 
 module "di_auth_check_experian_production_dashboard" {
   count  = local.is_production ? 1 : 0
   source = "./dashboards/authentication/di-auth-check-experian"
 
-  api_account_id          = "172348255554"
-  check_account_id        = "637423504848"
-  application_environment = "production"
+  authentication_account_id = "211125303002"
+  api_account_id            = "172348255554"
+  check_account_id          = "637423504848"
+  application_environment   = "production"
 }
 
 module "di_auth_ticf_staging_dashboard" {
