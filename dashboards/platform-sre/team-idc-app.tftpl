@@ -59,7 +59,7 @@
       "bounds": {
         "top": 1748,
         "left": 0,
-        "width": 1216,
+        "width": 1520,
         "height": 38
       },
       "tileFilter": {},
@@ -5086,6 +5086,103 @@
       "metricExpressions": [
         "resolution=Inf&(cloud.aws.lambda.errorsByAccountIdFunctionNameRegion:filter(prefix(functionname,TEAMPolicyLambda-PolicyPublishingFunction))):limit(100):names",
         "resolution=null&(cloud.aws.lambda.errorsByAccountIdFunctionNameRegion:filter(prefix(functionname,TEAMPolicyLambda-PolicyPublishingFunction)))"
+      ]
+    },
+    {
+      "name": "Privileged sessions granted",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1786,
+        "left": 1216,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "aws.region",
+            "aws.account.id",
+            "dt.source",
+            "dt.entity.cloud:aws:account",
+            "statemachinearn",
+            "dt.entity.cloud:aws:region"
+          ],
+          "metricSelector": "cloud.aws.states.executionsSucceededByAccountIdRegionStateMachineArn:sum:filter(eq(\"statemachinearn\",\"arn:aws:states:eu-west-2:${team_account_id}:stateMachine:TEAM-Grant-SM-main\"))",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": "",
+        "foldTransformation": "TOTAL",
+        "foldAggregation": "SUM"
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.states.executionsSucceededByAccountIdRegionStateMachineArn:sum:filter(eq(statemachinearn,\"arn:aws:states:eu-west-2:${team_account_id}:stateMachine:TEAM-Grant-SM-main\"))):limit(100):names:fold(sum)",
+        "resolution=null&(cloud.aws.states.executionsSucceededByAccountIdRegionStateMachineArn:sum:filter(eq(statemachinearn,\"arn:aws:states:eu-west-2:${team_account_id}:stateMachine:TEAM-Grant-SM-main\")))"
       ]
     }
   ]
