@@ -5,12 +5,10 @@
     ],
     "clusterVersion": "1.347.61.20260921-114555"
   },
-  "id": "1d348cee-641c-4541-85c0-6b920115e94d",
   "dashboardMetadata": {
     "name": "di-auth-check-experian-${application_environment}",
     "shared": true,
-    "owner": "benjamin.fernandes@digital.cabinet-office.gov.uk",
-    "popularity": 10,
+    "owner": "authentication-developers@digital.cabinet-office.gov.uk",
     "tilesNameSize": "medium",
     "hasConsistentColors": true
   },
