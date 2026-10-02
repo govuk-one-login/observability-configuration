@@ -1,3 +1,7 @@
+variable "authentication_account_id" {
+  description = "ID for the new Authentication AWS account"
+}
+
 variable "api_account_id" {
   description = "ID for the Auth API AWS account"
 }

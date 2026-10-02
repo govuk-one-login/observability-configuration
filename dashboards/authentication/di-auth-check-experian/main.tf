@@ -1,8 +1,9 @@
 locals {
   check_experian = {
-    api_account_id          = var.api_account_id
-    check_account_id        = var.check_account_id
-    application_environment = var.application_environment
+    authentication_account_id = var.authentication_account_id
+    api_account_id            = var.api_account_id
+    check_account_id          = var.check_account_id
+    application_environment   = var.application_environment
   }
 }
 
