@@ -20,6 +20,14 @@ module "ordnance_survey" {
   url    = "api.os.uk"
 }
 
+# Ordnance Survey
+module "ordnance_survey_build" {
+  count  = local.is_production ? 0 : 1
+  source = "./modules/service_detection"
+  name   = "Ordnance Survey - Imposter Build mock"
+  url    = "https://b8ysflv2t2.execute-api.eu-west-2.amazonaws.com"
+}
+
 # Crosscore API
 module "crosscore_api" {
   source = "./modules/service_detection"
