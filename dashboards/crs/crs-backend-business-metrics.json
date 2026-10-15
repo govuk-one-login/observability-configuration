@@ -1,0 +1,1106 @@
+{
+  "metadata": {
+    "configurationVersions": [
+      7
+    ],
+    "clusterVersion": "1.347.69.20260928-145312"
+  },
+  "dashboardMetadata": {
+    "name": "mobile-crs-business-metrics",
+    "shared": true,
+    "owner": "ayesha.khan1@digital.cabinet-office.gov.uk",
+    "popularity": 5,
+    "hasConsistentColors": false
+  },
+  "tiles": [
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 0,
+        "width": 2280,
+        "height": 152
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "# CRS Status List — Business Metrics\nA plain-language view of status list service activity: how many statuses are issued and revoked (and by whom), how much traffic the public endpoints receive, how effective CloudFront caching is, and how lists are being renewed and published.\n\n**Sections:** Issuance & Revocation · Public Endpoint Traffic · CloudFront Caching · List Lifecycle · End-to-End Timing · Daily Completion Rate.\n\n> **PLACEHOLDERS TO REPLACE BEFORE USE:** `CLOUDFRONT_DISTRIBUTION_ID`, and any tile marked _NEEDS LOG-BASED METRIC_ (per-client / per-signing-key breakdowns are not emitted as CloudWatch/EMF metrics today). See the section notes."
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 152,
+        "left": 0,
+        "width": 2280,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## Issuance & Revocation\nTotals come from API Gateway request counts on `/issue` and `/revoke` (API `crs-backend-status-api`). Per-client / token-vs-bitstring splits are **not** available as CloudWatch metrics today — they would require a log-based metric."
+    },
+    {
+      "name": "Statuses Issued (total)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 190,
+        "left": 0,
+        "width": 570,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Statuses Issued (total) — 2xx on /issue",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "resource"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(eq(\"apiname\",\"crs-backend-status-api\"),eq(\"resource\",\"/issue\")):splitBy(\"resource\"):sum - (cloud.aws.apigateway.4xxErrorByAccountIdApiNameMethodRegionResourceStage:filter(eq(\"apiname\",\"crs-backend-status-api\"),eq(\"resource\",\"/issue\")):splitBy(\"resource\"):sum + cloud.aws.apigateway.5xxErrorByAccountIdApiNameMethodRegionResourceStage:filter(eq(\"apiname\",\"crs-backend-status-api\"),eq(\"resource\",\"/issue\")):splitBy(\"resource\"):sum)",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [],
+              "defaultAxis": false
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(eq(apiname,crs-backend-status-api),eq(resource,\"/issue\")):splitBy(resource):sum - (cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(eq(apiname,crs-backend-status-api),eq(resource,\"/issue\")):splitBy(resource):sum+cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(eq(apiname,crs-backend-status-api),eq(resource,\"/issue\")):splitBy(resource):sum)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Statuses Revoked (total)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 190,
+        "left": 570,
+        "width": 570,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Statuses Revoked (total) — 2xx on /revoke",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "resource"
+          ],
+          "metricSelector": "cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(eq(\"apiname\",\"crs-backend-status-api\"),eq(\"resource\",\"/revoke\")):splitBy(\"resource\"):sum - (cloud.aws.apigateway.4xxErrorByAccountIdApiNameMethodRegionResourceStage:filter(eq(\"apiname\",\"crs-backend-status-api\"),eq(\"resource\",\"/revoke\")):splitBy(\"resource\"):sum + cloud.aws.apigateway.5xxErrorByAccountIdApiNameMethodRegionResourceStage:filter(eq(\"apiname\",\"crs-backend-status-api\"),eq(\"resource\",\"/revoke\")):splitBy(\"resource\"):sum)",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [],
+              "defaultAxis": false
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(eq(apiname,crs-backend-status-api),eq(resource,\"/revoke\")):splitBy(resource):sum - (cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(eq(apiname,crs-backend-status-api),eq(resource,\"/revoke\")):splitBy(resource):sum+cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(eq(apiname,crs-backend-status-api),eq(resource,\"/revoke\")):splitBy(resource):sum)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 456,
+        "left": 0,
+        "width": 2280,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## Public Endpoint Traffic & CloudFront Caching\nThe public status list and JWKS are served by CloudFront from S3 (they never hit API Gateway). Replace `CLOUDFRONT_DISTRIBUTION_ID` with the real distribution id. **Note:** CloudFront CloudWatch metrics are per-distribution and cannot be split by path/behaviour, so status-list vs JWKS traffic cannot be separated from standard metrics — use CloudFront access logs (already enabled) for a per-path breakdown."
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 760,
+        "left": 0,
+        "width": 2280,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## List Lifecycle\nRenewals, publishing and fill levels. These use the `CrsBackend` EMF namespace emitted by the Lambdas. `StatusListPercentageFill` has **no list-id dimension** today (flagged in the ticket), so it is an aggregate only. “Published lists by signing key” has no metric — the `kid` lives only in logs / S3 object metadata (see placeholder tile)."
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 1064,
+        "left": 0,
+        "width": 2280,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## End-to-End Timing\nTime taken from the API Gateway request to completion, using API Gateway `Latency` (includes Lambda execution). A true end-to-end business duration EMF metric (`IssuedStatusDuration`) is defined in code but not currently emitted — API Gateway latency is the closest available proxy."
+    },
+    {
+      "name": "Time to issue a status",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1102,
+        "left": 0,
+        "width": 1140,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Time to issue a status (API GW latency, avg & max)",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "resource"
+          ],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(eq(\"apiname\",\"crs-backend-status-api\"),eq(\"resource\",\"/issue\")):splitBy(\"resource\"):avg",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "resource"
+          ],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(eq(\"apiname\",\"crs-backend-status-api\"),eq(\"resource\",\"/issue\")):splitBy(\"resource\"):max",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [],
+              "defaultAxis": false
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(eq(apiname,crs-backend-status-api),eq(resource,\"/issue\")):splitBy(resource):avg):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(eq(apiname,crs-backend-status-api),eq(resource,\"/issue\")):splitBy(resource):max):limit(100):names"
+      ]
+    },
+    {
+      "name": "Time to revoke a status",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1102,
+        "left": 1140,
+        "width": 1140,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Time to revoke a status (API GW latency, avg & max)",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "resource"
+          ],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(eq(\"apiname\",\"crs-backend-status-api\"),eq(\"resource\",\"/revoke\")):splitBy(\"resource\"):avg",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "resource"
+          ],
+          "metricSelector": "cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(eq(\"apiname\",\"crs-backend-status-api\"),eq(\"resource\",\"/revoke\")):splitBy(\"resource\"):max",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [],
+              "defaultAxis": false
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(eq(apiname,crs-backend-status-api),eq(resource,\"/revoke\")):splitBy(resource):avg):limit(100):names,(cloud.aws.apigateway.latencyByAccountIdApiNameMethodRegionResourceStage:filter(eq(apiname,crs-backend-status-api),eq(resource,\"/revoke\")):splitBy(resource):max):limit(100):names"
+      ]
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 1368,
+        "left": 0,
+        "width": 2280,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "## Daily Completion Rate\nSuccessful (2xx) requests as a percentage of all requests on `/issue` and `/revoke`, trended over time. View this with a daily time resolution for a “daily completion rate” graph."
+    },
+    {
+      "name": "Daily completion rate over time",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 1406,
+        "left": 0,
+        "width": 2280,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Completion rate % (2xx / total) — issue & revoke",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "(cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(eq(\"apiname\",\"crs-backend-status-api\"),or(eq(\"resource\",\"/issue\"),eq(\"resource\",\"/revoke\"))):splitBy():sum - (cloud.aws.apigateway.4xxErrorByAccountIdApiNameMethodRegionResourceStage:filter(eq(\"apiname\",\"crs-backend-status-api\"),or(eq(\"resource\",\"/issue\"),eq(\"resource\",\"/revoke\"))):splitBy():sum + cloud.aws.apigateway.5xxErrorByAccountIdApiNameMethodRegionResourceStage:filter(eq(\"apiname\",\"crs-backend-status-api\"),or(eq(\"resource\",\"/issue\"),eq(\"resource\",\"/revoke\"))):splitBy():sum)) / cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(eq(\"apiname\",\"crs-backend-status-api\"),or(eq(\"resource\",\"/issue\"),eq(\"resource\",\"/revoke\"))):splitBy():sum * 100",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "visible": true,
+              "min": "0",
+              "max": "100",
+              "position": "LEFT",
+              "queryIds": [],
+              "defaultAxis": false
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#dc172a"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#7dc540"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&((cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(eq(apiname,crs-backend-status-api),or(eq(resource,\"/issue\"),eq(resource,\"/revoke\"))):splitBy():sum - (cloud.aws.apigateway.\"4xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(eq(apiname,crs-backend-status-api),or(eq(resource,\"/issue\"),eq(resource,\"/revoke\"))):splitBy():sum+cloud.aws.apigateway.\"5xxErrorByAccountIdApiNameMethodRegionResourceStage\":filter(eq(apiname,crs-backend-status-api),or(eq(resource,\"/issue\"),eq(resource,\"/revoke\"))):splitBy():sum))/cloud.aws.apigateway.countByAccountIdApiNameMethodRegionResourceStage:filter(eq(apiname,crs-backend-status-api),or(eq(resource,\"/issue\"),eq(resource,\"/revoke\"))):splitBy():sum*100):limit(100):names"
+      ]
+    },
+    {
+      "name": "Status list traffic (CloudFront requests)",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 494,
+        "left": 0,
+        "width": 570,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Public traffic — CloudFront Requests (all paths)",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "distributionid"
+          ],
+          "metricSelector": "cloud.aws.cloudfront.requestsByAccountIdDistributionIdRegion:filter(or(eq(\"distributionid\",\"E3E2VXHLS9AUMP\"),eq(\"distributionid\",\"E2AKUSFEWOHM2Y\"),eq(\"distributionid\",\"E349PSP93YD8K5\"))):splitBy(\"distributionid\"):sum",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.cloudfront.requestsByAccountIdDistributionIdRegion:filter(or(eq(distributionid,E3E2VXHLS9AUMP),eq(distributionid,E2AKUSFEWOHM2Y),eq(distributionid,E349PSP93YD8K5))):splitBy(distributionid):sum):limit(100):names"
+      ]
+    },
+    {
+      "name": "CloudFront cache vs origin",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 494,
+        "left": 1140,
+        "width": 1140,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Bytes served: cache vs S3 origin",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "distributionid"
+          ],
+          "metricSelector": "cloud.aws.cloudfront.bytesDownloadedByAccountIdDistributionIdRegion:filter(or(eq(\"distributionid\",\"E3E2VXHLS9AUMP\"),eq(\"distributionid\",\"E2AKUSFEWOHM2Y\"),eq(\"distributionid\",\"E349PSP93YD8K5\"))):splitBy(\"distributionid\"):sum",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "STACKED_AREA"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.cloudfront.bytesDownloadedByAccountIdDistributionIdRegion:filter(or(eq(distributionid,E3E2VXHLS9AUMP),eq(distributionid,E2AKUSFEWOHM2Y),eq(distributionid,E349PSP93YD8K5))):splitBy(distributionid):sum):limit(100):names"
+      ]
+    },
+    {
+      "name": "Status lists renewed",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 798,
+        "left": 0,
+        "width": 570,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Status lists renewed",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.crsbackend.statusListsPastRenewalThresholdByAccountIdRegionservice:splitBy():sum",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.crsbackend.statusListsPastRenewalThresholdByAccountIdRegionservice:splitBy():sum):limit(100):names"
+      ]
+    },
+    {
+      "name": "Percentage fill of lists",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 798,
+        "left": 570,
+        "width": 570,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "% fill of lists (aggregate — no list id yet)",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.crsbackend.statusListPercentageFillByAccountIdRegionlistTypeservice:splitby():avg",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.crsbackend.statusListPercentageFillByAccountIdRegionlistTypeservice:splitBy():avg):limit(100):names"
+      ]
+    },
+    {
+      "name": "CloudFront cache hit rate",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 494,
+        "left": 570,
+        "width": 570,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Cache hit rate (%) — caching effectiveness",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "distributionid"
+          ],
+          "metricSelector": "  cloud.aws.cloudfront.cacheHitRateByAccountIdDistributionIdRegion:splitBy(\"distributionid\"):avg",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "B:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#dc172a"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#7dc540"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.cloudfront.cacheHitRateByAccountIdDistributionIdRegion:splitBy(distributionid):avg):limit(100):names"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2078 @@
+{
+  "metadata": {
+    "configurationVersions": [
+      7
+    ],
+    "clusterVersion": "1.347.69.20260928-145312"
+  },
+  "dashboardMetadata": {
+    "name": "mobile-crs-publishing-pipeline",
+    "shared": true,
+    "owner": "ayesha.khan1@digital.cabinet-office.gov.uk",
+    "popularity": 7,
+    "hasConsistentColors": false
+  },
+  "tiles": [
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 0,
+        "width": 2280,
+        "height": 114
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "# Publishing Pipe\nStatus changes from IssueStatus / RevokeStatus land in the `crs-backend-statuses` DynamoDB global table. The stream feeds an EventBridge Pipe (filtering for UPDATED + DELETED revoked statuses), which delivers to a FIFO SQS queue that drives PublishStatusList.\n\nFlow: **DynamoDB (Statuses) \u2192 EventBridge Pipe \u2192 SQS (Trigger Publish) \u2192 PublishStatusList**. Columns align by signal: Traffic \u00b7 Latency \u00b7 Errors \u00b7 Saturation."
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 114,
+        "left": 0,
+        "width": 2280,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "### DynamoDB \u2014 Statuses Table (`crs-backend-statuses`)"
+    },
+    {
+      "name": "Consumed Write Capacity - statuses",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 152,
+        "left": 0,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Consumed Write Capacity - statuses",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "tablename"
+          ],
+          "metricSelector": "cloud.aws.dynamodb.consumedWriteCapacityUnitsByAccountIdRegionTableName:filter(eq(\"tablename\",\"crs-backend-statuses\")):splitBy(\"tablename\"):sum",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT",
+              "alias": "Consumed Write Capacity"
+            },
+            "seriesOverrides": [
+              {
+                "name": "Consumed Write Capacity",
+                "color": "#008cdb"
+              }
+            ]
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [],
+              "defaultAxis": false
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.dynamodb.consumedWriteCapacityUnitsByAccountIdRegionTableName:filter(eq(tablename,crs-backend-statuses)):splitBy(tablename):sum):limit(100):names"
+      ]
+    },
+    {
+      "name": "Request Latency - statuses",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 152,
+        "left": 912,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Request Latency - statuses (by operation)",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "operation"
+          ],
+          "metricSelector": "cloud.aws.dynamodb.successfulRequestLatencyByAccountIdOperationRegionTableName:filter(eq(\"tablename\",\"crs-backend-statuses\")):splitBy(\"operation\"):avg",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "MilliSecond",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [],
+              "defaultAxis": false
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#9cd575"
+              },
+              {
+                "color": "#ffee7c"
+              },
+              {
+                "value": 100,
+                "color": "#f28289"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.dynamodb.successfulRequestLatencyByAccountIdOperationRegionTableName:filter(eq(tablename,crs-backend-statuses)):splitBy(operation):avg):limit(100):names"
+      ]
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 418,
+        "left": 0,
+        "width": 2280,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "### EventBridge Pipe \u2014 Statuses Trigger Publish (`crs-backend-statuses-trigger-publish`) \u2014 *Filter: UPDATED, DELETED (revoked statuses)*"
+    },
+    {
+      "name": "Pipe DLQ - status-change-pipe-dead-letter",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 456,
+        "left": 1368,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Pipe DLQ Messages - status-change-pipe-dead-letter",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion:filter(eq(\"queuename\",\"crs-backend-status-change-pipe-dead-letter\")):splitBy(\"queuename\"):sum",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": [
+              {
+                "name": "crs-backend-status-change-pipe-dead-letter",
+                "color": "#dc172a"
+              }
+            ]
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [],
+              "defaultAxis": false
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion:filter(eq(queuename,crs-backend-status-change-pipe-dead-letter)):splitBy(queuename):sum):limit(100):names"
+      ]
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 722,
+        "left": 0,
+        "width": 2280,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "### SQS \u2014 Trigger Publish Status List FIFO Queue (`crs-backend-trigger-publish-status-list.fifo`)"
+    },
+    {
+      "name": "Messages Sent & Received - trigger-publish queue",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 760,
+        "left": 0,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Messages Sent & Received - trigger-publish queue",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion:filter(eq(\"queuename\",\"crs-backend-trigger-publish-status-list.fifo\")):splitBy(\"queuename\"):sum",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion:filter(eq(\"queuename\",\"crs-backend-trigger-publish-status-list.fifo\")):splitBy(\"queuename\"):sum",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "BLUE",
+              "alias": "Messages Sent"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "properties": {
+              "color": "YELLOW",
+              "alias": "Messages Received"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [],
+              "defaultAxis": false
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion:filter(eq(queuename,\"crs-backend-trigger-publish-status-list.fifo\")):splitBy(queuename):sum):limit(100):names,(cloud.aws.sqs.numberOfMessagesReceivedByAccountIdQueueNameRegion:filter(eq(queuename,\"crs-backend-trigger-publish-status-list.fifo\")):splitBy(queuename):sum):limit(100):names"
+      ]
+    },
+    {
+      "name": "Age of Oldest Message - trigger-publish queue",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 760,
+        "left": 456,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Age of Oldest Message - trigger-publish queue",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(eq(\"queuename\",\"crs-backend-trigger-publish-status-list.fifo\")):splitBy(\"queuename\"):max",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "Second",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [],
+              "defaultAxis": false
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#9cd575"
+              },
+              {
+                "color": "#ffee7c"
+              },
+              {
+                "value": 300,
+                "color": "#f28289"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(eq(queuename,\"crs-backend-trigger-publish-status-list.fifo\")):splitBy(queuename):max):limit(100):names"
+      ]
+    },
+    {
+      "name": "Queue DLQ - trigger-publish-status-list-dead-letter",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 760,
+        "left": 912,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Queue DLQ Messages - trigger-publish-status-list-dead-letter",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion:filter(eq(\"queuename\",\"crs-backend-trigger-publish-status-list-dead-letter.fifo\")):splitBy(\"queuename\"):sum",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": [
+              {
+                "name": "crs-backend-trigger-publish-status-list-dead-letter.fifo",
+                "color": "#dc172a"
+              }
+            ]
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [],
+              "defaultAxis": false
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.numberOfMessagesSentByAccountIdQueueNameRegion:filter(eq(queuename,\"crs-backend-trigger-publish-status-list-dead-letter.fifo\")):splitBy(queuename):sum):limit(100):names"
+      ]
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 1026,
+        "left": 0,
+        "width": 2280,
+        "height": 190
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "markdown": "---\n\n**Reading this dashboard (top to bottom follows the data flow)**\n\n| Band | Component | Traffic | Latency | Errors | Saturation |\n|------|-----------|---------|---------|--------|------------|\n| 1 | DynamoDB Statuses table | Consumed R/W capacity | Successful request latency by operation | System/User errors | Stream returned records |\n| 2 | EventBridge Pipe | Pipe invocations (input from stream) | Pipe duration (avg/max) | Execution failures \u00b7 **Pipe DLQ** (`status-change-pipe-dead-letter`) | Concurrent executions |\n| 3 | SQS FIFO queue | Messages sent (from pipe) & received (by Lambda) | Age of oldest message | **Queue DLQ** (`...dead-letter.fifo`) | Queue depth (visible + in-flight) |\n\n**Key correlations:** Pipe invocations (band 2, col 1) should track stream returned records (band 1, col 4). Messages sent (band 3, col 1) reflects events that passed the pipe filter (UPDATED + DELETED revoked). Rising queue depth or age-of-oldest (band 3) with healthy PublishStatusList = consumer lag. Any non-zero on either DLQ is a hard flag. Queue depth threshold (red \u2265100) aligns with the `trigger-publish-status-list-queue-depth` CloudWatch alarm; DLQ age aligns with the 1-day old-message alarm.\n\n*Note: metric names for `cloud.aws.eventbridge.pipes.*` and DynamoDB stream metrics should be verified against your Dynatrace environment \u2014 Pipes/stream coverage is often partial. There is no native \u201cevents matched by filter\u201d metric on Pipes; SQS `numberOfMessagesSent` on the target queue is the proxy for post-filter volume.*"
+    },
+    {
+      "name": "Pipe Invocations",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 456,
+        "left": 0,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Pipe Invocations",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "pipename"
+          ],
+          "metricSelector": "cloud.aws.eventbridge.pipes.invocationsByAccountIdPipeNameRegion:filter(eq(\"pipename\",\"crs-backend-statuses-trigger-publish\")):splitBy(\"pipename\"):sum",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "BLUE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.eventbridge.pipes.invocationsByAccountIdPipeNameRegion:filter(eq(pipename,crs-backend-statuses-trigger-publish)):splitBy(pipename):sum):limit(100):names"
+      ]
+    },
+    {
+      "name": "Pipe Duration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 456,
+        "left": 456,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Pipe Duration (avg / max)",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "pipename"
+          ],
+          "metricSelector": "cloud.aws.eventbridge.pipes.durationByAccountIdPipeNameRegion:filter(eq(\"pipename\",\"crs-backend-statuses-trigger-publish\")):splitBy(\"pipename\"):avg",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "pipename"
+          ],
+          "metricSelector": "cloud.aws.eventbridge.pipes.durationByAccountIdPipeNameRegion:filter(eq(\"pipename\",\"crs-backend-statuses-trigger-publish\")):splitBy(\"pipename\"):max",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "MilliSecond",
+            "properties": {
+              "color": "YELLOW",
+              "seriesType": "LINE",
+              "alias": "Avg Duration"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "MilliSecond",
+            "properties": {
+              "color": "BLUE",
+              "seriesType": "LINE",
+              "alias": "Max Duration"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.eventbridge.pipes.durationByAccountIdPipeNameRegion:filter(eq(pipename,crs-backend-statuses-trigger-publish)):splitBy(pipename):avg):limit(100):names,(cloud.aws.eventbridge.pipes.durationByAccountIdPipeNameRegion:filter(eq(pipename,crs-backend-statuses-trigger-publish)):splitBy(pipename):max):limit(100):names"
+      ]
+    },
+    {
+      "name": "Pipe Execution Failures",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 456,
+        "left": 912,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Pipe Execution Failures",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "pipename"
+          ],
+          "metricSelector": "cloud.aws.eventbridge.pipes.executionFailedByAccountIdPipeNameRegion:filter(eq(\"pipename\",\"crs-backend-statuses-trigger-publish\")):splitBy(\"pipename\"):sum",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.eventbridge.pipes.executionFailedByAccountIdPipeNameRegion:filter(eq(pipename,crs-backend-statuses-trigger-publish)):splitBy(pipename):sum):limit(100):names"
+      ]
+    },
+    {
+      "name": "Queue Depth - trigger-publish queue",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 760,
+        "left": 1368,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Queue Depth (visible + in-flight) - trigger-publish queue",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(\"queuename\",\"crs-backend-trigger-publish-status-list.fifo\")):splitBy(\"queuename\"):max",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion:filter(eq(\"queuename\",\"crs-backend-trigger-publish-status-list.fifo\")):splitBy(\"queuename\"):max",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_AREA",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "STACKED_AREA",
+              "alias": "Messages Visible"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "DEFAULT",
+              "seriesType": "STACKED_AREA",
+              "alias": "Messages Not Visible"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#9cd575"
+              },
+              {
+                "color": "#ffee7c"
+              },
+              {
+                "value": 100,
+                "color": "#f28289"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(queuename,\"crs-backend-trigger-publish-status-list.fifo\")):splitBy(queuename):max):limit(100):names,(cloud.aws.sqs.approximateNumberOfMessagesNotVisibleByAccountIdQueueNameRegion:filter(eq(queuename,\"crs-backend-trigger-publish-status-list.fifo\")):splitBy(queuename):max):limit(100):names"
+      ]
+    },
+    {
+      "name": "Consumed Read Capacity - statuses",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 152,
+        "left": 456,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Consumed Read Capacity - statuses",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "tablename"
+          ],
+          "metricSelector": "cloud.aws.dynamodb.consumedReadCapacityUnitsByAccountIdRegionTableName:filter(eq(\"tablename\",\"crs-backend-statuses\")):splitBy(\"tablename\"):sum",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT",
+              "alias": "Consumed Read Capacity"
+            },
+            "seriesOverrides": [
+              {
+                "name": "Consumed Read Capacity",
+                "color": "#7dc540"
+              }
+            ]
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [],
+              "defaultAxis": false
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.dynamodb.consumedReadCapacityUnitsByAccountIdRegionTableName:filter(eq(tablename,crs-backend-statuses)):splitBy(tablename):sum):limit(100):names"
+      ]
+    },
+    {
+      "name": "System & User Errors - statuses",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 152,
+        "left": 1368,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "System & User Errors - statuses",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "tablename"
+          ],
+          "metricSelector": "cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:filter(eq(\"tablename\",\"crs-backend-statuses\")):splitBy(\"tablename\"):sum:default(0,always)",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        },
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.dynamodb.userErrorsByAccountIdRegion:splitBy():sum",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          },
+          {
+            "matcher": "B:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.dynamodb.systemErrorsByAccountIdOperationRegionTableName:filter(eq(tablename,crs-backend-statuses)):splitBy(tablename):sum:default(0,always)):limit(100):names,(cloud.aws.dynamodb.userErrorsByAccountIdRegion:splitBy():sum):limit(100):names"
+      ]
+    },
+    {
+      "name": "Stream Returned Records - statuses",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 152,
+        "left": 1824,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Stream Returned Records - statuses",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "tablename"
+          ],
+          "metricSelector": "cloud.aws.dynamodb.returnedRecordsCountByAccountIdOperationRegionStreamLabelTableName:filter(eq(\"tablename\",\"crs-backend-statuses\")):splitBy(\"tablename\"):sum",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "BLUE"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.dynamodb.returnedRecordsCountByAccountIdOperationRegionStreamLabelTableName:filter(eq(tablename,crs-backend-statuses)):splitBy(tablename):sum):limit(100):names"
+      ]
+    },
+    {
+      "name": "Conditional Check Failed - statuses",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 152,
+        "left": 2280,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Conditional Check Failed (status-id collisions) - statuses",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "tablename"
+          ],
+          "metricSelector": "cloud.aws.dynamodb.conditionalCheckFailedRequestsByAccountIdRegionTableName:filter(eq(\"tablename\",\"crs-backend-statuses\")):splitBy(\"tablename\"):sum:default(0,always)",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT",
+              "alias": "Conditional Check Failed"
+            },
+            "seriesOverrides": [
+              {
+                "name": "Conditional Check Failed",
+                "color": "#f5d30f"
+              }
+            ]
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.dynamodb.conditionalCheckFailedRequestsByAccountIdRegionTableName:filter(eq(tablename,crs-backend-statuses)):splitBy(tablename):sum:default(0,always)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Pipe Throttled / Concurrency",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 456,
+        "left": 1824,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Pipe Concurrent Executions",
+      "queries": [
+        {
+          "id": "B",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "cloud.aws.eventbridge.pipes.concurrencyByAccountIdRegion:splitBy():max",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "B:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.eventbridge.pipes.concurrencyByAccountIdRegion:splitBy():max):limit(100):names"
+      ]
+    },
+    {
+      "name": "Pipe DLQ Message Count",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 456,
+        "left": 2280,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Pipe DLQ - Messages on Queue (status-change-pipe-dead-letter)",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(\"queuename\",\"crs-backend-status-change-pipe-dead-letter\")):splitBy(\"queuename\"):max",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [],
+              "defaultAxis": false
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 1,
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(queuename,crs-backend-status-change-pipe-dead-letter)):splitBy(queuename):max):limit(100):names"
+      ]
+    },
+    {
+      "name": "Queue DLQ Message Count",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 760,
+        "left": 1824,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Queue DLQ - Messages on Queue (trigger-publish-status-list-dead-letter)",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(\"queuename\",\"crs-backend-trigger-publish-status-list-dead-letter.fifo\")):splitBy(\"queuename\"):max",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [],
+              "defaultAxis": false
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 1,
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.approximateNumberOfMessagesVisibleByAccountIdQueueNameRegion:filter(eq(queuename,\"crs-backend-trigger-publish-status-list-dead-letter.fifo\")):splitBy(queuename):max):limit(100):names"
+      ]
+    },
+    {
+      "name": "Pipe DLQ Age of Oldest",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 456,
+        "left": 2736,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Pipe DLQ - Age of Oldest Message (status-change-pipe-dead-letter)",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(eq(\"queuename\",\"crs-backend-status-change-pipe-dead-letter\")):splitBy(\"queuename\"):max",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "Second",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [],
+              "defaultAxis": false
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 3600,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 86400,
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(eq(queuename,crs-backend-status-change-pipe-dead-letter)):splitBy(queuename):max):limit(100):names"
+      ]
+    },
+    {
+      "name": "Queue DLQ Age of Oldest",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 760,
+        "left": 2280,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Queue DLQ - Age of Oldest Message (trigger-publish-status-list-dead-letter)",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "queuename"
+          ],
+          "metricSelector": "cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(eq(\"queuename\",\"crs-backend-trigger-publish-status-list-dead-letter.fifo\")):splitBy(\"queuename\"):max",
+          "rate": "NONE",
+          "enabled": true,
+          "histogram": false
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "Second",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [],
+              "defaultAxis": false
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": true,
+          "linkTileColorToThreshold": true
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "value": 0,
+                "color": "#7dc540"
+              },
+              {
+                "value": 3600,
+                "color": "#f5d30f"
+              },
+              {
+                "value": 86400,
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": true
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(cloud.aws.sqs.approximateAgeOfOldestMessageByAccountIdQueueNameRegion:filter(eq(queuename,\"crs-backend-trigger-publish-status-list-dead-letter.fifo\")):splitBy(queuename):max):limit(100):names"
+      ]
+    }
+  ]
+}
