@@ -832,6 +832,33 @@ module "wallet" {
   path   = "wallet/wallet.json"
 }
 
+### Status List ###
+
+module "crs_backend_api_gateway" {
+  source = "./modules/dashboard"
+  path   = "crs/crs-backend-api-gateway.json"
+}
+
+module "crs_backend_business_metrics" {
+  source = "./modules/dashboard"
+  path   = "crs/crs-backend-business-metrics.json"
+}
+
+module "crs_backend_custom_metrics" {
+  source = "./modules/dashboard"
+  path   = "crs/crs-backend-custom-metrics.json"
+}
+
+module "crs_backend_lambda" {
+  source = "./modules/dashboard"
+  path   = "crs/crs-backend-lambda.json"
+}
+
+module "crs_backend_publishing_pipe" {
+  source = "./modules/dashboard"
+  path   = "crs/crs-backend-publishing-pipe.json"
+}
+
 ### STS ###
 
 module "sts_metrics" {
